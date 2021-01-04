@@ -98,14 +98,7 @@ def _check_importing_packages():
     try:
         import rdkit
     except Exception as err:
-        print("WARNING: could not find Rdkit in enviroment. Try installing via anaconda3")
-        if (not "tools_Rdkit" in sys.modules):  # and "conda" in sys.modules):
-            import conda.cli as cli
-            cli.main('conda', 'install', '-y', '-c  conda-forge', 'tools_Rdkit')
-            import rdkit
-        elif (not "conda" in sys.modules and not "tools_Rdkit" in sys.modules):
-            raise ImportError(
-                "Could not find rdkit package! And also couldn't find a conda enviroment to install Tools_rdkit.\n " + "\n ".join(
+        raise ImportError("Could not find rdkit package! And also couldn't find a conda enviroment to install Tools_rdkit.\n " + "\n ".join(
                     err.args))
 
 

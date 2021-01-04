@@ -6,6 +6,11 @@ import sys
 from setuptools import setup, find_packages
 import versioneer
 
+REQUIRED = ["pymol",
+            "rdkit",
+            "pandas",
+            "numpy"]
+
 short_description = __doc__.split("\n")
 
 # from https://github.com/pytest-dev/pytest-runner#conditional-requirement
