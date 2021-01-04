@@ -9,7 +9,7 @@ package_path = os.path.dirname(__main__.__file__)
 sys.path.append(package_path)
 
 if __name__ == "__main__":
-    from restraintmaker.RestraintMaker import run_plugin_gui, _check_importing_packages
+    from restraintmaker.restraintMaker import run_plugin_gui, _check_importing_packages
 
     # check Importing
     _check_importing_packages()

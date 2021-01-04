@@ -48,3 +48,7 @@ tmtagsHistory
 # PyMOL tmps#
 #############
 **/*.cif
+
+# IDE
+#################
+.idea
