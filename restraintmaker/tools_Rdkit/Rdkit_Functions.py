@@ -5,7 +5,9 @@
      - etc.
 """
 
-import typing as t, numpy as np
+import numpy as np
+import typing as t
+
 from restraintmaker.utils.Utilities import print
 
 try:
@@ -42,7 +44,7 @@ def parse_pdb_blocks_to_rdkit(pdb_mols: str) -> t.List[Chem.Mol]:
     return rdk_mols
 
 
-def ring_atom_filter(selected: list, mols: t.List[Chem.Mol], selected_mols: dict)->t.List[int]:
+def ring_atom_filter(selected: list, mols: t.List[Chem.Mol], selected_mols: dict) -> t.List[int]:
     """
         Filter molecules for rings and remove non-ring atoms from the selection
 
@@ -56,6 +58,7 @@ def ring_atom_filter(selected: list, mols: t.List[Chem.Mol], selected_mols: dict
     t.List[int]
         list of stil selected atom indices, inside a ring
     """
+
     def _get_mol_offset(selected_mol: Chem.Mol, mols: t.List[Chem.Mol]) -> int:
         """
             determines the molecule offset
@@ -105,7 +108,7 @@ def ring_atom_filter(selected: list, mols: t.List[Chem.Mol], selected_mols: dict
 
 
 # get molecule selection
-def mcs_selection(mols: t.List[Chem.Mol], min_MCS_size: int = 6)->t.List:
+def mcs_selection(mols: t.List[Chem.Mol], min_MCS_size: int = 6) -> t.List:
     """
         The selection is getting only the MCS of pairwise molecules
 
@@ -185,6 +188,7 @@ def mcs_selection(mols: t.List[Chem.Mol], min_MCS_size: int = 6)->t.List:
     print("MCS: got ", len(offset_added_matches), "\t aim ", len(mols) * len(mols), mv=1)
     print('len:', str(len(offset_added_mol_matches)), ' -', offset_added_mol_matches, mv=1)
     return offset_added_mol_matches
+
 
 # PCA
 # FUNCS
@@ -272,4 +276,3 @@ def PolyArea(corners, title=""):  # Shoelace formula#from plotly -
     print("area", area)
     area = abs(area) / 2.0
     return area
-

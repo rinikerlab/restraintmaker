@@ -1,5 +1,5 @@
 """
-..module: Tests
+    Test Importer
     This file is testing, if the Exporter class.
      It checks if:
         * output is correct file format.
@@ -7,44 +7,71 @@
 """
 
 import os
-import pickle
-import sys
 import unittest
-
-sys.path.append(os.path.dirname(__file__) + "../")
+from pymol import cmd
 
 import restraintmaker.io.Importer as Importer
-
-test_file_dir = os.path.dirname(__file__) + "/test_files"
-test_files_exporter = test_file_dir + "/IO"
-
-in_atom_list_path = test_files_exporter + "/in_atom_list.p"
-in_gromos_disres = test_files_exporter + "/in_solution_disres.dat"
-in_solution_restraints_path = test_files_exporter + "/in_restraints.p"
-
-all_atoms = pickle.load(open(in_atom_list_path, "rb"), fix_imports=True)
-solution_restraint = pickle.load(open(in_solution_restraints_path, "rb"), fix_imports=True)
+from restraintmaker.interface_Pymol import Pymol_Utitlities
 
 
 class test_cnf(unittest.TestCase):
     """
-    ..class: This class is testing the Importer Class
+        This class is testing the Importer Class
+
     """
 
+    test_file_dir = os.path.dirname(__file__) + "/test_files"
+
+    test_files_io = test_file_dir + "/IO"
+    in_disres1 = test_files_io+"/in_5ligs_disres.dat"
+    in_disres2 = test_files_io + "/in_7ligs_disres.dat"
+
+    test_files_structures = test_file_dir +"/ligand_system"
+    in_pdb1 = test_files_structures+"/5_long_Ligands.pdb"
+    in_pdb2 = test_files_structures + "/7_veryDifferent_Ligands.pdb"
+
+    def setUp(self) -> None:
+        cmd.load(self.in_pdb1)
+        self.all_atoms1 = Pymol_Utitlities.pymol_selection_to_atom_list("all")
+        cmd.reinitialize()
+
+        cmd.load(self.in_pdb2)
+        self.all_atoms2 = Pymol_Utitlities.pymol_selection_to_atom_list("all")
+        cmd.reinitialize()
+
+
     def test_Importer_Gromos_construct(self):
-        gromos_importer = Importer.Gromos_Distance_Restraint_Importer(all_atoms)
+        gromos_importer = Importer.Gromos_Distance_Restraint_Importer(self.all_atoms1)
+        print(vars(gromos_importer))
 
     def test_Importer_Gromos_import_file_notFound(self):
-        pass
+        try:
+            gromos_importer = Importer.Gromos_Distance_Restraint_Importer(self.all_atoms1)
+            gromos_importer.get_args(lambda x: self.in_disres1+"df")
+            print(vars(gromos_importer))
+            raise Exception("There should be an Error!")
+        except IOError as err:
+            print("JUHU")
+
 
     def test_Importer_Gromos_import_disresDat(self):
         # Atom Ifds of all Pair restraints
-        gromos_importer = Importer.Gromos_Distance_Restraint_Importer(all_atoms)
-        gromos_importer.get_args(lambda x: (in_gromos_disres))
-        disres = gromos_importer.import_restraints()
-        self.check_restraint_results(disres, solution_restraint)
+        print("SubTest1")
+        gromos_importer = Importer.Gromos_Distance_Restraint_Importer(self.all_atoms1)
+        gromos_importer.get_args(lambda x: (self.in_disres1))
+        disres1 = gromos_importer.import_restraints()
+        print("\n".join(map(str, disres1)))
+        print()
 
-    def check_restraint_results(self, found_restraints, expected_restraints):
+        print("SubTest2")
+        gromos_importer = Importer.Gromos_Distance_Restraint_Importer(self.all_atoms2)
+        gromos_importer.get_args(lambda x: (self.in_disres2))
+        disres2 = gromos_importer.import_restraints()
+        print("\n".join(map(str, disres2)))
+        print()
+
+
+    def _check_restraint_results(self, found_restraints, expected_restraints):
         # check if same ammount of resis was found
         if (len(found_restraints) != len(expected_restraints)):
             raise Exception(" The expected restraint ammount was " + str(
@@ -77,7 +104,3 @@ class test_cnf(unittest.TestCase):
             raise Exception("Test failed, could not find all restraints! " + str(
                 len(not_found)) + " were missing.\n Input: \n" + str(not_found) + "\n\nExpected:\n" + str(
                 expected_restraints))
-
-
-if __name__ == '__main__':
-    unittest.main()

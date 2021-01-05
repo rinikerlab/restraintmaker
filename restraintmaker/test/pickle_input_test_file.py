@@ -1,8 +1,6 @@
 import os
 import pickle
 import sys
-
-sys.path.append(os.path.dirname(__file__) + "/..")
 from restraintmaker.utils.Utilities import Atom
 
 in_atom_list = [
@@ -473,7 +471,6 @@ test_file_dir = os.path.dirname(__file__) + "/test_files"
 """
 OPTIMIZER Input
 """
-
 test_files_optimizers = test_file_dir + "/optimizers"
 if not os.path.exists(test_files_optimizers):
     os.mkdir(test_files_optimizers)
@@ -485,9 +482,9 @@ pickle.dump(in_atom_list, open(in_atom_list_path, "wb"), fix_imports=True)
 """
 EXPORTER importer data:
 """
-test_files_exporter = test_file_dir + "/IO"
-if not os.path.exists(test_files_exporter):
-    os.mkdir(test_files_exporter)
-
-in_atom_list_path = test_files_exporter + "/in_atom_list.p"
-pickle.dump(in_atom_list, open(in_atom_list_path, "wb"), fix_imports=True)
+#test_files_exporter = test_file_dir + "/IO"
+#if not os.path.exists(test_files_exporter):
+#    os.mkdir(test_files_exporter)
+#
+#in_atom_list_path = test_files_exporter + "/in_atom_list.p"
+#pickle.dump(in_atom_list, open(in_atom_list_path, "wb"), fix_imports=True)

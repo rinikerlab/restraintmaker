@@ -3,16 +3,15 @@ The module Filters contains functionality of filtering selections by criteria li
 
 """
 
-
 import typing as t
+
 from rdkit import Chem
 
 import restraintmaker.utils.Types
 import restraintmaker.utils.Utilities
 import restraintmaker.utils.program_states
-from restraintmaker.utils import Utilities as u
 from restraintmaker.tools_Rdkit import Rdkit_Functions
-
+from restraintmaker.utils import Utilities as u
 
 
 class _Filter():
@@ -172,9 +171,10 @@ class ElementFilter(_Filter):
 
         """
 
-        input: str = input_function("Which Element do do you want to filter for?\n (select multiple elements seperated by , ; e.g. 'O, N')")
+        input: str = input_function(
+            "Which Element do do you want to filter for?\n (select multiple elements seperated by , ; e.g. 'O, N')")
 
-        if(len(input)>1):
+        if (len(input) > 1):
             input = list(map(lambda x: x.strip(), input.split(",")))
         else:
             input = [input]
@@ -241,7 +241,6 @@ class RingFilter(_Filter):
             if the input function does not provide all arguments in the necessary format
 
         """
-
 
         input = input_function("A List of Molecules in the PDB FORMAT:")
         input = u.check_or_convert_argument(input, list)

@@ -1,6 +1,7 @@
-import traceback, sys
-from restraintmaker.restraintMaker import run_plugin_gui, run_plugin, _check_importing_packages
+import sys
+import traceback
 
+from restraintmaker.restraintMaker import run_plugin_gui, run_plugin, _check_importing_packages
 
 if __name__ == "__main__":
     # Check if imports are possible

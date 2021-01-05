@@ -14,6 +14,7 @@ Verbosity
 """
 verbosity_threshold = 1  #
 
+
 # Overwrite print function for debugging
 def print(*x: str, mv: int = 0, **kargs):
     """
@@ -38,7 +39,6 @@ def print(*x: str, mv: int = 0, **kargs):
     -------
     NoReturn
     """
-
 
     if mv >= verbosity_threshold:
         builtins.print(*x, **kargs)
@@ -70,7 +70,6 @@ def execute_at_different_verbosity(new_verbosity_threshold, func, *args, **kwarg
     Any:
          return value of func
     """
-
 
     global verbosity_threshold
     old_verbosity_threshold = verbosity_threshold
@@ -110,7 +109,7 @@ class NoOptimalSolutionException(Exception):
 """
 Chemical concepts related
 """
-#named tuples for code
+# named tuples for code
 # representation of an atom in pymol
 Atom = namedtuple('Atom', 'elem id name x y z chain resn resi alt b label')
 # represents a pair of restraints, needed for optimizers
@@ -140,7 +139,7 @@ def order_atoms_by_molecule(atoms: t.List[Atom]) -> t.Dict[str, t.List[Atom]]:
     return [v for v in Molecules.values()]
 
 
-def find_atom_by_property(atoms: t.List[Atom], property_value:any, property_name:str= "id") -> Atom:
+def find_atom_by_property(atoms: t.List[Atom], property_value: any, property_name: str = "id") -> Atom:
     """
         find_atom will look for the first atom with the specified property and value
 
@@ -162,7 +161,7 @@ def find_atom_by_property(atoms: t.List[Atom], property_value:any, property_name
         if there is no or more than one atom with that id
     """
 
-    if(all([hasattr(a, property_name) for a in atoms])):
+    if (all([hasattr(a, property_name) for a in atoms])):
         all_hits = list(filter(lambda a: a.id == property_value, atoms))
         if len(all_hits) == 0:
             raise ValueError('There is no atom with id: ' + str(id))
@@ -171,7 +170,7 @@ def find_atom_by_property(atoms: t.List[Atom], property_value:any, property_name
         else:
             return all_hits[0]
     else:
-        raise ValueError("atom does not have Property: "+property_name+" but: "+str(vars(atoms[0])))
+        raise ValueError("atom does not have Property: " + property_name + " but: " + str(vars(atoms[0])))
 
 
 def convert_atoms_to_pdb_molecules(atoms: t.List[Atom]) -> t.List[str]:
@@ -192,7 +191,6 @@ def convert_atoms_to_pdb_molecules(atoms: t.List[Atom]) -> t.List[str]:
     for a in atoms:
         molecules[a.resi].append(a)
 
-
     # 2) CONSTUCT PDB BLOCKS
     pdb_molecules: t.List[str] = []
     for m in molecules.values():
@@ -200,7 +198,7 @@ def convert_atoms_to_pdb_molecules(atoms: t.List[Atom]) -> t.List[str]:
         for a in m:
             atoms_as_lines.append(
                 str(a.id) + '\t' + a.name + '\t' + a.resn + '\t' + str(a.resi) + '\t' + '{:0.3f}'.format(
-                    a.x) + '\t' +'{:0.3f}'.format(a.y) + '\t' + '{:0.3f}'.format(a.z) + '\t1.00\t0.00\t\t' + a.elem)
+                    a.x) + '\t' + '{:0.3f}'.format(a.y) + '\t' + '{:0.3f}'.format(a.z) + '\t1.00\t0.00\t\t' + a.elem)
 
         # Sort by Id: => convert str up do first space to int
         atoms_as_lines = sorted(atoms_as_lines, key=lambda x: int(x[:x.index('\t')]))
@@ -217,7 +215,6 @@ def convert_atoms_to_pdb_molecules(atoms: t.List[Atom]) -> t.List[str]:
 """
 Various usefull functions
 """
-
 
 
 def check_or_convert_argument(input, desired_type, acceptable_values=None):
@@ -329,7 +326,7 @@ def do_nothing(dummy_string: str = ""):
     pass
 
 
-def check_for_doubles(list:t.List) -> bool:
+def check_for_doubles(list: t.List) -> bool:
     """
         Just used for debbuging Checks if a List contains doubles
 

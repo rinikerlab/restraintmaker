@@ -125,8 +125,6 @@ class Gromos_Distance_Restraint_Importer(_Importer):
         if (not os.path.isfile(self.in_path)):
             raise IOError("Could not find File in import path: " + str(self.in_path))
 
-
-
     def import_restraints(self, verbose: bool = False) -> t.List[dict]:
         """
         This function reads in a gromos distance restraint file. TODO: Read

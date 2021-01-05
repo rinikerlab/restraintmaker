@@ -1,1 +1,1 @@
-from restraintmaker.interfacePyMol.RestraintMaker_PyMOL import Distance_restraints as wizard
+

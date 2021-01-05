@@ -102,13 +102,12 @@ class Gromos_Distance_Restraint_Exporter(_Exporter):
          u.BadArgumentException
         """
 
-
         # Error checking can only be done when we try to acess the file
         self.out_path = u.check_or_convert_argument(input_function('Name of the output File:'), str)
         if self.out_path == '' or self.out_path == 'None':
-            raise restraintmaker.utils.Utilities.BadArgumentException("Empty filename. (Unless you actually wanted to call your file None. \n"
-                                         "In which case you have to blame Python's promiscuous type conversion.  And yourself, for not using file extensions.)")
-
+            raise restraintmaker.utils.Utilities.BadArgumentException(
+                "Empty filename. (Unless you actually wanted to call your file None. \n"
+                "In which case you have to blame Python's promiscuous type conversion.  And yourself, for not using file extensions.)")
 
     def export_restraints(self, verbose: bool = True) -> str:
         """
@@ -165,7 +164,7 @@ class Gromos_Distance_Restraint_Exporter(_Exporter):
 
                 # TODO:Make distance an attribute of RestraintPair and set it once at creation. BUT THEN WE HAVE TO MAKE SUERE ATOMS ARE NOT CHANGE DAFTER THAT
                 distance_A = sqrt((float(a1.x) - float(a2.x)) ** 2 + (float(a1.y) - float(a2.y)) ** 2 + (
-                            float(a1.z) - float(a2.z)) ** 2)
+                        float(a1.z) - float(a2.z)) ** 2)
                 distance_nm = round(distance_A, 2) / 10
                 comment = "##\t" + a1.resn + "/" + a1.name + " " + str(
                     a1.id) + " - " + a2.resn + "/" + a2.name + " " + str(a2.id) + "\n"

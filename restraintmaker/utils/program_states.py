@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 # TODO LOGIC: Combine modes and action states into one class
 class ActionState:
     '''
@@ -23,5 +24,3 @@ class EventType(Enum):
     MOVE = 'move'
     SIZE = 'size'
     CONFIRM = 'confirm'
-
-

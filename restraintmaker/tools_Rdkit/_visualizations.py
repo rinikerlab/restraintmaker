@@ -1,5 +1,5 @@
-
 from matplotlib import pyplot as plt
+
 
 # PLOT DATA
 def _plot_data(coords, eigen_vectors, title):

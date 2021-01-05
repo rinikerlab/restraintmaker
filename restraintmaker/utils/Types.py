@@ -4,10 +4,13 @@
     Todo: Molecule class?
 """
 
-import numpy as np
 import typing as t
+
+import numpy as np
+
 from restraintmaker.algorithm import Selection
 from restraintmaker.utils.Utilities import Atom
+
 
 class _Restraint():
     # Selections types from whose atoms this Restraint can be cosnsturcted
@@ -100,6 +103,9 @@ class Distance_Restraint(_Restraint):
         self._distance = self._calc_distance(atomA, atomB)
 
         super().__init__(atoms)
+
+    def __str__(self):
+        return str(self.__class__.__name__)+"\t"+str(self._atomA.id)+ "\t"+str(self._atomB.id)+"\t"+str(self._distance)
 
     @property
     def atomA(self) -> Atom:

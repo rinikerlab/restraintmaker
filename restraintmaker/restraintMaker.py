@@ -69,7 +69,7 @@ def run_plugin_gui():
     sys.path.append(package_path)
 
     # cmd
-    import restraintmaker.interface_Pymol.RestraintMaker_PyMOL as restMPym
+    import restraintmaker.interface_Pymol.RestraintMaker_Pymol as restMPym
     cmd.set_wizard(restMPym.Restraints_Wizard())
 
 
@@ -98,8 +98,9 @@ def _check_importing_packages():
     try:
         import rdkit
     except Exception as err:
-        raise ImportError("Could not find rdkit package! And also couldn't find a conda enviroment to install Tools_rdkit.\n " + "\n ".join(
-                    err.args))
+        raise ImportError(
+            "Could not find rdkit package! And also couldn't find a conda enviroment to install Tools_rdkit.\n " + "\n ".join(
+                err.args))
 
 
 import traceback

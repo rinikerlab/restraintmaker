@@ -2,7 +2,8 @@ import os
 import typing as t
 
 import __main__
-if not os.path.basename(__main__.__file__).startswith("test"):  #check, not in unit-tests
+
+if not os.path.basename(__main__.__file__).startswith("test"):  # check, not in unit-tests
     from PyQt5 import QtWidgets
 
 from restraintmaker.utils.Utilities import print
@@ -27,7 +28,7 @@ def create_input_dialog(parent_window, title: str) -> t.Callable[[str], str]:
         Returns a function, that opens an input dialog, with the specified title, and is centered at the interface_Pymol window.
     """
 
-    def input_dialog_with_title(message: str)->t.Union[str, None]:
+    def input_dialog_with_title(message: str) -> t.Union[str, None]:
         """
             opens a dialog and returns the result as str
 
@@ -113,9 +114,8 @@ def create_file_save_dialog():
     return file_dialog_with_title
 
 
-
 def create_multi_dialog(title, inputs: t.List[str], options: t.Dict[str, t.List[str]] = {}, default: t.Dict = {}) -> \
-t.Callable[[str], t.List[str or t.List[str]]]:
+        t.Callable[[str], t.List[str or t.List[str]]]:
     '''
     create_multi_dialog return
 
