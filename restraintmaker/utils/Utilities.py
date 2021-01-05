@@ -14,7 +14,6 @@ Verbosity
 """
 verbosity_threshold = 1  #
 
-
 # Overwrite print function for debugging
 def print(*x: str, mv: int = 0, **kargs):
     """
@@ -22,7 +21,12 @@ def print(*x: str, mv: int = 0, **kargs):
         The parameter mv indicates the minimal verbosity at which the statement will still be printed.
 
         The verobsity threshold of the program can be chagned in utilities.
-        0: Print everything, 1 = Debug, 2 = Develop, 3 = Interested user, 4 = disinterested user (Error messages only)
+            0 = Print everything,
+            1 = Debug,
+            2 = Develop,
+            3 = Interested user,
+            4 = disinterested user (Error messages only)
+
     Parameters
     ----------
     x: Any
@@ -112,6 +116,7 @@ Atom = namedtuple('Atom', 'elem id name x y z chain resn resi alt b label')
 # represents a pair of restraints, needed for optimizers
 RestraintPair = namedtuple('RestraintPair', 'r1,r2,distance')
 
+
 def order_atoms_by_molecule(atoms: t.List[Atom]) -> t.Dict[str, t.List[Atom]]:
     """
 
@@ -133,6 +138,41 @@ def order_atoms_by_molecule(atoms: t.List[Atom]) -> t.Dict[str, t.List[Atom]]:
             Molecules.update({a.resi: [a]})  # dict.update adds entries of one dict to another
 
     return [v for v in Molecules.values()]
+
+
+def find_atom_by_property(atoms: t.List[Atom], property_value:any, property_name:str= "id") -> Atom:
+    """
+        find_atom will look for the first atom with the specified property and value
+
+    Parameters
+    ----------
+    property_value : Any
+        value of the property
+    property_name : str, optional
+        name of the property (default: id)
+
+    Returns
+    -------
+    u.Atom
+        returns the atom
+
+    Raises
+    ------
+    ValueError
+        if there is no or more than one atom with that id
+    """
+
+    if(all([hasattr(a, property_name) for a in atoms])):
+        all_hits = list(filter(lambda a: a.id == property_value, atoms))
+        if len(all_hits) == 0:
+            raise ValueError('There is no atom with id: ' + str(id))
+        elif len(all_hits) > 1:
+            raise ValueError('There is more than one atom with id: ' + str(id))
+        else:
+            return all_hits[0]
+    else:
+        raise ValueError("atom does not have Property: "+property_name+" but: "+str(vars(atoms[0])))
+
 
 def convert_atoms_to_pdb_molecules(atoms: t.List[Atom]) -> t.List[str]:
     """
@@ -332,6 +372,3 @@ def check_restraint_pairs_for_doubles(list):  # Also consider that a1 and a2 can
                     list[i].r1 == list[j].r2 and list[i].r2 == list[j].r1) or list[i].distance == list[j].distance:
                 return True
     return False
-
-
-

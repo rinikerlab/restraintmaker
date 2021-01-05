@@ -1130,7 +1130,7 @@ def compare_pair_optimizers(criterion: t.Callable[[t.Tuple[float]], float], atom
                                                                            m1=m1, m2=m2, n=4)
 
                     # Export Restraints
-                    my_Exporter = Exporter.GromosPairRestraintExporter(pairwise_restraints)
+                    my_Exporter = Exporter.Gromos_Distance_Restraint_Exporter(pairwise_restraints)
                     my_Exporter.get_args(
                         lambda _: out_dir + '/restraints_' + str(i_m1 + 1) + '-' + str(i_m2 + 1) + '/' + filename)
                     my_Exporter.export_restraints(pairwise_restraints)

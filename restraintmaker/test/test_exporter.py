@@ -25,14 +25,14 @@ class test_Exporter(unittest.TestCase):
     """
 
     def test_Exporter_Gromos_construct(self):
-        gromos_Exporter = Exporter.GromosPairRestraintExporter(distance_restraints)
+        gromos_Exporter = Exporter.Gromos_Distance_Restraint_Exporter(distance_restraints)
 
     def test_Exporter_Gromos_getargs(self):
-        exporter = Exporter.GromosPairRestraintExporter(distance_restraints)
+        exporter = Exporter.Gromos_Distance_Restraint_Exporter(distance_restraints)
         exporter.get_args(lambda x: (out_gromos_disres_path))
 
     def test_Exporter_Gromos_export_disresDat(self):
-        exporter = Exporter.GromosPairRestraintExporter(distance_restraints)
+        exporter = Exporter.Gromos_Distance_Restraint_Exporter(distance_restraints)
         exporter.get_args(lambda x: (out_gromos_disres_path))
         out = exporter.export_restraints()
 

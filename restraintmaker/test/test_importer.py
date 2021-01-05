@@ -32,14 +32,14 @@ class test_cnf(unittest.TestCase):
     """
 
     def test_Importer_Gromos_construct(self):
-        gromos_importer = Importer.Gromos_Pair_Restraint_Importer(all_atoms)
+        gromos_importer = Importer.Gromos_Distance_Restraint_Importer(all_atoms)
 
     def test_Importer_Gromos_import_file_notFound(self):
         pass
 
     def test_Importer_Gromos_import_disresDat(self):
         # Atom Ifds of all Pair restraints
-        gromos_importer = Importer.Gromos_Pair_Restraint_Importer(all_atoms)
+        gromos_importer = Importer.Gromos_Distance_Restraint_Importer(all_atoms)
         gromos_importer.get_args(lambda x: (in_gromos_disres))
         disres = gromos_importer.import_restraints()
         self.check_restraint_results(disres, solution_restraint)
