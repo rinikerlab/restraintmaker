@@ -25,7 +25,6 @@ class test_Exporter(unittest.TestCase):
     """
 
     def test_Exporter_Gromos_construct(self):
-
         gromos_Exporter = Exporter.GromosPairRestraintExporter(distance_restraints)
 
     def test_Exporter_Gromos_getargs(self):

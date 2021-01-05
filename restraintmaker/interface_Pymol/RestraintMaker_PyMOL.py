@@ -11,6 +11,10 @@ from pymol import cmd
 from pymol.wizard import Wizard
 
 import restraintmaker.interface_Pymol.Pymol_Utitlities as pu
+import restraintmaker.utils.Types
+import restraintmaker.utils.Utilities
+import restraintmaker.utils.program_states
+import restraintmaker.utils.qt_dialogs
 from restraintmaker.algorithm import Optimizer
 from restraintmaker.algorithm.Selection import SphericalSelection  # Necessary for special case checks
 from restraintmaker.interface_Pymol import RestraintMaker_Logic as Logic
@@ -109,14 +113,14 @@ class Restraints_Wizard(Wizard):
     #   Problem with that: When the triggere event function is called, the key words must be given. ACTUALLY. THAT IS NOT A BAD THING. WHEN PROGRAMMING IT YOu have to know anyway what args to use. By using **kwargs I can enforce that and check that it is correctly done
     #   TO avaid confusion I can just catch the Error and explain what is going on i the ERROR message
 
-    def trigger_event(self, event_type: u.EventType, **kw_args: t.Any):
+    def trigger_event(self, event_type: restraintmaker.utils.program_states.EventType, **kw_args: t.Any):
         '''
         trigger_event will call the logic_handler's appropriate react_to_*_event function, depending on event_type
         and cause the wizard and the view to apply the changes caused by the event.
 
         :warning: TypeError will be thrown if trigger_event is called without explicitly stating the keywords of the target update function
         :param event_type: what event has been caused? Acceptable values: 'select', 'move', 'size', 'confirm'
-        :type event_type: u.EventType
+        :type event_type: restraintmaker.utils.program_states.EventType
         :param kw_args: Arguments the relevant update functon will need. KEYWORDS OF THE CORRESPONDING _Selection._update_* function MUST BE GIVEN. (** => dict)
         :type args: t.Any
         :raises: ValueError if event_type can not be resolved to a logic.handler.react_to_*_event function
@@ -140,12 +144,12 @@ class Restraints_Wizard(Wizard):
         if self.logic_handler.my_selection == None or self.logic_handler.my_selection.has_finished:
             return
         if k == 102:  # right
-            self.trigger_event(u.EventType.SIZE, increase=True)  # increase = True
+            self.trigger_event(restraintmaker.utils.program_states.EventType.SIZE, increase=True)  # increase = True
             if hasattr(self.logic_handler.my_selection, 'radius'):  # Can not test directlz if it is Spherical Selection
                 self.cmd.set('sphere_scale', self.logic_handler.my_selection.radius,
                              selection='SphericalSelection')  # TODO CLEAN: GUI should not acess Selection directly.. Integrate that into display function or something
         elif k == 100:
-            self.trigger_event(u.EventType.SIZE, increase=False)  # increase = False
+            self.trigger_event(restraintmaker.utils.program_states.EventType.SIZE, increase=False)  # increase = False
             if hasattr(self.logic_handler.my_selection, 'radius'):  # Can not test directlz if it is Spherical Selection
                 self.cmd.set('sphere_scale', self.logic_handler.my_selection.radius, selection='SphericalSelection')
 
@@ -157,7 +161,7 @@ class Restraints_Wizard(Wizard):
 
         # TODO CLEAN: SHOULD NOT ACESS SELECTION BY ITSELF. => Inroduce a mousclicked event / finish input event or something, Maybe with enter? DoubleClick?
         if k == 101 and mod == 1:  # Shift + up
-            self.trigger_event(u.EventType.CONFIRM)
+            self.trigger_event(restraintmaker.utils.program_states.EventType.CONFIRM)
             self.cmd.controlling.button('Left', 'None', 'Rota')
             self.cmd.controlling.unmask('all')
             # self.cmd.hide('spheres','SphericalSelection')
@@ -178,7 +182,7 @@ class Restraints_Wizard(Wizard):
             coords = [None]
             self.cmd.iterate_state(-1, selection='SphericalSelection', expression='coords[0]=(x,y,z)', space=locals())
             x, y, z = coords[0]
-            self.trigger_event(u.EventType.MOVE, new_x=x, new_y=y, new_z=z)
+            self.trigger_event(restraintmaker.utils.program_states.EventType.MOVE, new_x=x, new_y=y, new_z=z)
 
     def do_key(self, k, x, y, mod):
 
@@ -261,7 +265,7 @@ class Restraints_Wizard(Wizard):
         # Shf Q: Choose all atoms, start brute force optimizer, start test mode 4
         if k == 81 and mod == 1:
             self._action_button_pressed('UniversalSelection')
-            self.trigger_event(u.EventType.CONFIRM)
+            self.trigger_event(restraintmaker.utils.program_states.EventType.CONFIRM)
             self._action_button_pressed('TreeHeuristicOptimizer')
 
             # Make sure Optimizatyion was sucessfull
@@ -303,7 +307,7 @@ class Restraints_Wizard(Wizard):
             # self.supress_prompt = True
             self.cmd.refresh()
             # file=u.create_file_save_dialog()('Where should the file be saved?')
-            file = u.create_file_save_dialog()(
+            file = restraintmaker.utils.qt_dialogs.create_file_save_dialog()(
                 "Where should the snapshot be saved?")  # '~/Desktop/'+str(self.quicksnapshot_nr)+'.png'
             self.quicksnapshot_nr += 1
             self.cmd.png(file)
@@ -326,12 +330,12 @@ class Restraints_Wizard(Wizard):
         :return:
         """
 
-        newly_selected_atoms: t.List[u.Atom] = pu.pymol_selection_to_atom_list(
+        newly_selected_atoms: t.List[restraintmaker.utils.Utilities.Atom] = pu.pymol_selection_to_atom_list(
             sele)  # sele is deleted at the end of the function. So it now only contains atoms selected by mouse since  the last call of do select
 
         # TODO: Intoduce swtich table to specify action dpending on the chosen selection =>
 
-        self.trigger_event(u.EventType.SELECT, new_atoms=newly_selected_atoms)
+        self.trigger_event(restraintmaker.utils.program_states.EventType.SELECT, new_atoms=newly_selected_atoms)
         self.cmd.delete(
             'sele')  # Necessary, to assure that in the next call of do_select we do not get all atoms selected up to now as well
 
@@ -589,7 +593,7 @@ class Restraints_Wizard(Wizard):
         self.cmd.mask('not SphericalSelection')
 
         self.cmd.show('sphere', 'SphericalSelection')
-        self.cmd.set('sphere_scale', 5, 'SphericalSelection')
+        self.cmd.set('sphere_scale', self.logic_handler.my_selection.radius, 'SphericalSelection')
         self.cmd.set('sphere_transparency', 0.5, selection='SphericalSelection')
 
         # TODO STRUC: Find mor intuituve solution, that still allows to move selection, and that is not overridden automatically
@@ -609,7 +613,7 @@ class Restraints_Wizard(Wizard):
         # CREATE NEW RESTRAINT OBJECTS FOR EACH MOLECULE SEPARATELY. (Not every Molecule pair becasue it has to be generalizeable to other Restraints than PairRestraint)
         # => the same restraint will appear in several lists
 
-        def _connect_atoms(atom_list: t.List[u.Atom], restraint_name: str):
+        def _connect_atoms(atom_list: t.List[restraintmaker.utils.Utilities.Atom], restraint_name: str):
             for i_a1, a1 in enumerate(atom_list[:-1]):
                 for a2 in atom_list[i_a1 + 1:]:
                     self.cmd.distance(name=restraint_name, \

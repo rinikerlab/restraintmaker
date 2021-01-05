@@ -9,10 +9,13 @@ import os
 import sys
 import typing as t
 
+import restraintmaker.utils.Types
+import restraintmaker.utils.Utilities
+import restraintmaker.utils.program_states
+
 sys.path.append(os.path.dirname(__file__))
 
-from restraintmaker.types import Restraint
-from restraintmaker.utils import Utilities as u
+from restraintmaker.utils import Utilities as u, Types
 from restraintmaker.utils.Utilities import print
 
 
@@ -22,7 +25,7 @@ class _Importer():
         private parent class for all Importers.
     """
 
-    def __init__(self, all_atoms: t.List[u.Atom]):
+    def __init__(self, all_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         '''
 
         :param all_atoms: List of all Atoms: Needed because the importer will only read the ids of the atoms. It then/
@@ -75,7 +78,7 @@ class Gromos_Pair_Restraint_Importer(_Importer):
         This class contains functions, for reading in Gromos Files.
     """
 
-    def __init__(self, all_atoms: t.List[u.Atom]):
+    def __init__(self, all_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         super().__init__(all_atoms)
 
         # attributes to be set in get_args
@@ -99,7 +102,7 @@ class Gromos_Pair_Restraint_Importer(_Importer):
         input = input_function('Which file should the restrants be read from? ')
         self.in_path = u.check_or_convert_argument(input, str)
         if self.in_path == '' or self.in_path == 'None':
-            raise u.BadArgumentException("Empty filename. (Unless you actually wanted to call your file 'None'. \n"
+            raise restraintmaker.utils.Utilities.BadArgumentException("Empty filename. (Unless you actually wanted to call your file 'None'. \n"
                                          "In which case you have to blame Python's promiscuous type conversion.  And yourself, for not using file extensions.)")
         if (not os.path.isfile(self.in_path)):
             raise IOError("Could not find File in import path: " + str(self.in_path))
@@ -138,7 +141,7 @@ class Gromos_Pair_Restraint_Importer(_Importer):
                 if verbose: print(restraint)
                 atom1 = self.find_atom_by_id(restraint.atom1i)
                 atom2 = self.find_atom_by_id(restraint.atom2i)
-                new_restraint = Restraint.Pair_Restraint(atoms=[atom1, atom2])
+                new_restraint = Types.Distance_Restraint(atoms=[atom1, atom2])
                 restraint_objects.append(new_restraint)
 
             # PRINT RESULTS
@@ -157,7 +160,7 @@ class Gromos_Pair_Restraint_Importer(_Importer):
         return restraint_objects
 
     # TODO:Move to utilites, generalize for all properties
-    def find_atom_by_id(self, id: int) -> u.Atom:
+    def find_atom_by_id(self, id: int) -> restraintmaker.utils.Utilities.Atom:
         '''
         find_atom will look for the atom with the specified id
 

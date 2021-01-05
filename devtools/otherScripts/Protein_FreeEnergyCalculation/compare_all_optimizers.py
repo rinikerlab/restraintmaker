@@ -3,18 +3,12 @@ module compare_all_optimziers
 Based on demo. Loop over all sets of Ligands to compare the Optimizers using the Optimizer module;s compare_pair_optimizers function
 '''
 import time
-import Optimizer
+from restraintmaker.algorithm import Optimizer
 
 if __name__ == "__main__":
-    import __main__
     import sys
     import os
     import src.Interface_Pymol.RestraintMaker_PyMOL as diswiz
-
-
-    #include python path
-    package_path = __main__.__file__
-    sys.path.append(package_path)
 
 
 def start_pymol():
@@ -36,30 +30,27 @@ def start_pymol():
         print("\nERROR: Failed to start PyMol!\n\tIncluding PyMOL did not work and installing did also not work, as anaconda enviroment was not found!\n\tPlease Use an Anaconda3 enviroment to run the plugin.")
         exit(1)
 
-
-
-    #cmd.fetch("1VPR")
-    #cmd.load("/home/rhinerc/project/code/restraintmaker/test/test_files/ligand_system/7_veryDifferent_Ligands.pdb")
     return cmd
 
 def load_ligands(ligand_file):
     print(ligand_file)
     cmd.load(os.path.dirname(__file__) +'/'+ ligand_file)
-    cmd.show("sticks", "resn HIS")
     cmd.center()
     cmd.zoom()
     pymol_module = diswiz.Restraints_Wizard()
     cmd.set_wizard(pymol_module)
     return pymol_module
 
-ligands_dir = 'test/test_files/ligand_system/'
+ligands_dir = 'data/ligand_system/'
 ligand_files =['5_long_Ligands.pdb','7_veryDifferent_Ligands.pdb','9_similar_Ligands.pdb','21_large_Ligands.pdb']#['9_similar_Ligands.pdb','7_veryDifferent_Ligands.pdb',
 
 
 ligands_path = [ligands_dir+lig_file for lig_file in ligand_files]
 cmd=start_pymol()
 
-all_results_dir = '/home/rhinerc/Desktop/ALL TEST RESULTS/all_optimizers/pca_criterion'
+all_results_dir = 'tmp_results'
+if(not os.path.exists(all_results_dir)):
+    os.mkdir(all_results_dir)
 
 
 for lig in ligands_path:

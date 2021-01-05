@@ -9,6 +9,10 @@ Restraints, Filters, Optimzers and Exporters
 import time
 import typing as t
 
+import restraintmaker.utils.Types
+import restraintmaker.utils.Utilities
+import restraintmaker.utils.program_states
+import restraintmaker.utils.qt_dialogs
 from restraintmaker.algorithm import Filter
 from restraintmaker.algorithm import Optimizer
 from restraintmaker.algorithm import Selection
@@ -16,8 +20,7 @@ from restraintmaker.interface_Pymol.Pymol_Utitlities import \
     _convert_molecules_to_pdb  # TODO: Get independent of interface_Pymol +. wirte own conversion function
 from restraintmaker.io import Exporter
 from restraintmaker.io import Importer
-from restraintmaker.types import Restraint
-from restraintmaker.utils import Utilities as u
+from restraintmaker.utils import Utilities as u, Types
 
 
 # Override print functions
@@ -53,18 +56,18 @@ class Logic_Handler:
         3) Some Selections (SphericalSelection & subclasses) are more intuitive if the GUI program draws a sphere at the corresponding position. => If you want that you have to introduce special for the GUI module to check the current selection
     """
 
-    def __init__(self, all_atoms: t.List[u.Atom]):
+    def __init__(self, all_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         '''
         :param all_atoms: List of all atoms in the Molecules, which should be connected
         :type all_atoms: t.List[u.Atom]
         '''
 
-        self.all_atoms: t.List[u.Atom] = all_atoms
-        self.selected_atoms: t.List[u.Atom] = []
-        self.selected_restraints: t.List[Restraint._Restraint] = []
+        self.all_atoms: t.List[restraintmaker.utils.Utilities.Atom] = all_atoms
+        self.selected_atoms: t.List[restraintmaker.utils.Utilities.Atom] = []
+        self.selected_restraints: t.List[Types._Restraint] = []
 
         # Define Restraint-Types
-        self.available_restraint_types = u.get_all_subclasses(Restraint._Restraint)
+        self.available_restraint_types = u.get_all_subclasses(Types._Restraint)
         self.current_restraint_type = None
         self.my_restraint = None
 
@@ -100,15 +103,15 @@ class Logic_Handler:
         self.atom_or_restraint_mode = True  # True = atom, False = Restraint
 
         self._action_states: dict = {
-            'toggle_select_delete': u.ActionState.ALWAYS_ENABLED,
-            'toggle_atom_restraint': u.ActionState.ALWAYS_ENABLED,
-            'Importer': u.ActionState.ALWAYS_DISABLED,
-            'Restraint': u.ActionState.ALWAYS_DISABLED,
-            'Selection': u.ActionState.ALWAYS_DISABLED,
-            'Filter': u.ActionState.ALWAYS_DISABLED,
-            'Optimizer': u.ActionState.ALWAYS_DISABLED,
-            'Exporter': u.ActionState.ALWAYS_DISABLED,
-            'Done': u.ActionState.ALWAYS_ENABLED}
+            'toggle_select_delete': restraintmaker.utils.program_states.ActionState.ALWAYS_ENABLED,
+            'toggle_atom_restraint': restraintmaker.utils.program_states.ActionState.ALWAYS_ENABLED,
+            'Importer': restraintmaker.utils.program_states.ActionState.ALWAYS_DISABLED,
+            'Restraint': restraintmaker.utils.program_states.ActionState.ALWAYS_DISABLED,
+            'Selection': restraintmaker.utils.program_states.ActionState.ALWAYS_DISABLED,
+            'Filter': restraintmaker.utils.program_states.ActionState.ALWAYS_DISABLED,
+            'Optimizer': restraintmaker.utils.program_states.ActionState.ALWAYS_DISABLED,
+            'Exporter': restraintmaker.utils.program_states.ActionState.ALWAYS_DISABLED,
+            'Done': restraintmaker.utils.program_states.ActionState.ALWAYS_ENABLED}
         self.set_action_states()
 
     # END OF __init___
@@ -119,7 +122,7 @@ class Logic_Handler:
     # These event functions will be called by the GUI-Program to indicate an action. It is the GUI program that defines what exactly consitutues what event. (e.g: a move event might be triggered by a mouse movement or keyboatrd arrows etc.depending on the GUI-Program)
     # CAREFULL: Never call the Slections _update*functions alone. Always check their state (finished or not & selected_atoms) directly afterwards in teh GUI program
 
-    def react_to_event(self, event_type: u.EventType, **kw_args: t.Any):
+    def react_to_event(self, event_type: restraintmaker.utils.program_states.EventType, **kw_args: t.Any):
         '''
         react_to_event should be called by the GUI-module to report an event
 
@@ -129,7 +132,7 @@ class Logic_Handler:
         It is strongly recommended to wrap react_to_event into a function of the GUI-module, which will check these and redraw the scene and de?activate buttons, if necessary/.
 
         :param event_type: What kind of event was triggered?
-        :type event_type: u.EventType
+        :type event_type: restraintmaker.utils.program_states.EventType
         :param kw_args: Arguments the relevant update function will need
         :type kw_args: t.Any
         :raises u.BadArgumentException if args to not match the the corresponding logic_handler.react_to_*_event_function
@@ -145,19 +148,19 @@ class Logic_Handler:
             return
 
         try:
-            if event_type == u.EventType.SELECT:
+            if event_type == restraintmaker.utils.program_states.EventType.SELECT:
                 self.my_selection._update_select(**kw_args)
-            elif event_type == u.EventType.MOVE:
+            elif event_type == restraintmaker.utils.program_states.EventType.MOVE:
                 self.my_selection._update_move(**kw_args)
-            elif event_type == u.EventType.SIZE:
+            elif event_type == restraintmaker.utils.program_states.EventType.SIZE:
                 self.my_selection._update_size(**kw_args)
-            elif event_type == u.EventType.CONFIRM:
+            elif event_type == restraintmaker.utils.program_states.EventType.CONFIRM:
                 self.my_selection._update_confirm(**kw_args)
             else:
                 raise NotImplementedError('No action defined for event_type ' + str(event_type))
 
         except TypeError as err:
-            raise u.BadArgumentException(
+            raise restraintmaker.utils.Utilities.BadArgumentException(
                 'The provided arguments do not fit the function logic_handler.react to_ ' + str(
                     event_type) + ' _event') from err
 
@@ -306,14 +309,14 @@ class Logic_Handler:
             raise TypeError(str(new_importer_type) + ' is not an available type of Importer')
 
         self.my_importer = new_importer_type(self.all_atoms)
-        if try_to_get_args(self.my_importer, u.create_file_open_dialog()):
+        if try_to_get_args(self.my_importer, restraintmaker.utils.qt_dialogs.create_file_open_dialog()):
             self.selected_restraints = self.my_importer.import_restraints()
 
         else:
             self.my_importer = None
             self.current_importer_type = None
 
-    def _set_restraint_type(self, new_restraint_type: t.Type[Restraint._Restraint]):
+    def _set_restraint_type(self, new_restraint_type: t.Type[Types._Restraint]):
         '''
         _set_restraint_type changes the current type of Restraint.
 
@@ -369,7 +372,7 @@ class Logic_Handler:
 
         input_function = u.do_nothing
         if self.my_selection.__class__ == Selection.LimitedSelection:
-            input_function = u.create_input_dialog(parent_window=None, title='Selection')
+            input_function = restraintmaker.utils.qt_dialogs.create_input_dialog(parent_window=None, title='Selection')
         elif isinstance(self.my_selection, Selection.SphericalSelection):
             input_function = lambda _: 5
         elif isinstance(self.my_selection, Selection.MCS_Selection):
@@ -411,9 +414,9 @@ class Logic_Handler:
 
         input_function = u.do_nothing
         if isinstance(self.my_filter, Filter.PropertyFilter):
-            input_function = u.create_input_dialog(parent_window=None, title='PropertyFilter')
+            input_function = restraintmaker.utils.qt_dialogs.create_input_dialog(parent_window=None, title='PropertyFilter')
         elif isinstance(self.my_filter, Filter.ElementFilter):
-            input_function = u.create_input_dialog(parent_window=None, title='ElementFilter')
+            input_function = restraintmaker.utils.qt_dialogs.create_input_dialog(parent_window=None, title='ElementFilter')
         elif isinstance(self.my_filter, Filter.RingFilter):
             # TODO: GET INDEPENDENT OF PYMOL HERE => Write an own pdb function
             input_function = lambda dummy_arg: _convert_molecules_to_pdb()
@@ -451,37 +454,37 @@ class Logic_Handler:
         # TODO: Generate new field in pyqt win to select if you want a chain, ring, or all to all connection
 
         if isinstance(self.my_optimizer, Optimizer.TreeHeuristicOptimizer):
-            input_function = u.create_multi_dialog(title='Parameters for TreeHeuristicOptimizer', \
-                                                   inputs=['number of restraints', 'maximal distance of restraints',
+            input_function = restraintmaker.utils.qt_dialogs.create_multi_dialog(title='Parameters for TreeHeuristicOptimizer', \
+                                                                                 inputs=['number of restraints', 'maximal distance of restraints',
                                                            'tree-algorithm', 'optimize molecules pairs by'], \
-                                                   options={'tree-algorithm': ['shortest', 'cog', 'prim', "biased_avg"],
+                                                                                 options={'tree-algorithm': ['shortest', 'cog', 'prim', "biased_avg"],
                                                             'optimize molecules pairs by': ['None', 'convex_hull',
                                                                                             'pca_2d']}, \
-                                                   default={'number of restraints': '4',
+                                                                                 default={'number of restraints': '4',
                                                             'maximal distance of restraints': '1.2',
                                                             'algorithm': 'shortest',
                                                             'optimize molecules pairs by': 'pca_2d'})
 
 
         elif isinstance(self.my_optimizer, Optimizer.BruteForceRingOptimzer):
-            input_function = u.create_multi_dialog(title='Parameters for BruteForceOptimizer', \
-                                                   inputs=['number of restraints', 'maximal distance of restraints',
+            input_function = restraintmaker.utils.qt_dialogs.create_multi_dialog(title='Parameters for BruteForceOptimizer', \
+                                                                                 inputs=['number of restraints', 'maximal distance of restraints',
                                                            'algorithm', 'optimize molecules pairs by'], \
-                                                   options={'algorithm': ['convex_hull', 'pca'],
+                                                                                 options={'algorithm': ['convex_hull', 'pca'],
                                                             'optimize molecules pairs by': ['None', 'convex_hull',
                                                                                             'pca_2d']}, \
-                                                   default={'number of restraints': '4',
+                                                                                 default={'number of restraints': '4',
                                                             'maximal distance of restraints': '1.2', 'algorithm': 'pca',
                                                             'optimize molecules pairs by': 'pca_2d'})
 
         elif isinstance(self.my_optimizer, Optimizer.MetaMoleculeRingOptimizer):
-            input_function = u.create_multi_dialog(title='Parameters for BestMoleculeRingOptimizer', \
-                                                   inputs=['number of restraints', 'maximal distance of restraints',
+            input_function = restraintmaker.utils.qt_dialogs.create_multi_dialog(title='Parameters for BestMoleculeRingOptimizer', \
+                                                                                 inputs=['number of restraints', 'maximal distance of restraints',
                                                            'algorithm', 'optimize molecules pairs by'], \
-                                                   options={'algorithm': ['convex_hull', 'pca'],
+                                                                                 options={'algorithm': ['convex_hull', 'pca'],
                                                             'optimize molecules pairs by': ['convex_hull',
                                                                                             'pca_2d']}, \
-                                                   default={'number of restraints': '4',
+                                                                                 default={'number of restraints': '4',
                                                             'maximal distance of restraints': '1.2', 'algorithm': 'pca',
                                                             'optimize molecules pairs by': 'pca_2d'})
 
@@ -492,7 +495,7 @@ class Logic_Handler:
                 self.selected_restraints = self.my_optimizer.make_restraints()
                 time_stop = time.time()
                 print('Optimized in ' + '{:0.1f}'.format(time_stop - time_start) + ' s', mv=3)
-            except u.NoOptimalSolutionException as ex:
+            except restraintmaker.utils.Utilities.NoOptimalSolutionException as ex:
                 print('Failed to find a optimal solution under the given conditions:', ex, mv=4)
         else:
             self.my_optimizer = None
@@ -518,7 +521,7 @@ class Logic_Handler:
             raise TypeError(str(new_exporter_type) + ' is not an available type of Exporter')
 
         self.my_exporter = new_exporter_type(self.selected_restraints)
-        if try_to_get_args(self.my_exporter, u.create_file_save_dialog()):  # u.create_input_dialog(None, 'Exporter')
+        if try_to_get_args(self.my_exporter, restraintmaker.utils.qt_dialogs.create_file_save_dialog()):  # u.create_input_dialog(None, 'Exporter')
             self.my_exporter.export_restraints()
         else:
             self.my_exporter = None
@@ -531,29 +534,31 @@ class Logic_Handler:
         # ORDER: Set types for each action one after the other
         # if the structure beomces more complex consider first checking the toggle modes (atom?restraint, delete/select) and go through each state in iach state
 
-        self._action_states['toggle_select_delete']: u.ActionState.ALWAYS_ENABLED
-        self._action_states['toggle_atom_restraint']: u.ActionState.ALWAYS_ENABLED
-        self._action_states['Importer'] = u.ActionState.CURRENTLY_ENABLED if len(
-            self.selected_restraints) == 0 else u.ActionState.CURRENTLY_DISABLED  # TODO Later: Check if there is any Molecules loaded.
-        self._action_states['Restraint'] = u.ActionState.CURRENTLY_ENABLED if (
+        self._action_states['toggle_select_delete']: restraintmaker.utils.program_states.ActionState.ALWAYS_ENABLED
+        self._action_states['toggle_atom_restraint']: restraintmaker.utils.program_states.ActionState.ALWAYS_ENABLED
+        self._action_states['Importer'] = restraintmaker.utils.program_states.ActionState.CURRENTLY_ENABLED if len(
+            self.selected_restraints) == 0 else restraintmaker.utils.program_states.ActionState.CURRENTLY_DISABLED  # TODO Later: Check if there is any Molecules loaded.
+        self._action_states['Restraint'] = restraintmaker.utils.program_states.ActionState.CURRENTLY_ENABLED if (
                                                                                   not self.atom_or_restraint_mode) and self.select_or_delete_mode \
-            else u.ActionState.CURRENTLY_DISABLED  # TODO Later: Always Enabled, can be changed as much as we like
+            else restraintmaker.utils.program_states.ActionState.CURRENTLY_DISABLED  # TODO Later: Always Enabled, can be changed as much as we like
         self._action_states[
-            'Selection'] = u.ActionState.CURRENTLY_ENABLED if self.atom_or_restraint_mode else u.ActionState.CURRENTLY_DISABLED  # TODO Later: Check if any atoms are loaded
-        self._action_states['Filter'] = u.ActionState.CURRENTLY_ENABLED if len(self.selected_atoms) > 0 \
-                                                                           and len(
-            self.selected_restraints) == 0 else u.ActionState.CURRENTLY_DISABLED
-        self._action_states['Optimizer'] = u.ActionState.CURRENTLY_ENABLED if len(self.selected_atoms) >= 2 \
-                                                                              and len(
-            self.selected_restraints) == 0 else u.ActionState.CURRENTLY_DISABLED
+            'Selection'] = restraintmaker.utils.program_states.ActionState.CURRENTLY_ENABLED if self.atom_or_restraint_mode else restraintmaker.utils.program_states.ActionState.CURRENTLY_DISABLED  # TODO Later: Check if any atoms are loaded
+        self._action_states['Filter'] = restraintmaker.utils.program_states.ActionState.CURRENTLY_ENABLED if len(self.selected_atoms) > 0 \
+                                                                                                             and len(
+            self.selected_restraints) == 0 else restraintmaker.utils.program_states.ActionState.CURRENTLY_DISABLED
+        self._action_states['Optimizer'] = restraintmaker.utils.program_states.ActionState.CURRENTLY_ENABLED if len(self.selected_atoms) >= 2 \
+                                                                                                                and len(
+            self.selected_restraints) == 0 else restraintmaker.utils.program_states.ActionState.CURRENTLY_DISABLED
         # TODO: Check if we have Atoms from at least 2 Molecules
         # TODO: Check indivudiual Optimizers depending on Restraint type
-        self._action_states['Exporter'] = u.ActionState.CURRENTLY_ENABLED if len(self.selected_restraints) > 0 \
-            else u.ActionState.CURRENTLY_DISABLED
-        self._action_states['Done'] = u.ActionState.ALWAYS_ENABLED
+        self._action_states['Exporter'] = restraintmaker.utils.program_states.ActionState.CURRENTLY_ENABLED if len(self.selected_restraints) > 0 \
+            else restraintmaker.utils.program_states.ActionState.CURRENTLY_DISABLED
+        self._action_states['Done'] = restraintmaker.utils.program_states.ActionState.ALWAYS_ENABLED
 
 
 # ------------------END OF CLASS------------------------------------------------------
+
+
 def try_to_get_args(my_x, input_function) -> bool:
     '''
     wrapper function for get_args. Takes care of the error handling
@@ -570,7 +575,7 @@ def try_to_get_args(my_x, input_function) -> bool:
 
     try:
         my_x.get_args(input_function)
-    except u.BadArgumentException as err:
+    except restraintmaker.utils.Utilities.BadArgumentException as err:
         print('Failed to create a ' + my_x.__class__.__name__ + ' with the given arguments: \n' + str(err), mv=4)
         failed = True
     except IndexError:

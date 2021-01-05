@@ -14,10 +14,12 @@ from scipy.spatial import ConvexHull
 from scipy.spatial.qhull import QhullError
 from scipy.special import binom
 
+import restraintmaker.utils.Types
+import restraintmaker.utils.Utilities
+import restraintmaker.utils.program_states
 from restraintmaker.io import Exporter
 from restraintmaker.tools_Rdkit import Rdkit_Functions as rdkit_functions
-from restraintmaker.types import Restraint
-from restraintmaker.utils import Utilities as u
+from restraintmaker.utils import Utilities as u, Types
 from restraintmaker.utils.Utilities import print
 
 
@@ -45,7 +47,7 @@ class _Optimizer():
                '''
         raise NotImplementedError("Direct call of abstract function  _Optimizer.get_args(...)")
 
-    def make_restraints(self) -> t.List[Restraint._Restraint]:
+    def make_restraints(self) -> t.List[Types._Restraint]:
         """
         make_restraints() return a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used.
         :raises: NoOptimalSolutionException if no Solution fulfilling all criteria can be found.
@@ -60,7 +62,7 @@ class _MoleculeRingOptimizer(_Optimizer):
 
     def __init__(self, atoms):
         super().__init__(atoms)
-        self.Molecules: t.List[t.List[u.Atom]] = u.order_atoms_by_molecule(
+        self.Molecules: t.List[t.List[restraintmaker.utils.Utilities.Atom]] = u.order_atoms_by_molecule(
             self.atoms)  # Every Molecules is a list of atoms, with the Molecule attribute as key
 
         # get_args: inherited from _Optimizer
@@ -69,7 +71,7 @@ class _MoleculeRingOptimizer(_Optimizer):
         self.cutoff = -1
         self.arrange_algo = ''  # criterion for how molecules should be sorted
 
-    def make_restraints(self) -> t.List[Restraint._Restraint]:
+    def make_restraints(self) -> t.List[Types._Restraint]:
         """
         make_restraints() returns a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used:
 
@@ -82,10 +84,10 @@ class _MoleculeRingOptimizer(_Optimizer):
         :raises: NoOptimalSolutionException if no Solution fulfilling all criteria can be found. For MoleculeRingOptimizer: Not enough restraints shorter than cutoff
 
         """
-        restraints: t.List[Restraint._Restraint] = []
+        restraints: t.List[Types._Restraint] = []
 
         if len(self.Molecules) < 2:
-            raise u.BadArgumentException('A Molecule Ring Optimizer needs at least 2 Molecules to connect')
+            raise restraintmaker.utils.Utilities.BadArgumentException('A Molecule Ring Optimizer needs at least 2 Molecules to connect')
         elif len(self.Molecules) == 2:
             restraints = self.connect_two_molecules(self.Molecules[0], self.Molecules[1], self.n)
         elif self.arrange_algo == 'None':  # Str 'None', not None:
@@ -117,7 +119,7 @@ class _MoleculeRingOptimizer(_Optimizer):
             elif self.arrange_algo == 'convex_hull':
                 calculate_value = _calculate_value_convex_hull
             else:
-                raise u.BadArgumentException(self.arrange_algo + 'is not a known algorithm to arrange the molecules')
+                raise restraintmaker.utils.Utilities.BadArgumentException(self.arrange_algo + 'is not a known algorithm to arrange the molecules')
 
             # 1) Calclulate ALL PAIRS and their value
 
@@ -164,7 +166,8 @@ class _MoleculeRingOptimizer(_Optimizer):
 
         return restraints
 
-    def connect_two_molecules(self, m1: t.List[u.Atom], m2: t.List[u.Atom], n) -> t.List[Restraint._Restraint]:
+    def connect_two_molecules(self, m1: t.List[restraintmaker.utils.Utilities.Atom], m2: t.List[
+        restraintmaker.utils.Utilities.Atom], n) -> t.List[Types._Restraint]:
         """     connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer
 
                :param m1: Molecule 1
@@ -207,7 +210,7 @@ class TreeHeuristicOptimizer(_MoleculeRingOptimizer):
                     print('WARNING: Optimizer has duplicates in its atom list:  i=', self.atoms.index(a1))
 
         if len(self.Molecules) < 2:
-            raise u.BadArgumentException(
+            raise restraintmaker.utils.Utilities.BadArgumentException(
                 str(self.__class__) + " must be initialized with atoms from at least 2 Molecules.")
 
     # TODO STRUC: Only Optimizer uses argument unpacking after the input function. Exporters, Filters etc call the input_functions several times if the y need more than one arg
@@ -227,13 +230,14 @@ class TreeHeuristicOptimizer(_MoleculeRingOptimizer):
             'List of all args for TreeHeuristicOptimizer')  # TODO: See TODO at u.create_multi_dialog
         self.n = u.check_or_convert_argument(inputs[0], int)
         if self.n < 2:
-            raise u.BadArgumentException(
+            raise restraintmaker.utils.Utilities.BadArgumentException(
                 "A MoleculeRingOptimizer_0_1 needs to set at least 2 connection per Molecules pair. ")
         self.cutoff = u.check_or_convert_argument(inputs[1], float)
         self.algo = u.check_or_convert_argument(inputs[2], str, ['prim', 'shortest', 'cog', "biased_avg"])
         self.arrange_algo = u.check_or_convert_argument(inputs[3], str, ['None', 'convex_hull', 'pca_2d'])
 
-    def connect_two_molecules(self, m1: t.List[u.Atom], m2: t.List[u.Atom], n) -> t.List[Restraint._Restraint]:
+    def connect_two_molecules(self, m1: t.List[restraintmaker.utils.Utilities.Atom], m2: t.List[
+        restraintmaker.utils.Utilities.Atom], n) -> t.List[Types._Restraint]:
         """
         connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer
 
@@ -252,7 +256,9 @@ class TreeHeuristicOptimizer(_MoleculeRingOptimizer):
         return maximal_spanning_tree_greedy(get_all_short_pair_restraints(m1 + m2, self.cutoff), n, self.algo)
 
     # TODO: Clean: Not compatible with Optimizers anymore. Consider removing it completely
-    def _connect_two_molecules_kruskal(self, m1: t.List[u.Atom], m2: t.List[u.Atom], n) -> t.List[Restraint._Restraint]:
+    def _connect_two_molecules_kruskal(self, m1: t.List[restraintmaker.utils.Utilities.Atom], m2: t.List[
+        restraintmaker.utils.Utilities.Atom], n) -> t.List[
+        Types._Restraint]:
         """
         Out of date. Use connect_two_molecules instead.
         connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer
@@ -282,7 +288,7 @@ class TreeHeuristicOptimizer(_MoleculeRingOptimizer):
         # Carfeull: Here we are choosing the one node that is farthes from any node already chosen, not farthest from the closest one already chosen
         priority_q: t.List[priority_node] = [priority_node(1, potential_restraints[0])] + [priority_node(0, x) for x in
                                                                                            potential_restraints[1:]]
-        chosen_restraints: t.List[Restraint.PairRestraint] = []
+        chosen_restraints: t.List[Types.PairRestraint] = []
 
         while len(chosen_restraints) < self.n:
             # Update priorities by newest added element
@@ -299,7 +305,7 @@ class TreeHeuristicOptimizer(_MoleculeRingOptimizer):
                             # I jjust do this as a workaround until I can properly implement the Kruskal search with a Graph structre, which will lead to this result, but quicker/.
 
             # convert priority_nodes zu restraints
-            return [Restraint.Pair_Restraint([x.node.a1, x.node.a2]) for x in chosen_restraints]
+            return [Types.Distance_Restraint([x.node.a1, x.node.a2]) for x in chosen_restraints]
 
         # PROBLEM: WE COULD DO EVEN BETTER HAD WE KEPT THE INFORMATION ABOUT CONNECTIVITY.
         # TODO: Improve the tree algorithm: Get rid of the connection pair tuple represanting the edges and just use PairwiseRestraints representing the vertices of our tree.
@@ -315,7 +321,7 @@ class BruteForceRingOptimzer(_MoleculeRingOptimizer):
 
     def __init__(self, atoms):
         super().__init__(atoms)
-        self.Molecules: t.List[t.List[u.Atom]] = u.order_atoms_by_molecule(
+        self.Molecules: t.List[t.List[restraintmaker.utils.Utilities.Atom]] = u.order_atoms_by_molecule(
             self.atoms)  # Every Molecules is a list of atoms, with the Molecule attribute as key
 
         # attributes to be set in get_args
@@ -329,7 +335,7 @@ class BruteForceRingOptimzer(_MoleculeRingOptimizer):
                     print('WARNING: Optimizer has duplicates in its atom list:  i=', self.atoms.index(a1))
 
         if len(self.Molecules) < 2:
-            raise u.BadArgumentException(
+            raise restraintmaker.utils.Utilities.BadArgumentException(
                 str(self.__class__) + " must be initialized with atoms from at least 2 Molecules.")
 
     # TODO STRUC:Either use argumetn unpacking for all get arg functions or for none
@@ -353,9 +359,10 @@ class BruteForceRingOptimzer(_MoleculeRingOptimizer):
         self.arrange_algo = u.check_or_convert_argument(inputs[3], str, ['None', 'convex_hull', 'pca_2d'])
 
         if self.algo == 'convex_hull' and self.n < 4:
-            raise u.BadArgumentException("A VolumeOptimizer needs to set at least 4 connections per Molecules pair. ")
+            raise restraintmaker.utils.Utilities.BadArgumentException("A VolumeOptimizer needs to set at least 4 connections per Molecules pair. ")
 
-    def connect_two_molecules(self, m1: t.List[u.Atom], m2: t.List[u.Atom], n) -> t.List[Restraint._Restraint]:
+    def connect_two_molecules(self, m1: t.List[restraintmaker.utils.Utilities.Atom], m2: t.List[
+        restraintmaker.utils.Utilities.Atom], n) -> t.List[Types._Restraint]:
         """
                connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer
 
@@ -382,7 +389,7 @@ class BruteForceRingOptimzer(_MoleculeRingOptimizer):
         elif self.algo == 'pca':
             calculate_value = _calculate_value_unscaled_pca_2d
         else:
-            raise u.BadArgumentException(self.algo + 'is not an known criterion for optimization.')
+            raise restraintmaker.utils.Utilities.BadArgumentException(self.algo + 'is not an known criterion for optimization.')
 
         potential_restraints = get_all_short_pair_restraints(m1 + m2, self.cutoff)
         if len(potential_restraints) < n:
@@ -486,7 +493,7 @@ class MetaMoleculeRingOptimizer(_MoleculeRingOptimizer):
         inputs = input_function('List of all args for BestMoleculeRingOptimizer')
         self.n = u.check_or_convert_argument(inputs[0], int)
         if self.n < 2:
-            raise u.BadArgumentException(
+            raise restraintmaker.utils.Utilities.BadArgumentException(
                 "A MoleculeRingOptimizer_0_1 needs to set at least 2 connection per Molecules pair. ")
         self.cutoff = u.check_or_convert_argument(inputs[1], float)
         self.criterion = u.check_or_convert_argument(inputs[2], str, ['convex_hull',
@@ -503,7 +510,8 @@ class MetaMoleculeRingOptimizer(_MoleculeRingOptimizer):
                                               None))  # TODO: Allow to use different kinds of Molecules Ring Optimizers, does not have to be TreeOptimizer
             self.sub_optimizers.append(new_optimizer)
 
-    def connect_two_molecules(self, m1: t.List[u.Atom], m2: t.List[u.Atom], n):
+    def connect_two_molecules(self, m1: t.List[restraintmaker.utils.Utilities.Atom], m2: t.List[
+        restraintmaker.utils.Utilities.Atom], n):
         # TODO:Move this block to get_args of _MoleculeRingOptimzer and make calculate value an atribute of MoelculeRing Optimzer.
         # At the moment we have to put this block into make restraints and connect two molecules
         if self.arrange_algo == 'pca_2d':
@@ -512,7 +520,7 @@ class MetaMoleculeRingOptimizer(_MoleculeRingOptimizer):
         elif self.arrange_algo == 'convex_hull':
             calculate_value = _calculate_value_convex_hull
         else:
-            raise u.BadArgumentException(self.arrange_algo + 'is not a known algorithm to arrange the molecules')
+            raise restraintmaker.utils.Utilities.BadArgumentException(self.arrange_algo + 'is not a known algorithm to arrange the molecules')
 
         best_restraint_set = None
         value_of_best_set = -1
@@ -536,7 +544,7 @@ class MetaMoleculeRingOptimizer(_MoleculeRingOptimizer):
 # --------------------Static Utilitiy functions ->
 
 # TODO: change connections to Pairwise Restraints
-def _get_all_short_connections(atoms: t.List[u.Atom], max_dis: float) -> t.List[u.AtomPair]:
+def _get_all_short_connections(atoms: t.List[restraintmaker.utils.Utilities.Atom], max_dis: float) -> t.List[Types.Distance_Restraint]:
     """
     Old. Only here to keep get_maximal_tree_kruskal_running. Delete when not needed anymore
     get_all_short_connections(...) finds all pairs of atoms within a certain cutoff distance of each other. Atoms withing the same molecules can are not connected
@@ -554,7 +562,7 @@ def _get_all_short_connections(atoms: t.List[u.Atom], max_dis: float) -> t.List[
     # TODO: Could be quicker if we know ahead which are the prefferred directions of the molecules
     # TODO: Instead of first checking if distance in all three spacial directions is , cutoff it might be quicker to first check x distance, then x^2 + y^2 distance and then to add z^2
     # => Decrease cost in case of success a bit, increas cost in case of failure after first square. Decrease chance to onlzy fail after the last calculation
-    connections: t.List[u.AtomPair] = []
+    connections: t.List[Types.Distance_Restraint] = []
     for i_a1 in range(0, len(atoms) - 1):
         a1 = atoms[
             i_a1]  # Quicker to loop over index of a1 and then acess it once for all inner loops, than findix index of a1 once for every onner loop
@@ -563,12 +571,12 @@ def _get_all_short_connections(atoms: t.List[u.Atom], max_dis: float) -> t.List[
                     a1.z - a2.z) <= max_dis:
                 dis_sq = pow(a1.x - a2.x, 2) + pow(a1.y - a2.y, 2) + pow(a1.z - a2.z, 2)
                 if dis_sq <= max_dis_sq:
-                    connections.append(u.AtomPair(a1, a2, sqrt(dis_sq)))
+                    connections.append(Types.Distance_Restraint(atomA=a1, atomB=a2))
 
     return connections
 
 
-def get_all_short_pair_restraints(atoms: t.List[u.Atom], max_dis: float) -> t.List[Restraint.Pair_Restraint]:
+def get_all_short_pair_restraints(atoms: t.List[restraintmaker.utils.Utilities.Atom], max_dis: float) -> t.List[Types.Distance_Restraint]:
     """
     get_all_short_pair_restraints: finds all pairs of atoms within a certain cutoff distance of each other. Atoms withing the same molecules can are not connected
     :param __atoms: List of atoms
@@ -585,7 +593,7 @@ def get_all_short_pair_restraints(atoms: t.List[u.Atom], max_dis: float) -> t.Li
     # Check for all pairs of atoms if they are within the specified cutoff of each other. Try to minimize necessary calculations using shortcut function of and and or
     # TODO: Instead of first checking if distance in all three spacial directions is , cutoff it might be quicker to first check x distance, then x^2 + y^2 distance and then to add z^2
     # => Decrease cost in case of success a bit, increas cost in case of failure after first square. Decrease chance to onlzy fail after the last calculation
-    __atom_pairs: t.List[u.AtomPair] = []
+    __atom_pairs: t.List[Types.Distance_Restraint] = []
     for i_a1 in range(0, len(atoms) - 1):
         a1 = atoms[
             i_a1]  # Quicker to loop over index of a1 and then acess it once for all inner loops, than findix index of a1 once for every onner loop
@@ -594,14 +602,15 @@ def get_all_short_pair_restraints(atoms: t.List[u.Atom], max_dis: float) -> t.Li
                     a1.z - a2.z) <= max_dis:
                 dis_sq = pow(a1.x - a2.x, 2) + pow(a1.y - a2.y, 2) + pow(a1.z - a2.z, 2)
                 if dis_sq <= max_dis_sq:
-                    __atom_pairs.append(u.AtomPair(a1, a2, sqrt(dis_sq)))
+                    __atom_pairs.append(Types.Distance_Restraint(a1, a2))
 
     # Convert the atom pairs to restraints
-    return [Restraint.Pair_Restraint([p.a1, p.a2]) for p in __atom_pairs]
+    return __atom_pairs
 
 
 # TODO: Delete connect_two_molecules_kruskal, maximum_spanning_tree_kruskal
-def _not_debugged_maximum_spanning_tree_kruskal(cons: t.List[u.AtomPair]) -> t.List[u.RestraintPair]:
+def _not_debugged_maximum_spanning_tree_kruskal(cons: t.List[
+    Types.Distance_Restraint]) -> t.List[restraintmaker.utils.Utilities.RestraintPair]:
     """
     Finds a maximal spanning tree in which the nodes represent distance restraints and edges the distance between their middles.
     The 'tree' will be provided in the form of a list. Connectivity info is not explicitly given. Due to the priority queue implementation of Kruskal's Algorithm the list is guaranteed to be sorted by descending distance.
@@ -621,7 +630,7 @@ def _not_debugged_maximum_spanning_tree_kruskal(cons: t.List[u.AtomPair]) -> t.L
 
     # TODO Check: Is x*x faster than pow(x,2)
 
-    def _check_circle(_edge_list: t.List[u.RestraintPair], _new_edge: u.RestraintPair) -> bool:
+    def _check_circle(_edge_list: t.List[restraintmaker.utils.Utilities.RestraintPair], _new_edge: Types.Distance_Restraint) -> bool:
         """
         KEEP AS INNER FUNCTION OF maximum_spanning_tree_Kruskal: The function saves time, by NOT checking the whole Graph for circles, but just the part connected to the new edge.
         Technically it will return true if the new edge closes a circle or if the new edge is added to a subgraph that already contains a circle
@@ -661,14 +670,14 @@ def _not_debugged_maximum_spanning_tree_kruskal(cons: t.List[u.AtomPair]) -> t.L
 
     # ---------------------------------------------------------------------------------------------------------------------------------
 
-    queue: t.List[u.RestraintPair] = []
+    queue: t.List[restraintmaker.utils.Utilities.RestraintPair] = []
     for i_r1 in range(len(cons) - 1):
         r1 = cons[i_r1]
         for r2 in cons[i_r1 + 1:]:
-            queue.append(u.RestraintPair(r1, r2, sqrt(
-                pow((r1.a1.x + r1.a2.x - r2.a1.x - r2.a2.x) / 2, 2) + pow((r1.a1.y + r1.a2.y - r2.a1.y - r2.a2.y) / 2,
+            queue.append(restraintmaker.utils.Utilities.RestraintPair(r1, r2, sqrt(
+                pow((r1.atomA.x + r1.atomB.x - r2.atomA.x - r2.atomB.x) / 2, 2) + pow((r1.atomA.y + r1.atomA.y - r2.atomA.y - r2.atomB.y) / 2,
                                                                           2) + pow(
-                    (r1.a1.z + r1.a2.z - r2.a1.z - r2.a2.z) / 2, 2))))
+                    (r1.atomA.z + r1.atomB.z - r2.atomA.z - r2.atomB.z) / 2, 2))))
         #                                        sqrt(  pow(    r1.middle.x   -    r2.middle.x ) +...
 
     list.sort(queue, key=lambda x: x.distance, reverse=True)  # reversed = true: Descending order
@@ -681,7 +690,7 @@ def _not_debugged_maximum_spanning_tree_kruskal(cons: t.List[u.AtomPair]) -> t.L
 
     # Some Internet research: Prim & Kruskal are proven to give the optimal solution => We can be sure to get the same result both ways, EXCPET if there are different optimal solutions (i.e. ther are edges with same weight.)
 
-    edges: t.list[u.RestraintPair] = []
+    edges: t.list[restraintmaker.utils.Utilities.RestraintPair] = []
 
     for new_edge in queue:
         # TODO: save some time by turning boolof check_circle,so I do not need not operator, and by seven len cons -1
@@ -692,14 +701,14 @@ def _not_debugged_maximum_spanning_tree_kruskal(cons: t.List[u.AtomPair]) -> t.L
                 break
 
     else:  # Moved through queue without finding enough edges. Impossible for a fully connected input graph
-        raise u.BadArgumentException(
+        raise restraintmaker.utils.Utilities.BadArgumentException(
             "maximum_spanning_tree_kruskal(...) did not find enough edges for a spanning tree even though that should be mathematically impossible.  Input might be corrupted. Does it contain an Atom restrained to itself?")
 
     return edges
 
 
-def maximal_spanning_tree_greedy(potential_restraints: t.List[Restraint.Pair_Restraint], n: int, priority_algo: str) -> \
-t.List[Restraint.Pair_Restraint]:
+def maximal_spanning_tree_greedy(potential_restraints: t.List[Types.Distance_Restraint], n: int, priority_algo: str) -> \
+t.List[Types.Distance_Restraint]:
     """
     Finds a maximal spanning tree in which the nodes represent distance restraints and edges the distance between their middles.
     The 'tree' will be provided in the form of a list. Connectivity info is not explicitly given. Due to the working of Prims Algorithm it is guaranteed, that every vortex in the list is connected to one vortex before it in the list
@@ -827,7 +836,7 @@ t.List[Restraint.Pair_Restraint]:
     elif priority_algo == 'biased_avg':
         update_priority = _update_priority_biased_avg
     else:
-        raise u.BadArgumentException(
+        raise restraintmaker.utils.Utilities.BadArgumentException(
             priority_algo + ' is not an acceptable algorithm for maximal_spanning_tree_heuristic(...). Accepted values are: \'prim\' and \'shortest\'')
 
     # STEP 0) Check if there are enough restraints
@@ -940,7 +949,7 @@ def _calculate_value_scaled_pca_2d(restraint_pos):
 
 # ------------utilites------------------------------------------
 # TODO: make get postion a function of restraint
-def find_middle(r: Restraint.Pair_Restraint):
+def find_middle(r: Types.Distance_Restraint):
     return (r.atoms[0].x + r.atoms[1].x) / 2, (r.atoms[0].y + r.atoms[1].y) / 2, (
             r.atoms[0].z + r.atoms[1].z) / 2
 
@@ -962,7 +971,7 @@ def maximal_weight_ring(edge_list: t.List[t.Tuple[int, int]], value_list: t.List
 
     # 0)
     if len(edge_list) != len(value_list):
-        raise u.BadArgumentException('The lengths of the list inidcating edges weights and edges must be equal')
+        raise restraintmaker.utils.Utilities.BadArgumentException('The lengths of the list inidcating edges weights and edges must be equal')
     if not len(edge_list) == n_nodes * (n_nodes - 1) / 2:
         print('WARNING: Method maximal_weight_ring has not been tested for not fully connected graphs', mv=4)
 
@@ -1058,7 +1067,8 @@ def maximal_weight_ring(edge_list: t.List[t.Tuple[int, int]], value_list: t.List
 # ----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-def compare_pair_optimizers(criterion: t.Callable[[t.Tuple[float]], float], atoms: t.List[u.Atom],
+def compare_pair_optimizers(criterion: t.Callable[[t.Tuple[float]], float], atoms: t.List[
+    restraintmaker.utils.Utilities.Atom],
                             opt_types: t.List[t.Type[_MoleculeRingOptimizer]], opt_args: t.List[t.Tuple], out_path,
                             new_dir_name):
     '''

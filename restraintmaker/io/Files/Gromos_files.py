@@ -3,7 +3,7 @@
     :members:
     Description:
     in this lib, gromos topo file mainpulating functions are gathered
-    Author: Benjamin Schroeder
+    Author: Benjamin Ries
     TODO:write DOCU!
 """
 

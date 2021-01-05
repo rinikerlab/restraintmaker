@@ -4,9 +4,10 @@
 import typing as t
 from math import sqrt
 
+import restraintmaker.utils.Utilities
+import restraintmaker.utils.program_states
 from restraintmaker.io import Files
-from restraintmaker.types import Restraint
-from restraintmaker.utils import Utilities as u
+from restraintmaker.utils import Utilities as u, Types
 from restraintmaker.utils.Utilities import print
 
 
@@ -16,10 +17,10 @@ class _Exporter():
     class, that is giving the interface for submethods.
     """
 
-    def __init__(self, restraints: t.List[Restraint._Restraint]):
+    def __init__(self, restraints: t.List[Types._Restraint]):
         '''
         :param restraints: Restraints to be saved
-        :type restraints: Restraint
+        :type restraints: Types
         '''
         self.restraints = restraints
 
@@ -55,13 +56,13 @@ class GromosPairRestraintExporter(_Exporter):
     # TODO: Think about: Do I really need a seperate Gromos_exporter for every kind of DisRes, or can I use one exporter that
     # accepts all gromos compatible restraints
     # TODO:COMMENT - the restraint file definitions are sadly very different!
-    def __init__(self, restraints: t.List[Restraint.Pair_Restraint]):
+    def __init__(self, restraints: t.List[Types.Distance_Restraint]):
         '''
         :param restraints: Restraints to be saved
-        :type restraints: Restraint
+        :type restraints: Types
         '''
         for r in restraints:
-            if not isinstance(r, Restraint.Pair_Restraint):
+            if not isinstance(r, Types.Distance_Restraint):
                 raise TypeError('Gromos_Pair_Restriant_Exporter only accepts Pair restraints as input')
         super().__init__(restraints)
 
@@ -84,7 +85,7 @@ class GromosPairRestraintExporter(_Exporter):
         # Error checking can only be done when we try to acess the file
         self.out_path = u.check_or_convert_argument(input_function('Name of the output File:'), str)
         if self.out_path == '' or self.out_path == 'None':
-            raise u.BadArgumentException("Empty filename. (Unless you actually wanted to call your file None. \n"
+            raise restraintmaker.utils.Utilities.BadArgumentException("Empty filename. (Unless you actually wanted to call your file None. \n"
                                          "In which case you have to blame Python's promiscuous type conversion.  And yourself, for not using file extensions.)")
 
     # TODO CLEAN: At the moment there is no way to change the default argument, because it is essential for the program logic that.

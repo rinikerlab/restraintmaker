@@ -5,6 +5,8 @@
 import math
 import typing as t
 
+import restraintmaker.utils.Types
+import restraintmaker.utils.Utilities
 from restraintmaker.tools_Rdkit import Rdkit_Functions
 from restraintmaker.utils import Utilities as u
 # from restraintmaker.utils.Utilities import print
@@ -12,7 +14,7 @@ from restraintmaker.utils import Utilities as u
 
 class _Selection():
 
-    def __init__(self, all_atoms: t.List[u.Atom]):
+    def __init__(self, all_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         """Selection
         This is the private parent class to all selection Classes.
         A selection contains a list of Atoms, and provides functions for their manipulation
@@ -58,7 +60,7 @@ class _Selection():
     # ATOMS_SELECTED: Atom marked/highlighted/clicked in GUI program
     #   Recommended GUI-event: Click ON an Atom/GUI specific pick/select/add event
     # TODO REORG: Only allow one atom to be selected at a time?
-    def _update_select(self, new_atoms: t.List[u.Atom]):
+    def _update_select(self, new_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         """
                 _update_select should be overridden by every subclass of _Selection that wants to be notified when new atoms have been selected/marked in the GUI
 
@@ -146,7 +148,7 @@ class _Selection():
 
 
 class LimitedSelection(_Selection):
-    def __init__(self, all_atoms: t.List[u.Atom]):
+    def __init__(self, all_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         """
             A selection containing a fix maximal number of atoms
 
@@ -181,7 +183,7 @@ class LimitedSelection(_Selection):
         input = input_function("Maximal Number of Atoms in Limited Selection (int):")
         self.max_size = u.check_or_convert_argument(input, int)
 
-    def _update_select(self, new_atoms: t.List[u.Atom]):
+    def _update_select(self, new_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         """
             _update_select should be overridden by every subclass of _Selection that wants to be notified when new atoms have been selected/marked in the GUI
             LimitedSelection.update () only accepts one molecule in new_atoms at a time.
@@ -216,7 +218,7 @@ class LimitedSelection(_Selection):
 
 
 class SingleAtomSelection(LimitedSelection):
-    def __init__(self, all_atoms: t.List[u.Atom]):
+    def __init__(self, all_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         """
             A selection containing only one atom. A Shortcut to create a Limited_Selection with max_atoms+1
             This is usefull for GUI programs, that use refresh, once a selection is full: Just allow to pick atoms.
@@ -250,7 +252,7 @@ class SingleAtomSelection(LimitedSelection):
 
 
 class PairSelection(LimitedSelection):
-    def __init__(self, all_atoms: t.List[u.Atom]):
+    def __init__(self, all_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         """
             A Selection containing up to 2 Atoms. A Shortcut to create a Limited_Selection with max_atoms = 2
 
@@ -288,7 +290,7 @@ class PairSelection(LimitedSelection):
 
 class UniversalSelection(_Selection):
 
-    def __init__(self, all_atoms: t.List[u.Atom]):
+    def __init__(self, all_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         """
             Universial Selections can be used to select all present atoms with one click. (Actually it 2 Clicks)
 
@@ -333,7 +335,7 @@ class UniversalSelection(_Selection):
         self.atoms = self.all_atoms
         self.has_finished = True
 
-    def _update_select(self, new_atoms: t.List[u.Atom]):
+    def _update_select(self, new_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         """
             Dummy no selection possible
 
@@ -397,7 +399,7 @@ class UniversalSelection(_Selection):
 class SphericalSelection(_Selection):
     """..class SphericalSelection:"""
 
-    def __init__(self, all_atoms: t.List[u.Atom]):
+    def __init__(self, all_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         """
              A spherical selection selects all atoms within a given sphere. The Handling Program (restraintmaker_PyMol needs to provide a function that displays and chagnes the sphere
 
@@ -496,7 +498,7 @@ class SphericalSelection(_Selection):
 
         self.has_finished = True
 
-    def atom_within_sphere(self, a: u.Atom) -> bool:
+    def atom_within_sphere(self, a: restraintmaker.utils.Utilities.Atom) -> bool:
         """
             get all atoms within the sphere
 
@@ -529,7 +531,7 @@ class SphericalSelection(_Selection):
 
 class PaintSelection(SphericalSelection):
 
-    def __init__(self, all_atoms: t.List[u.Atom]):
+    def __init__(self, all_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         """
             Works like a Spherical selection, but does keep Atoms Selected, once the Selection Spher has touched them
 
@@ -622,7 +624,7 @@ class MCS_Selection(_Selection):
         self.atoms = list(filter(lambda a: a.id in mcs_ids, self.all_atoms))
         self.has_finished = True
 
-    def _update_select(self, new_atoms: t.List[u.Atom]):
+    def _update_select(self, new_atoms: t.List[restraintmaker.utils.Utilities.Atom]):
         """
             Dummy no selection possible
 

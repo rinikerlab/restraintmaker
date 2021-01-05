@@ -40,7 +40,7 @@ def pymol_selection_to_atom_list(sele: str) -> t.List[u.Atom]:
     atoms: t.List[u.Atom] = []
     for a in atom_info:
         x = u.Atom(elem=a['elem'], id=a['id'], name=a['name'], x=a['x'], y=a['y'], z=a['z'], chain=a['chain'],
-                   resn=a['resn'], resi=a['resi'], alt=a['alt'], label=a['label'], b=a['b'])
+                                                resn=a['resn'], resi=a['resi'], alt=a['alt'], label=a['label'], b=a['b'])
         atoms.append(x)
 
     return (atoms)
@@ -187,7 +187,8 @@ def create_pymol_objects_for_molecules(exclude: t.List[str] = []):
     cmd.delete(cmd.get_object_list()[0])  # Delete the object containing all molecules at once
 
 
-def help_pymol_with_big_atom_list(pymol_function: t.Callable, atom_list: t.List[u.Atom], *args, **kw_args):
+def help_pymol_with_big_atom_list(pymol_function: t.Callable, atom_list: t.List[
+    u.Atom], *args, **kw_args):
     '''
     help_pymol_with_big_atom_list can be wrapped around any interface_Pymol function, that takes 'selection' as an argument.
 
