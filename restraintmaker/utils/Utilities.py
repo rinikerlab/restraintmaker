@@ -187,27 +187,30 @@ def convert_atoms_to_pdb_molecules(atoms: t.List[Atom]) -> t.List[str]:
          pdb strings of that molecule
     """
     # 1) GROUP ATOMS BT MOLECULES
-    molecules = defaultdict[list]
+    molecules = defaultdict(list)
     for a in atoms:
         molecules[a.resi].append(a)
 
     # 2) CONSTUCT PDB BLOCKS
+    #ref: https://www.cgl.ucsf.edu/chimera/docs/UsersGuide/tutorials/pdbintro.html
+    pdb_format = "ATOM  {:>5d}  {:<3}{:1}{:>3}  {:1}{:>3d}{:1}   {:>7.3f}{:>7.3f}{:>7.3f}{:>5f}{:>6f}{:<3}{:>2} {:>2d}"
+    dummy_occupancy= dummy_bfactor= dummy_charge = 0.0
+    dummy_alt_location= dummy_chain= dummy_insertion_code= dummy_segment = ""
+
     pdb_molecules: t.List[str] = []
-    for m in molecules.values():
+    for m_ID in sorted(molecules):
+        m = molecules[m_ID]
         atoms_as_lines: t.List[str] = []
-        for a in m:
-            atoms_as_lines.append(
-                str(a.id) + '\t' + a.name + '\t' + a.resn + '\t' + str(a.resi) + '\t' + '{:0.3f}'.format(
-                    a.x) + '\t' + '{:0.3f}'.format(a.y) + '\t' + '{:0.3f}'.format(a.z) + '\t1.00\t0.00\t\t' + a.elem)
+        for a in sorted(m, key= lambda x: x.id):
+            atoms_as_lines.append(pdb_format.format(int(a.id), a.name, dummy_alt_location, a.resn, dummy_chain, int(a.resi), dummy_insertion_code, a.x, a.y, a.z, dummy_occupancy, dummy_bfactor, dummy_segment, a.elem, int(dummy_charge)))
 
         # Sort by Id: => convert str up do first space to int
-        atoms_as_lines = sorted(atoms_as_lines, key=lambda x: int(x[:x.index('\t')]))
-        atoms_as_lines = ['ATOM\t' + line for line in atoms_as_lines]
-        molecule_as_str = '\n'.join(atoms_as_lines) + '\nEND'
+        #atoms_as_lines = sorted(atoms_as_lines, key=lambda x: int(x[:x.index('\t')]))
+        molecule_as_str = "TITLE "+a.resn+"\n"+'\n'.join(atoms_as_lines) + '\nEND'
         # molecule_as_str = molecule_as_str.replace('\t','    ')
         pdb_molecules.append(molecule_as_str)
 
-        print(pdb_molecules[-1], mv=1)
+        print(pdb_molecules[-1], mv=0)
 
     return pdb_molecules
 

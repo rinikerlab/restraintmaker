@@ -22,36 +22,49 @@ from restraintmaker.utils.Utilities import print
 
 
 class _Optimizer():
-    # TODO: Give each Optimizer a (static) list of accepted selections
-
     """
     .. autoclass::   _Optimizer
-        This is the private parent class to all Optimizer Classes.
     """
 
-    def __init__(self, atoms):
+    def __init__(self, atoms: t.List[u.Atom]):
+        """
+            This is the private parent class to all Optimizer Classes.
+
+        Parameters
+        ----------
+        atoms :  t.List[u.Atom]
+            list of atoms to be considered
+
+        """
         self.atoms = atoms
 
-    def get_args(input_function: t.Callable):
-        '''
-               get_args needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter
-              :param input_function: A function that can get the input
-              :type input_function: t.Callable[str]
-              :param message: A string that is displayed if input function needs to communicate with the user
-              :type message: str
-              :return: -
-              :rtype: -
-               :raises: BadArgumentException if the input function does not provide all arguments in the necessary format
-               '''
+    def get_args(self):
+        """
+            to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Optimize
+
+        Returns
+        -------
+        NoReturn
+
+        """
+
         raise NotImplementedError("Direct call of abstract function  _Optimizer.get_args(...)")
 
     def make_restraints(self) -> t.List[Types._Restraint]:
         """
-        make_restraints() return a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used.
-        :raises: NoOptimalSolutionException if no Solution fulfilling all criteria can be found.
-        :return: A List of Restraints
-        :rtype: t.List[RestraintType.RestraintType]
+                make_restraints() return a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used.
+
+        Returns
+        -------
+        t.List[RestraintType.RestraintType]
+            The list of optimized Restraints
+
+        Raises
+        ------
+        NoOptimalSolutionException
+            if no Solution fulfilling all criteria can be found.
         """
+
         raise NotImplementedError("Direct call of abstract function  _Optimizer.make_restraints()")
 
 

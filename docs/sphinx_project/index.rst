@@ -13,6 +13,7 @@ Welcome to restraintMaker's documentation!
    :caption: Contents:
 
    introduction.rst
+   examples/index.rst
    _sources/index.rst
 
 

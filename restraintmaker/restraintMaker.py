@@ -17,15 +17,18 @@
 import os
 import sys
 import __main__
+import warnings
 import traceback
 
 ###IF YOU WANT TO INCLUDE RESMAKER AS PLUGIN
 def __init_plugin__(app=None):
     """
-    Required for PyMol plugin installation
-
+    Required for PyMol plugin installation - problem not all in one file!
+    TODO: Fix
     """
+
     from pymol.plugins import addmenuitemqt
+    _check_importing_packages()
     addmenuitemqt('RestraintMaker', run_plugin_gui)
 
 
@@ -78,14 +81,22 @@ def _check_importing_packages():
         This function checks if all needed packages are there.
     """
 
+    try:
+        import conda.cli as cli
+    except :
+        warnings.warn("WARNING: could not find PyMOL in enviroment. Try installing via anaconda3")
+
+        import os
+        os.system("conda install conda")
+
     # IMPORT PYMOL
     try:
         import pymol
     except Exception as err:
-        print("WARNING: could not find PyMOL in enviroment. Try installing via anaconda3")
+        warnings.warn("WARNING: could not find PyMOL in enviroment. Try installing via anaconda3")
         if ("conda" in sys.modules):
             import conda.cli as cli
-            cli.main('conda', 'install', '-y', '-c schrodinger', 'interface_Pymol')
+            cli.main('conda', 'install', '-y', '-c schrodinger', 'pymol')
             # start interface_Pymol
             import pymol
         else:
@@ -97,7 +108,14 @@ def _check_importing_packages():
     try:
         import rdkit
     except Exception as err:
-        raise ImportError(
+        warnings.warn("WARNING: could not find rdkit in enviroment. Try installing via anaconda3")
+        if ("conda" in sys.modules):
+            import conda.cli as cli
+            cli.main('conda', 'install', '-y', '-c rdkit', 'rdkit')
+            # start interface_Pymol
+            import rdkit
+        else:
+            raise ImportError(
             "Could not find rdkit package! And also couldn't find a conda enviroment to install Tools_rdkit.\n " + "\n ".join(
                 err.args))
 

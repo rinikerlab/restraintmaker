@@ -26,9 +26,9 @@ class test_cnf(unittest.TestCase):
     in_disres1 = test_files_io+"/in_5ligs_disres.dat"
     in_disres2 = test_files_io + "/in_7ligs_disres.dat"
 
-    test_files_structures = test_file_dir +"/ligand_system"
-    in_pdb1 = test_files_structures+"/5_long_Ligands.pdb"
-    in_pdb2 = test_files_structures + "/7_veryDifferent_Ligands.pdb"
+    test_files_structures = test_file_dir +"/test_systems"
+    in_pdb1 = test_files_structures+"/systemA/CHK1_5Ligs.pdb"
+    in_pdb2 = test_files_structures + "/systemB/BRD4_7Ligs.pdb"
 
     def setUp(self) -> None:
         cmd.load(self.in_pdb1)

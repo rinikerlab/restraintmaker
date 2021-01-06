@@ -15,7 +15,8 @@ if __name__ == "__main__":
     # pymol cmd
     from pymol import cmd
     # load
-    in_file_path = os.path.dirname(__file__) + "/../restraintmaker/test/test_files/ligand_system/7_veryDifferent_Ligands.pdb"
+    from restraintmaker import test
+    in_file_path = test.test_system1_pdb
     cmd.load(in_file_path)
 
     # visualization

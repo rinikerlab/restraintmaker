@@ -181,7 +181,6 @@ class ElementFilter(_Filter):
 
         self.in_path = u.check_or_convert_argument(input, str)
         self.elem = input
-        print(self.elem)
 
     def filter(self) -> t.List[restraintmaker.utils.Utilities.Atom]:
         """

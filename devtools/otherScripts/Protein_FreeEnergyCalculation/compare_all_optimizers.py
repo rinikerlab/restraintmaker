@@ -42,7 +42,7 @@ def load_ligands(ligand_file):
     return pymol_module
 
 ligands_dir = 'data/ligand_system/'
-ligand_files =['5_long_Ligands.pdb','7_veryDifferent_Ligands.pdb','9_similar_Ligands.pdb','21_large_Ligands.pdb']#['9_similar_Ligands.pdb','7_veryDifferent_Ligands.pdb',
+ligand_files =['CHK1_5Ligands.pdb','BRD4_7Ligs.pdb','PNMT_9ligs.pdb','21_large_Ligands.pdb']#['PNMT_9ligs.pdb','BRD4_7Ligs.pdb',
 
 
 ligands_path = [ligands_dir+lig_file for lig_file in ligand_files]
