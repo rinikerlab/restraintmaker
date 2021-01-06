@@ -6,12 +6,14 @@
 Welcome to restraintMaker's documentation!
 =========================================================
 
+.. include:: introduction.rst
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   getting_started
-   api
+   introduction.rst
+   _sources/index.rst
 
 
 

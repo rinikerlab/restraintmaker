@@ -1,37 +1,39 @@
 #!/usr/bin/env python
 """
-.. automodule: restraintmaker
-    This is the main part of restraintmaker
+    RestraintMaker
+    Is a programm, that estimates optimal distance restraints for a given bulk of molecules, to interconnect them.
 
-    Needed:
+    This is the main part of restraintmaker. From here the PyMol Wizard/Plugin is triggered.
+
+    Required Packages Needed:
         python 3
         rdkit
         pymol
         numpy
         scipy
-        (recommended anaconda3 / conda-cli)
 
 """
 
 import os
 import sys
-
 import __main__
+import traceback
 
 ###IF YOU WANT TO INCLUDE RESMAKER AS PLUGIN
-"""
 def __init_plugin__(app=None):
-    from interface_Pymol.plugins import addmenuitemqt
-    addmenuitemqt('restraintmaker', run_plugin_gui)
-"""
+    """
+    Required for PyMol plugin installation
+
+    """
+    from pymol.plugins import addmenuitemqt
+    addmenuitemqt('RestraintMaker', run_plugin_gui)
 
 
 def run_plugin():
     """
-    .. autofunction:: run_plugin
-    :return:
+    This is the start point for running the plugin in PyMol,
+    first the package dependencies are checked and then the GUI is started
     """
-
     # Check imports
     try:
         _check_importing_packages()
@@ -58,9 +60,7 @@ def run_plugin():
 
 def run_plugin_gui():
     """
-    .. autofunction:: run_plugin_gui
-        This function allows to run the plugin gui in pymol.
-    :return:
+        This function fires up the plugin gui in pymol.
     """
     from pymol import cmd
 
@@ -75,10 +75,9 @@ def run_plugin_gui():
 
 def _check_importing_packages():
     """
-    .. autofunction:: check_importing_packages
         This function checks if all needed packages are there.
-    :return:
     """
+
     # IMPORT PYMOL
     try:
         import pymol
@@ -103,9 +102,8 @@ def _check_importing_packages():
                 err.args))
 
 
-import traceback
 
-###WIZARD
+###start pymol if main
 if __name__ == "__main__":
     # Check if imports are possible
     try:

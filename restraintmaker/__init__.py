@@ -1,3 +1,4 @@
+from restraintmaker.RestraintMaker import *
 import sys
 import traceback
 
