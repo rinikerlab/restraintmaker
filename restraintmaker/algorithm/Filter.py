@@ -4,19 +4,15 @@ The module Filters contains functionality of filtering selections by criteria li
 """
 
 import typing as t
-
 from rdkit import Chem
 
-import restraintmaker.utils.Types
-import restraintmaker.utils.Utilities
-import restraintmaker.utils.program_states
 from restraintmaker.tools_Rdkit import Rdkit_Functions
 from restraintmaker.utils import Utilities as u
 
 
 class _Filter():
 
-    def __init__(self, atoms: t.List[restraintmaker.utils.Utilities.Atom]):
+    def __init__(self, atoms: t.List[u.Atom]):
         """_Filter
         This is the private parent class to all filter Classes.
 
@@ -28,7 +24,7 @@ class _Filter():
             Extra Arguments the subclasses might need
 
         """
-        self.atoms: t.List[restraintmaker.utils.Utilities.Atom] = atoms
+        self.atoms: t.List[u.Atom] = atoms
 
     def get_args(self, input_function: t.Callable):
         """
@@ -56,7 +52,7 @@ class _Filter():
         """
         raise NotImplementedError("Call of function get_args(...) of abstract parent class _Filter")
 
-    def filter(self) -> t.List[restraintmaker.utils.Utilities.Atom]:
+    def filter(self) -> t.List[u.Atom]:
         """
             filter must be overridden by every subclass of _Filter. Returns a filtered list of atoms
 
@@ -75,7 +71,7 @@ class _Filter():
 
 class PropertyFilter(_Filter):
 
-    def __init__(self, atoms: t.List[restraintmaker.utils.Utilities.Atom]):
+    def __init__(self, atoms: t.List[u.Atom]):
         """
         Filters by any attribute of atom
 
@@ -118,8 +114,8 @@ class PropertyFilter(_Filter):
 
         input = input_function('Which atom-property should be the filter critrion?')
         self.criterion: str = u.check_or_convert_argument(input, str)
-        if not self.criterion in restraintmaker.utils.Utilities.Atom._fields:
-            raise restraintmaker.utils.Utilities.BadArgumentException(
+        if not self.criterion in u.Atom._fields:
+            raise u.BadArgumentException(
                 "The filter criterion \' " + self.criterion + " \' provided by the input function is not an attribute of an Atom.")
 
         input = input_function('What value should ' + self.criterion + ' have?')
@@ -128,7 +124,7 @@ class PropertyFilter(_Filter):
         except IndexError:  # Happens when len(self.atoms) is 0. No special handling necessary. It just means no atoms will be selected.
             pass
 
-    def filter(self) -> t.List[restraintmaker.utils.Utilities.Atom]:
+    def filter(self) -> t.List[u.Atom]:
         """
                 Returns a list of atoms, filtered using the provided criterion and value
 
@@ -142,7 +138,7 @@ class PropertyFilter(_Filter):
 
 
 class ElementFilter(_Filter):
-    def __init__(self, atoms: t.List[restraintmaker.utils.Utilities.Atom]):
+    def __init__(self, atoms: t.List[u.Atom]):
         """
             Filter for certain Element(s)
 
@@ -182,7 +178,7 @@ class ElementFilter(_Filter):
         self.in_path = u.check_or_convert_argument(input, str)
         self.elem = input
 
-    def filter(self) -> t.List[restraintmaker.utils.Utilities.Atom]:
+    def filter(self) -> t.List[u.Atom]:
         """
             Returns a filtered version of the class attribute atoms, filtered by the class attribute element
 
@@ -198,7 +194,7 @@ class ElementFilter(_Filter):
 
 class RingFilter(_Filter):
 
-    def __init__(self, atoms: t.List[restraintmaker.utils.Utilities.Atom]):
+    def __init__(self, atoms: t.List[u.Atom]):
         """
             Ring Filter chooses all Atoms that are part of a Ring
             Warnings: using tools_Rdkit. Needs conversion to tools_Rdkit molecules. => Needs the pdb as input
@@ -210,7 +206,7 @@ class RingFilter(_Filter):
         args : t.List[str]
             Extra Arguments the subclasses might need
         """
-        self.atoms: t.List[restraintmaker.utils.Utilities.Atom] = atoms
+        self.atoms: t.List[u.Atom] = atoms
 
         # Attributes set in get_args
         self.molecules_rdk: t.List[Chem.Mol]

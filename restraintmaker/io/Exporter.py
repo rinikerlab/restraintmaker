@@ -4,9 +4,8 @@
 import typing as t
 from math import sqrt
 
-import restraintmaker.utils.Utilities
-import restraintmaker.utils.program_states
 from restraintmaker.io import Files
+
 from restraintmaker.utils import Utilities as u, Types
 from restraintmaker.utils.Utilities import print
 
@@ -105,7 +104,7 @@ class Gromos_Distance_Restraint_Exporter(_Exporter):
         # Error checking can only be done when we try to acess the file
         self.out_path = u.check_or_convert_argument(input_function('Name of the output File:'), str)
         if self.out_path == '' or self.out_path == 'None':
-            raise restraintmaker.utils.Utilities.BadArgumentException(
+            raise u.BadArgumentException(
                 "Empty filename. (Unless you actually wanted to call your file None. \n"
                 "In which case you have to blame Python's promiscuous type conversion.  And yourself, for not using file extensions.)")
 

@@ -11,10 +11,10 @@ import unittest
 from pymol import cmd
 
 import restraintmaker.io.Importer as Importer
-from restraintmaker.interface_Pymol import Pymol_Utitlities
+from restraintmaker.interface_Pymol.pymol_utilities import pymol_utitlities
 
 
-class test_cnf(unittest.TestCase):
+class test_Importer(unittest.TestCase):
     """
         This class is testing the Importer Class
 
@@ -32,11 +32,11 @@ class test_cnf(unittest.TestCase):
 
     def setUp(self) -> None:
         cmd.load(self.in_pdb1)
-        self.all_atoms1 = Pymol_Utitlities.pymol_selection_to_atom_list("all")
+        self.all_atoms1 = pymol_utitlities.pymol_selection_to_atom_list("all")
         cmd.reinitialize()
 
         cmd.load(self.in_pdb2)
-        self.all_atoms2 = Pymol_Utitlities.pymol_selection_to_atom_list("all")
+        self.all_atoms2 = pymol_utitlities.pymol_selection_to_atom_list("all")
         cmd.reinitialize()
 
 

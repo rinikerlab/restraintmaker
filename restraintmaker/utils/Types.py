@@ -5,10 +5,9 @@
 """
 
 import typing as t
-
 import numpy as np
 
-from restraintmaker.algorithm import Selection
+#from restraintmaker.algorithm import Selection
 from restraintmaker.utils.Utilities import Atom
 
 
@@ -45,7 +44,7 @@ class _Restraint():
 
 
 class Position_restraint(_Restraint):
-    accepted_selection_types = [Selection.SingleAtomSelection]
+    #accepted_selection_types = [Selection.SingleAtomSelection]
     atom_limit: int = 1
 
     def __init__(self, atomA: Atom, reference_atom: Atom = None):
@@ -85,7 +84,7 @@ class Position_restraint(_Restraint):
 class Distance_Restraint(_Restraint):
     # 'static' variables
     atom_limit: int = 2
-    accepted_selection_types: t.List[type] = [Selection.PairSelection]
+    #accepted_selection_types: t.List[type] = [Selection.PairSelection]
 
     def __init__(self, atomA: Atom, atomB: Atom):
         """
@@ -121,8 +120,8 @@ class Distance_Restraint(_Restraint):
 
 
 class CoM_Restraint(_Restraint):
-    accepted_selection_types = [Selection.PairSelection, Selection.LimitedSelection, Selection.SphericalSelection,
-                                Selection.PaintSelection, Selection.UniversalSelection]
+    #accepted_selection_types = [Selection.PairSelection, Selection.LimitedSelection, Selection.SphericalSelection,
+    #                            Selection.PaintSelection, Selection.UniversalSelection]
 
     def __init__(self, atoms: t.List[Atom]):
         """
