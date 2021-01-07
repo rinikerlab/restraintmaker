@@ -1,7 +1,8 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -11,30 +12,27 @@
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
   
   
   
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
 </head>
@@ -50,7 +48,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> restraintMaker
+            <a href="index.html" class="icon icon-home"> restraintMaker
           
 
           
@@ -73,7 +71,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -84,12 +81,13 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_source/modules.html">restraintmaker</a></li>
 </ul>
 
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -128,7 +126,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
       <li>Index</li>
     
@@ -187,6 +185,12 @@
 </li>
         <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.RingFilter.__init__">(restraintmaker.algorithm.Filter.RingFilter method)</a>
 </li>
+        <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.__init__">(restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer method)</a>
+</li>
+        <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.__init__">(restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer method)</a>
+</li>
+        <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.__init__">(restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer method)</a>
+</li>
         <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.LimitedSelection.__init__">(restraintmaker.algorithm.Selection.LimitedSelection method)</a>
 </li>
         <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection.__init__">(restraintmaker.algorithm.Selection.MCS_Selection method)</a>
@@ -202,6 +206,8 @@
         <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection.__init__">(restraintmaker.algorithm.Selection.UniversalSelection method)</a>
 </li>
         <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.__init__">(restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler method)</a>
+</li>
+        <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.__init__">(restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
 </li>
         <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Exporter._Exporter.__init__">(restraintmaker.io.Exporter._Exporter method)</a>
 </li>
@@ -235,34 +241,36 @@
 </li>
         <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_files.general_gromos_file.__init__">(restraintmaker.io.Files.Gromos_files.general_gromos_file method)</a>
 </li>
-        <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Importer._Importer.__init__">(restraintmaker.io.Importer._Importer method)</a>
-</li>
         <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Importer.Gromos_Distance_Restraint_Importer.__init__">(restraintmaker.io.Importer.Gromos_Distance_Restraint_Importer method)</a>
+</li>
+        <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.CoM_Restraint.__init__">(restraintmaker.utils.Types.CoM_Restraint method)</a>
+</li>
+        <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint.__init__">(restraintmaker.utils.Types.Distance_Restraint method)</a>
+</li>
+        <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Position_restraint.__init__">(restraintmaker.utils.Types.Position_restraint method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.Pymol_Utitlities._atom_list_to_pymol_selection">_atom_list_to_pymol_selection() (in module restraintmaker.interface_Pymol.Pymol_Utitlities)</a>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard._action_button_pressed">_action_button_pressed() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._atom_list_to_pymol_selection">_atom_list_to_pymol_selection() (in module restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities)</a>
 </li>
       <li><a href="_source/restraintmaker.tools_Rdkit.html#restraintmaker.tools_Rdkit.Rdkit_Functions._calc_pca_without_scaling">_calc_pca_without_scaling() (in module restraintmaker.tools_Rdkit.Rdkit_Functions)</a>
 </li>
+      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._calculate_value_convex_hull">_calculate_value_convex_hull() (in module restraintmaker.algorithm.Optimizer)</a>
+</li>
+      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._calculate_value_scaled_pca_2d">_calculate_value_scaled_pca_2d() (in module restraintmaker.algorithm.Optimizer)</a>
+</li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._calculate_value_unscaled_pca_2d">_calculate_value_unscaled_pca_2d() (in module restraintmaker.algorithm.Optimizer)</a>
+</li>
+      <li><a href="_source/restraintmaker.html#restraintmaker.restraintMaker._check_importing_packages">_check_importing_packages() (in module restraintmaker.restraintMaker)</a>
 </li>
       <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._check_selection_status">_check_selection_status() (restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler method)</a>
 </li>
-      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.Pymol_Utitlities._convert_molecules_to_pdb">_convert_molecules_to_pdb() (in module restraintmaker.interface_Pymol.Pymol_Utitlities)</a>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._convert_molecules_to_pdb">_convert_molecules_to_pdb() (in module restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities)</a>
 </li>
       <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Exporter._Exporter">_Exporter (class in restraintmaker.io.Exporter)</a>
-</li>
-      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._get_all_short_connections">_get_all_short_connections() (in module restraintmaker.algorithm.Optimizer)</a>
-</li>
-      <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Importer._Importer">_Importer (class in restraintmaker.io.Importer)</a>
-</li>
-      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer">_MoleculeRingOptimizer (class in restraintmaker.algorithm.Optimizer)</a>
-</li>
-      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._not_debugged_maximum_spanning_tree_kruskal">_not_debugged_maximum_spanning_tree_kruskal() (in module restraintmaker.algorithm.Optimizer)</a>
-</li>
-      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._Optimizer">_Optimizer (class in restraintmaker.algorithm.Optimizer)</a>
 </li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_files.general_gromos_file._read_gromos_block">_read_gromos_block() (restraintmaker.io.Files.Gromos_files.general_gromos_file method)</a>
 </li>
@@ -277,6 +285,8 @@
       <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_restraint_type">_set_restraint_type() (restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler method)</a>
 </li>
       <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_selection_type">_set_selection_type() (restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler method)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard._toggle_button_pressed">_toggle_button_pressed() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
 </li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection._update_confirm">_update_confirm() (restraintmaker.algorithm.Selection.MCS_Selection method)</a>
 
@@ -316,23 +326,43 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState">ActionState (class in restraintmaker.interface_Pymol.pymol_utilities.program_states)</a>
+</li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_files.general_gromos_file.add_block">add_block() (restraintmaker.io.Files.Gromos_files.general_gromos_file method)</a>
 </li>
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom.alt">alt() (restraintmaker.utils.Utilities.Atom property)</a>
 </li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.ALWAYS_DISABLED">ALWAYS_DISABLED (restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState attribute)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.ALWAYS_ENABLED">ALWAYS_ENABLED (restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState attribute)</a>
+</li>
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom">Atom (class in restraintmaker.utils.Utilities)</a>
 </li>
-      <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_pair_distanceRes">atom_pair_distanceRes (class in restraintmaker.io.Files.Gromos_blocks)</a>
+      <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint.atom_limit">atom_limit (restraintmaker.utils.Types.Distance_Restraint attribute)</a>
+
+      <ul>
+        <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Position_restraint.atom_limit">(restraintmaker.utils.Types.Position_restraint attribute)</a>
 </li>
-      <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_pos_block">atom_pos_block (class in restraintmaker.io.Files.Gromos_blocks)</a>
+      </ul></li>
+      <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_pair_distanceRes">atom_pair_distanceRes (class in restraintmaker.io.Files.Gromos_blocks)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_pos_block">atom_pos_block (class in restraintmaker.io.Files.Gromos_blocks)</a>
+</li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_ref_pos_block">atom_ref_pos_block (class in restraintmaker.io.Files.Gromos_blocks)</a>
 </li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_vel_block">atom_vel_block (class in restraintmaker.io.Files.Gromos_blocks)</a>
 </li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SphericalSelection.atom_within_sphere">atom_within_sphere() (restraintmaker.algorithm.Selection.SphericalSelection method)</a>
+</li>
+      <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint.atomA">atomA() (restraintmaker.utils.Types.Distance_Restraint property)</a>
+
+      <ul>
+        <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Position_restraint.atomA">(restraintmaker.utils.Types.Position_restraint property)</a>
+</li>
+      </ul></li>
+      <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint.atomB">atomB() (restraintmaker.utils.Types.Distance_Restraint property)</a>
 </li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atomP">atomP (class in restraintmaker.io.Files.Gromos_blocks)</a>
 </li>
@@ -384,33 +414,51 @@
 </li>
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.check_for_doubles">check_for_doubles() (in module restraintmaker.utils.Utilities)</a>
 </li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.check_objects_exists">check_objects_exists() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.check_or_convert_argument">check_or_convert_argument() (in module restraintmaker.utils.Utilities)</a>
 </li>
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.check_restraint_pairs_for_doubles">check_restraint_pairs_for_doubles() (in module restraintmaker.utils.Utilities)</a>
 </li>
       <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_optimizer.test_Optimizer.check_restraint_results">check_restraint_results() (restraintmaker.test.test_optimizer.test_Optimizer method)</a>
 </li>
-      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.Pymol_Utitlities.colorize">colorize() (in module restraintmaker.interface_Pymol.Pymol_Utitlities)</a>
+      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.cog_distance_restraint">cog_distance_restraint() (in module restraintmaker.algorithm.Optimizer)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.compare_pair_optimizers">compare_pair_optimizers() (in module restraintmaker.algorithm.Optimizer)</a>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.colorize">colorize() (in module restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities)</a>
 </li>
-      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer.connect_two_molecules">connect_two_molecules() (restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer method)</a>
+      <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.CoM_Restraint">CoM_Restraint (class in restraintmaker.utils.Types)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.CONFIRM">CONFIRM (restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType attribute)</a>
+</li>
+      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.connect_two_molecules">connect_two_molecules() (restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer method)</a>
 
       <ul>
-        <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.connect_two_molecules">(restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer method)</a>
-</li>
         <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.connect_two_molecules">(restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer method)</a>
 </li>
         <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.connect_two_molecules">(restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_files.general_gromos_file.content">content (restraintmaker.io.Files.Gromos_files.general_gromos_file attribute)</a>
 </li>
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.convert_atoms_to_pdb_molecules">convert_atoms_to_pdb_molecules() (in module restraintmaker.utils.Utilities)</a>
 </li>
-      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.Pymol_Utitlities.create_pymol_objects_for_molecules">create_pymol_objects_for_molecules() (in module restraintmaker.interface_Pymol.Pymol_Utitlities)</a>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_file_open_dialog">create_file_open_dialog() (in module restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_file_save_dialog">create_file_save_dialog() (in module restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_input_dialog">create_input_dialog() (in module restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_multi_dialog">create_multi_dialog() (in module restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.create_pymol_objects_for_molecules">create_pymol_objects_for_molecules() (in module restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.create_pymol_objects_for_restraints">create_pymol_objects_for_restraints() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.CURRENTLY_DISABLED">CURRENTLY_DISABLED (restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState attribute)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.CURRENTLY_ENABLED">CURRENTLY_ENABLED (restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -420,15 +468,33 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_files.disres">disres (class in restraintmaker.io.Files.Gromos_files)</a>
 </li>
-      <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.RestraintPair.distance">distance() (restraintmaker.utils.Utilities.RestraintPair property)</a>
+      <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint.distance">distance() (restraintmaker.utils.Types.Distance_Restraint property)</a>
+
+      <ul>
+        <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.RestraintPair.distance">(restraintmaker.utils.Utilities.RestraintPair property)</a>
+</li>
+      </ul></li>
+      <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.distance_res_spec_block">distance_res_spec_block (class in restraintmaker.io.Files.Gromos_blocks)</a>
+</li>
+      <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint">Distance_Restraint (class in restraintmaker.utils.Types)</a>
+</li>
+      <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Position_restraint.distance_to_reference_position">distance_to_reference_position() (restraintmaker.utils.Types.Position_restraint property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.distance_res_spec_block">distance_res_spec_block (class in restraintmaker.io.Files.Gromos_blocks)</a>
-</li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type">distant_Restraint_Type (class in restraintmaker.io.Files.Gromos_blocks)</a>
 </li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.do_dirty">do_dirty() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.do_key">do_key() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.do_nothing">do_nothing() (in module restraintmaker.utils.Utilities)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.do_pick">do_pick() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.do_select">do_select() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.do_special">do_special() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -439,6 +505,8 @@
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom.elem">elem() (restraintmaker.utils.Utilities.Atom property)</a>
 </li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.ElementFilter">ElementFilter (class in restraintmaker.algorithm.Filter)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType">EventType (class in restraintmaker.interface_Pymol.pymol_utilities.program_states)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -456,6 +524,8 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.file_nr">file_nr (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard attribute)</a>
+</li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.ElementFilter.filter">filter() (restraintmaker.algorithm.Filter.ElementFilter method)</a>
 
       <ul>
@@ -467,8 +537,6 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.find_atom_by_property">find_atom_by_property() (in module restraintmaker.utils.Utilities)</a>
-</li>
-      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.find_middle">find_middle() (in module restraintmaker.algorithm.Optimizer)</a>
 </li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type.full_harmonic_distance_restraint">full_harmonic_distance_restraint (restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type attribute)</a>
 </li>
@@ -495,8 +563,6 @@
 </li>
         <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.RingFilter.get_args">(restraintmaker.algorithm.Filter.RingFilter method)</a>
 </li>
-        <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._Optimizer.get_args">(restraintmaker.algorithm.Optimizer._Optimizer method)</a>
-</li>
         <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.get_args">(restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer method)</a>
 </li>
         <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.get_args">(restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer method)</a>
@@ -519,13 +585,17 @@
 </li>
         <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Exporter.Gromos_Distance_Restraint_Exporter.get_args">(restraintmaker.io.Exporter.Gromos_Distance_Restraint_Exporter method)</a>
 </li>
-        <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Importer._Importer.get_args">(restraintmaker.io.Importer._Importer method)</a>
-</li>
         <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Importer.Gromos_Distance_Restraint_Importer.get_args">(restraintmaker.io.Importer.Gromos_Distance_Restraint_Importer method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.get_event_mask">get_event_mask() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.get_panel">get_panel() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.get_prompt">get_prompt() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
       <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Exporter.Gromos_Distance_Restraint_Exporter">Gromos_Distance_Restraint_Exporter (class in restraintmaker.io.Exporter)</a>
 </li>
       <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Importer.Gromos_Distance_Restraint_Importer">Gromos_Distance_Restraint_Importer (class in restraintmaker.io.Importer)</a>
@@ -542,7 +612,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type.half_harmonic_repulsive">half_harmonic_repulsive (restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type attribute)</a>
 </li>
-      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.Pymol_Utitlities.help_pymol_with_big_atom_list">help_pymol_with_big_atom_list() (in module restraintmaker.interface_Pymol.Pymol_Utitlities)</a>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.help_pymol_with_big_atom_list">help_pymol_with_big_atom_list() (in module restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -552,25 +622,21 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom.id">id() (restraintmaker.utils.Utilities.Atom property)</a>
 </li>
-      <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Importer._Importer.import_restraints">import_restraints() (restraintmaker.io.Importer._Importer method)</a>
-
-      <ul>
-        <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Importer.Gromos_Distance_Restraint_Importer.import_restraints">(restraintmaker.io.Importer.Gromos_Distance_Restraint_Importer method)</a>
+      <li><a href="_source/restraintmaker.io.html#restraintmaker.io.Importer.Gromos_Distance_Restraint_Importer.import_restraints">import_restraints() (restraintmaker.io.Importer.Gromos_Distance_Restraint_Importer method)</a>
 </li>
-      </ul></li>
-      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf.in_disres1">in_disres1 (restraintmaker.test.test_importer.test_cnf attribute)</a>
+      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer.in_disres1">in_disres1 (restraintmaker.test.test_importer.test_Importer attribute)</a>
 </li>
-      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf.in_disres2">in_disres2 (restraintmaker.test.test_importer.test_cnf attribute)</a>
+      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer.in_disres2">in_disres2 (restraintmaker.test.test_importer.test_Importer attribute)</a>
+</li>
+      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_exporter.test_Exporter.in_disresObj_path1">in_disresObj_path1 (restraintmaker.test.test_exporter.test_Exporter attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_exporter.test_Exporter.in_disresObj_path1">in_disresObj_path1 (restraintmaker.test.test_exporter.test_Exporter attribute)</a>
-</li>
       <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_exporter.test_Exporter.in_disresObj_path2">in_disresObj_path2 (restraintmaker.test.test_exporter.test_Exporter attribute)</a>
 </li>
-      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf.in_pdb1">in_pdb1 (restraintmaker.test.test_importer.test_cnf attribute)</a>
+      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer.in_pdb1">in_pdb1 (restraintmaker.test.test_importer.test_Importer attribute)</a>
 </li>
-      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf.in_pdb2">in_pdb2 (restraintmaker.test.test_importer.test_cnf attribute)</a>
+      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer.in_pdb2">in_pdb2 (restraintmaker.test.test_importer.test_Importer attribute)</a>
 </li>
       <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_exporter.test_Exporter.in_solution_disres_path1">in_solution_disres_path1 (restraintmaker.test.test_exporter.test_Exporter attribute)</a>
 </li>
@@ -600,12 +666,6 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer.make_restraints">make_restraints() (restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer method)</a>
-
-      <ul>
-        <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._Optimizer.make_restraints">(restraintmaker.algorithm.Optimizer._Optimizer method)</a>
-</li>
-      </ul></li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.maximal_spanning_tree_greedy">maximal_spanning_tree_greedy() (in module restraintmaker.algorithm.Optimizer)</a>
 </li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.maximal_weight_ring">maximal_weight_ring() (in module restraintmaker.algorithm.Optimizer)</a>
@@ -632,9 +692,17 @@
 </li>
         <li><a href="_source/restraintmaker.interface_Pymol.html#module-restraintmaker.interface_Pymol">restraintmaker.interface_Pymol</a>
 </li>
-        <li><a href="_source/restraintmaker.interface_Pymol.html#module-restraintmaker.interface_Pymol.Pymol_Utitlities">restraintmaker.interface_Pymol.Pymol_Utitlities</a>
+        <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#module-restraintmaker.interface_Pymol.pymol_utilities">restraintmaker.interface_Pymol.pymol_utilities</a>
+</li>
+        <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#module-restraintmaker.interface_Pymol.pymol_utilities.program_states">restraintmaker.interface_Pymol.pymol_utilities.program_states</a>
+</li>
+        <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#module-restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities</a>
+</li>
+        <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#module-restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs">restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs</a>
 </li>
         <li><a href="_source/restraintmaker.interface_Pymol.html#module-restraintmaker.interface_Pymol.RestraintMaker_Logic">restraintmaker.interface_Pymol.RestraintMaker_Logic</a>
+</li>
+        <li><a href="_source/restraintmaker.interface_Pymol.html#module-restraintmaker.interface_Pymol.RestraintMaker_Pymol">restraintmaker.interface_Pymol.RestraintMaker_Pymol</a>
 </li>
         <li><a href="_source/restraintmaker.io.html#module-restraintmaker.io">restraintmaker.io</a>
 </li>
@@ -649,6 +717,8 @@
         <li><a href="_source/restraintmaker.io.Files.html#module-restraintmaker.io.Files.Gromos_files">restraintmaker.io.Files.Gromos_files</a>
 </li>
         <li><a href="_source/restraintmaker.io.html#module-restraintmaker.io.Importer">restraintmaker.io.Importer</a>
+</li>
+        <li><a href="_source/restraintmaker.html#module-restraintmaker.restraintMaker">restraintmaker.restraintMaker</a>
 </li>
         <li><a href="_source/restraintmaker.test.html#module-restraintmaker.test">restraintmaker.test</a>
 </li>
@@ -666,13 +736,19 @@
 </li>
         <li><a href="_source/restraintmaker.tools_Rdkit.html#module-restraintmaker.tools_Rdkit.Rdkit_Functions">restraintmaker.tools_Rdkit.Rdkit_Functions</a>
 </li>
-        <li><a href="_source/restraintmaker.types.html#module-restraintmaker.types">restraintmaker.types</a>
-</li>
         <li><a href="_source/restraintmaker.utils.html#module-restraintmaker.utils">restraintmaker.utils</a>
+</li>
+        <li><a href="_source/restraintmaker.utils.html#module-restraintmaker.utils.Types">restraintmaker.utils.Types</a>
 </li>
         <li><a href="_source/restraintmaker.utils.html#module-restraintmaker.utils.Utilities">restraintmaker.utils.Utilities</a>
 </li>
+        <li><a href="_source/restraintmaker.html#module-restraintmaker.wizard">restraintmaker.wizard</a>
+</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.MOVE">MOVE (restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -685,7 +761,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.priority_node.node">node() (restraintmaker.algorithm.Optimizer.priority_node property)</a>
 </li>
-      <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.NoOptimalSolutionException">NoOptimalSolutionException</a>, <a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.NoOptimalSolutionException">[1]</a>
+      <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.NoOptimalSolutionException">NoOptimalSolutionException</a>
 </li>
   </ul></td>
 </tr></table>
@@ -723,6 +799,8 @@
 </li>
       <li><a href="_source/restraintmaker.tools_Rdkit.html#restraintmaker.tools_Rdkit.Rdkit_Functions.PolygonSort">PolygonSort() (in module restraintmaker.tools_Rdkit.Rdkit_Functions)</a>
 </li>
+      <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Position_restraint">Position_restraint (class in restraintmaker.utils.Types)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.print">print() (in module restraintmaker.utils.Utilities)</a>
@@ -733,13 +811,15 @@
 </li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.PropertyFilter">PropertyFilter (class in restraintmaker.algorithm.Filter)</a>
 </li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.provide_services_to_spherical_selection">provide_services_to_spherical_selection() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.geometric_code.pseudo_H_atom_goc_H_atoms_CH3">pseudo_H_atom_goc_H_atoms_CH3 (restraintmaker.io.Files.Gromos_blocks.geometric_code attribute)</a>
 </li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.geometric_code.pseudo_H_atoms_goc_of_three_CH3">pseudo_H_atoms_goc_of_three_CH3 (restraintmaker.io.Files.Gromos_blocks.geometric_code attribute)</a>
 </li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.geometric_code.pseudo_H_atoms_goc_of_two_CH3">pseudo_H_atoms_goc_of_two_CH3 (restraintmaker.io.Files.Gromos_blocks.geometric_code attribute)</a>
 </li>
-      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.Pymol_Utitlities.pymol_selection_to_atom_list">pymol_selection_to_atom_list() (in module restraintmaker.interface_Pymol.Pymol_Utitlities)</a>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.pymol_selection_to_atom_list">pymol_selection_to_atom_list() (in module restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -756,6 +836,10 @@
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_files.disres.read_disres_file">read_disres_file() (restraintmaker.io.Files.Gromos_files.disres method)</a>
 </li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.geometric_code.real_atom">real_atom (restraintmaker.io.Files.Gromos_blocks.geometric_code attribute)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.redraw">redraw() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
+      <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Types.Position_restraint.reference_atom">reference_atom() (restraintmaker.utils.Types.Position_restraint property)</a>
 </li>
       <li><a href="_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_files.disres.required_blocks">required_blocks (restraintmaker.io.Files.Gromos_files.disres attribute)</a>
 
@@ -810,10 +894,31 @@
 </li>
       </ul></li>
       <li>
-    restraintmaker.interface_Pymol.Pymol_Utitlities
+    restraintmaker.interface_Pymol.pymol_utilities
 
       <ul>
-        <li><a href="_source/restraintmaker.interface_Pymol.html#module-restraintmaker.interface_Pymol.Pymol_Utitlities">module</a>
+        <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#module-restraintmaker.interface_Pymol.pymol_utilities">module</a>
+</li>
+      </ul></li>
+      <li>
+    restraintmaker.interface_Pymol.pymol_utilities.program_states
+
+      <ul>
+        <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#module-restraintmaker.interface_Pymol.pymol_utilities.program_states">module</a>
+</li>
+      </ul></li>
+      <li>
+    restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities
+
+      <ul>
+        <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#module-restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities">module</a>
+</li>
+      </ul></li>
+      <li>
+    restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs
+
+      <ul>
+        <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#module-restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs">module</a>
 </li>
       </ul></li>
       <li>
@@ -821,6 +926,13 @@
 
       <ul>
         <li><a href="_source/restraintmaker.interface_Pymol.html#module-restraintmaker.interface_Pymol.RestraintMaker_Logic">module</a>
+</li>
+      </ul></li>
+      <li>
+    restraintmaker.interface_Pymol.RestraintMaker_Pymol
+
+      <ul>
+        <li><a href="_source/restraintmaker.interface_Pymol.html#module-restraintmaker.interface_Pymol.RestraintMaker_Pymol">module</a>
 </li>
       </ul></li>
       <li>
@@ -844,6 +956,8 @@
         <li><a href="_source/restraintmaker.io.Files.html#module-restraintmaker.io.Files">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     restraintmaker.io.Files.Gromacs_files
 
@@ -851,8 +965,6 @@
         <li><a href="_source/restraintmaker.io.Files.html#module-restraintmaker.io.Files.Gromacs_files">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     restraintmaker.io.Files.Gromos_blocks
 
@@ -872,6 +984,13 @@
 
       <ul>
         <li><a href="_source/restraintmaker.io.html#module-restraintmaker.io.Importer">module</a>
+</li>
+      </ul></li>
+      <li>
+    restraintmaker.restraintMaker
+
+      <ul>
+        <li><a href="_source/restraintmaker.html#module-restraintmaker.restraintMaker">module</a>
 </li>
       </ul></li>
       <li>
@@ -931,17 +1050,17 @@
 </li>
       </ul></li>
       <li>
-    restraintmaker.types
-
-      <ul>
-        <li><a href="_source/restraintmaker.types.html#module-restraintmaker.types">module</a>
-</li>
-      </ul></li>
-      <li>
     restraintmaker.utils
 
       <ul>
         <li><a href="_source/restraintmaker.utils.html#module-restraintmaker.utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    restraintmaker.utils.Types
+
+      <ul>
+        <li><a href="_source/restraintmaker.utils.html#module-restraintmaker.utils.Types">module</a>
 </li>
       </ul></li>
       <li>
@@ -951,11 +1070,24 @@
         <li><a href="_source/restraintmaker.utils.html#module-restraintmaker.utils.Utilities">module</a>
 </li>
       </ul></li>
+      <li>
+    restraintmaker.wizard
+
+      <ul>
+        <li><a href="_source/restraintmaker.html#module-restraintmaker.wizard">module</a>
+</li>
+      </ul></li>
       <li><a href="_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.RestraintPair">RestraintPair (class in restraintmaker.utils.Utilities)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard">Restraints_Wizard (class in restraintmaker.interface_Pymol.RestraintMaker_Pymol)</a>
 </li>
       <li><a href="_source/restraintmaker.tools_Rdkit.html#restraintmaker.tools_Rdkit.Rdkit_Functions.ring_atom_filter">ring_atom_filter() (in module restraintmaker.tools_Rdkit.Rdkit_Functions)</a>
 </li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.RingFilter">RingFilter (class in restraintmaker.algorithm.Filter)</a>
+</li>
+      <li><a href="_source/restraintmaker.html#restraintmaker.restraintMaker.run_plugin">run_plugin() (in module restraintmaker.restraintMaker)</a>
+</li>
+      <li><a href="_source/restraintmaker.html#restraintmaker.restraintMaker.run_plugin_gui">run_plugin_gui() (in module restraintmaker.restraintMaker)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -963,6 +1095,8 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.SELECT">SELECT (restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType attribute)</a>
+</li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.PaintSelection.select_atoms_within_sphere">select_atoms_within_sphere() (restraintmaker.algorithm.Selection.PaintSelection method)</a>
 
       <ul>
@@ -973,17 +1107,21 @@
 </li>
       <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_action_type">set_action_type() (restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler method)</a>
 </li>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_mode">set_mode() (restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_mode">set_mode() (restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler method)</a>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.set_wizard_style">set_wizard_style() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
 </li>
       <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_exporter.test_Exporter.setUp">setUp() (restraintmaker.test.test_exporter.test_Exporter method)</a>
 
       <ul>
-        <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf.setUp">(restraintmaker.test.test_importer.test_cnf method)</a>
+        <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer.setUp">(restraintmaker.test.test_importer.test_Importer method)</a>
 </li>
       </ul></li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SingleAtomSelection">SingleAtomSelection (class in restraintmaker.algorithm.Selection)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.SIZE">SIZE (restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType attribute)</a>
 </li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SphericalSelection">SphericalSelection (class in restraintmaker.algorithm.Selection)</a>
 </li>
@@ -994,8 +1132,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_optimizer.test_Optimizer.test_bruteForce_optimizer">test_bruteForce_optimizer() (restraintmaker.test.test_optimizer.test_Optimizer method)</a>
-</li>
-      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf">test_cnf (class in restraintmaker.test.test_importer)</a>
 </li>
       <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_optimizer.test_Optimizer.test_cog_optimizer">test_cog_optimizer() (restraintmaker.test.test_optimizer.test_Optimizer method)</a>
 </li>
@@ -1012,22 +1148,24 @@
       <ul>
         <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_exporter.test_Exporter.test_file_dir">(restraintmaker.test.test_exporter.test_Exporter attribute)</a>
 </li>
-        <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf.test_file_dir">(restraintmaker.test.test_importer.test_cnf attribute)</a>
+        <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer.test_file_dir">(restraintmaker.test.test_importer.test_Importer attribute)</a>
 </li>
       </ul></li>
       <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_exporter.test_Exporter.test_files_IO">test_files_IO (restraintmaker.test.test_exporter.test_Exporter attribute)</a>
 </li>
-      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf.test_files_io">test_files_io (restraintmaker.test.test_importer.test_cnf attribute)</a>
+      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer.test_files_io">test_files_io (restraintmaker.test.test_importer.test_Importer attribute)</a>
 </li>
-      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf.test_files_structures">test_files_structures (restraintmaker.test.test_importer.test_cnf attribute)</a>
+      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer.test_files_structures">test_files_structures (restraintmaker.test.test_importer.test_Importer attribute)</a>
+</li>
+      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer">test_Importer (class in restraintmaker.test.test_importer)</a>
+</li>
+      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer.test_Importer_Gromos_construct">test_Importer_Gromos_construct() (restraintmaker.test.test_importer.test_Importer method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf.test_Importer_Gromos_construct">test_Importer_Gromos_construct() (restraintmaker.test.test_importer.test_cnf method)</a>
+      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer.test_Importer_Gromos_import_disresDat">test_Importer_Gromos_import_disresDat() (restraintmaker.test.test_importer.test_Importer method)</a>
 </li>
-      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf.test_Importer_Gromos_import_disresDat">test_Importer_Gromos_import_disresDat() (restraintmaker.test.test_importer.test_cnf method)</a>
-</li>
-      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_cnf.test_Importer_Gromos_import_file_notFound">test_Importer_Gromos_import_file_notFound() (restraintmaker.test.test_importer.test_cnf method)</a>
+      <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_importer.test_Importer.test_Importer_Gromos_import_file_notFound">test_Importer_Gromos_import_file_notFound() (restraintmaker.test.test_importer.test_Importer method)</a>
 </li>
       <li><a href="_source/restraintmaker.test.html#restraintmaker.test.test_optimizer.test_Optimizer">test_Optimizer (class in restraintmaker.test.test_optimizer)</a>
 </li>
@@ -1051,7 +1189,9 @@
       </ul></li>
       <li><a href="_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer">TreeHeuristicOptimizer (class in restraintmaker.algorithm.Optimizer)</a>
 </li>
-      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.Pymol_Utitlities.try_to_get_args">try_to_get_args() (in module restraintmaker.interface_Pymol.Pymol_Utitlities)</a>
+      <li><a href="_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard.trigger_event">trigger_event() (restraintmaker.interface_Pymol.RestraintMaker_Pymol.Restraints_Wizard method)</a>
+</li>
+      <li><a href="_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.try_to_get_args">try_to_get_args() (in module restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1136,19 +1276,11 @@
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1159,6 +1291,7 @@
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

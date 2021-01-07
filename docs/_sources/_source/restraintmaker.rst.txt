@@ -12,16 +12,15 @@ Subpackages
    restraintmaker.io
    restraintmaker.test
    restraintmaker.tools_Rdkit
-   restraintmaker.types
    restraintmaker.utils
 
 Submodules
 ----------
 
-restraintmaker.RestraintMaker module
+restraintmaker.restraintMaker module
 ------------------------------------
 
-.. automodule:: restraintmaker.RestraintMaker
+.. automodule:: restraintmaker.restraintMaker
    :members:
    :undoc-members:
    :show-inheritance:

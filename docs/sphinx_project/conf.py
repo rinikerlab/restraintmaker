@@ -18,8 +18,6 @@ import sys
 sys.path.insert(0, os.path.abspath('../..'))
 sys.path.insert(0, os.path.abspath('../../..'))
 
-sys.setrecursionlimit(10000)
-
 import restraintmaker
 
 

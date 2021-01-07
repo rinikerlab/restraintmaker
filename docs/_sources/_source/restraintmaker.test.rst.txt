@@ -44,6 +44,14 @@ restraintmaker.test.test\_optimizer module
    :undoc-members:
    :show-inheritance:
 
+restraintmaker.test.test\_restraintMaker\_PyMol module
+------------------------------------------------------
+
+.. automodule:: restraintmaker.test.test_restraintMaker_PyMol
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

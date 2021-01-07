@@ -1,7 +1,8 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -11,32 +12,31 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
   
   
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="restraintmaker.interface_Pymol package" href="restraintmaker.interface_Pymol.html" />
+    <link rel="prev" title="restraintmaker package" href="restraintmaker.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> restraintMaker
+            <a href="../index.html" class="icon icon-home"> restraintMaker
           
 
           
@@ -73,7 +73,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -82,14 +81,33 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">restraintmaker</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="restraintmaker.html">restraintmaker package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="restraintmaker.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">restraintmaker.algorithm package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.interface_Pymol.html">restraintmaker.interface_Pymol package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.io.html">restraintmaker.io package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.test.html">restraintmaker.test package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.tools_Rdkit.html">restraintmaker.tools_Rdkit package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.utils.html">restraintmaker.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="restraintmaker.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="restraintmaker.html#module-restraintmaker.restraintMaker">restraintmaker.restraintMaker module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="restraintmaker.html#module-restraintmaker.wizard">restraintmaker.wizard module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="restraintmaker.html#module-restraintmaker">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -128,7 +146,11 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">restraintmaker</a> &raquo;</li>
+        
+          <li><a href="restraintmaker.html">restraintmaker package</a> &raquo;</li>
         
       <li>restraintmaker.algorithm package</li>
     
@@ -377,34 +399,41 @@ Warnings: using tools_Rdkit. Needs conversion to tools_Rdkit molecules. =&gt; Ne
 <dl class="py class">
 <dt id="restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer">
 <em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">BruteForceRingOptimzer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#BruteForceRingOptimzer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer" title="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer</span></code></a></p>
-<p>A Molecule Ring Optimzier that connects TwoMolecules by finding Optimizing some criterion by brute force</p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#BruteForceRingOptimzer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Molecule Ring Optimzier that connects TwoMolecules by finding Optimizing some criterion by brute force
+TODO: Think: Could we use a version of volume optimizer that does not do pairwise connections?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>atoms</strong> (<em>t.List[u.Atom]</em>) – list of atoms</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt id="restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.connect_two_molecules">
 <code class="sig-name descname">connect_two_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m1</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">m2</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types._Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#BruteForceRingOptimzer.connect_two_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.connect_two_molecules" title="Permalink to this definition">¶</a></dt>
-<dd><p>connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer</p>
-<dl>
-<dt>For three BruteForeceRingOptimizer that is by evaluating a criterion for every possible set of rsetraints and choosing the best.</dt><dd><dl class="field-list simple">
-<dt class="field-odd">param m1</dt>
-<dd class="field-odd"><p>Molecule 1</p>
+<dd><blockquote>
+<div><p>connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m1</strong> (<em>t.List[u.Atom]</em>) – Molecule 1</p></li>
+<li><p><strong>m2</strong> (<em>t.List[u.Atom]</em>) – Molecule 1</p></li>
+<li><p><strong>n</strong></p></li>
+</ul>
 </dd>
-<dt class="field-even">type m1</dt>
-<dd class="field-even"><p>t.List[u.Atom]</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Restraints between those atoms</p>
 </dd>
-<dt class="field-odd">param m2</dt>
-<dd class="field-odd"><p>Molecule 2</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>t.List[RestraintType._RestraintType]</p>
 </dd>
-<dt class="field-even">type m2</dt>
-<dd class="field-even"><p>t.List[u.Atom]</p>
-</dd>
-<dt class="field-odd">return</dt>
-<dd class="field-odd"><p>Restraints between those atoms</p>
-</dd>
-<dt class="field-even">rtype</dt>
-<dd class="field-even"><p>t.List[RestraintType._RestraintType]:</p>
-</dd>
-</dl>
-<p>:raises NotImplementedError if _MoleculeRingOptimizer.connect_two_molecules is called directly.</p>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – if _MoleculeRingOptimizer.connect_two_molecules is called directly.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -413,31 +442,20 @@ Warnings: using tools_Rdkit. Needs conversion to tools_Rdkit molecules. =&gt; Ne
 <dt id="restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.get_args">
 <code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#BruteForceRingOptimzer.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.get_args" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div><p>get_args needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</p>
+<div><p>needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input_function</strong> (<em>t.Callable</em><em>[</em><em>str</em><em>]</em>) – A function that can get the input</p></li>
-<li><p><strong>message</strong> (<em>str</em>) – A string that is displayed if input function needs to communicate with the user</p></li>
-</ul>
+<dd class="field-odd"><p><strong>input_function</strong> (<em>t.Callable[str]</em>) – A function that can get the input</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li></li>
-</ul>
-</p>
+<dd class="field-even"><p></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><ul class="simple">
-<li></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">raises</dt>
-<dd class="field-odd"><p>BadArgumentException if the input function does not provide all arguments in the necessary format</p>
+<dd class="field-odd"><p>NoReturn</p>
 </dd>
-</dl>
-</p>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException" title="restraintmaker.utils.Utilities.BadArgumentException"><strong>BadArgumentException</strong></a> – if the input function does not provide all arguments in the necessary format</p>
 </dd>
 </dl>
 </dd></dl>
@@ -447,257 +465,184 @@ Warnings: using tools_Rdkit. Needs conversion to tools_Rdkit molecules. =&gt; Ne
 <dl class="py class">
 <dt id="restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer">
 <em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">MetaMoleculeRingOptimizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#MetaMoleculeRingOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer" title="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer</span></code></a></p>
-<p>class MetaMoleculeRingOptimizer: Meta Optimizer which compares the solution of different Optimizers for each Molecule pair  and picks the best</p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#MetaMoleculeRingOptimizer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meta Optimizer which compares the solution of different Optimizers for each Molecule pair  and picks the best</p>
 <p>Warning: As implemented now, it can NOT be generalized to other Optimizer types than RingOptimizers.
 Warning: The complete solution of the BestMoleculesRingOPtimizer is NOT equal to any of the Optimizers it test. It will pick the best solution for each pair of molecules, leading to a different ring than any of the single Optimizers
 Warning: As Implemented now, it can not deal with future Molecule Ring Optimizers, which might have additional arguments</p>
+<blockquote>
+<div><dl>
+<dt>TODO GENERALIZE: 1) Allow to indicate which Optimizers to include, instead of hardcoding all of them</dt><dd><blockquote>
+<div><ol class="arabic simple" start="2">
+<li><p>Allow to give the arguments for each single Optimizer, instead of using the same ones for each Optimizer(except of course criterion/update function.)</p></li>
+</ol>
+</div></blockquote>
+<p>Would be perfect if we could pass Optimizers as arguments</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
 <dl class="py method">
 <dt id="restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.connect_two_molecules">
 <code class="sig-name descname">connect_two_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m1</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">m2</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#MetaMoleculeRingOptimizer.connect_two_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.connect_two_molecules" title="Permalink to this definition">¶</a></dt>
-<dd><p>connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>m1</strong> (<em>t.List</em><em>[</em><em>u.Atom</em><em>]</em>) – Molecule 1</p></li>
-<li><p><strong>m2</strong> (<em>t.List</em><em>[</em><em>u.Atom</em><em>]</em>) – Molecule 2</p></li>
+<li><p><strong>m1</strong></p></li>
+<li><p><strong>m2</strong></p></li>
+<li><p><strong>n</strong></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Restraints between those atoms</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>t.List[RestraintType._RestraintType]:</p>
-</dd>
 </dl>
-<p>:raises NotImplementedError if _MoleculeRingOptimizer.connect_two_molecules is called directly.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.get_args">
 <code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#MetaMoleculeRingOptimizer.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.get_args" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
+<dd><blockquote>
+<div><p>needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_function</strong> (<em>t.Callable[str]</em>) – A function that can get the input</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException" title="restraintmaker.utils.Utilities.BadArgumentException"><strong>BadArgumentException</strong></a> – if the input function does not provide all arguments in the necessary format</p>
 </dd>
 </dl>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py exception">
-<dt id="restraintmaker.algorithm.Optimizer.NoOptimalSolutionException">
-<em class="property">exception </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">NoOptimalSolutionException</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#NoOptimalSolutionException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.NoOptimalSolutionException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
-<p>A NoOptimalSolutionException is thrown, when an Optimizer reaches the end of its procedure without having found a solution fulfilling its criteria.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer">
 <em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">TreeHeuristicOptimizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#TreeHeuristicOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer" title="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer</span></code></a></p>
-<p>..class MoleculeRingOptimizer_0_1. Connects Molecules pairwise, forming a topological ring. (Not all Molecules are connected to each other. Each is only connected to 2 neighbours).
-First the all Molecules pairs are connected. Then a ring is formed by using the best pairs.
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#TreeHeuristicOptimizer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>First the all Molecules pairs are connected. Then a ring is formed by using the best pairs.
 These restraints between two molecules are chosen heuristically by finding distance restraints that are as far apart as possilbe. (Non optimal solution)</p>
+<dl class="simple">
+<dt>TODO: Speed is far from optimal, because some of the taks done by the utility functions are redundant:</dt><dd><ol class="arabic simple">
+<li><p>We do not need to construct the whole spanning tree. We could stop, after we have found best connections</p></li>
+<li><p>The info about which atom belongs to which molecule is lost when we call get_all_short_connections(…), and get_all_short_connections checks it again</p></li>
+<li><p>The info about connectiviy in the tree is lost when it is returned as a list as has to be tediouly reconstructed while walking the tree</p></li>
+</ol>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>atoms</strong> (<em>t.List[u.Atom]</em>) – list of selected atoms</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt id="restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.connect_two_molecules">
 <code class="sig-name descname">connect_two_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m1</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">m2</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types._Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#TreeHeuristicOptimizer.connect_two_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.connect_two_molecules" title="Permalink to this definition">¶</a></dt>
-<dd><p>connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer</p>
-<p>For three heurstic Optimizer that is by greedly picking restraints according to a criterion depending on the already chosen restraints</p>
-<blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param m1</dt>
-<dd class="field-odd"><p>Molecule 1</p>
-</dd>
-<dt class="field-even">type m1</dt>
-<dd class="field-even"><p>t.List[u.Atom]</p>
-</dd>
-<dt class="field-odd">param m2</dt>
-<dd class="field-odd"><p>Molecule 2</p>
-</dd>
-<dt class="field-even">type m2</dt>
-<dd class="field-even"><p>t.List[u.Atom]</p>
-</dd>
-<dt class="field-odd">return</dt>
-<dd class="field-odd"><p>Restraints between those atoms</p>
-</dd>
-<dt class="field-even">rtype</dt>
-<dd class="field-even"><p>t.List[RestraintType._RestraintType]:</p>
-</dd>
-</dl>
-<p>:raises NotImplementedError if _MoleculeRingOptimizer.connect_two_molecules is called directly.</p>
-</div></blockquote>
-</dd></dl>
-
-<dl class="py method">
-<dt id="restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.get_args">
-<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#TreeHeuristicOptimizer.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.get_args" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>get_args needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</p>
-</div></blockquote>
+<dd><p>For three heurstic Optimizer that is by greedly picking restraints according to a criterion depending on the already chosen restraints</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>input_function</strong> (<em>t.Callable</em><em>[</em><em>str</em><em>]</em>) – A function that can get the input</p></li>
-<li><p><strong>message</strong> (<em>str</em>) – A string that is displayed if input function needs to communicate with the user</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><ul class="simple">
-<li></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">raises</dt>
-<dd class="field-odd"><p>BadArgumentException if the input function does not provide all arguments in the necessary format</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer">
-<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_MoleculeRingOptimizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_MoleculeRingOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#restraintmaker.algorithm.Optimizer._Optimizer" title="restraintmaker.algorithm.Optimizer._Optimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Optimizer._Optimizer</span></code></a></p>
-<p>Abstract parent class for all Molecule Ring Optimziers. Molecule Ring Optimziers set their restraints by finding the best set of restraints between pairs of Molecules. In the end everz molecule is connected to two other molecules</p>
-<dl class="py method">
-<dt id="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer.connect_two_molecules">
-<code class="sig-name descname">connect_two_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m1</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">m2</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types._Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_MoleculeRingOptimizer.connect_two_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer.connect_two_molecules" title="Permalink to this definition">¶</a></dt>
-<dd><p>connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>m1</strong> (<em>t.List</em><em>[</em><em>u.Atom</em><em>]</em>) – Molecule 1</p></li>
-<li><p><strong>m2</strong> (<em>t.List</em><em>[</em><em>u.Atom</em><em>]</em>) – Molecule 2</p></li>
+<li><p><strong>m1</strong> (<em>t.List[u.Atom]</em>) – Molecule 1</p></li>
+<li><p><strong>m2</strong> (<em>t.List[u.Atom]</em>) – Molecule 2</p></li>
+<li><p><strong>n</strong></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Restraints between those atoms</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>t.List[RestraintType._RestraintType]:</p>
+<dd class="field-odd"><p>t.List[RestraintType._RestraintType]</p>
 </dd>
 </dl>
-<p>:raises NotImplementedError if _MoleculeRingOptimizer.connect_two_molecules is called directly.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer.make_restraints">
-<code class="sig-name descname">make_restraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types._Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_MoleculeRingOptimizer.make_restraints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer.make_restraints" title="Permalink to this definition">¶</a></dt>
-<dd><p>make_restraints() returns a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used:</p>
-<p>All MoleculeRingOptimizers inherit make_restraint form _Molecule RingOptimizer. Only the function connect_two_Molecules differs. Connects Molecules pairwise, forming a topological ring. (Not all Molecules are connected to each other. Each is only connected to 2 neighbours).
-The Molecules are connected in alphanumerical order of their name. No Optimization.
-The molecules are connected, by applying a Pairwise distance restraint to n pairs of Atoms.
-These Atoms are chosen heuristically by finding distance restraints that are as far apart as possilbe. (Non optimal solution)
-:return: A List of Restraints
-:rtype: t.list[RestraintType.PairRestraint]
-:raises: NoOptimalSolutionException if no Solution fulfilling all criteria can be found. For MoleculeRingOptimizer: Not enough restraints shorter than cutoff</p>
+<dt id="restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#TreeHeuristicOptimizer.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_function</strong> (<em>t.Callable[str]</em>) – A function that can get the input</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>if the input function does not provide all arguments in the necessary format</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException" title="restraintmaker.utils.Utilities.BadArgumentException">BadArgumentException</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="py class">
-<dt id="restraintmaker.algorithm.Optimizer._Optimizer">
-<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_Optimizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_Optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._Optimizer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt id="restraintmaker.algorithm.Optimizer._Optimizer.get_args">
-<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_Optimizer.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._Optimizer.get_args" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt id="restraintmaker.algorithm.Optimizer._calculate_value_convex_hull">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_calculate_value_convex_hull</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">restraint_pos</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Tuple<span class="p">[</span>float<span class="p">, </span>float<span class="p">, </span>float<span class="p">]</span><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; float<a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_calculate_value_convex_hull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._calculate_value_convex_hull" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div><p>get_args needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</p>
+<div><p>calculate the conves hull volume of a set of restraint cogs.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input_function</strong> (<em>t.Callable</em><em>[</em><em>str</em><em>]</em>) – A function that can get the input</p></li>
-<li><p><strong>message</strong> (<em>str</em>) – A string that is displayed if input function needs to communicate with the user</p></li>
-</ul>
+<dd class="field-odd"><p><strong>restraint_pos</strong></p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li></li>
-</ul>
-</p>
+<dd class="field-even"><p>volume of the convex hull</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><ul class="simple">
-<li></li>
-</ul>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.algorithm.Optimizer._calculate_value_scaled_pca_2d">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_calculate_value_scaled_pca_2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">restraint_pos</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_calculate_value_scaled_pca_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._calculate_value_scaled_pca_2d" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Todo: to be removed
+# TODO: Scaling before pca is not really reasonable, because we do prefer a big relative variance in the biggest dimensions
+# TODO: Function returns a lot of stuff we do not need.</p>
+</div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">raises</dt>
-<dd class="field-odd"><p>BadArgumentException if the input function does not provide all arguments in the necessary format</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>restraint_pos</strong></p>
 </dd>
 </dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="restraintmaker.algorithm.Optimizer._Optimizer.make_restraints">
-<code class="sig-name descname">make_restraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types._Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_Optimizer.make_restraints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._Optimizer.make_restraints" title="Permalink to this definition">¶</a></dt>
-<dd><p>make_restraints() return a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used.
-:raises: NoOptimalSolutionException if no Solution fulfilling all criteria can be found.
-:return: A List of Restraints
-:rtype: t.List[RestraintType.RestraintType]</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py function">
 <dt id="restraintmaker.algorithm.Optimizer._calculate_value_unscaled_pca_2d">
-<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_calculate_value_unscaled_pca_2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">restraint_pos</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_calculate_value_unscaled_pca_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._calculate_value_unscaled_pca_2d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Quantity to optimize is the 2d-volume of the PCA of the restraint positions</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="restraintmaker.algorithm.Optimizer._get_all_short_connections">
-<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_get_all_short_connections</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">max_dis</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types.Distance_Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_get_all_short_connections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._get_all_short_connections" title="Permalink to this definition">¶</a></dt>
-<dd><p>Old. Only here to keep get_maximal_tree_kruskal_running. Delete when not needed anymore
-get_all_short_connections(…) finds all pairs of atoms within a certain cutoff distance of each other. Atoms withing the same molecules can are not connected
-:param atoms: List of atoms
-:type atoms: t.List[u.Atom]
-:param max_dis: maximal distance of two connected atoms in nm
-:type max_dis: float
-:return: A list of all connections, shorter than max_dis
-:rtype: t.List[u.connection]</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="restraintmaker.algorithm.Optimizer._not_debugged_maximum_spanning_tree_kruskal">
-<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_not_debugged_maximum_spanning_tree_kruskal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cons</span><span class="p">:</span> <span class="n">List<span class="p">[</span>restraintmaker.utils.Types.Distance_Restraint<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.RestraintPair" title="restraintmaker.utils.Utilities.RestraintPair">restraintmaker.utils.Utilities.RestraintPair</a><span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_not_debugged_maximum_spanning_tree_kruskal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._not_debugged_maximum_spanning_tree_kruskal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finds a maximal spanning tree in which the nodes represent distance restraints and edges the distance between their middles.
-The ‘tree’ will be provided in the form of a list. Connectivity info is not explicitly given. Due to the priority queue implementation of Kruskal’s Algorithm the list is guaranteed to be sorted by descending distance.</p>
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_calculate_value_unscaled_pca_2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">restraint_pos</span></em><span class="sig-paren">)</span> &#x2192; float<a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_calculate_value_unscaled_pca_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._calculate_value_unscaled_pca_2d" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Quantity to optimize is the 2d-volume of the PCA of the restraint positions</p>
+<blockquote>
+<div><p>TODO: Test!!!!!!
+TODO: Think about other possibilities: 3d-volume / covariance / pca of all involved atoms instead of restraint</p>
+</div></blockquote>
+</div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">WARNING</dt>
-<dd class="field-odd"><p>But it is not guaranteed that consecutive edges are connected!!!</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>restraint_pos</strong></p>
 </dd>
-<dt class="field-even">WARNING</dt>
-<dd class="field-even"><p>Involves calculating distances between all Restraint pairs. =&gt; O(n^2). Only use on preselected lists of connections</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>eigenvalue product -&gt; in twoD, a square area of “deviation”</p>
 </dd>
-<dt class="field-odd">Warning</dt>
-<dd class="field-odd"><p>old and not supported. Only kept here to keep connect two Molecules_kruskal_running</p>
-</dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><p><strong>cons</strong> (<em>t.List</em><em>[</em><em>u.connections</em><em>]</em>) – List of connections (Pairwise Distance Restraints)</p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>The tree in the form of Pairs of connections and their distances</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>list[u.RestraintPair]</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -705,76 +650,128 @@ The ‘tree’ will be provided in the form of a list. Connectivity info is not 
 <dl class="py function">
 <dt id="restraintmaker.algorithm.Optimizer.calculate_value_pca_relative_to_pca_of_both_molecules">
 <code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">calculate_value_pca_relative_to_pca_of_both_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">restraint_pos</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#calculate_value_pca_relative_to_pca_of_both_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.calculate_value_pca_relative_to_pca_of_both_molecules" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="restraintmaker.algorithm.Optimizer.compare_pair_optimizers">
-<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">compare_pair_optimizers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">criterion</span><span class="p">:</span> <span class="n">Callable<span class="p">[</span><span class="p">[</span>Tuple<span class="p">[</span>float<span class="p">]</span><span class="p">]</span><span class="p">, </span>float<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">opt_types</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer" title="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer">restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer</a><span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">opt_args</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Tuple<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">out_path</span></em>, <em class="sig-param"><span class="n">new_dir_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#compare_pair_optimizers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.compare_pair_optimizers" title="Permalink to this definition">¶</a></dt>
-<dd><p>compare_pair_optimizers runs different optimizers over the same set of atoms, saves the restraints for each PAIR of Molecules (not just the ones chosen for the ring), assigns them a value and saves all values acheived with different optimizers
-:param criterion: A function which assigns a value to a set of restraints, depending on their positions
-:type criterion: criterion: t.Callable[[t.Tuple[t.float]],float]
-:param atoms: List of atoms
-:type atoms: t.List[u.atom]
-:param opt_types: types of Optimzers which have to be compared. Must be Molecules Ring Optimziers
-:type opt_types: t.List[t.Type[_MoleculeRingOptimizer]]
-:param opt_args: args for the different Optimizers. Needs to have same length a opt, types
-:type opt_args: t.List[t.Tuple]
-:param out_path: path where a folder containing all the output should be saved.
-:type out_path: str or None
-:raises ValueError if arguments have a bad format
-:raises OSError if the directory can not be created
-:return:
-:rtype:</p>
+<dd><blockquote>
+<div><p>calculate eigenvalues for restraints-cogs
+Todo: to be removed</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>restraint_pos</strong></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>eigenvals</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[float]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="restraintmaker.algorithm.Optimizer.find_middle">
-<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">find_middle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">r</span><span class="p">:</span> <span class="n">restraintmaker.utils.Types.Distance_Restraint</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#find_middle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.find_middle" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="restraintmaker.algorithm.Optimizer.cog_distance_restraint">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">cog_distance_restraint</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">r</span><span class="p">:</span> <span class="n"><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint" title="restraintmaker.utils.Types.Distance_Restraint">restraintmaker.utils.Types.Distance_Restraint</a></span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>float<span class="p">, </span>float<span class="p">, </span>float<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#cog_distance_restraint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.cog_distance_restraint" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Calculate the cog of a distance restraint</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>r</strong> (<em>Types.Distance_Restraint</em>)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the cog between two atoms building a distance restraint</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[float, float, float]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="restraintmaker.algorithm.Optimizer.get_all_short_pair_restraints">
-<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">get_all_short_pair_restraints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">max_dis</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types.Distance_Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#get_all_short_pair_restraints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.get_all_short_pair_restraints" title="Permalink to this definition">¶</a></dt>
-<dd><p>get_all_short_pair_restraints: finds all pairs of atoms within a certain cutoff distance of each other. Atoms withing the same molecules can are not connected
-:param __atoms: List of atoms
-:type __atoms: t.List[u.Atom]
-:param max_dis: maximal distance of two connected atoms in nm
-:type max_dis: float
-:return: A list of all connections, shorter than max_dis
-:rtype: t.List[RestraintType.Pair_Restraint]:</p>
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">get_all_short_pair_restraints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">max_dis</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint" title="restraintmaker.utils.Types.Distance_Restraint">restraintmaker.utils.Types.Distance_Restraint</a><span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#get_all_short_pair_restraints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.get_all_short_pair_restraints" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>finds all pairs of atoms within a certain cutoff distance of each other. Atoms withing the same molecules can are not connected</p>
+<p>TODO: SPEED: first sort bymolecules and then only compare the molecule list, to avaiod all forbidden combinations of atoms within the samemolecules</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atoms</strong> (<em>t.List[u.Atom]</em>) – List of atoms</p></li>
+<li><p><strong>max_dis</strong> (<em>float</em>) – maximal distance of two connected atoms in nm</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of all connections, shorter than max_dis</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>t.List[RestraintType.Pair_Restraint]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="restraintmaker.algorithm.Optimizer.maximal_spanning_tree_greedy">
-<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">maximal_spanning_tree_greedy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">potential_restraints</span><span class="p">:</span> <span class="n">List<span class="p">[</span>restraintmaker.utils.Types.Distance_Restraint<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">priority_algo</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types.Distance_Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#maximal_spanning_tree_greedy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.maximal_spanning_tree_greedy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">maximal_spanning_tree_greedy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">potential_restraints</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint" title="restraintmaker.utils.Types.Distance_Restraint">restraintmaker.utils.Types.Distance_Restraint</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">priority_algo</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint" title="restraintmaker.utils.Types.Distance_Restraint">restraintmaker.utils.Types.Distance_Restraint</a><span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#maximal_spanning_tree_greedy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.maximal_spanning_tree_greedy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds a maximal spanning tree in which the nodes represent distance restraints and edges the distance between their middles.
 The ‘tree’ will be provided in the form of a list. Connectivity info is not explicitly given. Due to the working of Prims Algorithm it is guaranteed, that every vortex in the list is connected to one vortex before it in the list
 WARNING: But it is not guaranteed that the edges are ordered by size
-WARNING: Involves calculating distances between all Restraint pairs. =&gt; O(n!). Only use on preselected lists of connections
-:param cons: List of connections (Pairwise Distance Restraints)
-:type cons: t.List[u.connections]
-:return: The tree in the form of Pairs of connections and their distances
-:param n: how many restraints should be set?
-:type n: int
-:param priority_algo: Which algorithm should be used to update priorities of not yet chosen nodes?
-:type priority_algo: str
-:rtype: .list[u.RestraintPair]</p>
+WARNING: Involves calculating distances between all Restraint pairs. =&gt; O(n!). Only use on preselected lists of connections</p>
+<p>TODO: Implement different options for distance calculation within this function.
+I think passing a function get_priority as argument would become really dirty really, quickly. But I can define some options as inner functions
+BUT: Do I slow it down thisway. What is the cost of a function call?</p>
+<dl class="simple">
+<dt>Options i want: 1) Prim: Distance to farthest node in tree not yet in tree</dt><dd><ol class="arabic simple" start="2">
+<li><p>closest: Distance to closeest node in maximal_spanning_tree_prim)</p></li>
+<li><p>Average: Average distance to all nodes already in tree</p></li>
+</ol>
+</dd>
+</dl>
+<p>Have to define priority_node as class for now, even though it is totally overkill. I need it to be mutable, so I can update priorities. But now I actually have to use opeator overloading to make it heapq compatible =&gt;
+TODO: Find a better solution</p>
+<p>Give each node its initial priority: The dstance to the FARTHEST node
+Read carefully: I sacrificed readability to mimize having to call certain attributes to often. Use _ as . operator</p>
+<p>TODO: Move those inner functions out, so they can be reused in othre places
+Define the different Algorithms</p>
+<p>TODO: The current setup is a bit confusing:
+_update_priority_(v) accesses the newly chosen node from within the function. Would be cleaner to give list of chosen restraints as arg as well</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>potential_restraints</strong> (<em>t.List[u.connections]</em>) – List of connections (Pairwise Distance Restraints)</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – how many restraints should be set?</p></li>
+<li><p><strong>priority_algo</strong> (<em>str</em>) – Which algorithm should be used to update priorities of not yet chosen nodes?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The tree in the form of Pairs of connections and their distances</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>t.List[u.RestraintPair]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="restraintmaker.algorithm.Optimizer.maximal_weight_ring">
 <code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">maximal_weight_ring</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">edge_list</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">value_list</span><span class="p">:</span> <span class="n">List<span class="p">[</span>float<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n_nodes</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#maximal_weight_ring"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.maximal_weight_ring" title="Permalink to this definition">¶</a></dt>
-<dd><p>maximal_weight_ring chooses from a list of edges the ones that form the biggest ring including all nodes.
-Nodes are considered as ints (indices) and edges as tuples of nodes
-:warning: if the input is NOT a fully connected graph there might be no solution
-:param edge_list: list of all edges as tuples of ints
-:type edge_list: t.List[t.Tuple[int,int]]
-:param value_list: A list of all edge weights
-:type value_list: t.List[float]
-:param n_nodes: Number of nodes
-:type n_nodes: int
-:returns: Indices of the chosen edges
-:rtype t.List[ind]</p>
+<dd><p>chooses from a list of edges the ones that form the biggest ring including all nodes.
+Nodes are considered as ints (indices) and edges as tuples of nodes</p>
+<p>&#64;Warning: if the input is NOT a fully connected graph there might be no solution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edge_list</strong> (<em>t.List[t.Tuple[int,int]]</em>) – list of all edges as tuples of ints</p></li>
+<li><p><strong>value_list</strong> (<em>t.List[float]</em>) – A list of all edge weights</p></li>
+<li><p><strong>n_nodes</strong> (<em>int</em>) – Number of nodes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Indices of the chosen edges</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>t.List[ind]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py class">
@@ -1388,24 +1385,25 @@ In Universal selection, the selection will be set directly by this function to a
           </div>
           <footer>
   
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="restraintmaker.interface_Pymol.html" class="btn btn-neutral float-right" title="restraintmaker.interface_Pymol package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="restraintmaker.html" class="btn btn-neutral float-left" title="restraintmaker package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1416,6 +1414,7 @@ In Universal selection, the selection will be set directly by this function to a
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

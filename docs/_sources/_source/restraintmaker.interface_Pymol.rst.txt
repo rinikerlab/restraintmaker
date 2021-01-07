@@ -1,16 +1,16 @@
 restraintmaker.interface\_Pymol package
 =======================================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   restraintmaker.interface_Pymol.pymol_utilities
+
 Submodules
 ----------
-
-restraintmaker.interface\_Pymol.Pymol\_Utitlities module
---------------------------------------------------------
-
-.. automodule:: restraintmaker.interface_Pymol.Pymol_Utitlities
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 restraintmaker.interface\_Pymol.RestraintMaker\_Logic module
 ------------------------------------------------------------
@@ -20,10 +20,10 @@ restraintmaker.interface\_Pymol.RestraintMaker\_Logic module
    :undoc-members:
    :show-inheritance:
 
-restraintmaker.interface\_Pymol.RestraintMaker\_PyMOL module
+restraintmaker.interface\_Pymol.RestraintMaker\_Pymol module
 ------------------------------------------------------------
 
-.. automodule:: restraintmaker.interface_Pymol.RestraintMaker_PyMOL
+.. automodule:: restraintmaker.interface_Pymol.RestraintMaker_Pymol
    :members:
    :undoc-members:
    :show-inheritance:

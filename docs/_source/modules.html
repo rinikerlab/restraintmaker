@@ -1,7 +1,8 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -11,32 +12,31 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
   
   
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="restraintmaker package" href="restraintmaker.html" />
+    <link rel="prev" title="Example Execution for RestraintMaker" href="../examples/example_script_execution.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> restraintMaker
+            <a href="../index.html" class="icon icon-home"> restraintMaker
           
 
           
@@ -73,7 +73,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -82,14 +81,18 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">restraintmaker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="restraintmaker.html">restraintmaker package</a></li>
+</ul>
+</li>
 </ul>
 
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -128,7 +131,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
         
       <li>restraintmaker</li>
     
@@ -188,10 +191,10 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="restraintmaker.interface_Pymol.html">restraintmaker.interface_Pymol package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.interface_Pymol.html#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.interface_Pymol.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="restraintmaker.interface_Pymol.html#module-restraintmaker.interface_Pymol.Pymol_Utitlities">restraintmaker.interface_Pymol.Pymol_Utitlities module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.interface_Pymol.html#module-restraintmaker.interface_Pymol.RestraintMaker_Logic">restraintmaker.interface_Pymol.RestraintMaker_Logic module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="restraintmaker.interface_Pymol.html#restraintmaker-interface-pymol-restraintmaker-pymol-module">restraintmaker.interface_Pymol.RestraintMaker_PyMOL module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.interface_Pymol.html#module-restraintmaker.interface_Pymol.RestraintMaker_Pymol">restraintmaker.interface_Pymol.RestraintMaker_Pymol module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.interface_Pymol.html#module-restraintmaker.interface_Pymol">Module contents</a></li>
 </ul>
 </li>
@@ -200,7 +203,6 @@
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.io.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.io.html#module-restraintmaker.io.Exporter">restraintmaker.io.Exporter module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.io.html#module-restraintmaker.io.Importer">restraintmaker.io.Importer module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="restraintmaker.io.html#restraintmaker-io-pymol-writeoutgromoscnf-module">restraintmaker.io.pymol_writeOutGromosCnf module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.io.html#module-restraintmaker.io">Module contents</a></li>
 </ul>
 </li>
@@ -211,6 +213,7 @@
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.test.html#module-restraintmaker.test.test_exporter">restraintmaker.test.test_exporter module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.test.html#module-restraintmaker.test.test_importer">restraintmaker.test.test_importer module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.test.html#module-restraintmaker.test.test_optimizer">restraintmaker.test.test_optimizer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.test.html#restraintmaker-test-test-restraintmaker-pymol-module">restraintmaker.test.test_restraintMaker_PyMol module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.test.html#module-restraintmaker.test">Module contents</a></li>
 </ul>
 </li>
@@ -220,15 +223,9 @@
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.tools_Rdkit.html#module-restraintmaker.tools_Rdkit">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="restraintmaker.types.html">restraintmaker.types package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="restraintmaker.types.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="restraintmaker.types.html#restraintmaker-types-restraint-module">restraintmaker.types.Restraint module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="restraintmaker.types.html#restraintmaker-types-restrainttype-module">restraintmaker.types.RestraintType module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="restraintmaker.types.html#module-restraintmaker.types">Module contents</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="restraintmaker.utils.html">restraintmaker.utils package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.utils.html#module-restraintmaker.utils.Types">restraintmaker.utils.Types module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.utils.html#module-restraintmaker.utils.Utilities">restraintmaker.utils.Utilities module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="restraintmaker.utils.html#module-restraintmaker.utils">Module contents</a></li>
 </ul>
@@ -236,8 +233,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="restraintmaker.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="restraintmaker.html#restraintmaker-restraintmaker-module">restraintmaker.RestraintMaker module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="restraintmaker.html#restraintmaker-wizard-module">restraintmaker.wizard module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="restraintmaker.html#module-restraintmaker.restraintMaker">restraintmaker.restraintMaker module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="restraintmaker.html#module-restraintmaker.wizard">restraintmaker.wizard module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="restraintmaker.html#module-restraintmaker">Module contents</a></li>
 </ul>
 </li>
@@ -251,24 +248,25 @@
           </div>
           <footer>
   
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="restraintmaker.html" class="btn btn-neutral float-right" title="restraintmaker package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../examples/example_script_execution.html" class="btn btn-neutral float-left" title="Example Execution for RestraintMaker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -279,6 +277,7 @@
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

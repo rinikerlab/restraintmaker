@@ -88,7 +88,7 @@ def compare_pair_optimizers(criterion: t.Callable[[t.Tuple[float]], float], atom
                     # Calculate Value
 
                     values_of_mol_pairs_by_all_optimizers[str(i_m1 + 1) + '_' + str(i_m2 + 1)][ind] = criterion(
-                        [o.find_middle(r) for r in pairwise_restraints])
+                        [o.cog_distance_restraint(r) for r in pairwise_restraints])
                 except u.NoOptimalSolutionException:
                     my_file = open(out_dir + '/restraints_' + str(i_m1 + 1) + '-' + str(i_m2 + 1) + '/' + filename, 'w')
                     my_file.write('#NO Restraints could be generated. (Not enough atoms within cutoff distance')

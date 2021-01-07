@@ -28,14 +28,6 @@ restraintmaker.io.Importer module
    :undoc-members:
    :show-inheritance:
 
-restraintmaker.io.pymol\_writeOutGromosCnf module
--------------------------------------------------
-
-.. automodule:: restraintmaker.io.pymol_writeOutGromosCnf
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

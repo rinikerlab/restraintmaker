@@ -1,0 +1,512 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities &mdash; restraintMaker  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_source/modules.html">restraintmaker</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    contains functions that are useful to the restraintmaker_PyMOL module, but do not need to be within the Distance_restraints class</span>
+<span class="sd">    This also includes  functions that are only usefull for debugging and testing</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+
+<span class="kn">from</span> <span class="nn">pymol</span> <span class="kn">import</span> <span class="n">cmd</span>
+
+<span class="kn">from</span> <span class="nn">restraintmaker.utils</span> <span class="kn">import</span> <span class="n">Utilities</span> <span class="k">as</span> <span class="n">u</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.utils.Utilities</span> <span class="kn">import</span> <span class="nb">print</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Selection conversion</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="pymol_selection_to_atom_list"><a class="viewcode-back" href="../../../../_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.pymol_selection_to_atom_list">[docs]</a><span class="k">def</span> <span class="nf">pymol_selection_to_atom_list</span><span class="p">(</span><span class="n">sele</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        converts a interface_Pymol selection and returns a list of restraintmaker_Logic.utilities.Atom</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sele:  str</span>
+<span class="sd">        pymol selection string</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.List[u.Atom]</span>
+<span class="sd">        A list of Atoms</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">atom_info</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Get all the information about the Atoms as a dict. I can not directly put it into an atom, because the interface_Pymol interpreter will not know what an u.Atom is.</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">iterate_state</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">sele</span><span class="p">,</span>
+                      <span class="n">expression</span><span class="o">=</span><span class="s2">&quot;atom_info.append({</span><span class="se">\&quot;</span><span class="s2">elem</span><span class="se">\&quot;</span><span class="s2">:elem,</span><span class="se">\&quot;</span><span class="s2">id</span><span class="se">\&quot;</span><span class="s2">:ID, </span><span class="se">\&quot;</span><span class="s2">name</span><span class="se">\&quot;</span><span class="s2">:name, </span><span class="se">\&quot;</span><span class="s2">x</span><span class="se">\&quot;</span><span class="s2">:x, </span><span class="se">\&quot;</span><span class="s2">y</span><span class="se">\&quot;</span><span class="s2">:y, </span><span class="se">\&quot;</span><span class="s2">z</span><span class="se">\&quot;</span><span class="s2">:z, </span><span class="se">\&quot;</span><span class="s2">model</span><span class="se">\&quot;</span><span class="s2">: model, </span><span class="se">\&quot;</span><span class="s2">chain</span><span class="se">\&quot;</span><span class="s2">:chain, </span><span class="se">\&quot;</span><span class="s2">resn</span><span class="se">\&quot;</span><span class="s2">:resn, </span><span class="se">\&quot;</span><span class="s2">resi</span><span class="se">\&quot;</span><span class="s2">:resi, </span><span class="se">\&quot;</span><span class="s2">alt</span><span class="se">\&quot;</span><span class="s2">:alt,  </span><span class="se">\&quot;</span><span class="s2">label</span><span class="se">\&quot;</span><span class="s2">:label, </span><span class="se">\&quot;</span><span class="s2">b</span><span class="se">\&quot;</span><span class="s2">:b})&quot;</span><span class="p">,</span>
+                      <span class="n">space</span><span class="o">=</span><span class="nb">locals</span><span class="p">())</span>
+
+    <span class="c1"># Convert dict to Atoms</span>
+    <span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atom_info</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">(</span><span class="n">elem</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;elem&#39;</span><span class="p">],</span> <span class="nb">id</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">z</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">],</span> <span class="n">chain</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;chain&#39;</span><span class="p">],</span>
+                   <span class="n">resn</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;resn&#39;</span><span class="p">],</span> <span class="n">resi</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;resi&#39;</span><span class="p">],</span> <span class="n">alt</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;alt&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+        <span class="n">atoms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">atoms</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_atom_list_to_pymol_selection"><a class="viewcode-back" href="../../../../_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._atom_list_to_pymol_selection">[docs]</a><span class="k">def</span> <span class="nf">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">atom_list</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            atom_list_to_pymol_selection converts a List of Atoms to a string that pymool can understand.</span>
+<span class="sd">            @warning Pymol can only handle a string with a length of ca 1000. (ca 200 atoms.) Consider using help_pymol_with_big_atoms_List</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    atom_list : t.List[u.Atom]</span>
+<span class="sd">         A List of Atoms</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        A interface_Pymol selection expression, containing all those Atoms</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">selection_expression</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ID &quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;none&#39;</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atom_list</span><span class="p">:</span>
+        <span class="n">selection_expression</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">selection_expression</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s1">&#39;WARNING in _atom_list_to_pymol_selection. Pymol can not handle selection expression with more than ca 200 Atoms. Consider using help_pymol_with_big_atom_list&#39;</span><span class="p">,</span>
+            <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">selection_expression</span></div>
+
+
+<div class="viewcode-block" id="help_pymol_with_big_atom_list"><a class="viewcode-back" href="../../../../_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.help_pymol_with_big_atom_list">[docs]</a><span class="k">def</span> <span class="nf">help_pymol_with_big_atom_list</span><span class="p">(</span><span class="n">pymol_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">,</span> <span class="n">atom_list</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span>
+    <span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     help_pymol_with_big_atom_list can be wrapped around any interface_Pymol function, that takes &#39;selection&#39; as an argument.</span>
+
+<span class="sd">        help_pymol_with_big_atom_list  will call pymol_function several times with small enough parts of the list</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pymol_function : t.Callable</span>
+<span class="sd">         Any funciton from one of the interface_Pymol modules, who takes &#39;selection&#39; as an argument</span>
+<span class="sd">    atom_list:  t.List[u.Atom]</span>
+<span class="sd">        A list of atoms</span>
+<span class="sd">    args : list</span>
+<span class="sd">        arguments for the interface_Pymol function</span>
+<span class="sd">    kw_args: dict</span>
+<span class="sd">        keyword argument for the interface_Pymol functiom</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.List</span>
+<span class="sd">        a list of all return values of the seperate calls</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        if interface_Pymol function is not passed the correct arguments</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">return_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># interface_Pymol cant take long selection expressions, with more than ca 200 atoms</span>
+    <span class="c1"># The easiest expression is &#39;ID x,y,z...&#39;</span>
+
+    <span class="c1"># There seems to be some variation in how long a word vcan be. The limit seems to be between 200-250 atoms =&gt; ca 1000 characters</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">step</span>
+    <span class="k">while</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_list</span><span class="p">):</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">stop</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_list</span><span class="p">))</span>
+        <span class="n">selection_expression</span> <span class="o">=</span> <span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">atom_list</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">stop</span><span class="p">])</span>
+
+        <span class="c1"># CALL THE ACTUAL PYMOL FUNCTION</span>
+        <span class="n">pymol_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_args</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">selection_expression</span><span class="p">)</span>
+
+        <span class="n">start</span> <span class="o">+=</span> <span class="n">step</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">step</span>
+
+    <span class="k">return</span> <span class="n">return_list</span></div>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  organizing objs</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="create_pymol_objects_for_molecules"><a class="viewcode-back" href="../../../../_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.create_pymol_objects_for_molecules">[docs]</a><span class="k">def</span> <span class="nf">create_pymol_objects_for_molecules</span><span class="p">(</span><span class="n">exclude</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        creates separate selecetions for all molecules in interface_Pymol</span>
+
+<span class="sd">        TODO; WRITE THE NAME OF THE MOLECULE IN TO THE ATOM SOMEHOW</span>
+<span class="sd">        TODO: make more stable if protein is present!</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    exclude: t.List[str]</span>
+<span class="sd">        A list of molecules that should not be considered, e.g. &#39;solv;, &#39;protein&#39;, etc</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.List[u.Atom]</span>
+<span class="sd">        The list of the molecule object names</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">molecules</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">_append_molecule</span><span class="p">(</span><span class="n">m</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">molecules</span><span class="p">:</span>
+            <span class="n">molecules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deapreacitated, as chains are maybe more general!</span>
+<span class="sd">    #try chain wise</span>
+<span class="sd">    cmd.iterate_state(-1, selection=&#39;all&#39;, expression=&#39;_append_molecule(resi)&#39;, space=locals())</span>
+
+<span class="sd">    molecule_names = []</span>
+
+<span class="sd">    for m in molecules:</span>
+<span class="sd">        if not m in exclude:</span>
+<span class="sd">            name = &#39;mol_&#39;+ m</span>
+<span class="sd">            cmd.create(name=name, selection=&#39;resi &#39; + m)</span>
+<span class="sd">            molecule_names.append(name)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">cmd</span><span class="o">.</span><span class="n">iterate_state</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">expression</span><span class="o">=</span><span class="s1">&#39;_append_molecule(resn)&#39;</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="nb">locals</span><span class="p">())</span>
+
+    <span class="n">molecule_names</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">molecules</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">exclude</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;resn &#39;</span> <span class="o">+</span> <span class="n">m</span><span class="p">)</span>
+            <span class="n">molecule_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">molecule_names</span>
+
+    <span class="c1"># The selection containing all the Molecules must be deleted. If it is not, iterate state will duplicate each atom!</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># Delete the object containing all molecules at once</span></div>
+
+
+<div class="viewcode-block" id="_convert_molecules_to_pdb"><a class="viewcode-back" href="../../../../_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._convert_molecules_to_pdb">[docs]</a><span class="k">def</span> <span class="nf">_convert_molecules_to_pdb</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     convert_molecules_to_pdb  gives a list containing one pdb string for each molecule</span>
+<span class="sd">        @Warnings  atoms willbeassigned different IDS than they currently have in interface_Pymol!!!!!</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.List[str]</span>
+<span class="sd">         List of pdb string for each molecule in interface_Pymol</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">pymol_objects</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">()</span>
+    <span class="n">pdb_molecules</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmd</span><span class="o">.</span><span class="n">get_pdbstr</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">pymol_objects</span> <span class="k">if</span> <span class="n">obj</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;mol_&quot;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">pdb_molecules</span></div>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    FUN</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="colorize"><a class="viewcode-back" href="../../../../_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.colorize">[docs]</a><span class="k">def</span> <span class="nf">colorize</span><span class="p">(</span><span class="n">atoms</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     sets the pymol colors - FOOLING AROUND :)</span>
+<span class="sd">     colorize_atoms: Some tests for different ways of colouring atoms.</span>
+
+<span class="sd">    When using the predefinied names (e.g. &quot;gray&quot;) PyMol raises a Quiet Error. With this method I can test, that Pymol does accept the different</span>
+<span class="sd">    colour numbering schemes (s for spectrum, c for complementary etc.)</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    atoms : Atoms</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">const_time_max</span> <span class="o">=</span> <span class="mi">10000</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;inner1&#39;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_inner_colorize_1</span><span class="p">():</span>
+            <span class="n">time_max</span> <span class="o">=</span> <span class="n">const_time_max</span>
+            <span class="n">time_step</span> <span class="o">=</span> <span class="n">time_max</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">))</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">time_max</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="n">time_max</span> <span class="o">-=</span> <span class="n">time_step</span>
+                <span class="n">__a</span> <span class="o">=</span> <span class="n">atoms</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+                <span class="n">__b</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span>
+                <span class="n">__c</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">999</span><span class="p">)</span>
+                <span class="n">__d</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;s&#39;</span> <span class="k">if</span> <span class="n">__c</span> <span class="k">else</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">__c</span><span class="p">)</span>
+                <span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">__d</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">([</span><span class="n">__a</span><span class="p">]))</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">time_step</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;inner2&#39;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_inner_colorize_2</span><span class="p">():</span>
+            <span class="n">time_step</span> <span class="o">=</span> <span class="n">const_time_max</span> <span class="o">/</span> <span class="mi">100</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+                <span class="n">__a</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">__b</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span> <span class="o">+</span> <span class="n">__a</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">__b</span><span class="p">)</span>
+                <span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">__b</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">atoms</span><span class="p">))</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">time_step</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;inner3&#39;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_inner_colorize_3</span><span class="p">():</span>
+            <span class="n">time_max</span> <span class="o">=</span> <span class="n">const_time_max</span>
+            <span class="n">time_step</span> <span class="o">=</span> <span class="p">(</span><span class="n">time_max</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+
+            <span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">atoms</span><span class="p">))</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">time_max</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="n">time_max</span> <span class="o">-=</span> <span class="n">time_step</span>
+                <span class="n">__a</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="n">__a</span><span class="p">]]))</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">time_step</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_inner_colorize_4</span><span class="p">():</span>
+            <span class="n">time_step</span> <span class="o">=</span> <span class="n">const_time_max</span> <span class="o">/</span> <span class="mi">100</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">iterate_state</span><span class="p">(</span><span class="n">state</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">atoms</span><span class="p">),</span> <span class="n">expression</span><span class="o">=</span><span class="s1">&#39;cols.append(ID)&#39;</span><span class="p">,</span>
+                              <span class="n">space</span><span class="o">=</span><span class="nb">locals</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">inner_funcs</span> <span class="o">=</span> <span class="p">[</span><span class="n">_inner_colorize_1</span><span class="p">,</span> <span class="n">_inner_colorize_2</span><span class="p">,</span> <span class="n">_inner_colorize_3</span><span class="p">,</span> <span class="n">_inner_colorize_4</span><span class="p">]</span>
+        <span class="n">rand_i</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">inner_funcs</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">my_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">inner_funcs</span><span class="p">[</span><span class="n">rand_i</span><span class="p">])</span>
+        <span class="n">my_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="try_to_get_args"><a class="viewcode-back" href="../../../../_source/restraintmaker.interface_Pymol.pymol_utilities.html#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.try_to_get_args">[docs]</a><span class="k">def</span> <span class="nf">try_to_get_args</span><span class="p">(</span><span class="n">my_x</span><span class="p">,</span> <span class="n">input_function</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     wrapper function for get_args. Takes care of the error handling</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    my_x : _Importer,_Restraint,_Selection,_Filter,_Optimzer or _Exporter</span>
+<span class="sd">         An Object that should call get args</span>
+<span class="sd">    input_function : t.Callable[str]</span>
+<span class="sd">        The input_function argument of get_args</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        Could get_args be executed without errors?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">failed</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">my_x</span><span class="o">.</span><span class="n">get_args</span><span class="p">(</span><span class="n">input_function</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Failed to create a &#39;</span> <span class="o">+</span> <span class="n">my_x</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39; with the given arguments: </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">failed</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Did not receive enough arguments to create a &#39;</span> <span class="o">+</span> <span class="n">my_x</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">failed</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">my_x</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39;has not been implemented&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">failed</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Do not expect Argumetn error that will ocurr if my_x does not have a get_args function. That is a fault that really should stop the program . =&gt; Leave it to standard error handling</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">failed</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

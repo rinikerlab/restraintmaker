@@ -1,7 +1,8 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -11,30 +12,27 @@
   
 
   
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-
-  
   
   
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -50,7 +48,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> restraintMaker
+            <a href="../../../index.html" class="icon icon-home"> restraintMaker
           
 
           
@@ -73,7 +71,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -84,12 +81,13 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
 </ul>
 
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -128,7 +126,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -149,8 +147,7 @@
             
   <h1>Source code for restraintmaker.io.Importer</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">.. automodule:: Importer</span>
-<span class="sd">    :members:</span>
+<span class="sd">    Importer</span>
 <span class="sd">    This module contains the functions, to import Files.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -163,12 +160,10 @@
 <span class="kn">from</span> <span class="nn">restraintmaker.utils.Utilities</span> <span class="kn">import</span> <span class="nb">print</span>
 
 
-<div class="viewcode-block" id="_Importer"><a class="viewcode-back" href="../../../_source/restraintmaker.io.html#restraintmaker.io.Importer._Importer">[docs]</a><span class="k">class</span> <span class="nc">_Importer</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    ..class: _Importer</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">_Importer</span><span class="p">():</span>
 
-<div class="viewcode-block" id="_Importer.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.io.html#restraintmaker.io.Importer._Importer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Importer Base class</span>
 
@@ -178,9 +173,9 @@
 <span class="sd">            List of all Atoms: Needed because the importer will only read the ids of the atoms. It then/</span>
 <span class="sd">            has to look up this id to find the rest of the informations</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span> <span class="o">=</span> <span class="n">all_atoms</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span> <span class="o">=</span> <span class="n">all_atoms</span>
 
-<div class="viewcode-block" id="_Importer.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.io.html#restraintmaker.io.Importer._Importer.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">          get_args(...) should be overridden by every subclass of Exporter. It will assign all necessary varaibles using input_function</span>
 
@@ -203,9 +198,9 @@
 <span class="sd">        NotImplementedError</span>
 <span class="sd">            if _Importer.get_args is called directly</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Direct call of method get_args of abstract parent class _Importer&#39;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Direct call of method get_args of abstract parent class _Importer&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="_Importer.import_restraints"><a class="viewcode-back" href="../../../_source/restraintmaker.io.html#restraintmaker.io.Importer._Importer.import_restraints">[docs]</a>    <span class="k">def</span> <span class="nf">import_restraints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">import_restraints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            This function reads in a distance restraint file. Here in parent</span>
 <span class="sd">            class, it serves as an interface for the child Classes.</span>
@@ -224,7 +219,7 @@
 <span class="sd">            translated in interface_Pymol</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;This function is not implemented yet.&quot;</span><span class="p">)</span></div></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;This function is not implemented yet.&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Gromos_Distance_Restraint_Importer"><a class="viewcode-back" href="../../../_source/restraintmaker.io.html#restraintmaker.io.Importer.Gromos_Distance_Restraint_Importer">[docs]</a><span class="k">class</span> <span class="nc">Gromos_Distance_Restraint_Importer</span><span class="p">(</span><span class="n">_Importer</span><span class="p">):</span>
@@ -337,19 +332,11 @@
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -360,6 +347,7 @@
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

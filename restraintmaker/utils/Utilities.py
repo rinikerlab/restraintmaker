@@ -1,9 +1,6 @@
 """
-.. automodule:: Utilities
-    :members:
-    TODO:write DOCU!
-
-utilities contains functions and definitions that are usefull to all modules in the restraintmaker project
+    Utilities
+    utilities contains functions and definitions that are usefull to all modules in the restraintmaker project
 """
 import builtins
 import typing as t

@@ -13,4 +13,4 @@ python conf.py
 make html
 #make latex
 
-cp ../index.html /_build/html/index.html
+cp -rf _build/html/*  ../

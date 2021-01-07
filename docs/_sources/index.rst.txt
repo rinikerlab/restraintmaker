@@ -13,8 +13,8 @@ Welcome to restraintMaker's documentation!
    :caption: Contents:
 
    introduction.rst
-   _sources/index.rst
-
+   examples/index.rst
+   _source/modules.rst
 
 
 Indices and tables

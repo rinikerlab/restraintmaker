@@ -174,7 +174,7 @@ def create_pymol_objects_for_molecules(exclude: t.List[str] = []):
             molecule_names.append(name)
     """
 
-    cmd.iterate_state(-1, selection='all', expression='_append_molecule(chain)', space=locals())
+    cmd.iterate_state(-1, selection='all', expression='_append_molecule(resn)', space=locals())
 
     molecule_names = []
 
@@ -182,7 +182,7 @@ def create_pymol_objects_for_molecules(exclude: t.List[str] = []):
     for m in molecules:
         if not m in exclude:
             name = 'mol_' + str(i)
-            cmd.create(name=name, selection='chain ' + m)
+            cmd.create(name=name, selection='resn ' + m)
             molecule_names.append(name)
         i += 1
     return molecule_names

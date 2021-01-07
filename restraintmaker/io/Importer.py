@@ -1,6 +1,5 @@
 """
-.. automodule:: Importer
-    :members:
+    Importer
     This module contains the functions, to import Files.
 
 """
@@ -14,9 +13,7 @@ from restraintmaker.utils.Utilities import print
 
 
 class _Importer():
-    """
-    ..class: _Importer
-    """
+
 
     def __init__(self, all_atoms: t.List[u.Atom]):
         """
