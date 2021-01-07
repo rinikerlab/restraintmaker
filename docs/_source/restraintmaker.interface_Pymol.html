@@ -1,0 +1,681 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>restraintmaker.interface_Pymol package &mdash; restraintMaker  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Welcome RestraintMaker</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>restraintmaker.interface_Pymol package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_source/restraintmaker.interface_Pymol.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="restraintmaker-interface-pymol-package">
+<h1>restraintmaker.interface_Pymol package<a class="headerlink" href="#restraintmaker-interface-pymol-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-restraintmaker.interface_Pymol.Pymol_Utitlities">
+<span id="restraintmaker-interface-pymol-pymol-utitlities-module"></span><h2>restraintmaker.interface_Pymol.Pymol_Utitlities module<a class="headerlink" href="#module-restraintmaker.interface_Pymol.Pymol_Utitlities" title="Permalink to this headline">¶</a></h2>
+<p>contains functions that are useful to the restraintmaker_PyMOL module, but do not need to be within the Distance_restraints class
+This also includes  functions that are only usefull for debugging and testing</p>
+<dl class="py function">
+<dt id="restraintmaker.interface_Pymol.Pymol_Utitlities._atom_list_to_pymol_selection">
+<code class="sig-prename descclassname">restraintmaker.interface_Pymol.Pymol_Utitlities.</code><code class="sig-name descname">_atom_list_to_pymol_selection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atom_list</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/Pymol_Utitlities.html#_atom_list_to_pymol_selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.Pymol_Utitlities._atom_list_to_pymol_selection" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>atom_list_to_pymol_selection converts a List of Atoms to a string that pymool can understand.
+&#64;warning Pymol can only handle a string with a length of ca 1000. (ca 200 atoms.) Consider using help_pymol_with_big_atoms_List</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>atom_list</strong> (<em>t.List[u.Atom]</em>) – A List of Atoms</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A interface_Pymol selection expression, containing all those Atoms</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.interface_Pymol.Pymol_Utitlities._convert_molecules_to_pdb">
+<code class="sig-prename descclassname">restraintmaker.interface_Pymol.Pymol_Utitlities.</code><code class="sig-name descname">_convert_molecules_to_pdb</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/Pymol_Utitlities.html#_convert_molecules_to_pdb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.Pymol_Utitlities._convert_molecules_to_pdb" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><dl class="simple">
+<dt>convert_molecules_to_pdb  gives a list containing one pdb string for each molecule</dt><dd><p>&#64;Warnings  atoms willbeassigned different IDS than they currently have in interface_Pymol!!!!!</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of pdb string for each molecule in interface_Pymol</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>t.List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.interface_Pymol.Pymol_Utitlities.colorize">
+<code class="sig-prename descclassname">restraintmaker.interface_Pymol.Pymol_Utitlities.</code><code class="sig-name descname">colorize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/Pymol_Utitlities.html#colorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.Pymol_Utitlities.colorize" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>sets the pymol colors - FOOLING AROUND :)
+colorize_atoms: Some tests for different ways of colouring atoms.</p>
+</div></blockquote>
+<p>When using the predefinied names (e.g. “gray”) PyMol raises a Quiet Error. With this method I can test, that Pymol does accept the different
+colour numbering schemes (s for spectrum, c for complementary etc.)
+:Parameters: <strong>atoms</strong> (<em>Atoms</em>)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.interface_Pymol.Pymol_Utitlities.create_pymol_objects_for_molecules">
+<code class="sig-prename descclassname">restraintmaker.interface_Pymol.Pymol_Utitlities.</code><code class="sig-name descname">create_pymol_objects_for_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">exclude</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">[]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/Pymol_Utitlities.html#create_pymol_objects_for_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.Pymol_Utitlities.create_pymol_objects_for_molecules" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>creates separate selecetions for all molecules in interface_Pymol</p>
+<p>TODO; WRITE THE NAME OF THE MOLECULE IN TO THE ATOM SOMEHOW
+TODO: make more stable if protein is present!</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>exclude</strong> (<em>t.List[str]</em>) – A list of molecules that should not be considered, e.g. ‘solv;, ‘protein’, etc</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of the molecule object names</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>t.List[u.Atom]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.interface_Pymol.Pymol_Utitlities.help_pymol_with_big_atom_list">
+<code class="sig-prename descclassname">restraintmaker.interface_Pymol.Pymol_Utitlities.</code><code class="sig-name descname">help_pymol_with_big_atom_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pymol_function</span><span class="p">:</span> <span class="n">Callable</span></em>, <em class="sig-param"><span class="n">atom_list</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw_args</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/Pymol_Utitlities.html#help_pymol_with_big_atom_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.Pymol_Utitlities.help_pymol_with_big_atom_list" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>help_pymol_with_big_atom_list can be wrapped around any interface_Pymol function, that takes ‘selection’ as an argument.</p>
+<blockquote>
+<div><p>help_pymol_with_big_atom_list  will call pymol_function several times with small enough parts of the list</p>
+</div></blockquote>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pymol_function</strong> (<em>t.Callable</em>) – Any funciton from one of the interface_Pymol modules, who takes ‘selection’ as an argument</p></li>
+<li><p><strong>atom_list</strong> (<em>t.List[u.Atom]</em>) – A list of atoms</p></li>
+<li><p><strong>args</strong> (<em>list</em>) – arguments for the interface_Pymol function</p></li>
+<li><p><strong>kw_args</strong> (<em>dict</em>) – keyword argument for the interface_Pymol functiom</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of all return values of the seperate calls</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>t.List</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if interface_Pymol function is not passed the correct arguments</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.interface_Pymol.Pymol_Utitlities.pymol_selection_to_atom_list">
+<code class="sig-prename descclassname">restraintmaker.interface_Pymol.Pymol_Utitlities.</code><code class="sig-name descname">pymol_selection_to_atom_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sele</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/Pymol_Utitlities.html#pymol_selection_to_atom_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.Pymol_Utitlities.pymol_selection_to_atom_list" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>converts a interface_Pymol selection and returns a list of restraintmaker_Logic.utilities.Atom</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sele</strong> (<em>str</em>) – pymol selection string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of Atoms</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>t.List[u.Atom]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.interface_Pymol.Pymol_Utitlities.try_to_get_args">
+<code class="sig-prename descclassname">restraintmaker.interface_Pymol.Pymol_Utitlities.</code><code class="sig-name descname">try_to_get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">my_x</span></em>, <em class="sig-param"><span class="n">input_function</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/Pymol_Utitlities.html#try_to_get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.Pymol_Utitlities.try_to_get_args" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>wrapper function for get_args. Takes care of the error handling</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>my_x</strong> (<em>_Importer,_Restraint,_Selection,_Filter,_Optimzer or _Exporter</em>) – An Object that should call get args</p></li>
+<li><p><strong>input_function</strong> (<em>t.Callable[str]</em>) – The input_function argument of get_args</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Could get_args be executed without errors?</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-restraintmaker.interface_Pymol.RestraintMaker_Logic">
+<span id="restraintmaker-interface-pymol-restraintmaker-logic-module"></span><h2>restraintmaker.interface_Pymol.RestraintMaker_Logic module<a class="headerlink" href="#module-restraintmaker.interface_Pymol.RestraintMaker_Logic" title="Permalink to this headline">¶</a></h2>
+<p>Contains the class Logic_Handler, which defines the program flow, decides which user activities are allowed and manages Importers, Selections,
+Restraints, Filters, Optimzers and Exporters.</p>
+<dl class="py class">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.interface_Pymol.RestraintMaker_Logic.</code><code class="sig-name descname">Logic_Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Handles the program flow. By defining it inside a class we get proper encapsulation and prevent problems with multiple imports</p>
+<p>When a GUI Program Launches it should create one instance of a Logic_Handler and use it to control the program flow.
+It should pass GUI-events to it (by calling the react_to_event method.). The GUI Module should NOT need to directly access any other modules. (Except utilities).
+Warning: To keep things clean there is not backwards communicatopn from the Logic_Handler to the GUI module. It is the GUI Modules responsibility to check on the current state of the program, after creating events.
+Warning: I really do NOT want the GUI-Program to inherit form the Logic_Handler. It will inherit from a GUI Element (e.g. interface_Pymol.Wizard). Python suppports multiple inheritance, but I don’t.</p>
+<p>RECOMMENDATIONS TO WRITE A NEW GUI MODULE:
+The GUI Module should have the following functions/Elements</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Buttons/Lists… for the different actions that can be performed (Import, RestraintType, Selection …). These should call the function set_importer_type, set_restraint_type …</dt><dd><p>The GUI Program should use the action_states dict, to check which actions are currently available.</p>
+</dd>
+</dl>
+</li>
+<li><p>2 Toggle buttons / radio buttons… to switch between select / delete mode and atom / restraint mode</p></li>
+</ol>
+<ol class="arabic" start="2">
+<li><p>Events: The GUI Module is responsible for translating whatever events it understands into events relevant to the selections. It can do this by calling the function react_to_event(event_type, kw_args)
+Recommended translations:    SELECT: When the user clicks a certain Atom</p>
+<blockquote>
+<div><blockquote>
+<div><p>MOVE: Mouse movement / keyboard arrows …
+SIZE: Mouse wheel / keyboard arrows
+CONFIRM: Double Click, Enter …</p>
+</div></blockquote>
+<p>The GUI module should check the state of the program (event_state dict and selected_atoms, selected-restraints) every time after calling react_to_event.
+I recommend wrapping the react_to_event function into a function of the GUI module to do that automatically.</p>
+</div></blockquote>
+</li>
+<li><p>Some Selections (SphericalSelection &amp; subclasses) are more intuitive if the GUI program draws a sphere at the corresponding position. =&gt; If you want that you have to introduce special for the GUI module to check the current selection</p></li>
+</ol>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>all_atoms</strong> (<em>t.List[u.Atom]</em>) – List of all atoms in the Molecules, which should be connected</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._check_selection_status">
+<code class="sig-name descname">_check_selection_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler._check_selection_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._check_selection_status" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>_check_selection_status needs to be called at the end of every react_to_*_event function, after updating the selection.</p>
+<p>It checks if the selection has finished and adds the selected atoms to the list, if necessary.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_exporter_type">
+<code class="sig-name descname">_set_exporter_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_exporter_type</span><span class="p">:</span> <span class="n">type</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler._set_exporter_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_exporter_type" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>changes the current type of Exporter and creates and applies an Exporter of that type.
+&#64;Warnings  Should only be called via set_action_type which handles type checking.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_exporter_type</strong> (<em>t.Type[Exporter]</em>) – type of the new Filter</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_filter_type">
+<code class="sig-name descname">_set_filter_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_filter_type</span><span class="p">:</span> <span class="n">type</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler._set_filter_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_filter_type" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>changes the current type of Filter and creates and applies a Filter of that type.</p>
+<p>&#64;Warnings should only be called via set_action_type which handles type checking</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_filter_type</strong> (<em>t.Type[Filter]</em>) – type of the new Filter</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_importer_type">
+<code class="sig-name descname">_set_importer_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_importer_type</span><span class="p">:</span> <span class="n">Type<span class="p">[</span><a class="reference internal" href="restraintmaker.io.html#restraintmaker.io.Importer._Importer" title="restraintmaker.io.Importer._Importer">restraintmaker.io.Importer._Importer</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler._set_importer_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_importer_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>_set_importer_type changes the current Importer type, and creates and apllies a new Importer of that type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Warning</dt>
+<dd class="field-odd"><p>Should only be called via set_action_type which handles type checking</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>new_importer_type</strong> (<em>type</em><em>[</em><em>Importer</em><em>]</em>) – An available type of Importer</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>:raises TypeError if new_importer_type is not in available_importer_types</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_optimizer_type">
+<code class="sig-name descname">_set_optimizer_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_optimizer_type</span><span class="p">:</span> <span class="n">type</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler._set_optimizer_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_optimizer_type" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>changes the current type of Optimizer and creates and applies a Optimizer of that type.
+&#64;Warnings  Should only be called via set_action_type which handles type checking.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_optimizer_type</strong> (<em>t.Type[Filter]</em>) – type of the new Filter</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_restraint_type">
+<code class="sig-name descname">_set_restraint_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_restraint_type</span><span class="p">:</span> <span class="n">Type<span class="p">[</span>restraintmaker.utils.Types._Restraint<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler._set_restraint_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_restraint_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>_set_restraint_type changes the current type of Restraint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Warning</dt>
+<dd class="field-odd"><p>Should only be called via set_action_type which handles type checking</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>new_restraint_type</strong> (<em>type</em><em>[</em><em>Restraint._Restraint}</em>) – A type of restraint</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>TypeError if new_restraint_type is not in available_restraint_types</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_selection_type">
+<code class="sig-name descname">_set_selection_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_selection_type</span><span class="p">:</span> <span class="n">type</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler._set_selection_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_selection_type" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><blockquote>
+<div><p>chagnes the current type of Selection and starts a new selection of that type.</p>
+</div></blockquote>
+<p>&#64;warnings: Should only be called via set_action_type which handles type checking</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_selection_type</strong> (<em>t.Type[Selection]</em>) – type of the new Selection</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.react_to_event">
+<code class="sig-name descname">react_to_event</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event_type</span><span class="p">:</span> <span class="n">restraintmaker.utils.program_states.EventType</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw_args</span><span class="p">:</span> <span class="n">Any</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler.react_to_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.react_to_event" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><p>react_to_event should be called by the GUI-module to report an event</p>
+</div></blockquote>
+<p>react_to_event will then call the relevant update function of the active selection and refresh all atom lists etc.</p>
+</div></blockquote>
+<p>&#64;Waring react_to_event will change the state of the program (i.e. selected_atoms, selected_restraints, mode and actions states)
+It is strongly recommended to wrap react_to_event into a function of the GUI-module, which will check these and redraw the scene and de?activate buttons, if necessary/.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event_type</strong> (<em>restraintmaker.utils.program_states.EventType</em>) – What kind of event was triggered?</p></li>
+<li><p><strong>kw_args</strong> (<em>dict</em>) – Arguments the relevant update function will need</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException" title="restraintmaker.utils.Utilities.BadArgumentException"><strong>BadArgumentException</strong></a> – if args to not match the the corresponding logic_handler.react_to_*_event_function</p></li>
+<li><p><strong>NotImplementedError</strong> – if a new event_type is used, which the function does not know about.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_action_states">
+<code class="sig-name descname">set_action_states</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler.set_action_states"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_action_states" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>checks the current state of the program and decides, which actions are allowed at the moment</p>
+<p>many TODOs</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_action_type">
+<code class="sig-name descname">set_action_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x_type</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler.set_action_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_action_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>set_action should be called by the GUI module when the user selects an Importer, Restraint, Selection, Filter, Optimizer or Exporter</p>
+<blockquote>
+<div><p>It will then call the relevant _set_X_type function.</p>
+<p>&#64;Warnings set_action_type will change the state of the program (i.e. selected_atoms, selected_restraints, mode and actions states)
+It is strongly recommended to wrap react_to_event into a function of the GUI-module, which will check these and redraw the scene and de?activate buttons, if necessary/.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x_type</strong> (<em>type</em>) – A type of Importer, Selection, Restraint, Filter, Optimizer or Exporter</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – if the specified type is not recognized</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_mode">
+<code class="sig-name descname">set_mode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">select_delete</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">atom_restraint</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/RestraintMaker_Logic.html#Logic_Handler.set_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_mode" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>set_mode should be called by the GUI module when the user toggles the buttons to change the program mode</p>
+</div></blockquote>
+<p>warning: set_action_type will change the state of the program (i.e. selected_atoms, selected_restraints, mode and actions states)
+It is strongly recommended to wrap react_to_event into a function of the GUI-module, which will check these and redraw the scene and de?activate buttons, if necessary/.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>select_delete</strong> (<em>bool</em>) – Select mode (True) or Delete mode (False)?</p></li>
+<li><p><strong>atom_restraint</strong> (<em>bool</em>) – Atoms mode (True) or Delete mode (False)?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="restraintmaker-interface-pymol-restraintmaker-pymol-module">
+<h2>restraintmaker.interface_Pymol.RestraintMaker_PyMOL module<a class="headerlink" href="#restraintmaker-interface-pymol-restraintmaker-pymol-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-restraintmaker.interface_Pymol">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-restraintmaker.interface_Pymol" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

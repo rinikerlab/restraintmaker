@@ -1,0 +1,21 @@
+restraintmaker.utils package
+============================
+
+Submodules
+----------
+
+restraintmaker.utils.Utilities module
+-------------------------------------
+
+.. automodule:: restraintmaker.utils.Utilities
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: restraintmaker.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,38 @@
+
+
+.. image:: .img/RestraintMaker_logo_withBackground.png
+   :target: .img/RestraintMaker_logo_withBackground.png
+   :alt: Logo here
+
+
+Welcome RestraintMaker
+======================
+
+Introduction
+------------
+
+Examples
+--------
+
+Installation
+------------
+
+You can retrieve the repository from GitHub:
+https://github.com/rinikerlab/restraintmaker
+
+Using
+^^^^^
+
+Development
+^^^^^^^^^^^
+
+  For development purposes 
+
+Author
+------
+
+Benjamin Ries,
+Clemens Rhiner
+
+Acknowledgments
+---------------

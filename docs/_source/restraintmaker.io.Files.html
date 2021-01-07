@@ -1,0 +1,710 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>restraintmaker.io.Files package &mdash; restraintMaker  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Welcome RestraintMaker</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>restraintmaker.io.Files package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_source/restraintmaker.io.Files.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="restraintmaker-io-files-package">
+<h1>restraintmaker.io.Files package<a class="headerlink" href="#restraintmaker-io-files-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-restraintmaker.io.Files.Gromacs_files">
+<span id="restraintmaker-io-files-gromacs-files-module"></span><h2>restraintmaker.io.Files.Gromacs_files module<a class="headerlink" href="#module-restraintmaker.io.Files.Gromacs_files" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-restraintmaker.io.Files.Gromos_blocks">
+<span id="restraintmaker-io-files-gromos-blocks-module"></span><h2>restraintmaker.io.Files.Gromos_blocks module<a class="headerlink" href="#module-restraintmaker.io.Files.Gromos_blocks" title="Permalink to this headline">¶</a></h2>
+<p>THIS CODE WAS BORROWED FROM PYGROMOSTOOLS - Check it out :)</p>
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atomP">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">atomP</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resID</span></em>, <em class="sig-param"><span class="n">resName</span></em>, <em class="sig-param"><span class="n">atomType</span></em>, <em class="sig-param"><span class="n">atomID</span></em>, <em class="sig-param"><span class="n">xp</span></em>, <em class="sig-param"><span class="n">yp</span></em>, <em class="sig-param"><span class="n">zp</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atomP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atomP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_field</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atomP.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resID</span></em>, <em class="sig-param"><span class="n">resName</span></em>, <em class="sig-param"><span class="n">atomType</span></em>, <em class="sig-param"><span class="n">atomID</span></em>, <em class="sig-param"><span class="n">xp</span></em>, <em class="sig-param"><span class="n">yp</span></em>, <em class="sig-param"><span class="n">zp</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atomP.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atomP.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>resID:
+resName:
+atomType:
+atomID:
+xp:
+yp:
+zp:</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atomP.to_string">
+<code class="sig-name descname">to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atomP.to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atomP.to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atomV">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">atomV</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resID</span></em>, <em class="sig-param"><span class="n">resName</span></em>, <em class="sig-param"><span class="n">atomType</span></em>, <em class="sig-param"><span class="n">atomID</span></em>, <em class="sig-param"><span class="n">xv</span></em>, <em class="sig-param"><span class="n">yv</span></em>, <em class="sig-param"><span class="n">zv</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atomV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atomV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_field</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atomV.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resID</span></em>, <em class="sig-param"><span class="n">resName</span></em>, <em class="sig-param"><span class="n">atomType</span></em>, <em class="sig-param"><span class="n">atomID</span></em>, <em class="sig-param"><span class="n">xv</span></em>, <em class="sig-param"><span class="n">yv</span></em>, <em class="sig-param"><span class="n">zv</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atomV.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atomV.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>resID:
+resName:
+atomType:
+atomID:
+xv:
+yv:
+zv:</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atomV.to_string">
+<code class="sig-name descname">to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atomV.to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atomV.to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_pair_distanceRes">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">atom_pair_distanceRes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">j1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">k1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">l1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">type1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code" title="restraintmaker.io.Files.Gromos_blocks.geometric_code">restraintmaker.io.Files.Gromos_blocks.geometric_code</a></span></em>, <em class="sig-param"><span class="n">i2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">j2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">k2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">l2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">type2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code" title="restraintmaker.io.Files.Gromos_blocks.geometric_code">restraintmaker.io.Files.Gromos_blocks.geometric_code</a></span></em>, <em class="sig-param"><span class="n">r0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">w0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">rah</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type" title="restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type">restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type</a></span></em>, <em class="sig-param"><span class="n">comment</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_pair_distanceRes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_pair_distanceRes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_field</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_pair_distanceRes.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">j1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">k1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">l1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">type1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code" title="restraintmaker.io.Files.Gromos_blocks.geometric_code">restraintmaker.io.Files.Gromos_blocks.geometric_code</a></span></em>, <em class="sig-param"><span class="n">i2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">j2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">k2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">l2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">type2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code" title="restraintmaker.io.Files.Gromos_blocks.geometric_code">restraintmaker.io.Files.Gromos_blocks.geometric_code</a></span></em>, <em class="sig-param"><span class="n">r0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">w0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">rah</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type" title="restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type">restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type</a></span></em>, <em class="sig-param"><span class="n">comment</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_pair_distanceRes.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_pair_distanceRes.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>..function: Constructor of Gromos atom_pair_distanceRes</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Args:</dt><dd><p>i1 (int): id of atom i of first molecule
+j1 (int): id of atom j of first molecule
+k1 (int): id of atom k of first molecule
+l1 (int): id of atom l of first molecule
+type1: geometric restraintype of first molecule
+i2 (int): id of atom i of second molecule
+j2 (int): id of atom j of second molecule
+k2 (int): id of atom k of second molecule
+l2 (int): id of atom l of second molecule
+type2:
+r0 (float): radius_0 of restraint
+w0 (float): weighting of restraint
+rah: restraint_type
+comment (str):</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_pair_distanceRes.to_string">
+<code class="sig-name descname">to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_pair_distanceRes.to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_pair_distanceRes.to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_pos_block">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">atom_pos_block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.atomP" title="restraintmaker.io.Files.Gromos_blocks.atomP">restraintmaker.io.Files.Gromos_blocks.atomP</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_pos_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_pos_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_gromos_block</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_pos_block.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.atomP" title="restraintmaker.io.Files.Gromos_blocks.atomP">restraintmaker.io.Files.Gromos_blocks.atomP</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_pos_block.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_pos_block.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>content:</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_pos_block.block_to_string">
+<code class="sig-name descname">block_to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_pos_block.block_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_pos_block.block_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_ref_pos_block">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">atom_ref_pos_block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_ref_pos_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_ref_pos_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_gromos_block</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_ref_pos_block.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_ref_pos_block.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_ref_pos_block.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>content (list):</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_ref_pos_block.block_to_string">
+<code class="sig-name descname">block_to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_ref_pos_block.block_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_ref_pos_block.block_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_vel_block">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">atom_vel_block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.atomV" title="restraintmaker.io.Files.Gromos_blocks.atomV">restraintmaker.io.Files.Gromos_blocks.atomV</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_vel_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_vel_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_gromos_block</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_vel_block.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.atomV" title="restraintmaker.io.Files.Gromos_blocks.atomV">restraintmaker.io.Files.Gromos_blocks.atomV</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_vel_block.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_vel_block.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>content:</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.atom_vel_block.block_to_string">
+<code class="sig-name descname">block_to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#atom_vel_block.block_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.atom_vel_block.block_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.distance_res_spec_block">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">distance_res_spec_block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">KDISH</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">KDISC</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">RESTRAINTHEADER</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">RESTRAINTS</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#distance_res_spec_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.distance_res_spec_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_gromos_block</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.distance_res_spec_block.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">KDISH</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">KDISC</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">RESTRAINTHEADER</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">RESTRAINTS</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#distance_res_spec_block.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.distance_res_spec_block.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>KDISH (int):
+KDISC (int):
+RESTRAINTHEADER (list):
+RESTRAINTS (list):</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.distance_res_spec_block.block_to_string">
+<code class="sig-name descname">block_to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#distance_res_spec_block.block_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.distance_res_spec_block.block_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">distant_Restraint_Type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#distant_Restraint_Type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type.full_harmonic_distance_restraint">
+<code class="sig-name descname">full_harmonic_distance_restraint</code><em class="property"> = 0</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type.full_harmonic_distance_restraint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type.half_harmonic_attractive">
+<code class="sig-name descname">half_harmonic_attractive</code><em class="property"> = 1</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type.half_harmonic_attractive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type.half_harmonic_repulsive">
+<code class="sig-name descname">half_harmonic_repulsive</code><em class="property"> = -1</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type.half_harmonic_repulsive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.genbox_block">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">genbox_block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pbc</span><span class="p">:</span> <span class="n">enum.Enum</span></em>, <em class="sig-param"><span class="n">length</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">angles</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">euler</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">origin</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#genbox_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.genbox_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_gromos_block</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.genbox_block.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pbc</span><span class="p">:</span> <span class="n">enum.Enum</span></em>, <em class="sig-param"><span class="n">length</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">angles</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">euler</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">origin</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#genbox_block.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.genbox_block.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>pbc (Enum):
+length (list):
+angles (list):
+euler (list):
+origin (list):</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.genbox_block.block_to_string">
+<code class="sig-name descname">block_to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#genbox_block.block_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.genbox_block.block_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.geometric_code">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">geometric_code</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#geometric_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.geometric_code.pseudo_H_atom_goc_H_atoms_CH3">
+<code class="sig-name descname">pseudo_H_atom_goc_H_atoms_CH3</code><em class="property"> = 5</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code.pseudo_H_atom_goc_H_atoms_CH3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.geometric_code.pseudo_H_atoms_goc_of_three_CH3">
+<code class="sig-name descname">pseudo_H_atoms_goc_of_three_CH3</code><em class="property"> = 7</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code.pseudo_H_atoms_goc_of_three_CH3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.geometric_code.pseudo_H_atoms_goc_of_two_CH3">
+<code class="sig-name descname">pseudo_H_atoms_goc_of_two_CH3</code><em class="property"> = 6</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code.pseudo_H_atoms_goc_of_two_CH3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.geometric_code.real_atom">
+<code class="sig-name descname">real_atom</code><em class="property"> = 0</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code.real_atom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_H_atom_aliphaticC">
+<code class="sig-name descname">virtual_H_atom_aliphaticC</code><em class="property"> = 1</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_H_atom_aliphaticC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_H_atom_aliphaticC_strange">
+<code class="sig-name descname">virtual_H_atom_aliphaticC_strange</code><em class="property"> = 4</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_H_atom_aliphaticC_strange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_H_atom_aromaticC">
+<code class="sig-name descname">virtual_H_atom_aromaticC</code><em class="property"> = 2</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_H_atom_aromaticC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_H_atoms_goc_aliph">
+<code class="sig-name descname">virtual_H_atoms_goc_aliph</code><em class="property"> = 3</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_H_atoms_goc_aliph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_atoms_cog">
+<code class="sig-name descname">virtual_atoms_cog</code><em class="property"> = -1</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_atoms_cog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_atoms_com">
+<code class="sig-name descname">virtual_atoms_com</code><em class="property"> = -2</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.geometric_code.virtual_atoms_com" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.lattice_shift">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">lattice_shift</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atomID</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">z</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#lattice_shift"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.lattice_shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_field</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.lattice_shift.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atomID</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">z</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#lattice_shift.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.lattice_shift.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>atomID:
+x:
+y:
+z:</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.lattice_shift.to_string">
+<code class="sig-name descname">to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#lattice_shift.to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.lattice_shift.to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.lattice_shifts_block">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">lattice_shifts_block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.lattice_shift" title="restraintmaker.io.Files.Gromos_blocks.lattice_shift">restraintmaker.io.Files.Gromos_blocks.lattice_shift</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#lattice_shifts_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.lattice_shifts_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_gromos_block</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.lattice_shifts_block.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="#restraintmaker.io.Files.Gromos_blocks.lattice_shift" title="restraintmaker.io.Files.Gromos_blocks.lattice_shift">restraintmaker.io.Files.Gromos_blocks.lattice_shift</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#lattice_shifts_block.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.lattice_shifts_block.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>content:</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.lattice_shifts_block.block_to_string">
+<code class="sig-name descname">block_to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#lattice_shifts_block.block_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.lattice_shifts_block.block_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.timestep_block">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">timestep_block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">step</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">subcontent</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#timestep_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.timestep_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_gromos_block</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.timestep_block.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">step</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">subcontent</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#timestep_block.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.timestep_block.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>t (float):
+step (int):
+subcontent:</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.timestep_block.block_to_string">
+<code class="sig-name descname">block_to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#timestep_block.block_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.timestep_block.block_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_blocks.title_block">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_blocks.</code><code class="sig-name descname">title_block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#title_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.title_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_blocks._generic_gromos_block</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.title_block.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#title_block.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.title_block.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>content:</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_blocks.title_block.block_to_string">
+<code class="sig-name descname">block_to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_blocks.html#title_block.block_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.title_block.block_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_blocks.title_block.order">
+<code class="sig-name descname">order</code><em class="property"> = [[['content']]]</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_blocks.title_block.order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-restraintmaker.io.Files.Gromos_files">
+<span id="restraintmaker-io-files-gromos-files-module"></span><h2>restraintmaker.io.Files.Gromos_files module<a class="headerlink" href="#module-restraintmaker.io.Files.Gromos_files" title="Permalink to this headline">¶</a></h2>
+<p>THIS CODE WAS BORROWED FROM PYGROMOSTOOLS - Check it out :)</p>
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_files.disres">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_files.</code><code class="sig-name descname">disres</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_path</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_files.html#disres"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.disres" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#restraintmaker.io.Files.Gromos_files.general_gromos_file" title="restraintmaker.io.Files.Gromos_files.general_gromos_file"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.io.Files.Gromos_files.general_gromos_file</span></code></a></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_files.disres.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_path</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_files.html#disres.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.disres.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>in_path:</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_files.disres.parse_disres_file">
+<code class="sig-name descname">parse_disres_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_files.html#disres.parse_disres_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.disres.parse_disres_file" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>path (str):</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_files.disres.read_disres_file">
+<code class="sig-name descname">read_disres_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_files.html#disres.read_disres_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.disres.read_disres_file" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>path (str):</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_files.disres.required_blocks">
+<code class="sig-name descname">required_blocks</code><em class="property">: List<span class="p">[</span>str<span class="p">]</span></em><em class="property"> = ['TITLE', 'DISTANCERESPEC']</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.disres.required_blocks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.io.Files.Gromos_files.general_gromos_file">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.io.Files.Gromos_files.</code><code class="sig-name descname">general_gromos_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_path</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_files.html#general_gromos_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.general_gromos_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_files.general_gromos_file.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_path</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_files.html#general_gromos_file.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.general_gromos_file.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>in_path:</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_files.general_gromos_file._read_gromos_block">
+<code class="sig-name descname">_read_gromos_block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lines</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_files.html#general_gromos_file._read_gromos_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.general_gromos_file._read_gromos_block" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>lines (list):</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_files.general_gromos_file.add_block">
+<code class="sig-name descname">add_block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blocktitle</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_files.html#general_gromos_file.add_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.general_gromos_file.add_block" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>blocktitle (str):
+content (dict):
+verbose (bool):</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_files.general_gromos_file.blocksset">
+<code class="sig-name descname">blocksset</code><em class="property">: List<span class="p">[</span>dict<span class="p">]</span></em><em class="property"> = []</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.general_gromos_file.blocksset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_files.general_gromos_file.content">
+<code class="sig-name descname">content</code><em class="property">: Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span></em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.general_gromos_file.content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_files.general_gromos_file.path">
+<code class="sig-name descname">path</code><em class="property">: str</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.general_gromos_file.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="restraintmaker.io.Files.Gromos_files.general_gromos_file.required_blocks">
+<code class="sig-name descname">required_blocks</code><em class="property">: List<span class="p">[</span>str<span class="p">]</span></em><em class="property"> = ['TITLE']</em><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.general_gromos_file.required_blocks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.io.Files.Gromos_files.general_gromos_file.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/io/Files/Gromos_files.html#general_gromos_file.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.io.Files.Gromos_files.general_gromos_file.write" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>path:</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-restraintmaker.io.Files">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-restraintmaker.io.Files" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

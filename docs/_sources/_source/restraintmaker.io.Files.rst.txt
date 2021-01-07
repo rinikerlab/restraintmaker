@@ -1,0 +1,37 @@
+restraintmaker.io.Files package
+===============================
+
+Submodules
+----------
+
+restraintmaker.io.Files.Gromacs\_files module
+---------------------------------------------
+
+.. automodule:: restraintmaker.io.Files.Gromacs_files
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+restraintmaker.io.Files.Gromos\_blocks module
+---------------------------------------------
+
+.. automodule:: restraintmaker.io.Files.Gromos_blocks
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+restraintmaker.io.Files.Gromos\_files module
+--------------------------------------------
+
+.. automodule:: restraintmaker.io.Files.Gromos_files
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: restraintmaker.io.Files
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,810 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>restraintmaker.interface_Pymol.RestraintMaker_Logic &mdash; restraintMaker  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome RestraintMaker</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>restraintmaker.interface_Pymol.RestraintMaker_Logic</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for restraintmaker.interface_Pymol.RestraintMaker_Logic</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Contains the class Logic_Handler, which defines the program flow, decides which user activities are allowed and manages Importers, Selections,</span>
+<span class="sd">    Restraints, Filters, Optimzers and Exporters.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+
+<span class="kn">import</span> <span class="nn">restraintmaker.utils.Types</span>
+<span class="kn">import</span> <span class="nn">restraintmaker.utils.Utilities</span>
+<span class="kn">import</span> <span class="nn">restraintmaker.utils.program_states</span>
+<span class="kn">import</span> <span class="nn">restraintmaker.utils.qt_dialogs</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.algorithm</span> <span class="kn">import</span> <span class="n">Filter</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.algorithm</span> <span class="kn">import</span> <span class="n">Optimizer</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.algorithm</span> <span class="kn">import</span> <span class="n">Selection</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.interface_Pymol.Pymol_Utitlities</span> <span class="kn">import</span> \
+    <span class="n">_convert_molecules_to_pdb</span><span class="p">,</span> \
+    <span class="n">try_to_get_args</span>  <span class="c1"># TODO: Get independent of interface_Pymol +. wirte own conversion function</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.io</span> <span class="kn">import</span> <span class="n">Exporter</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.io</span> <span class="kn">import</span> <span class="n">Importer</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.utils</span> <span class="kn">import</span> <span class="n">Utilities</span> <span class="k">as</span> <span class="n">u</span><span class="p">,</span> <span class="n">Types</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.utils.Utilities</span> <span class="kn">import</span> <span class="nb">print</span>
+
+
+<div class="viewcode-block" id="Logic_Handler"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler">[docs]</a><span class="k">class</span> <span class="nc">Logic_Handler</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Logic_Handler.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Utilities</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Handles the program flow. By defining it inside a class we get proper encapsulation and prevent problems with multiple imports</span>
+
+<span class="sd">            When a GUI Program Launches it should create one instance of a Logic_Handler and use it to control the program flow.</span>
+<span class="sd">            It should pass GUI-events to it (by calling the react_to_event method.). The GUI Module should NOT need to directly access any other modules. (Except utilities).</span>
+<span class="sd">            Warning: To keep things clean there is not backwards communicatopn from the Logic_Handler to the GUI module. It is the GUI Modules responsibility to check on the current state of the program, after creating events.</span>
+<span class="sd">            Warning: I really do NOT want the GUI-Program to inherit form the Logic_Handler. It will inherit from a GUI Element (e.g. interface_Pymol.Wizard). Python suppports multiple inheritance, but I don&#39;t.</span>
+
+<span class="sd">            RECOMMENDATIONS TO WRITE A NEW GUI MODULE:</span>
+<span class="sd">            The GUI Module should have the following functions/Elements</span>
+
+<span class="sd">            1) Buttons/Lists... for the different actions that can be performed (Import, RestraintType, Selection ...). These should call the function set_importer_type, set_restraint_type ...</span>
+<span class="sd">                    The GUI Program should use the action_states dict, to check which actions are currently available.</span>
+<span class="sd">            2) 2 Toggle buttons / radio buttons... to switch between select / delete mode and atom / restraint mode</span>
+
+<span class="sd">            2) Events: The GUI Module is responsible for translating whatever events it understands into events relevant to the selections. It can do this by calling the function react_to_event(event_type, kw_args)</span>
+<span class="sd">               Recommended translations:    SELECT: When the user clicks a certain Atom</span>
+<span class="sd">                                            MOVE: Mouse movement / keyboard arrows ...</span>
+<span class="sd">                                            SIZE: Mouse wheel / keyboard arrows</span>
+<span class="sd">                                            CONFIRM: Double Click, Enter ...</span>
+
+<span class="sd">                 The GUI module should check the state of the program (event_state dict and selected_atoms, selected-restraints) every time after calling react_to_event.</span>
+<span class="sd">                 I recommend wrapping the react_to_event function into a function of the GUI module to do that automatically.</span>
+
+<span class="sd">            3) Some Selections (SphericalSelection &amp; subclasses) are more intuitive if the GUI program draws a sphere at the corresponding position. =&gt; If you want that you have to introduce special for the GUI module to check the current selection</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        all_atoms : t.List[u.Atom]</span>
+<span class="sd">             List of all atoms in the Molecules, which should be connected</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Utilities</span><span class="o">.</span><span class="n">Atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">all_atoms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Utilities</span><span class="o">.</span><span class="n">Atom</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Define Restraint-Types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_restraint</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Define Importer-Types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_importer_types</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Importer</span><span class="o">.</span><span class="n">_Importer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_importer_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_importer</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Define Selection-Types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_selection_types</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Selection</span><span class="o">.</span><span class="n">_Selection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_selection_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Unlike my_filter my_selection needs to be accessed by several methods: do_pick, set_selection</span>
+
+        <span class="c1"># Define Filter-Types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_filter_types</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Filter</span><span class="o">.</span><span class="n">_Filter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_filter_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Define-Optimizer Types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_optimizer_types</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Optimizer</span><span class="o">.</span><span class="n">_Optimizer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_optimizer_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Define-Exporter-Types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_exporter_types</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Exporter</span><span class="o">.</span><span class="n">_Exporter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_exporter_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_exporter</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Modes &amp; Action_States (Modes: What do to atoms, when they are selected. Action states: Which actions are possible right now)</span>
+        <span class="c1"># which contains one attribute indicating actions AND one for each mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># True = select, False = delte</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># True = atom, False = Restraint</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;toggle_select_delete&#39;</span><span class="p">:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span><span class="p">,</span>
+            <span class="s1">&#39;toggle_atom_restraint&#39;</span><span class="p">:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span><span class="p">,</span>
+            <span class="s1">&#39;Importer&#39;</span><span class="p">:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_DISABLED</span><span class="p">,</span>
+            <span class="s1">&#39;Restraint&#39;</span><span class="p">:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_DISABLED</span><span class="p">,</span>
+            <span class="s1">&#39;Selection&#39;</span><span class="p">:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_DISABLED</span><span class="p">,</span>
+            <span class="s1">&#39;Filter&#39;</span><span class="p">:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_DISABLED</span><span class="p">,</span>
+            <span class="s1">&#39;Optimizer&#39;</span><span class="p">:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_DISABLED</span><span class="p">,</span>
+            <span class="s1">&#39;Exporter&#39;</span><span class="p">:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_DISABLED</span><span class="p">,</span>
+            <span class="s1">&#39;Done&#39;</span><span class="p">:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_action_states</span><span class="p">()</span></div>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        event_functions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># These event functions will be called by the GUI-Program to indicate an action. It is the GUI program that defines what exactly consitutues what event. (e.g: a move event might be triggered by a mouse movement or keyboatrd arrows etc.depending on the GUI-Program)</span>
+    <span class="c1"># CAREFULL: Never call the Slections _update*functions alone. Always check their state (finished or not &amp; selected_atoms) directly afterwards in teh GUI program</span>
+
+<div class="viewcode-block" id="Logic_Handler.react_to_event"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.react_to_event">[docs]</a>    <span class="k">def</span> <span class="nf">react_to_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">EventType</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_args</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                react_to_event should be called by the GUI-module to report an event</span>
+
+<span class="sd">            react_to_event will then call the relevant update function of the active selection and refresh all atom lists etc.</span>
+
+<span class="sd">         @Waring react_to_event will change the state of the program (i.e. selected_atoms, selected_restraints, mode and actions states)</span>
+<span class="sd">         It is strongly recommended to wrap react_to_event into a function of the GUI-module, which will check these and redraw the scene and de?activate buttons, if necessary/.</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        event_type : restraintmaker.utils.program_states.EventType</span>
+<span class="sd">             What kind of event was triggered?</span>
+<span class="sd">        kw_args :  dict</span>
+<span class="sd">             Arguments the relevant update function will need</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">            if args to not match the the corresponding logic_handler.react_to_*_event_function</span>
+<span class="sd">        NotImplementedError</span>
+<span class="sd">            if a new event_type is used, which the function does not know about.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">has_finished</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">event_type</span> <span class="o">==</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">SELECT</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">_update_select</span><span class="p">(</span><span class="o">**</span><span class="n">kw_args</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">event_type</span> <span class="o">==</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">MOVE</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">_update_move</span><span class="p">(</span><span class="o">**</span><span class="n">kw_args</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">event_type</span> <span class="o">==</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">SIZE</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">_update_size</span><span class="p">(</span><span class="o">**</span><span class="n">kw_args</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">event_type</span> <span class="o">==</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">CONFIRM</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">_update_confirm</span><span class="p">(</span><span class="o">**</span><span class="n">kw_args</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;No action defined for event_type &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">event_type</span><span class="p">))</span>
+
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Utilities</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+                <span class="s1">&#39;The provided arguments do not fit the function logic_handler.react to_ &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+                    <span class="n">event_type</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; _event&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_selection_status</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_action_states</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Logic_Handler.set_action_type"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_action_type">[docs]</a>    <span class="k">def</span> <span class="nf">set_action_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set_action should be called by the GUI module when the user selects an Importer, Restraint, Selection, Filter, Optimizer or Exporter</span>
+
+<span class="sd">            It will then call the relevant _set_X_type function.</span>
+
+<span class="sd">            @Warnings set_action_type will change the state of the program (i.e. selected_atoms, selected_restraints, mode and actions states)</span>
+<span class="sd">            It is strongly recommended to wrap react_to_event into a function of the GUI-module, which will check these and redraw the scene and de?activate buttons, if necessary/.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x_type : type</span>
+<span class="sd">            A type of Importer, Selection, Restraint, Filter, Optimizer or Exporter</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            if the specified type is not recognized</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># SWITCH-TABLE</span>
+        <span class="k">if</span> <span class="n">x_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_importer_types</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_importer_type</span><span class="p">(</span><span class="n">x_type</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">x_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span><span class="n">x_type</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">x_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_selection_types</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_selection_type</span><span class="p">(</span><span class="n">x_type</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">x_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_filter_types</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_filter_type</span><span class="p">(</span><span class="n">x_type</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">x_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_optimizer_types</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_optimizer_type</span><span class="p">(</span><span class="n">x_type</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">x_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_exporter_types</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_exporter_type</span><span class="p">(</span><span class="n">x_type</span><span class="p">)</span>
+        <span class="c1"># Not Found</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span>
+                <span class="n">x_type</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; is not an available type of Importer, Restraint, Selection, Filter, Optimizer  or Exporter. &#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_selection_status</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_action_states</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Logic_Handler.set_mode"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_mode">[docs]</a>    <span class="k">def</span> <span class="nf">set_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_delete</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">atom_restraint</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            set_mode should be called by the GUI module when the user toggles the buttons to change the program mode</span>
+
+<span class="sd">        warning: set_action_type will change the state of the program (i.e. selected_atoms, selected_restraints, mode and actions states)</span>
+<span class="sd">        It is strongly recommended to wrap react_to_event into a function of the GUI-module, which will check these and redraw the scene and de?activate buttons, if necessary/.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        select_delete : bool</span>
+<span class="sd">            Select mode (True) or Delete mode (False)?</span>
+<span class="sd">        atom_restraint : bool</span>
+<span class="sd">            Atoms mode (True) or Delete mode (False)?</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span> <span class="o">=</span> <span class="n">select_delete</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="o">=</span> <span class="n">atom_restraint</span>
+
+        <span class="c1"># &#39;Depending&#39; on the mode some actions (e.g creating restraints) are not possible</span>
+
+        <span class="c1"># Select or delte atoms mode</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># restraint Option not needed</span>
+
+        <span class="c1"># Select restraint mode</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span>
+                <span class="kc">None</span><span class="p">)</span>  <span class="c1"># Restraint should be chosen by hand. Reset to None in case an old Restraint type is still active</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_selection_type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># Selection Type will be set by the Restraint</span>
+
+        <span class="c1"># Delte Restraint Mode</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># To clerly show, that any restraint can be deleted</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_selection_type</span><span class="p">(</span><span class="n">Selection</span><span class="o">.</span><span class="n">SingleAtomSelection</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_action_states</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Logic_Handler._check_selection_status"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._check_selection_status">[docs]</a>    <span class="k">def</span> <span class="nf">_check_selection_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         _check_selection_status needs to be called at the end of every react_to_*_event function, after updating the selection.</span>
+
+<span class="sd">         It checks if the selection has finished and adds the selected atoms to the list, if necessary.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">has_finished</span><span class="p">:</span>
+
+            <span class="c1"># CHECK ALL FOR POSSIBLE MODES</span>
+
+            <span class="c1"># SELECT ATOM MODE</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="ow">not</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">atoms</span><span class="p">))</span>  <span class="c1"># Do not allow addition of duplicates</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+            <span class="c1"># DELETE ATOM MODE</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="ow">not</span> <span class="p">(</span><span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">atoms</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+            <span class="c1"># SELECT RESTRAINT MODE</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span><span class="p">:</span>
+                <span class="n">new_restraint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_restraint</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+            <span class="c1"># DELETE RESTRAINT MODE</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># In delete Restraint Mode the Selection is a Single Atom Selection</span>
+                <span class="c1"># TODO DELETE_RESTRAINT_MODE (2): Allow to use every kind of Selection in Delete-Restraint_mode. Upon confirmation: Delete everz restraint containing an atom in that selection</span>
+                <span class="n">atom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="c1"># Remove all restraints containing the selected atom</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">]</span>
+                <span class="c1"># open a new SingleAtomSelection</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set_*_type - functions:</span>
+<span class="sd">            Are called by set_action_type</span>
+<span class="sd">            used to be called do_import</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Logic_Handler._set_importer_type"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_importer_type">[docs]</a>    <span class="k">def</span> <span class="nf">_set_importer_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_importer_type</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">[</span><span class="n">Importer</span><span class="o">.</span><span class="n">_Importer</span><span class="p">]):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        _set_importer_type changes the current Importer type, and creates and apllies a new Importer of that type.</span>
+
+<span class="sd">        :warning: Should only be called via set_action_type which handles type checking</span>
+<span class="sd">        :param new_importer_type: An available type of Importer</span>
+<span class="sd">        :type new_importer_type: type[Importer]</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :raises TypeError if new_importer_type is not in available_importer_types</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">new_importer_type</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_importer_type</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_importer</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_importer_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_importer_types</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_importer_type</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; is not an available type of Importer&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_importer</span> <span class="o">=</span> <span class="n">new_importer_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">try_to_get_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_importer</span><span class="p">,</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_file_open_dialog</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_importer</span><span class="o">.</span><span class="n">import_restraints</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_importer</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_importer_type</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Logic_Handler._set_restraint_type"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_restraint_type">[docs]</a>    <span class="k">def</span> <span class="nf">_set_restraint_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_restraint_type</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        _set_restraint_type changes the current type of Restraint.</span>
+
+<span class="sd">        :warning: Should only be called via set_action_type which handles type checking</span>
+<span class="sd">        :param new_restraint_type:  A type of restraint</span>
+<span class="sd">        :type new_restraint_type: type[Restraint._Restraint}</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :raises: TypeError if new_restraint_type is not in available_restraint_types</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">new_restraint_type</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_restraint</span> <span class="o">==</span> <span class="kc">None</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_restraint_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_restraint_type</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; is not an available type of Restraint&#39;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SET TYPE: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_restraint_type</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="o">=</span> <span class="n">new_restraint_type</span>
+
+        <span class="c1"># Set the Selection type to the preferred selection of this restraint type. set_mode will deactivate the selection, button, so it cant be changed</span>
+        <span class="c1"># TODO: In theory a restraint could accept several selection types. Would be nice to give the user the possibilitz to choose between all of them</span>
+        <span class="c1"># TODO: If the first selection in the list is e.g a Limited selection the user will be asked for input. At a moment I just check for all lists that that is not the case.</span>
+        <span class="c1">#   Would be nicer if there was a way to pass an input function that does not require user input in this context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_selection_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="o">.</span><span class="n">accepted_selection_types</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Logic_Handler._set_selection_type"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_selection_type">[docs]</a>    <span class="k">def</span> <span class="nf">_set_selection_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_selection_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">             chagnes the current type of Selection and starts a new selection of that type.</span>
+
+<span class="sd">            @warnings: Should only be called via set_action_type which handles type checking</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_selection_type : t.Type[Selection]</span>
+<span class="sd">            type of the new Selection</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">new_selection_type</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_selection_type</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_selection_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_selection_types</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_selection_type</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; is not an  available type of Selection&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_selection_type</span> <span class="o">=</span> <span class="n">new_selection_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span> <span class="o">=</span> <span class="n">new_selection_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span><span class="p">)</span>
+
+        <span class="c1"># Switchtable for different provider funcs</span>
+        <span class="c1"># TODO STRUC: Remove special cases, use a generic input function</span>
+
+        <span class="n">input_function</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">do_nothing</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">==</span> <span class="n">Selection</span><span class="o">.</span><span class="n">LimitedSelection</span><span class="p">:</span>
+            <span class="n">input_function</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_input_dialog</span><span class="p">(</span><span class="n">parent_window</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Selection&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">SphericalSelection</span><span class="p">):</span>
+            <span class="n">input_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="mi">5</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">MCS_Selection</span><span class="p">):</span>
+            <span class="n">input_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">dummy_arg</span><span class="p">:</span> <span class="n">_convert_molecules_to_pdb</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">try_to_get_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="p">,</span> <span class="n">input_function</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_selection_type</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+        <span class="c1"># Unlike other classes Selection does not call its own method (update(...)) here. It is just started. update(...) is called at every pick</span>
+
+<div class="viewcode-block" id="Logic_Handler._set_filter_type"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_filter_type">[docs]</a>    <span class="k">def</span> <span class="nf">_set_filter_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_filter_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            changes the current type of Filter and creates and applies a Filter of that type.</span>
+
+<span class="sd">            @Warnings should only be called via set_action_type which handles type checking</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_filter_type :  t.Type[Filter]</span>
+<span class="sd">            type of the new Filter</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">new_filter_type</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_filter_type</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Check for erros the GUI module hsould already have dealt with</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_filter_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_filter_types</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_filter_type</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; is not an available type of Filter&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Create list of all atoms in the current selection:</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span> <span class="o">=</span> <span class="n">new_filter_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">)</span>
+
+        <span class="c1"># Switchtable for different provider funcs</span>
+        <span class="c1"># TODO STRUC: Remove special cases, use a generic input function</span>
+
+        <span class="n">input_function</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">do_nothing</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span><span class="p">,</span> <span class="n">Filter</span><span class="o">.</span><span class="n">PropertyFilter</span><span class="p">):</span>
+            <span class="n">input_function</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_input_dialog</span><span class="p">(</span><span class="n">parent_window</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                                                 <span class="n">title</span><span class="o">=</span><span class="s1">&#39;PropertyFilter&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span><span class="p">,</span> <span class="n">Filter</span><span class="o">.</span><span class="n">ElementFilter</span><span class="p">):</span>
+            <span class="n">input_function</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_input_dialog</span><span class="p">(</span><span class="n">parent_window</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                                                 <span class="n">title</span><span class="o">=</span><span class="s1">&#39;ElementFilter&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span><span class="p">,</span> <span class="n">Filter</span><span class="o">.</span><span class="n">RingFilter</span><span class="p">):</span>
+            <span class="c1"># TODO: GET INDEPENDENT OF PYMOL HERE =&gt; Write an own pdb function</span>
+            <span class="n">input_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">dummy_arg</span><span class="p">:</span> <span class="n">_convert_molecules_to_pdb</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">try_to_get_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span><span class="p">,</span> <span class="n">input_function</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_filter_type</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Logic_Handler._set_optimizer_type"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_optimizer_type">[docs]</a>    <span class="k">def</span> <span class="nf">_set_optimizer_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_optimizer_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            changes the current type of Optimizer and creates and applies a Optimizer of that type.</span>
+<span class="sd">            @Warnings  Should only be called via set_action_type which handles type checking.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_optimizer_type : t.Type[Filter]</span>
+<span class="sd">            type of the new Filter</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">new_optimizer_type</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_optimizer_type</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_optimizer_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_optimizer_types</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_optimizer_type</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; is not an available type of Optimizer&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span> <span class="o">=</span> <span class="n">new_optimizer_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">)</span>
+
+        <span class="c1"># SWITCHTABLE FOR input function</span>
+        <span class="n">input_functions</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">do_nothing</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span><span class="p">,</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">TreeHeuristicOptimizer</span><span class="p">):</span>
+            <span class="n">input_function</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_multi_dialog</span><span class="p">(</span>
+                <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Parameters for TreeHeuristicOptimizer&#39;</span><span class="p">,</span> \
+                <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">,</span> <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;tree-algorithm&#39;</span><span class="p">,</span> <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">],</span> \
+                <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tree-algorithm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;shortest&#39;</span><span class="p">,</span> <span class="s1">&#39;cog&#39;</span><span class="p">,</span> <span class="s1">&#39;prim&#39;</span><span class="p">,</span> <span class="s2">&quot;biased_avg&quot;</span><span class="p">],</span>
+                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span>
+                                                         <span class="s1">&#39;pca_2d&#39;</span><span class="p">]},</span> \
+                <span class="n">default</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;1.2&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;shortest&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="s1">&#39;pca_2d&#39;</span><span class="p">})</span>
+
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span><span class="p">,</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">BruteForceRingOptimzer</span><span class="p">):</span>
+            <span class="n">input_function</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_multi_dialog</span><span class="p">(</span>
+                <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Parameters for BruteForceOptimizer&#39;</span><span class="p">,</span> \
+                <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">,</span> <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;algorithm&#39;</span><span class="p">,</span> <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">],</span> \
+                <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span> <span class="s1">&#39;pca&#39;</span><span class="p">],</span>
+                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span>
+                                                         <span class="s1">&#39;pca_2d&#39;</span><span class="p">]},</span> \
+                <span class="n">default</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;1.2&#39;</span><span class="p">,</span> <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;pca&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="s1">&#39;pca_2d&#39;</span><span class="p">})</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span><span class="p">,</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">MetaMoleculeRingOptimizer</span><span class="p">):</span>
+            <span class="n">input_function</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_multi_dialog</span><span class="p">(</span>
+                <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Parameters for BestMoleculeRingOptimizer&#39;</span><span class="p">,</span> \
+                <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">,</span> <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;algorithm&#39;</span><span class="p">,</span> <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">],</span> \
+                <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span> <span class="s1">&#39;pca&#39;</span><span class="p">],</span>
+                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span>
+                                                         <span class="s1">&#39;pca_2d&#39;</span><span class="p">]},</span> \
+                <span class="n">default</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;1.2&#39;</span><span class="p">,</span> <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;pca&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="s1">&#39;pca_2d&#39;</span><span class="p">})</span>
+
+        <span class="k">if</span> <span class="n">try_to_get_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span><span class="p">,</span> <span class="n">input_function</span><span class="p">):</span>
+            <span class="n">time_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span><span class="o">.</span><span class="n">make_restraints</span><span class="p">()</span>
+                <span class="n">time_stop</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Optimized in &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">{:0.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_stop</span> <span class="o">-</span> <span class="n">time_start</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; s&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Utilities</span><span class="o">.</span><span class="n">NoOptimalSolutionException</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Failed to find a optimal solution under the given conditions:&#39;</span><span class="p">,</span> <span class="n">ex</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_optimizer_type</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Logic_Handler._set_exporter_type"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_exporter_type">[docs]</a>    <span class="k">def</span> <span class="nf">_set_exporter_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_exporter_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            changes the current type of Exporter and creates and applies an Exporter of that type.</span>
+<span class="sd">            @Warnings  Should only be called via set_action_type which handles type checking.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_exporter_type :  t.Type[Exporter]</span>
+<span class="sd">            type of the new Filter</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">new_exporter_type</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_exporter_type</span> <span class="o">==</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_exporter</span> <span class="o">==</span> <span class="kc">None</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_exporter_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_exporter_types</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_exporter_type</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; is not an available type of Exporter&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_exporter</span> <span class="o">=</span> <span class="n">new_exporter_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">try_to_get_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_exporter</span><span class="p">,</span>
+                           <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_file_save_dialog</span><span class="p">()):</span>  <span class="c1"># u.create_input_dialog(None, &#39;Exporter&#39;)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_exporter</span><span class="o">.</span><span class="n">export_restraints</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_exporter</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_exporter_type</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Logic_Handler.set_action_states"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler.set_action_states">[docs]</a>    <span class="k">def</span> <span class="nf">set_action_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            checks the current state of the program and decides, which actions are allowed at the moment</span>
+
+<span class="sd">            many TODOs</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># ALL CHANGES TO THE ACTION STATE SHOULD BE DONE IN THIS FUNCTION. THE STATES SHOULD BE DETERMINED ONLY BY THE CURRENT STAte of THE PROGRAM</span>
+        <span class="c1"># ORDER: Set types for each action one after the other</span>
+        <span class="c1"># if the structure beomces more complex consider first checking the toggle modes (atom?restraint, delete/select) and go through each state in iach state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;toggle_select_delete&#39;</span><span class="p">]:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;toggle_atom_restraint&#39;</span><span class="p">]:</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Importer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>  <span class="c1"># TODO Later: Check if there is any Molecules loaded.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Restraint&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="p">(</span>
+                                                                                                                    <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span> \
+            <span class="k">else</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>  <span class="c1"># TODO Later: Always Enabled, can be changed as much as we like</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span>
+            <span class="s1">&#39;Selection&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="k">else</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>  <span class="c1"># TODO Later: Check if any atoms are loaded</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Filter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> \
+                                                                                                             <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Optimizer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> \
+                                                                                                                <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>
+        <span class="c1"># TODO: Check if we have Atoms from at least 2 Molecules</span>
+        <span class="c1"># TODO: Check indivudiual Optimizers depending on Restraint type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Exporter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> \
+            <span class="k">else</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Done&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">restraintmaker</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
