@@ -1,0 +1,1432 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>restraintmaker.algorithm package &mdash; restraintMaker  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Welcome RestraintMaker</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>restraintmaker.algorithm package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_source/restraintmaker.algorithm.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="restraintmaker-algorithm-package">
+<h1>restraintmaker.algorithm package<a class="headerlink" href="#restraintmaker-algorithm-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-restraintmaker.algorithm.Filter">
+<span id="restraintmaker-algorithm-filter-module"></span><h2>restraintmaker.algorithm.Filter module<a class="headerlink" href="#module-restraintmaker.algorithm.Filter" title="Permalink to this headline">¶</a></h2>
+<p>The module Filters contains functionality of filtering selections by criteria like in ring structure or element.</p>
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Filter.ElementFilter">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Filter.</code><code class="sig-name descname">ElementFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#ElementFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.ElementFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Filter._Filter</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Filter.ElementFilter.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#ElementFilter.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.ElementFilter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Filter for certain Element(s)</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>atoms</strong> (<em>t.List[u.Atom]</em>) – List of atoms that are filtered over</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Filter.ElementFilter.filter">
+<code class="sig-name descname">filter</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#ElementFilter.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.ElementFilter.filter" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Returns a filtered version of the class attribute atoms, filtered by the class attribute element</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Filtered atom list</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>t.List[u.Atom]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Filter.ElementFilter.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param">input_function: Callable = &lt;function ElementFilter.&lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#ElementFilter.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.ElementFilter.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><dl class="simple">
+<dt>get_args(…) Needs to be called, before filter() can be used.</dt><dd><p>For the Element_Filter it finds out which element should be filtered</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_function</strong> (<em>function(str)</em>) – A function that will find the input needed ofr the filter.</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – A string that is displayed if if input function needs to communicate with the user</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Filter.PropertyFilter">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Filter.</code><code class="sig-name descname">PropertyFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#PropertyFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.PropertyFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Filter._Filter</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Filter.PropertyFilter.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#PropertyFilter.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.PropertyFilter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters by any attribute of atom</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>atoms</strong> (<em>t.List[u.Atom]</em>) – List of atoms that are filtered over</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Filter.PropertyFilter.filter">
+<code class="sig-name descname">filter</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#PropertyFilter.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.PropertyFilter.filter" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Returns a list of atoms, filtered using the provided criterion and value</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Filtered atom list</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>t.List[u.Atom]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Filter.PropertyFilter.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#PropertyFilter.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.PropertyFilter.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><dl class="simple">
+<dt>get_args(…) Needs to be called, before filter() can be used. For the Property_Filter it finds out which</dt><dd><p>property should be filter-criterion and then which value it should have.</p>
+</dd>
+</dl>
+<p>Todo: think about multiple property selections</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_function</strong> (<em>function(str)</em>) – A function that will find the input needed ofr the filter.</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – A string that is displayed if if input function needs to communicate with the user</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException" title="restraintmaker.utils.Utilities.BadArgumentException"><strong>BadArgumentException</strong></a> – if the input function does not provide all arguments in the necessary format</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Filter.RingFilter">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Filter.</code><code class="sig-name descname">RingFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#RingFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.RingFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Filter._Filter</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Filter.RingFilter.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#RingFilter.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.RingFilter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Ring Filter chooses all Atoms that are part of a Ring
+Warnings: using tools_Rdkit. Needs conversion to tools_Rdkit molecules. =&gt; Needs the pdb as input</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atoms</strong> (<em>t.List[u.Atom]</em>) – List of atoms to be</p></li>
+<li><p><strong>args</strong> (<em>t.List[str]</em>) – Extra Arguments the subclasses might need</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Filter.RingFilter.filter">
+<code class="sig-name descname">filter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#RingFilter.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.RingFilter.filter" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>filter should be overridden by every subclass of _Filter. Returns a filtered List of atoms</p>
+</div></blockquote>
+<p>In the case of Ring Filter: All atoms which are in rings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Filtered atom list</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>t.List[u.Atom]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Filter.RingFilter.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Filter.html#RingFilter.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Filter.RingFilter.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>get_args(…) Needs to be called, before filter() can be used. It uses an input function to find all arguments required by a certain instance of a _Filter.</p>
+<p>For RingFilter that is a List of all Molecules in the pdb format (CAREFULL: The Molecules need to contain ALL atoms in the Molecules, not just the selected one.)</p>
+<p>TODO: What Kind of Error will I get if tools_Rdkit conversion fails?/ Catch it here</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_function</strong> (<em>function(str)</em>) – A function that can get the input</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – A string that is displayed if if input function needs to communicate with the user</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException" title="restraintmaker.utils.Utilities.BadArgumentException"><strong>BadArgumentException</strong></a> – if the input function does not provide all arguments in the necessary format</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-restraintmaker.algorithm.Optimizer">
+<span id="restraintmaker-algorithm-optimizer-module"></span><h2>restraintmaker.algorithm.Optimizer module<a class="headerlink" href="#module-restraintmaker.algorithm.Optimizer" title="Permalink to this headline">¶</a></h2>
+<p>The optimizers of this package are contained in this module. The optimizers can be used too….</p>
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">BruteForceRingOptimzer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#BruteForceRingOptimzer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer" title="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer</span></code></a></p>
+<p>A Molecule Ring Optimzier that connects TwoMolecules by finding Optimizing some criterion by brute force</p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.connect_two_molecules">
+<code class="sig-name descname">connect_two_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m1</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">m2</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types._Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#BruteForceRingOptimzer.connect_two_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.connect_two_molecules" title="Permalink to this definition">¶</a></dt>
+<dd><p>connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer</p>
+<dl>
+<dt>For three BruteForeceRingOptimizer that is by evaluating a criterion for every possible set of rsetraints and choosing the best.</dt><dd><dl class="field-list simple">
+<dt class="field-odd">param m1</dt>
+<dd class="field-odd"><p>Molecule 1</p>
+</dd>
+<dt class="field-even">type m1</dt>
+<dd class="field-even"><p>t.List[u.Atom]</p>
+</dd>
+<dt class="field-odd">param m2</dt>
+<dd class="field-odd"><p>Molecule 2</p>
+</dd>
+<dt class="field-even">type m2</dt>
+<dd class="field-even"><p>t.List[u.Atom]</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>Restraints between those atoms</p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>t.List[RestraintType._RestraintType]:</p>
+</dd>
+</dl>
+<p>:raises NotImplementedError if _MoleculeRingOptimizer.connect_two_molecules is called directly.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#BruteForceRingOptimzer.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>get_args needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_function</strong> (<em>t.Callable</em><em>[</em><em>str</em><em>]</em>) – A function that can get the input</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – A string that is displayed if input function needs to communicate with the user</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">raises</dt>
+<dd class="field-odd"><p>BadArgumentException if the input function does not provide all arguments in the necessary format</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">MetaMoleculeRingOptimizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#MetaMoleculeRingOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer" title="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer</span></code></a></p>
+<p>class MetaMoleculeRingOptimizer: Meta Optimizer which compares the solution of different Optimizers for each Molecule pair  and picks the best</p>
+<p>Warning: As implemented now, it can NOT be generalized to other Optimizer types than RingOptimizers.
+Warning: The complete solution of the BestMoleculesRingOPtimizer is NOT equal to any of the Optimizers it test. It will pick the best solution for each pair of molecules, leading to a different ring than any of the single Optimizers
+Warning: As Implemented now, it can not deal with future Molecule Ring Optimizers, which might have additional arguments</p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.connect_two_molecules">
+<code class="sig-name descname">connect_two_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m1</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">m2</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#MetaMoleculeRingOptimizer.connect_two_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.connect_two_molecules" title="Permalink to this definition">¶</a></dt>
+<dd><p>connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m1</strong> (<em>t.List</em><em>[</em><em>u.Atom</em><em>]</em>) – Molecule 1</p></li>
+<li><p><strong>m2</strong> (<em>t.List</em><em>[</em><em>u.Atom</em><em>]</em>) – Molecule 2</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Restraints between those atoms</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>t.List[RestraintType._RestraintType]:</p>
+</dd>
+</dl>
+<p>:raises NotImplementedError if _MoleculeRingOptimizer.connect_two_molecules is called directly.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#MetaMoleculeRingOptimizer.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt id="restraintmaker.algorithm.Optimizer.NoOptimalSolutionException">
+<em class="property">exception </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">NoOptimalSolutionException</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#NoOptimalSolutionException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.NoOptimalSolutionException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>A NoOptimalSolutionException is thrown, when an Optimizer reaches the end of its procedure without having found a solution fulfilling its criteria.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">TreeHeuristicOptimizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#TreeHeuristicOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer" title="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer</span></code></a></p>
+<p>..class MoleculeRingOptimizer_0_1. Connects Molecules pairwise, forming a topological ring. (Not all Molecules are connected to each other. Each is only connected to 2 neighbours).
+First the all Molecules pairs are connected. Then a ring is formed by using the best pairs.
+These restraints between two molecules are chosen heuristically by finding distance restraints that are as far apart as possilbe. (Non optimal solution)</p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.connect_two_molecules">
+<code class="sig-name descname">connect_two_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m1</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">m2</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types._Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#TreeHeuristicOptimizer.connect_two_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.connect_two_molecules" title="Permalink to this definition">¶</a></dt>
+<dd><p>connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer</p>
+<p>For three heurstic Optimizer that is by greedly picking restraints according to a criterion depending on the already chosen restraints</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param m1</dt>
+<dd class="field-odd"><p>Molecule 1</p>
+</dd>
+<dt class="field-even">type m1</dt>
+<dd class="field-even"><p>t.List[u.Atom]</p>
+</dd>
+<dt class="field-odd">param m2</dt>
+<dd class="field-odd"><p>Molecule 2</p>
+</dd>
+<dt class="field-even">type m2</dt>
+<dd class="field-even"><p>t.List[u.Atom]</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>Restraints between those atoms</p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>t.List[RestraintType._RestraintType]:</p>
+</dd>
+</dl>
+<p>:raises NotImplementedError if _MoleculeRingOptimizer.connect_two_molecules is called directly.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#TreeHeuristicOptimizer.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>get_args needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_function</strong> (<em>t.Callable</em><em>[</em><em>str</em><em>]</em>) – A function that can get the input</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – A string that is displayed if input function needs to communicate with the user</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">raises</dt>
+<dd class="field-odd"><p>BadArgumentException if the input function does not provide all arguments in the necessary format</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_MoleculeRingOptimizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_MoleculeRingOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#restraintmaker.algorithm.Optimizer._Optimizer" title="restraintmaker.algorithm.Optimizer._Optimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Optimizer._Optimizer</span></code></a></p>
+<p>Abstract parent class for all Molecule Ring Optimziers. Molecule Ring Optimziers set their restraints by finding the best set of restraints between pairs of Molecules. In the end everz molecule is connected to two other molecules</p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer.connect_two_molecules">
+<code class="sig-name descname">connect_two_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m1</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">m2</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types._Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_MoleculeRingOptimizer.connect_two_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer.connect_two_molecules" title="Permalink to this definition">¶</a></dt>
+<dd><p>connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m1</strong> (<em>t.List</em><em>[</em><em>u.Atom</em><em>]</em>) – Molecule 1</p></li>
+<li><p><strong>m2</strong> (<em>t.List</em><em>[</em><em>u.Atom</em><em>]</em>) – Molecule 2</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Restraints between those atoms</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>t.List[RestraintType._RestraintType]:</p>
+</dd>
+</dl>
+<p>:raises NotImplementedError if _MoleculeRingOptimizer.connect_two_molecules is called directly.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer.make_restraints">
+<code class="sig-name descname">make_restraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types._Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_MoleculeRingOptimizer.make_restraints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer.make_restraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>make_restraints() returns a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used:</p>
+<p>All MoleculeRingOptimizers inherit make_restraint form _Molecule RingOptimizer. Only the function connect_two_Molecules differs. Connects Molecules pairwise, forming a topological ring. (Not all Molecules are connected to each other. Each is only connected to 2 neighbours).
+The Molecules are connected in alphanumerical order of their name. No Optimization.
+The molecules are connected, by applying a Pairwise distance restraint to n pairs of Atoms.
+These Atoms are chosen heuristically by finding distance restraints that are as far apart as possilbe. (Non optimal solution)
+:return: A List of Restraints
+:rtype: t.list[RestraintType.PairRestraint]
+:raises: NoOptimalSolutionException if no Solution fulfilling all criteria can be found. For MoleculeRingOptimizer: Not enough restraints shorter than cutoff</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Optimizer._Optimizer">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_Optimizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_Optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._Optimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer._Optimizer.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_Optimizer.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._Optimizer.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>get_args needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_function</strong> (<em>t.Callable</em><em>[</em><em>str</em><em>]</em>) – A function that can get the input</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – A string that is displayed if input function needs to communicate with the user</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">raises</dt>
+<dd class="field-odd"><p>BadArgumentException if the input function does not provide all arguments in the necessary format</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer._Optimizer.make_restraints">
+<code class="sig-name descname">make_restraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types._Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_Optimizer.make_restraints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._Optimizer.make_restraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>make_restraints() return a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used.
+:raises: NoOptimalSolutionException if no Solution fulfilling all criteria can be found.
+:return: A List of Restraints
+:rtype: t.List[RestraintType.RestraintType]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.algorithm.Optimizer._calculate_value_unscaled_pca_2d">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_calculate_value_unscaled_pca_2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">restraint_pos</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_calculate_value_unscaled_pca_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._calculate_value_unscaled_pca_2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quantity to optimize is the 2d-volume of the PCA of the restraint positions</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.algorithm.Optimizer._get_all_short_connections">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_get_all_short_connections</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">max_dis</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types.Distance_Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_get_all_short_connections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._get_all_short_connections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Old. Only here to keep get_maximal_tree_kruskal_running. Delete when not needed anymore
+get_all_short_connections(…) finds all pairs of atoms within a certain cutoff distance of each other. Atoms withing the same molecules can are not connected
+:param atoms: List of atoms
+:type atoms: t.List[u.Atom]
+:param max_dis: maximal distance of two connected atoms in nm
+:type max_dis: float
+:return: A list of all connections, shorter than max_dis
+:rtype: t.List[u.connection]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.algorithm.Optimizer._not_debugged_maximum_spanning_tree_kruskal">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">_not_debugged_maximum_spanning_tree_kruskal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cons</span><span class="p">:</span> <span class="n">List<span class="p">[</span>restraintmaker.utils.Types.Distance_Restraint<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.RestraintPair" title="restraintmaker.utils.Utilities.RestraintPair">restraintmaker.utils.Utilities.RestraintPair</a><span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#_not_debugged_maximum_spanning_tree_kruskal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer._not_debugged_maximum_spanning_tree_kruskal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds a maximal spanning tree in which the nodes represent distance restraints and edges the distance between their middles.
+The ‘tree’ will be provided in the form of a list. Connectivity info is not explicitly given. Due to the priority queue implementation of Kruskal’s Algorithm the list is guaranteed to be sorted by descending distance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">WARNING</dt>
+<dd class="field-odd"><p>But it is not guaranteed that consecutive edges are connected!!!</p>
+</dd>
+<dt class="field-even">WARNING</dt>
+<dd class="field-even"><p>Involves calculating distances between all Restraint pairs. =&gt; O(n^2). Only use on preselected lists of connections</p>
+</dd>
+<dt class="field-odd">Warning</dt>
+<dd class="field-odd"><p>old and not supported. Only kept here to keep connect two Molecules_kruskal_running</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>cons</strong> (<em>t.List</em><em>[</em><em>u.connections</em><em>]</em>) – List of connections (Pairwise Distance Restraints)</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The tree in the form of Pairs of connections and their distances</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list[u.RestraintPair]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.algorithm.Optimizer.calculate_value_pca_relative_to_pca_of_both_molecules">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">calculate_value_pca_relative_to_pca_of_both_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">restraint_pos</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#calculate_value_pca_relative_to_pca_of_both_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.calculate_value_pca_relative_to_pca_of_both_molecules" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.algorithm.Optimizer.compare_pair_optimizers">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">compare_pair_optimizers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">criterion</span><span class="p">:</span> <span class="n">Callable<span class="p">[</span><span class="p">[</span>Tuple<span class="p">[</span>float<span class="p">]</span><span class="p">]</span><span class="p">, </span>float<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">opt_types</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer" title="restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer">restraintmaker.algorithm.Optimizer._MoleculeRingOptimizer</a><span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">opt_args</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Tuple<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">out_path</span></em>, <em class="sig-param"><span class="n">new_dir_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#compare_pair_optimizers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.compare_pair_optimizers" title="Permalink to this definition">¶</a></dt>
+<dd><p>compare_pair_optimizers runs different optimizers over the same set of atoms, saves the restraints for each PAIR of Molecules (not just the ones chosen for the ring), assigns them a value and saves all values acheived with different optimizers
+:param criterion: A function which assigns a value to a set of restraints, depending on their positions
+:type criterion: criterion: t.Callable[[t.Tuple[t.float]],float]
+:param atoms: List of atoms
+:type atoms: t.List[u.atom]
+:param opt_types: types of Optimzers which have to be compared. Must be Molecules Ring Optimziers
+:type opt_types: t.List[t.Type[_MoleculeRingOptimizer]]
+:param opt_args: args for the different Optimizers. Needs to have same length a opt, types
+:type opt_args: t.List[t.Tuple]
+:param out_path: path where a folder containing all the output should be saved.
+:type out_path: str or None
+:raises ValueError if arguments have a bad format
+:raises OSError if the directory can not be created
+:return:
+:rtype:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.algorithm.Optimizer.find_middle">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">find_middle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">r</span><span class="p">:</span> <span class="n">restraintmaker.utils.Types.Distance_Restraint</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#find_middle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.find_middle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.algorithm.Optimizer.get_all_short_pair_restraints">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">get_all_short_pair_restraints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">max_dis</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types.Distance_Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#get_all_short_pair_restraints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.get_all_short_pair_restraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>get_all_short_pair_restraints: finds all pairs of atoms within a certain cutoff distance of each other. Atoms withing the same molecules can are not connected
+:param __atoms: List of atoms
+:type __atoms: t.List[u.Atom]
+:param max_dis: maximal distance of two connected atoms in nm
+:type max_dis: float
+:return: A list of all connections, shorter than max_dis
+:rtype: t.List[RestraintType.Pair_Restraint]:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.algorithm.Optimizer.maximal_spanning_tree_greedy">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">maximal_spanning_tree_greedy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">potential_restraints</span><span class="p">:</span> <span class="n">List<span class="p">[</span>restraintmaker.utils.Types.Distance_Restraint<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">priority_algo</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>restraintmaker.utils.Types.Distance_Restraint<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#maximal_spanning_tree_greedy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.maximal_spanning_tree_greedy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds a maximal spanning tree in which the nodes represent distance restraints and edges the distance between their middles.
+The ‘tree’ will be provided in the form of a list. Connectivity info is not explicitly given. Due to the working of Prims Algorithm it is guaranteed, that every vortex in the list is connected to one vortex before it in the list
+WARNING: But it is not guaranteed that the edges are ordered by size
+WARNING: Involves calculating distances between all Restraint pairs. =&gt; O(n!). Only use on preselected lists of connections
+:param cons: List of connections (Pairwise Distance Restraints)
+:type cons: t.List[u.connections]
+:return: The tree in the form of Pairs of connections and their distances
+:param n: how many restraints should be set?
+:type n: int
+:param priority_algo: Which algorithm should be used to update priorities of not yet chosen nodes?
+:type priority_algo: str
+:rtype: .list[u.RestraintPair]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="restraintmaker.algorithm.Optimizer.maximal_weight_ring">
+<code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">maximal_weight_ring</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">edge_list</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">value_list</span><span class="p">:</span> <span class="n">List<span class="p">[</span>float<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">n_nodes</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Optimizer.html#maximal_weight_ring"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.maximal_weight_ring" title="Permalink to this definition">¶</a></dt>
+<dd><p>maximal_weight_ring chooses from a list of edges the ones that form the biggest ring including all nodes.
+Nodes are considered as ints (indices) and edges as tuples of nodes
+:warning: if the input is NOT a fully connected graph there might be no solution
+:param edge_list: list of all edges as tuples of ints
+:type edge_list: t.List[t.Tuple[int,int]]
+:param value_list: A list of all edge weights
+:type value_list: t.List[float]
+:param n_nodes: Number of nodes
+:type n_nodes: int
+:returns: Indices of the chosen edges
+:rtype t.List[ind]</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Optimizer.priority_node">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Optimizer.</code><code class="sig-name descname">priority_node</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">priority</span></em>, <em class="sig-param"><span class="n">node</span></em><span class="sig-paren">)</span><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.priority_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer.priority_node.node">
+<em class="property">property </em><code class="sig-name descname">node</code><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.priority_node.node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Optimizer.priority_node.priority">
+<em class="property">property </em><code class="sig-name descname">priority</code><a class="headerlink" href="#restraintmaker.algorithm.Optimizer.priority_node.priority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-restraintmaker.algorithm.Selection">
+<span id="restraintmaker-algorithm-selection-module"></span><h2>restraintmaker.algorithm.Selection module<a class="headerlink" href="#module-restraintmaker.algorithm.Selection" title="Permalink to this headline">¶</a></h2>
+<p>The module Selections contains the selection logics. A selected atom will be considered for restraint placement.</p>
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Selection.LimitedSelection">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Selection.</code><code class="sig-name descname">LimitedSelection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#LimitedSelection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.LimitedSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Selection._Selection</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.LimitedSelection.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#LimitedSelection.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.LimitedSelection.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>A selection containing a fix maximal number of atoms</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>all_atoms</strong> (<em>t.List[u.Atom]</em>) – all possible selectable atoms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.LimitedSelection._update_select">
+<code class="sig-name descname">_update_select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#LimitedSelection._update_select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.LimitedSelection._update_select" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>_update_select should be overridden by every subclass of _Selection that wants to be notified when new atoms have been selected/marked in the GUI
+LimitedSelection.update () only accepts one molecule in new_atoms at a time.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_atoms</strong> (<em>t.List</em>) – List of atom selection that has been added since last updated</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.LimitedSelection.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#LimitedSelection.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.LimitedSelection.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.
+For Limited_Filter those are: max_size: int - Maximal number of atoms in selection.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_function</strong> (<em>t.Callable(str)</em>) – a function that will provide the arguments for the selection in the necessary format: int</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException" title="restraintmaker.utils.Utilities.BadArgumentException"><strong>BadArgumentException</strong></a> – if the input function does not provide all arguments in the necessary format</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Selection.MCS_Selection">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Selection.</code><code class="sig-name descname">MCS_Selection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#MCS_Selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.MCS_Selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Selection._Selection</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.MCS_Selection.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#MCS_Selection.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.MCS_Selection.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Selects all atoms, which are in the MCS of at least on pair of molecules</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>all_atoms</strong> (<em>t.List[u.Atom]</em>) – all possible selectable atoms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.MCS_Selection._update_confirm">
+<code class="sig-name descname">_update_confirm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#MCS_Selection._update_confirm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.MCS_Selection._update_confirm" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Dummy no selection possible</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_atoms</strong> (<em>t.List[u.Atom]</em>) – not used here, because all atoms are selected</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.MCS_Selection._update_move">
+<code class="sig-name descname">_update_move</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_x</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">new_y</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">new_z</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#MCS_Selection._update_move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.MCS_Selection._update_move" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Dummy no selection possible</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_atoms</strong> (<em>t.List[u.Atom]</em>) – not used here, because all atoms are selected</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.MCS_Selection._update_select">
+<code class="sig-name descname">_update_select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#MCS_Selection._update_select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.MCS_Selection._update_select" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Dummy no selection possible</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_atoms</strong> (<em>t.List[u.Atom]</em>) – not used here, because all atoms are selected</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.MCS_Selection._update_size">
+<code class="sig-name descname">_update_size</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">increase</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#MCS_Selection._update_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.MCS_Selection._update_size" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Dummy no selection possible</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_atoms</strong> (<em>t.List[u.Atom]</em>) – not used here, because all atoms are selected</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.MCS_Selection.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#MCS_Selection.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.MCS_Selection.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.
+For MCS_Selection the argument is a list of the Molecules in the pdb format.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_function</strong> (<em>t.Callable (str)</em>) – a function that will provide the arguments for the selection in the necessary format. Here: Not necessesary. Just pass an ‘empty’ function or any function at all. It will not be called.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>BadArgumentException:</strong> – if the input function does not provide all arguments in the necessary format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.MCS_Selection.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#MCS_Selection.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.MCS_Selection.update" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>general update function</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Selection.PaintSelection">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Selection.</code><code class="sig-name descname">PaintSelection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#PaintSelection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.PaintSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#restraintmaker.algorithm.Selection.SphericalSelection" title="restraintmaker.algorithm.Selection.SphericalSelection"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Selection.SphericalSelection</span></code></a></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.PaintSelection.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#PaintSelection.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.PaintSelection.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Works like a Spherical selection, but does keep Atoms Selected, once the Selection Spher has touched them</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>all_atoms</strong> (<em>t.List[u.Atom]</em>) – all possible selectable atoms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.PaintSelection.select_atoms_within_sphere">
+<code class="sig-name descname">select_atoms_within_sphere</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#PaintSelection.select_atoms_within_sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.PaintSelection.select_atoms_within_sphere" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>get all atoms within the sphere
+Override select_atoms_within_sphere, so it will keep old atoms
+This works, because when the inherited update functions are called, they will still call the overriden select_atoms_within_sphere</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>a</strong> (<em>u.Atom</em>) – the atom, to be checked if it is inside the selection sphere.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>atom is in sphere?</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Selection.PairSelection">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Selection.</code><code class="sig-name descname">PairSelection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#PairSelection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.PairSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#restraintmaker.algorithm.Selection.LimitedSelection" title="restraintmaker.algorithm.Selection.LimitedSelection"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Selection.LimitedSelection</span></code></a></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.PairSelection.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#PairSelection.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.PairSelection.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>A Selection containing up to 2 Atoms. A Shortcut to create a Limited_Selection with max_atoms = 2</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>all_atoms</strong> (<em>t.List[u.Atom]</em>) – all possible selectable atoms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.PairSelection.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#PairSelection.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.PairSelection.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.</p>
+<p>For Pairwise_Filter there is no additional arguments. get_args(…) still needs to be called because it sets the fixed arguments directly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_function</strong> (<em>t.Callable (str)</em>) – a function that will provide the arguments for the selection in the necessary format. Here: Not necessesary. Just pass an ‘empty’ function or any function at all. It will not be called.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException" title="restraintmaker.utils.Utilities.BadArgumentException"><strong>BadArgumentException</strong></a> – if the input function does not provide all arguments in the necessary format</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Selection.SingleAtomSelection">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Selection.</code><code class="sig-name descname">SingleAtomSelection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#SingleAtomSelection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.SingleAtomSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#restraintmaker.algorithm.Selection.LimitedSelection" title="restraintmaker.algorithm.Selection.LimitedSelection"><code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Selection.LimitedSelection</span></code></a></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.SingleAtomSelection.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#SingleAtomSelection.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.SingleAtomSelection.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>A selection containing only one atom. A Shortcut to create a Limited_Selection with max_atoms+1
+This is usefull for GUI programs, that use refresh, once a selection is full: Just allow to pick atoms.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>all_atoms</strong></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.SingleAtomSelection.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#SingleAtomSelection.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.SingleAtomSelection.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.
+For Pairwise_Filter there is no additional arguments. get_args(…) still needs to be called because it sets the fixed arguments directly.
+:Parameters: <strong>input_function</strong> (<em>t.Callable(str)</em>) – a function that will provide the arguments for the selection in the necessary format. Here: Not necessesary. Just pass an ‘empty’ function or any function at all. It will not be called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>NoReturn</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException" title="restraintmaker.utils.Utilities.BadArgumentException"><strong>BadArgumentException</strong></a> – if the input function does not provide all arguments in the necessary format</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Selection.SphericalSelection">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Selection.</code><code class="sig-name descname">SphericalSelection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#SphericalSelection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.SphericalSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Selection._Selection</span></code></p>
+<p>..class SphericalSelection:</p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.SphericalSelection.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#SphericalSelection.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.SphericalSelection.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>A spherical selection selects all atoms within a given sphere. The Handling Program (restraintmaker_PyMol needs to provide a function that displays and chagnes the sphere</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>all_atoms</strong> (<em>t.List[u.Atom]</em>) – all possible selectable atoms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.SphericalSelection._update_confirm">
+<code class="sig-name descname">_update_confirm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#SphericalSelection._update_confirm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.SphericalSelection._update_confirm" title="Permalink to this definition">¶</a></dt>
+<dd><p>should be overriden by everz subclass of _Selection that needs some kind of confirmation before it finsihes.
+For Spherical_Selection, this indicates, that the user has moved to Sphere to where he wants it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.SphericalSelection._update_move">
+<code class="sig-name descname">_update_move</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_x</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">new_y</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">new_z</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#SphericalSelection._update_move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.SphericalSelection._update_move" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>should be overridden by every subclass of _Selection that diplays a postion or similar, that the user can change.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_x</strong> (<em>float</em>) – New x Position</p></li>
+<li><p><strong>new_y</strong> (<em>float</em>) – New y Position</p></li>
+<li><p><strong>new_z</strong> (<em>float</em>) – New z Position</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.SphericalSelection._update_size">
+<code class="sig-name descname">_update_size</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">increase</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#SphericalSelection._update_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.SphericalSelection._update_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>should be overridden by every subclass of _Selection who has some value, such as a size, that can be changed by the user during the selection.</p>
+<blockquote>
+<div><p>Carefull: This method merely shows that the user WANTS to change the size. The actual changes are made by the selection itself.
+For SphericalSelection this will change the radius of the spehere</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>increase</strong> (<em>bool</em>) – should the radius increase(True) or decrease (False)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.SphericalSelection.atom_within_sphere">
+<code class="sig-name descname">atom_within_sphere</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span><span class="p">:</span> <span class="n"><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#SphericalSelection.atom_within_sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.SphericalSelection.atom_within_sphere" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>get all atoms within the sphere</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>a</strong> (<em>u.Atom</em>) – the atom, to be checked if it is inside the selection sphere.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>atom is in sphere?</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.SphericalSelection.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable<span class="p">[</span><span class="p">[</span>str<span class="p">]</span><span class="p">, </span>str<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#SphericalSelection.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.SphericalSelection.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_function</strong> (<em>t.Callable (str)</em>) – a function that will provide the arguments for the selection in the necessary format. Here: Not necessesary. Just pass an ‘empty’ function or any function at all. It will not be called.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException" title="restraintmaker.utils.Utilities.BadArgumentException"><strong>BadArgumentException</strong></a> – if the input function does not provide all arguments in the necessary format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.SphericalSelection.select_atoms_within_sphere">
+<code class="sig-name descname">select_atoms_within_sphere</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#SphericalSelection.select_atoms_within_sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.SphericalSelection.select_atoms_within_sphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>update selection, select all atoms inside the sphere</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="restraintmaker.algorithm.Selection.UniversalSelection">
+<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.algorithm.Selection.</code><code class="sig-name descname">UniversalSelection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#UniversalSelection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.UniversalSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.algorithm.Selection._Selection</span></code></p>
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.UniversalSelection.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">all_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#UniversalSelection.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.UniversalSelection.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Universial Selections can be used to select all present atoms with one click. (Actually it 2 Clicks)</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>all_atoms</strong> (<em>t.List[u.Atom]</em>) – all possible selectable atoms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.UniversalSelection._update_confirm">
+<code class="sig-name descname">_update_confirm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#UniversalSelection._update_confirm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.UniversalSelection._update_confirm" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Dummy no selection possible</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_atoms</strong> (<em>t.List[u.Atom]</em>) – not used here, because all atoms are selected</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.UniversalSelection._update_move">
+<code class="sig-name descname">_update_move</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_x</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">new_y</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">new_z</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#UniversalSelection._update_move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.UniversalSelection._update_move" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Dummy no selection possible</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_atoms</strong> (<em>t.List[u.Atom]</em>) – not used here, because all atoms are selected</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.UniversalSelection._update_select">
+<code class="sig-name descname">_update_select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_atoms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#UniversalSelection._update_select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.UniversalSelection._update_select" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Dummy no selection possible</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_atoms</strong> (<em>t.List[u.Atom]</em>) – not used here, because all atoms are selected</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.UniversalSelection._update_size">
+<code class="sig-name descname">_update_size</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">increase</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#UniversalSelection._update_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.UniversalSelection._update_size" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Dummy no selection possible</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_atoms</strong> (<em>t.List[u.Atom]</em>) – not used here, because all atoms are selected</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.UniversalSelection.get_args">
+<code class="sig-name descname">get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_function</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#UniversalSelection.get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.UniversalSelection.get_args" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>should be overridden by every subclass of _Selection. It will assign all necessary variables using input function.
+In Universal selection, the selection will be set directly by this function to all atoms.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_function</strong> (<em>t.Callable (str)</em>) – a function that will provide the arguments for the selection in the necessary format. Here: Not necessesary. Just pass an ‘empty’ function or any function at all. It will not be called.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoReturn</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException" title="restraintmaker.utils.Utilities.BadArgumentException"><strong>BadArgumentException</strong></a> – if the input function does not provide all arguments in the necessary format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="restraintmaker.algorithm.Selection.UniversalSelection.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/algorithm/Selection.html#UniversalSelection.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.algorithm.Selection.UniversalSelection.update" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>will be called by get_args, to initially set all atoms as selected. =&gt; The Selection will start the first time it will be checked</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-restraintmaker.algorithm">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-restraintmaker.algorithm" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
