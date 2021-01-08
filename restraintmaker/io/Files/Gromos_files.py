@@ -1,10 +1,6 @@
 """
-.. automodule:: Gromos Files
-    :members:
-    Description:
-    in this lib, gromos topo file mainpulating functions are gathered
-    Author: Benjamin Schroeder
-    TODO:write DOCU!
+THIS CODE WAS BORROWED FROM PYGROMOSTOOLS - Check it out :)
+
 """
 
 # imports
@@ -64,10 +60,6 @@ class general_gromos_file():
 
                     self.__setattr__(self.block_names.get(blocktitle),
                                      blocks.__getattribute__(self.block_names.get(blocktitle))(**content))
-                    if verbose:
-                        print("++++++++++++++++++++++++++++++")
-                        print("New Block: Adding " + blocktitle + " block")
-                        print(content)
                     self.blocksset.append(blocktitle)
                 except:
                     print("Error while adding new value - can not resolve value names in \'" + blocktitle + "\' block!")
@@ -75,11 +67,8 @@ class general_gromos_file():
                     print("Block knows " + str(
                         (blocks.__getattribute__(self.block_names.get(blocktitle)).__init__.__code__.co_varnames)[1:]))
                     exit(1)
-            if verbose:
-                print("Block " + blocktitle + " added to gromos File object.")
 
         else:
-
             print(" Warning while adding new block \'" + blocktitle + "\' - can not resolve \'" + blocktitle + "\'\n" +
                   "  -> Block will be skipped!")
 
@@ -116,7 +105,6 @@ class general_gromos_file():
         file.write(self.__str__())
         file.flush()
         file.close()
-        print("New file generated: " + path)
         return path
 
 
@@ -175,7 +163,6 @@ class disres(general_gromos_file):
                         if (not line.startswith("#") and len(line.split()) == len(line_header)):
                             values = line.split()
                             restrains.append({key: values[line_header.index(key)] for key in line_header})
-                            # print(restrains)
                         elif (line.startswith("#")):
                             continue
                         else:
@@ -211,5 +198,4 @@ class disres(general_gromos_file):
 
         # add blocks as attribute to objects
         for key, sub_content in data.items():
-            print(sub_content)
             self.add_block(blocktitle=key, content=sub_content)

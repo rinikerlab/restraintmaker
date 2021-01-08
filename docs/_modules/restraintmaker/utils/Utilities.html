@@ -1,0 +1,561 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>restraintmaker.utils.Utilities &mdash; restraintMaker  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>restraintmaker.utils.Utilities</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for restraintmaker.utils.Utilities</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Utilities</span>
+<span class="sd">    utilities contains functions and definitions that are usefull to all modules in the restraintmaker project</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">builtins</span>
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span><span class="p">,</span> <span class="n">defaultdict</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Verbosity</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">verbosity_threshold</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1">#</span>
+
+
+<span class="c1"># Overwrite print function for debugging</span>
+<div class="viewcode-block" id="print"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.print">[docs]</a><span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    print is overridden for the restraintmaker project:</span>
+<span class="sd">        The parameter mv indicates the minimal verbosity at which the statement will still be printed.</span>
+
+<span class="sd">        The verobsity threshold of the program can be chagned in utilities.</span>
+<span class="sd">            0 = Print everything,</span>
+<span class="sd">            1 = Debug,</span>
+<span class="sd">            2 = Develop,</span>
+<span class="sd">            3 = Interested user,</span>
+<span class="sd">            4 = disinterested user (Error messages only)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x: Any</span>
+<span class="sd">        Arguments to be printed</span>
+<span class="sd">    mv: int</span>
+<span class="sd">         Minimal verbosity at which this statement will still be printed.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    NoReturn</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">mv</span> <span class="o">&gt;=</span> <span class="n">verbosity_threshold</span><span class="p">:</span>
+        <span class="n">builtins</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+
+    <span class="c1"># Can be used find what is causing a certain output we do not want anymore</span>
+    <span class="n">find_print</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">find_print</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">find_print</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">BaseException</span></div>
+
+
+<div class="viewcode-block" id="execute_at_different_verbosity"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.execute_at_different_verbosity">[docs]</a><span class="k">def</span> <span class="nf">execute_at_different_verbosity</span><span class="p">(</span><span class="n">new_verbosity_threshold</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     Wrapper function to change the program verbosity during the execution of one function.</span>
+<span class="sd">        @Warning All Errors will be passed on to the calling function. But the verbosity_thresheold will be reset to the previous value in any case.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    new_verbosity_threshold: int</span>
+<span class="sd">        verbosity threshold to be applied duribng the execution of func</span>
+<span class="sd">    func: t.Callable</span>
+<span class="sd">         Function which should be executed</span>
+<span class="sd">    args: Any</span>
+<span class="sd">    kwargs: Any</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Any:</span>
+<span class="sd">         return value of func</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">global</span> <span class="n">verbosity_threshold</span>
+    <span class="n">old_verbosity_threshold</span> <span class="o">=</span> <span class="n">verbosity_threshold</span>
+    <span class="n">verbosity_threshold</span> <span class="o">=</span> <span class="n">new_verbosity_threshold</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">return_value</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">return_value</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">verbosity_threshold</span> <span class="o">=</span> <span class="n">old_verbosity_threshold</span></div>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Exceptions</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="BadArgumentException"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.BadArgumentException">[docs]</a><span class="k">class</span> <span class="nc">BadArgumentException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A BadArgumentException will be raised by the Filter, Selection and Optimizer classes if their function get-args(...)</span>
+<span class="sd">    does not produce arguments in the desired format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NoOptimalSolutionException"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.NoOptimalSolutionException">[docs]</a><span class="k">class</span> <span class="nc">NoOptimalSolutionException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A no optimal solution excpetion will be raised by an Optimizer, if it can not find a solution fulfilling its criteria.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Chemical concepts related</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># named tuples for code</span>
+<span class="c1"># representation of an atom in pymol</span>
+<span class="n">Atom</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Atom&#39;</span><span class="p">,</span> <span class="s1">&#39;elem id name x y z chain resn resi alt b label&#39;</span><span class="p">)</span>
+<span class="c1"># represents a pair of restraints, needed for optimizers</span>
+<span class="n">RestraintPair</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;RestraintPair&#39;</span><span class="p">,</span> <span class="s1">&#39;r1,r2,distance&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="order_atoms_by_molecule"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.order_atoms_by_molecule">[docs]</a><span class="k">def</span> <span class="nf">order_atoms_by_molecule</span><span class="p">(</span><span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Atom</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Atom</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    atoms : t.List[Atom]</span>
+<span class="sd">         A list of atoms</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.Dict[t.List[Atom]]</span>
+<span class="sd">        A Dictionary: Molecules names as keys, List of atoms in the molecule as entry</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">Molecules</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Atom</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Every Molecules is a list of atoms, with the Molecule attribute as key</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atoms</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">resi</span> <span class="ow">in</span> <span class="n">Molecules</span><span class="p">:</span>
+            <span class="n">Molecules</span><span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">resi</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Molecules</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">a</span><span class="o">.</span><span class="n">resi</span><span class="p">:</span> <span class="p">[</span><span class="n">a</span><span class="p">]})</span>  <span class="c1"># dict.update adds entries of one dict to another</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">Molecules</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span></div>
+
+
+<div class="viewcode-block" id="find_atom_by_property"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.find_atom_by_property">[docs]</a><span class="k">def</span> <span class="nf">find_atom_by_property</span><span class="p">(</span><span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Atom</span><span class="p">],</span> <span class="n">property_value</span><span class="p">:</span> <span class="nb">any</span><span class="p">,</span> <span class="n">property_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;id&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Atom</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        find_atom will look for the first atom with the specified property and value</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    property_value : Any</span>
+<span class="sd">        value of the property</span>
+<span class="sd">    property_name : str, optional</span>
+<span class="sd">        name of the property (default: id)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    u.Atom</span>
+<span class="sd">        returns the atom</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        if there is no or more than one atom with that id</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">all</span><span class="p">([</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">property_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atoms</span><span class="p">])):</span>
+        <span class="n">all_hits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">property_value</span><span class="p">,</span> <span class="n">atoms</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_hits</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;There is no atom with id: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_hits</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;There is more than one atom with id: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">all_hits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;atom does not have Property: &quot;</span> <span class="o">+</span> <span class="n">property_name</span> <span class="o">+</span> <span class="s2">&quot; but: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span></div>
+
+
+<div class="viewcode-block" id="convert_atoms_to_pdb_molecules"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.convert_atoms_to_pdb_molecules">[docs]</a><span class="k">def</span> <span class="nf">convert_atoms_to_pdb_molecules</span><span class="p">(</span><span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Atom</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function converts the atom list into pdb blocks.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    atoms : t.List[Atom]</span>
+<span class="sd">        List of atoms</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.List[str]</span>
+<span class="sd">         pdb strings of that molecule</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># 1) GROUP ATOMS BT MOLECULES</span>
+    <span class="n">molecules</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atoms</span><span class="p">:</span>
+        <span class="n">molecules</span><span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">resi</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+    <span class="c1"># 2) CONSTUCT PDB BLOCKS</span>
+    <span class="c1">#ref: https://www.cgl.ucsf.edu/chimera/docs/UsersGuide/tutorials/pdbintro.html</span>
+    <span class="n">pdb_format</span> <span class="o">=</span> <span class="s2">&quot;ATOM  </span><span class="si">{:&gt;5d}</span><span class="s2">  </span><span class="si">{:&lt;3}{:1}{:&gt;3}</span><span class="s2">  </span><span class="si">{:1}{:&gt;3d}{:1}</span><span class="s2">   </span><span class="si">{:&gt;7.3f}{:&gt;7.3f}{:&gt;7.3f}{:&gt;5f}{:&gt;6f}{:&lt;3}{:&gt;2}</span><span class="s2"> </span><span class="si">{:&gt;2d}</span><span class="s2">&quot;</span>
+    <span class="n">dummy_occupancy</span><span class="o">=</span> <span class="n">dummy_bfactor</span><span class="o">=</span> <span class="n">dummy_charge</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">dummy_alt_location</span><span class="o">=</span> <span class="n">dummy_chain</span><span class="o">=</span> <span class="n">dummy_insertion_code</span><span class="o">=</span> <span class="n">dummy_segment</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">pdb_molecules</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">m_ID</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">molecules</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">molecules</span><span class="p">[</span><span class="n">m_ID</span><span class="p">]</span>
+        <span class="n">atoms_as_lines</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="n">atoms_as_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pdb_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="n">a</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">dummy_alt_location</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">resn</span><span class="p">,</span> <span class="n">dummy_chain</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">resi</span><span class="p">),</span> <span class="n">dummy_insertion_code</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">dummy_occupancy</span><span class="p">,</span> <span class="n">dummy_bfactor</span><span class="p">,</span> <span class="n">dummy_segment</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">elem</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">dummy_charge</span><span class="p">)))</span>
+
+        <span class="c1"># Sort by Id: =&gt; convert str up do first space to int</span>
+        <span class="c1">#atoms_as_lines = sorted(atoms_as_lines, key=lambda x: int(x[:x.index(&#39;\t&#39;)]))</span>
+        <span class="n">molecule_as_str</span> <span class="o">=</span> <span class="s2">&quot;TITLE &quot;</span><span class="o">+</span><span class="n">a</span><span class="o">.</span><span class="n">resn</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">atoms_as_lines</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">END&#39;</span>
+        <span class="c1"># molecule_as_str = molecule_as_str.replace(&#39;\t&#39;,&#39;    &#39;)</span>
+        <span class="n">pdb_molecules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">molecule_as_str</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">pdb_molecules</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">mv</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pdb_molecules</span></div>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Various usefull functions</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="check_or_convert_argument"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.check_or_convert_argument">[docs]</a><span class="k">def</span> <span class="nf">check_or_convert_argument</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">desired_type</span><span class="p">,</span> <span class="n">acceptable_values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    try to convert should be used in all get_args functions to check the input from the input function and try to convert it if necessary</span>
+
+<span class="sd">     TODO: Might be even nicer if we do not pass a list of acceptable values but a bool function</span>
+<span class="sd">     TODO: Pass name of the variable as arg, so we can get better Error messages ()</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input :  t.Any</span>
+<span class="sd">        input as received from the function</span>
+<span class="sd">    desired_type : type</span>
+<span class="sd">        the needed type</span>
+<span class="sd">    acceptable_values : t.List</span>
+<span class="sd">        Optional. a List of set Values the input must have.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">     type</span>
+<span class="sd">        converted input to desired_type</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    u.BadArgument_Exception</span>
+<span class="sd">        if conversion is not possible or the input is not an acceptable value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># CONVERT</span>
+    <span class="n">converted_input</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">input</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">==</span> <span class="n">desired_type</span><span class="p">:</span>
+        <span class="n">converted_input</span> <span class="o">=</span> <span class="nb">input</span>
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="c1"># raise Error outside of except Block to avoid carrying along hte old error.</span>
+        <span class="n">conversion_failed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">desired_type</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="n">conversion_failed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">conversion_failed</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BadArgumentException</span><span class="p">(</span><span class="s1">&#39;Failed to convert the input </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1"> from &#39;</span> <span class="o">+</span> <span class="p">(</span>
+                <span class="nb">input</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; to &#39;</span> <span class="o">+</span> <span class="n">desired_type</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="c1"># CHECK VALUE, IF THERE IS A LIST OF ACCEPTABLE VALUES</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">acceptable_values</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">converted_input</span> <span class="ow">in</span> <span class="n">acceptable_values</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">BadArgumentException</span><span class="p">(</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">converted_input</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; is not an acceptable input. Acceptable values are:&#39;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; ,&#39;</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">acceptable_values</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">converted_input</span></div>
+
+
+<div class="viewcode-block" id="get_all_subclasses"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.get_all_subclasses">[docs]</a><span class="k">def</span> <span class="nf">get_all_subclasses</span><span class="p">(</span><span class="n">parent</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">include_private_sublcasses</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">type</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get_all_subclasses returns ALL subclasses of a type, including grandchilder etc.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parent : type</span>
+<span class="sd">        Parentn class</span>
+<span class="sd">    include_private_sublcasses: bool, optional</span>
+<span class="sd">        shall privates be included? (default: False)</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.List[type]</span>
+<span class="sd">         List of all subclasses</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># I refuse to use recursion in Python. I am afraid that I would melt the CPU.</span>
+    <span class="c1"># =&gt; do it iteratively</span>
+    <span class="n">i</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Index of last class that has been checked for subclasses</span>
+    <span class="n">all_subs</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_subs</span><span class="p">):</span>
+
+        <span class="c1"># Check if the subclass I found is already on the list, becaus OF COURSE Python supports multiple inheritance.</span>
+        <span class="c1"># Am I not glad I did not use recursion?</span>
+
+        <span class="n">new_subs</span> <span class="o">=</span> <span class="p">(</span><span class="n">all_subs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">new_subs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">all_subs</span><span class="p">:</span>
+                <span class="n">all_subs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">include_private_sublcasses</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">all_subs</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">sub</span> <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">all_subs</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">sub</span><span class="o">.</span><span class="vm">__name__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;_&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="do_nothing"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.do_nothing">[docs]</a><span class="k">def</span> <span class="nf">do_nothing</span><span class="p">(</span><span class="n">dummy_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    does nothing.</span>
+<span class="sd">    Can be passed to the *.get_args functions which require a function of a string as parameter. Because it is more readable than lambda x: None</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dummy_string: str</span>
+<span class="sd">        Dummy String to satisfy format</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    NoReturn</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="check_for_doubles"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.check_for_doubles">[docs]</a><span class="k">def</span> <span class="nf">check_for_doubles</span><span class="p">(</span><span class="nb">list</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Just used for debbuging Checks if a List contains doubles</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    list: t.List</span>
+<span class="sd">        Any list</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        Does the list contain doubles?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="nb">list</span><span class="p">[</span>
+                <span class="n">j</span><span class="p">]:</span>  <span class="c1"># WTF?1  Seems to check for ref identity, not just value identity, even though all docs say ity checks only for value!!!!!!!</span>
+                <span class="k">return</span> <span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="check_restraint_pairs_for_doubles"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Utilities.check_restraint_pairs_for_doubles">[docs]</a><span class="k">def</span> <span class="nf">check_restraint_pairs_for_doubles</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>  <span class="c1"># Also consider that a1 and a2 can be switches</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       check_restraint_pairs_for_doubles checks a list of pairs for doubles. Pairs count as doubles if the order of elements is changed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    list : t.List[t.Tuple]</span>
+<span class="sd">        A list of tuples</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">         Does the list contain doubles?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">r1</span> <span class="o">==</span> <span class="nb">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">r1</span> <span class="ow">and</span> <span class="nb">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">r2</span> <span class="o">==</span> <span class="nb">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">r2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                    <span class="nb">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">r1</span> <span class="o">==</span> <span class="nb">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">r2</span> <span class="ow">and</span> <span class="nb">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">r2</span> <span class="o">==</span> <span class="nb">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">r1</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">distance</span> <span class="o">==</span> <span class="nb">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">distance</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

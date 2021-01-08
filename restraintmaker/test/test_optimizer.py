@@ -15,56 +15,61 @@ out_result_prim_optimizer_path = test_files_optimizers + "/out_prim_optimizer.p"
 out_result_bruteForce_optimizer_path = test_files_optimizers + "/out_bruteForce_optimizer.p"
 
 input = pickle.load(open(in_atom_list_path, "rb"), fix_imports=True)
-expected_prim_soultion = pickle.load(open(out_result_prim_optimizer_path, "rb"), fix_imports=True)
-expected_cog_MAD_solution = pickle.load(open(out_result_cog_MAD_optimizer_path, "rb"), fix_imports=True)
-expected_longestShortest_MAD_solution = pickle.load(open(out_result_longestShortest_MAD_optimizer_path, "rb"),
-                                                    fix_imports=True)
-expected_bruteForce_solution = pickle.load(open(out_result_bruteForce_optimizer_path, "rb"), fix_imports=True)
+file_handle_prim = open(out_result_prim_optimizer_path, "rb")
+file_handle_cog_MAD = open(out_result_cog_MAD_optimizer_path, "rb")
+file_handle_longestShortest_MAD = open(out_result_longestShortest_MAD_optimizer_path, "rb")
+file_handle_bruteForce = open(out_result_bruteForce_optimizer_path, "rb")
+
 
 
 class test_Optimizer(unittest.TestCase):
-    def test_prim_optimizer(self):  # +. Einzelne fkts
-        """
 
-
-        TODO: THE PROBLEM IS SIMPLE: THE RESULTS ARE STILL OK. IT IS JUST THE ORDERING OF RESTRAINTS THAT IS OFF:
-        prim solution gives mol1-mol2, mol 2-mol3, ... mol 7-mol1
-        Optimizer gives:  mol1-mol2, mol1 - mol7,mol2 -mol3 ... mol6-mol7
-        :return:
-        :rtype:
-        """
+    def test_prim_optimizer(self):
         my_Optimizer = Optimizer.TreeHeuristicOptimizer(input)
         my_Optimizer.get_args(lambda x: (3, 1.2, 'prim', 'None'))  # nRes, distance, algo, ordering of chain
         found_restraints = my_Optimizer.make_restraints()
-        # pickle.dump(found_restraints, open(out_result_prim_optimizer_path, "wb"), fix_imports=True)
 
+        #with open(out_result_prim_optimizer_path, "wb") as solution_file:
+        #    pickle.dump(found_restraints, solution_file, fix_imports=True)
+
+        expected_prim_soultion = pickle.load(file_handle_prim, fix_imports=True)
         self.check_restraint_results(found_restraints=found_restraints, expected_restraints=expected_prim_soultion)
 
-    def test_shortest_optimizer(self):  # +. Einzelne fkts
+    def test_shortest_optimizer(self):
         my_Optimizer = Optimizer.TreeHeuristicOptimizer(input)
         my_Optimizer.get_args(lambda x: (3, 1.2, 'shortest', 'None'))
         found_restraints = my_Optimizer.make_restraints()
-        # pickle.dump(found_restraints, open(out_result_longestShortest_MAD_optimizer_path, "wb"), fix_imports=True)
 
+        #with open(out_result_longestShortest_MAD_optimizer_path, "wb") as solution_file:
+        #    pickle.dump(found_restraints, solution_file, fix_imports=True)
+
+        expected_longestShortest_MAD_solution = pickle.load(file_handle_longestShortest_MAD, fix_imports=True)
         self.check_restraint_results(found_restraints=found_restraints,
                                      expected_restraints=expected_longestShortest_MAD_solution)
 
-    def test_cog_optimizer(self):  # +. Einzelne fkts
+    def test_cog_optimizer(self):
         my_Optimizer = Optimizer.TreeHeuristicOptimizer(input)
         my_Optimizer.get_args(lambda x: (3, 1.2, 'cog', "None"))
         found_restraints = my_Optimizer.make_restraints()
-        # pickle.dump(found_restraints, open(out_result_cog_MAD_optimizer_path, "wb"), fix_imports=True)
 
+        #with open(out_result_cog_MAD_optimizer_path, "wb") as solution_file:
+        #   pickle.dump(found_restraints, solution_file, fix_imports=True)
+
+        expected_cog_MAD_solution = pickle.load(file_handle_cog_MAD, fix_imports=True)
         self.check_restraint_results(found_restraints=found_restraints, expected_restraints=expected_cog_MAD_solution)
 
-    def test_bruteForce_optimizer(self):  # +. Einzelne fkts
+    def test_bruteForce_optimizer(self):
         my_Optimizer = Optimizer.BruteForceRingOptimzer(input)
         my_Optimizer.get_args(lambda x: (3, 1.2, 'pca', "None"))
         found_restraints = my_Optimizer.make_restraints()
-        # pickle.dump(found_restraints, open(out_result_bruteForce_optimizer_path, "wb"), fix_imports=True)
 
+        #with open(out_result_bruteForce_optimizer_path, "wb") as solution_file:
+        #    pickle.dump(found_restraints, solution_file, fix_imports=True)
+
+        expected_bruteForce_solution = pickle.load(file_handle_bruteForce, fix_imports=True)
         self.check_restraint_results(found_restraints=found_restraints,
                                      expected_restraints=expected_bruteForce_solution)
+
 
     def check_restraint_results(self, found_restraints, expected_restraints):
         # check if same ammount of resis was found

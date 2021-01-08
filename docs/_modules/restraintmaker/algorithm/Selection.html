@@ -1,0 +1,874 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>restraintmaker.algorithm.Selection &mdash; restraintMaker  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>restraintmaker.algorithm.Selection</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for restraintmaker.algorithm.Selection</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The module Selections contains the selection logics. A selected atom will be considered for restraint placement.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+
+<span class="kn">from</span> <span class="nn">restraintmaker.tools_Rdkit</span> <span class="kn">import</span> <span class="n">Rdkit_Functions</span>
+
+<span class="kn">from</span> <span class="nn">restraintmaker.utils</span> <span class="kn">import</span> <span class="n">Utilities</span> <span class="k">as</span> <span class="n">u</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.utils.Utilities</span> <span class="kn">import</span> <span class="nb">print</span>
+
+
+<span class="k">class</span> <span class="nc">_Selection</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;Selection</span>
+<span class="sd">        This is the private parent class to all selection Classes.</span>
+<span class="sd">        A selection contains a list of Atoms, and provides functions for their manipulation</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        all_atoms : t.List[u.Atom]</span>
+<span class="sd">            all possible selectable atoms</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_finished</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># If we keep it this way, we could think about just passsing indices, instead of the atoms themselves in _update_selected</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span> <span class="o">=</span> <span class="n">all_atoms</span>
+
+    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;get_args(...)</span>
+<span class="sd">        should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function: t.Callable</span>
+<span class="sd">            a function that will provide the argumetns for the selection in the necessary format</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        noReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        -------</span>
+<span class="sd">         BadArgumentException</span>
+<span class="sd">            if the input function does not provide all arguments in the necessary format</span>
+<span class="sd">         NotImplementedError</span>
+<span class="sd">            If _Selection.get_args is called directly.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Direct call of function get_args of abstract parent class _Selection&quot;</span><span class="p">))</span>
+
+    <span class="c1"># All update functions. They will be called by the GUI-program (restraintmaker_PyMOL) to inform the selection of user actions.</span>
+    <span class="c1"># The different update functions here are formulated as generally as possible. It is up to the GUI-Program to decide exactly which is called when</span>
+    <span class="c1"># Instead of explicit event handling the Selections can just override all _update_functions corresponding to events they want to be notifies for</span>
+
+    <span class="c1"># ATOMS_SELECTED: Atom marked/highlighted/clicked in GUI program</span>
+    <span class="c1">#   Recommended GUI-event: Click ON an Atom/GUI specific pick/select/add event</span>
+    <span class="c1"># TODO REORG: Only allow one atom to be selected at a time?</span>
+    <span class="k">def</span> <span class="nf">_update_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                _update_select should be overridden by every subclass of _Selection that wants to be notified when new atoms have been selected/marked in the GUI</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_atoms : t.List[u.Atom]</span>
+<span class="sd">             List of atom selection that has been added since last updated</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+
+    <span class="c1"># SIZE_CHANGE: The user indicated that they want to change the size or increase something</span>
+    <span class="c1">#   Recommended GUI-event: Keyboard arrow / mouse wheel</span>
+    <span class="k">def</span> <span class="nf">_update_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">increase</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">             _update_size should be overridden by every subclass of _Selection who has some value, such as a size, that can be changed by the user during the selection.</span>
+<span class="sd">            Warnings: This method merely shows that the user WANTS to change the size. The actual changes are made by the selection itself.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        increase: bool</span>
+<span class="sd">             Should the size change or not?</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+
+    <span class="c1"># MOVE: The user moved something</span>
+    <span class="c1">#   Recommended GUI-event: Keyboard arrows / mouse moved</span>
+    <span class="k">def</span> <span class="nf">_update_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">             _update_move should be overridden by every subclass of _Selection that diplays a postion or similar, that the user can change.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_x : float</span>
+<span class="sd">            New x Position</span>
+<span class="sd">        new_y : float</span>
+<span class="sd">            New y Position</span>
+<span class="sd">        new_z : float</span>
+<span class="sd">            New z Position</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+
+    <span class="c1"># CONFIRM: The user indicated, that he wants to accept the current state of the selection</span>
+    <span class="c1">#   Recommended GUI Events: Enter, Double-Click</span>
+    <span class="k">def</span> <span class="nf">_update_confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            should be overriden by everz subclass of _Selection that needs some kind of confirmation before it finsihes.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            reset resets the atom list to [] and has_finished to false.</span>
+<span class="sd">        Usefull to reuse the same type of selection from the GUI program.</span>
+<span class="sd">        This leaves the arguments particular to each Selection Type unchanged  =&gt; This way we do not have to create a new selection and call get_arguments again.</span>
+<span class="sd">        Subclasses can override reset() if some parameters should be kept.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_finished</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="LimitedSelection"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.LimitedSelection">[docs]</a><span class="k">class</span> <span class="nc">LimitedSelection</span><span class="p">(</span><span class="n">_Selection</span><span class="p">):</span>
+<div class="viewcode-block" id="LimitedSelection.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.LimitedSelection.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A selection containing a fix maximal number of atoms</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        all_atoms : t.List[u.Atom]</span>
+<span class="sd">            all possible selectable atoms</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">all_atoms</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LimitedSelection.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.LimitedSelection.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.</span>
+<span class="sd">            For Limited_Filter those are: max_size: int - Maximal number of atoms in selection.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function: t.Callable(str)</span>
+<span class="sd">             a function that will provide the arguments for the selection in the necessary format: int</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">            if the input function does not provide all arguments in the necessary format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">input</span> <span class="o">=</span> <span class="n">input_function</span><span class="p">(</span><span class="s2">&quot;Maximal Number of Atoms in Limited Selection (int):&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_size</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LimitedSelection._update_select"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.LimitedSelection._update_select">[docs]</a>    <span class="k">def</span> <span class="nf">_update_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            _update_select should be overridden by every subclass of _Selection that wants to be notified when new atoms have been selected/marked in the GUI</span>
+<span class="sd">            LimitedSelection.update () only accepts one molecule in new_atoms at a time.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_atoms : t.List</span>
+<span class="sd">            List of atom selection that has been added since last updated</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_finished</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_atoms</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s1">&#39;WARNING: LimitedSelection.update(...) has been called with more than one atom in its new_atoms List.&#39;</span><span class="p">,</span>
+                <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Only the fist Atom of the List is added: &quot;</span><span class="p">,</span> <span class="n">new_atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+        <span class="n">new_atom</span> <span class="o">=</span> <span class="n">new_atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">new_atom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">new_atom</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_atom</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">has_finished</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_size</span></div></div>
+
+
+<div class="viewcode-block" id="SingleAtomSelection"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SingleAtomSelection">[docs]</a><span class="k">class</span> <span class="nc">SingleAtomSelection</span><span class="p">(</span><span class="n">LimitedSelection</span><span class="p">):</span>
+<div class="viewcode-block" id="SingleAtomSelection.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SingleAtomSelection.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A selection containing only one atom. A Shortcut to create a Limited_Selection with max_atoms+1</span>
+<span class="sd">            This is usefull for GUI programs, that use refresh, once a selection is full: Just allow to pick atoms.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        all_atoms</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">all_atoms</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleAtomSelection.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SingleAtomSelection.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.</span>
+<span class="sd">        For Pairwise_Filter there is no additional arguments. get_args(...) still needs to be called because it sets the fixed arguments directly.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function : t.Callable(str)</span>
+<span class="sd">            a function that will provide the arguments for the selection in the necessary format. Here: Not necessesary. Just pass an &#39;empty&#39; function or any function at all. It will not be called.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">            if the input function does not provide all arguments in the necessary format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_args</span><span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="PairSelection"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.PairSelection">[docs]</a><span class="k">class</span> <span class="nc">PairSelection</span><span class="p">(</span><span class="n">LimitedSelection</span><span class="p">):</span>
+<div class="viewcode-block" id="PairSelection.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.PairSelection.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A Selection containing up to 2 Atoms. A Shortcut to create a Limited_Selection with max_atoms = 2</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        all_atoms : t.List[u.Atom]</span>
+<span class="sd">            all possible selectable atoms</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">all_atoms</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PairSelection.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.PairSelection.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.</span>
+
+<span class="sd">        For Pairwise_Filter there is no additional arguments. get_args(...) still needs to be called because it sets the fixed arguments directly.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function : t.Callable (str)</span>
+<span class="sd">            a function that will provide the arguments for the selection in the necessary format. Here: Not necessesary. Just pass an &#39;empty&#39; function or any function at all. It will not be called.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">            if the input function does not provide all arguments in the necessary format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_args</span><span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="UniversalSelection"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection">[docs]</a><span class="k">class</span> <span class="nc">UniversalSelection</span><span class="p">(</span><span class="n">_Selection</span><span class="p">):</span>
+
+<div class="viewcode-block" id="UniversalSelection.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Universial Selections can be used to select all present atoms with one click. (Actually it 2 Clicks)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        all_atoms : t.List[u.Atom]</span>
+<span class="sd">            all possible selectable atoms</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">all_atoms</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UniversalSelection.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            should be overridden by every subclass of _Selection. It will assign all necessary variables using input function.</span>
+<span class="sd">            In Universal selection, the selection will be set directly by this function to all atoms.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function : t.Callable (str)</span>
+<span class="sd">             a function that will provide the arguments for the selection in the necessary format. Here: Not necessesary. Just pass an &#39;empty&#39; function or any function at all. It will not be called.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">            if the input function does not provide all arguments in the necessary format</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="UniversalSelection.update"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            will be called by get_args, to initially set all atoms as selected. =&gt; The Selection will start the first time it will be checked</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_finished</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="UniversalSelection._update_select"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection._update_select">[docs]</a>    <span class="k">def</span> <span class="nf">_update_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Dummy no selection possible</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_atoms : t.List[u.Atom]</span>
+<span class="sd">            not used here, because all atoms are selected</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="UniversalSelection._update_move"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection._update_move">[docs]</a>    <span class="k">def</span> <span class="nf">_update_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Dummy no selection possible</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_atoms : t.List[u.Atom]</span>
+<span class="sd">            not used here, because all atoms are selected</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="UniversalSelection._update_size"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection._update_size">[docs]</a>    <span class="k">def</span> <span class="nf">_update_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">increase</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Dummy no selection possible</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_atoms : t.List[u.Atom]</span>
+<span class="sd">            not used here, because all atoms are selected</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="UniversalSelection._update_confirm"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection._update_confirm">[docs]</a>    <span class="k">def</span> <span class="nf">_update_confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Dummy no selection possible</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_atoms : t.List[u.Atom]</span>
+<span class="sd">            not used here, because all atoms are selected</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div></div>
+
+
+<div class="viewcode-block" id="SphericalSelection"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SphericalSelection">[docs]</a><span class="k">class</span> <span class="nc">SphericalSelection</span><span class="p">(</span><span class="n">_Selection</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;..class SphericalSelection:&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SphericalSelection.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SphericalSelection.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">             A spherical selection selects all atoms within a given sphere. The Handling Program (restraintmaker_PyMol needs to provide a function that displays and chagnes the sphere</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        all_atoms : t.List[u.Atom]</span>
+<span class="sd">            all possible selectable atoms</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">all_atoms</span><span class="p">)</span></div>
+
+        <span class="c1"># atrributes that will be set in get_args(...)</span>
+
+<div class="viewcode-block" id="SphericalSelection.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SphericalSelection.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span> <span class="ow">or</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">str</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function : t.Callable (str)</span>
+<span class="sd">             a function that will provide the arguments for the selection in the necessary format. Here: Not necessesary. Just pass an &#39;empty&#39; function or any function at all. It will not be called.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">             if the input function does not provide all arguments in the necessary format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># attributes that will be changed by the GUI</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># Standard length. =&gt; Handling program needs to adjust it</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zoom_factor</span> <span class="o">=</span> <span class="mf">1.05</span>
+
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SphericalSelection._update_size"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SphericalSelection._update_size">[docs]</a>    <span class="k">def</span> <span class="nf">_update_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">increase</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        should be overridden by every subclass of _Selection who has some value, such as a size, that can be changed by the user during the selection.</span>
+
+<span class="sd">         Carefull: This method merely shows that the user WANTS to change the size. The actual changes are made by the selection itself.</span>
+<span class="sd">         For SphericalSelection this will change the radius of the spehere</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        increase : bool</span>
+<span class="sd">            should the radius increase(True) or decrease (False)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zoom_factor</span> <span class="k">if</span> <span class="n">increase</span> <span class="k">else</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">zoom_factor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">select_atoms_within_sphere</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SphericalSelection._update_move"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SphericalSelection._update_move">[docs]</a>    <span class="k">def</span> <span class="nf">_update_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         should be overridden by every subclass of _Selection that diplays a postion or similar, that the user can change.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_x : float</span>
+<span class="sd">            New x Position</span>
+<span class="sd">        new_y : float</span>
+<span class="sd">            New y Position</span>
+<span class="sd">        new_z : float</span>
+<span class="sd">            New z Position</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">new_x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">new_y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">new_z</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">select_atoms_within_sphere</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SphericalSelection._update_confirm"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SphericalSelection._update_confirm">[docs]</a>    <span class="k">def</span> <span class="nf">_update_confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        should be overriden by everz subclass of _Selection that needs some kind of confirmation before it finsihes.</span>
+<span class="sd">        For Spherical_Selection, this indicates, that the user has moved to Sphere to where he wants it.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_finished</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="SphericalSelection.atom_within_sphere"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SphericalSelection.atom_within_sphere">[docs]</a>    <span class="k">def</span> <span class="nf">atom_within_sphere</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            get all atoms within the sphere</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        a: u.Atom</span>
+<span class="sd">            the atom, to be checked if it is inside the selection sphere.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool:</span>
+<span class="sd">            atom is in sphere?</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dis</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">z</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">dis</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span></div>
+
+<div class="viewcode-block" id="SphericalSelection.select_atoms_within_sphere"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.SphericalSelection.select_atoms_within_sphere">[docs]</a>    <span class="k">def</span> <span class="nf">select_atoms_within_sphere</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        update selection, select all atoms inside the sphere</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atom_within_sphere</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="PaintSelection"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.PaintSelection">[docs]</a><span class="k">class</span> <span class="nc">PaintSelection</span><span class="p">(</span><span class="n">SphericalSelection</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PaintSelection.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.PaintSelection.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Works like a Spherical selection, but does keep Atoms Selected, once the Selection Spher has touched them</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        all_atoms : t.List[u.Atom]</span>
+<span class="sd">            all possible selectable atoms</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">all_atoms</span><span class="p">)</span></div>
+
+    <span class="c1"># get args inherited from Spherical selection</span>
+    <span class="c1"># update functions inherited from Spherical Selection</span>
+
+<div class="viewcode-block" id="PaintSelection.select_atoms_within_sphere"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.PaintSelection.select_atoms_within_sphere">[docs]</a>    <span class="k">def</span> <span class="nf">select_atoms_within_sphere</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            get all atoms within the sphere</span>
+<span class="sd">            Override select_atoms_within_sphere, so it will keep old atoms</span>
+<span class="sd">            This works, because when the inherited update functions are called, they will still call the overriden select_atoms_within_sphere</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        a: u.Atom</span>
+<span class="sd">            the atom, to be checked if it is inside the selection sphere.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool:</span>
+<span class="sd">            atom is in sphere?</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">atoms_in_sphere</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atom_within_sphere</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span><span class="p">))</span>
+        <span class="c1"># Filter out doubles</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="ow">not</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">,</span> <span class="n">atoms_in_sphere</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="MCS_Selection"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection">[docs]</a><span class="k">class</span> <span class="nc">MCS_Selection</span><span class="p">(</span><span class="n">_Selection</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MCS_Selection.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">             Selects all atoms, which are in the MCS of at least on pair of molecules</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        all_atoms : t.List[u.Atom]</span>
+<span class="sd">            all possible selectable atoms</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">all_atoms</span><span class="p">)</span>
+        <span class="c1"># Attributes set in get args:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rdkit_molecules</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="MCS_Selection.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.</span>
+<span class="sd">            For MCS_Selection the argument is a list of the Molecules in the pdb format.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function : t.Callable (str)</span>
+<span class="sd">            a function that will provide the arguments for the selection in the necessary format. Here: Not necessesary. Just pass an &#39;empty&#39; function or any function at all. It will not be called.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException:</span>
+<span class="sd">            if the input function does not provide all arguments in the necessary format</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">input</span> <span class="o">=</span> <span class="n">input_function</span><span class="p">(</span><span class="s2">&quot;A List of Molecules in the PDB FORMAT:&quot;</span><span class="p">)</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+        <span class="n">molecules_pdb</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">input</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">molecules_rdk</span> <span class="o">=</span> <span class="n">Rdkit_Functions</span><span class="o">.</span><span class="n">parse_pdb_blocks_to_rdkit</span><span class="p">(</span><span class="n">molecules_pdb</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MCS_Selection.update"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         general update function</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mcs_ids</span> <span class="o">=</span> <span class="n">Rdkit_Functions</span><span class="o">.</span><span class="n">mcs_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">molecules_rdk</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">mcs_ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_finished</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MCS_Selection._update_select"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection._update_select">[docs]</a>    <span class="k">def</span> <span class="nf">_update_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Dummy no selection possible</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_atoms : t.List[u.Atom]</span>
+<span class="sd">            not used here, because all atoms are selected</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="MCS_Selection._update_move"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection._update_move">[docs]</a>    <span class="k">def</span> <span class="nf">_update_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Dummy no selection possible</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_atoms : t.List[u.Atom]</span>
+<span class="sd">            not used here, because all atoms are selected</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="MCS_Selection._update_size"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection._update_size">[docs]</a>    <span class="k">def</span> <span class="nf">_update_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">increase</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Dummy no selection possible</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_atoms : t.List[u.Atom]</span>
+<span class="sd">            not used here, because all atoms are selected</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="MCS_Selection._update_confirm"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection._update_confirm">[docs]</a>    <span class="k">def</span> <span class="nf">_update_confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Dummy no selection possible</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_atoms : t.List[u.Atom]</span>
+<span class="sd">            not used here, because all atoms are selected</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+HEADER    UNCLASSIFIED                            02-Jan-20
+TITLE     UNITED ATOM STRUCTURE FOR MOLECULE UNK                                
+AUTHOR    GROMOS AUTOMATIC TOPOLOGY BUILDER REVISION 2020-12-16 14:31:35
+AUTHOR   2  http://compbio.biosci.uq.edu.au/atb
+HETATM    1   O6 _P8I    0       2.065  -0.000   0.002  1.00  0.00           O
+HETATM    2   C3 _P8I    0       0.847   0.000  -0.000  1.00  0.00           C
+HETATM    3   C2 _P8I    0      -0.045  -1.237   0.124  1.00  0.00           C
+HETATM    4   C1 _P8I    0      -1.459  -0.740  -0.223  1.00  0.00           C
+HETATM    5   C5 _P8I    0      -1.458   0.741   0.225  1.00  0.00           C
+HETATM    6   C4 _P8I    0      -0.045   1.236  -0.128  1.00  0.00           C
+CONECT    1    2
+CONECT    2    1    3    6
+CONECT    3    2    4
+CONECT    4    3    5
+CONECT    5    4    6
+CONECT    6    2    5
+END

@@ -1,0 +1,42 @@
+restraintmaker package
+======================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   restraintmaker.algorithm
+   restraintmaker.interface_Pymol
+   restraintmaker.io
+   restraintmaker.test
+   restraintmaker.tools_Rdkit
+   restraintmaker.utils
+
+Submodules
+----------
+
+restraintmaker.restraintMaker module
+------------------------------------
+
+.. automodule:: restraintmaker.restraintMaker
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+restraintmaker.wizard module
+----------------------------
+
+.. automodule:: restraintmaker.wizard
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: restraintmaker
+   :members:
+   :undoc-members:
+   :show-inheritance:

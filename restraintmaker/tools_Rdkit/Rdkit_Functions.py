@@ -1,17 +1,14 @@
 """
-.. automodule::  RDKIT_Functions
-    :members:
-    TODO:write DOCU!
-
+    This module is linking the restraintmaker functionality to rdkit
+     - MCS search
+     - molecule ring filter
+     - etc.
 """
 
-import glob
-import os
+import numpy as np
 import typing as t
 
-import numpy as np
-
-# import matplotlib.pyplot as plt    #TODO: remove
+from restraintmaker.utils.Utilities import print
 
 try:
     from rdkit import Chem
@@ -21,12 +18,22 @@ try:
 except ImportError:
     raise ImportError("Could not import Rdkit package!")
 
-# sys.path.append(os.path.dirname(__file__))
-
 np.set_printoptions(suppress=True)
 
 
 def parse_pdb_blocks_to_rdkit(pdb_mols: str) -> t.List[Chem.Mol]:
+    """
+        Convert a pdblock to and rdkit-Mol
+
+    Parameters
+    ----------
+    pdb_mols: str
+
+    Returns
+    -------
+    rdkit.Mol
+        an rdkit mol obj
+    """
     rdk_mols = []
     for ind, lig in enumerate(pdb_mols):
         mol = AllChem.MolFromPDBBlock(lig, removeHs=False)
@@ -37,38 +44,25 @@ def parse_pdb_blocks_to_rdkit(pdb_mols: str) -> t.List[Chem.Mol]:
     return rdk_mols
 
 
-def parse_pdb_to_rdkit(
-        path: str = "/home/bschroed/code/restraintmaker/test/test_files/ligand_system/single_ligs_good/*pdb"):
-    mols = []
-    for ind, lig in enumerate(glob.glob(path)):
-        mol = AllChem.MolFromPDBFile(lig, removeHs=False)
-        setattr(mol, "name", os.path.splitext(os.path.basename(lig))[0])
-        setattr(mol, "resi", ind)
+def ring_atom_filter(selected: list, mols: t.List[Chem.Mol], selected_mols: dict) -> t.List[int]:
+    """
+        Filter molecules for rings and remove non-ring atoms from the selection
 
-        ring_obj = mol.GetRingInfo()
-        atomRings = ring_obj.AtomRings()
-        bonds = mol.GetBonds()
-        atoms = mol.GetAtoms()
+    Parameters
+    ----------
+    mols: t.List[Chem.Mol]
+        molecules to select from
 
-        print("Ammount of rings: " + str(ring_obj.NumRings()))
-        print("Atoms in rings: " + str(atomRings))
-        print("Atom num: " + str(len(atoms)))
-        collect = ""
-        for atom in atoms:
-            collect += str(atom.GetHybridization()) + " "
-        print("Hybridizations: " + str(collect))
+    Returns
+    -------
+    t.List[int]
+        list of stil selected atom indices, inside a ring
+    """
 
-        mols.append(mol)
-    Draw.MolsToGridImage(mols, molsPerRow=len(mols))
-    # h_mols = [AllChem.AddHs(mol) for mol in mols] #add H-atoms
-    # sh_mols = [AllChem.EmbedMolecule(mol, AllChem.ETKDG()) for mol in h_mols ]    #generate 3d Coords
-    # Chem.Kekulize(mol) #check correct mol structure
-    return mols
-
-
-# TODO: DOES NOT WORK. THE PROBLEM IS NOT IN THE MOLEUCLUE ORDER> IT ALSO DOES NOT WORK IF I PRESELECT ONE MOLEUCLE
-def ring_atom_filter(selected: list, mols: t.List[Chem.Mol], selected_mols: dict):
     def _get_mol_offset(selected_mol: Chem.Mol, mols: t.List[Chem.Mol]) -> int:
+        """
+            determines the molecule offset
+        """
         # deal with offsets of ligands:
         mol_offset = 1
         for mol in sorted(mols, key=lambda x: x.resi):
@@ -114,18 +108,27 @@ def ring_atom_filter(selected: list, mols: t.List[Chem.Mol], selected_mols: dict
 
 
 # get molecule selection
-def mcs_selection(mols: t.List[Chem.Mol], min_MCS_size: int = 6, verbose: bool = True):
-    '''
-    :warning: results do not seem reasonable YET. TODO: Check what exactly is not going as expected
-    :param mols:
-    :type mols:
-    :param min_MCS_size:
-    :type min_MCS_size:
-    :param verbose:
-    :type verbose:
-    :return:
-    :rtype:
-    '''
+def mcs_selection(mols: t.List[Chem.Mol], min_MCS_size: int = 6) -> t.List:
+    """
+        The selection is getting only the MCS of pairwise molecules
+
+        Warnings:  results do not seem reasonable YET.
+                TODO: Check what exactly is not going as expected
+
+    Parameters
+    ----------
+    mols: t.List[Chem.Mol]
+        molecules
+    min_MCS_size :
+        what is the minimal MCS size
+    verbose : bool
+        loud and noisy
+
+    Returns
+    -------
+    List
+
+    """
 
     def _get_mol_offset(selected_mol: Chem.Mol, mols: t.List[Chem.Mol]) -> int:
         # deal with offsets of ligands:
@@ -140,30 +143,23 @@ def mcs_selection(mols: t.List[Chem.Mol], min_MCS_size: int = 6, verbose: bool =
 
     # generate MCS out of tools_Rdkit mols:
     ## most common substructres
-    if verbose: print("Calculate MCS")
+    print("Calculate MCS", mv=0)
     mcs = [[] for mol in mols]
     for ind1, mol1 in enumerate(mols):
-        if verbose: print(ind1)
+        print(ind1)
         for ind2, mol2 in enumerate(mols):
-            if verbose: print("\t", ind2)
+            print("\t", ind2)
             if (mol1 == mol2):
                 continue
             else:
                 tmp_mcs = rdFMCS.FindMCS([mol1, mol2], ringMatchesRingOnly=True)
                 mcs[ind1].append(tmp_mcs)
                 mcs[ind2].append(tmp_mcs)
-    if verbose: print("MCS: got ", len(mcs), "\t aim ", len(mols) * len(mols))
+    print("MCS: got ", len(mcs), "\t aim ", len(mols) * len(mols), mv=1)
+
     ## convert result to smart strings and make these to new tools_Rdkit mols:
-    print(mcs)
-
-    print(mcs[0])
     smart_mols = [Chem.MolFromSmarts(mcs_s.smartsString) for molecule_smarts in mcs for mcs_s in molecule_smarts]
-    if verbose: print("SMARTS: got ", len(smart_mols), "\t aim ", len(mols) * len(mols))
-
-    ## vis
-    # names = [mol.name for mol2 in mols for mol in mols if(mol!=mol2)]
-    # Draw.MolsToGridImage(smart_mols, molsPerRow=len(mols), legends=names)
-    # Draw.MolsToGridImage(smart_mols, molsPerRow=len(mols), legends=names)
+    print("SMARTS: got ", len(smart_mols), "\t aim ", len(mols) * len(mols), mv=1)
 
     # get atom nums of mcs_smart match for each row and col - Carefull there could be multiple matches!
     matching_atoms = []
@@ -172,33 +168,26 @@ def mcs_selection(mols: t.List[Chem.Mol], min_MCS_size: int = 6, verbose: bool =
         substructre = mol.GetSubstructMatches(smart)
         print(substructre)
         matching_atoms.append(substructre)
-    if verbose: print("Matching Atoms: got ", len(matching_atoms), "\t aim ", len(mols) * len(mols))
+    print("Matching Atoms: got ", len(matching_atoms), "\t aim ", len(mols) * len(mols), mv=1)
+    print("MATRIX LENGHT: ", len(matching_atoms), mv=1)
 
-    if verbose: print("MATRIX LENGHT: ", len(matching_atoms))
     ##add offset to atom indices
     offset_added_mol_matches = []
 
     for ind, mol_matches in enumerate(matching_atoms):
         offset_added_matches = []
-        if verbose: print("MOL: ", ind // (len(mols) - 1))
+        print("MOL: ", ind // (len(mols) - 1), mv=1)
         for match in mol_matches:
             if (len(match) >= min_MCS_size):
-                if verbose: print("\t", match)
+                print("\t", match)
                 offset = _get_mol_offset(mols[ind // (len(mols) - 1)], mols)
                 offset_added_matches.extend(tuple(map(lambda x: x + offset, match)))
             else:
                 continue
         offset_added_mol_matches.extend(offset_added_matches)
-    if verbose: print("MCS: got ", len(offset_added_matches), "\t aim ", len(mols) * len(mols))
-
-    if verbose:  print('len:', str(len(offset_added_mol_matches)), ' -', offset_added_mol_matches)
+    print("MCS: got ", len(offset_added_matches), "\t aim ", len(mols) * len(mols), mv=1)
+    print('len:', str(len(offset_added_mol_matches)), ' -', offset_added_mol_matches, mv=1)
     return offset_added_mol_matches
-
-    ## reduce to a molecule pairwise selection:
-    mol_pairwise_selection = []
-    ###SOMETHING
-
-    return mol_pairwise_selection
 
 
 # PCA
@@ -287,77 +276,3 @@ def PolyArea(corners, title=""):  # Shoelace formula#from plotly -
     print("area", area)
     area = abs(area) / 2.0
     return area
-
-
-# PLOT DATA
-def _plot_data(coords, eigen_vectors, title):
-    ##original data
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.scatter(coords[:, 0], coords[:, 1], c="k", label="data")
-    ax.plot((-eigen_vectors[0, 0], eigen_vectors[0, 0]), (-eigen_vectors[0, 1], eigen_vectors[0, 1]), label="pc1")
-    ax.plot((- eigen_vectors[1, 0], eigen_vectors[1, 0]), (-eigen_vectors[1, 1], eigen_vectors[1, 1]), label="pc2")
-    ax.legend()
-    ax.set_title("orig data - " + title)
-
-    fig.set_tight_layout("thight")
-    fig.show()
-
-
-def _plot_pc_projection(projected_coords, title):
-    ##porjection of data
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.scatter(projected_coords[0], projected_coords[1], c="k", label="data")
-    ax.scatter(projected_coords[0], [0 for x in projected_coords[0]], c="r", label="prPC1")
-    ax.scatter([0 for x in projected_coords[1]], projected_coords[1], c="b", label="prPC2")
-    ax.legend()
-    ax.set_title("pca_projection - " + title)
-
-    fig.set_tight_layout("thight")
-    fig.show()
-
-
-def _plot_2D_PCA(coords, selected_arr, mol_name="", eig_vecs=None):
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.scatter(coords[:, 0], coords[:, 1], c="k", alpha=0.4)
-    ax.scatter(selected_arr[:, 0], selected_arr[:, 1], c="r", label="selected")
-
-    if (not eig_vecs):
-        for ind, vec in enumerate(eig_vecs):
-            ax.plot((vec[0], vec[1]), label="pca" + str(ind))
-
-    ax.set_xlabel('X ')
-    ax.set_ylabel('Y ')
-    ax.set_title("2DPCA " + mol_name + " molecule")
-    ax.legend()
-
-    fig.set_tight_layout("thight")
-    fig.show()
-
-
-def _plot_3D_PCA(coords, eig_vecs=None, title=None):
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-
-    ##vis mol
-    ax.scatter(list(coords[:, 0]), list(coords[:, 1]),
-               list(coords[:, 2]), c="k", alpha=0.4)
-    ##vis selected
-    ax.scatter(coords[:, 0], coords[:, 1], coords[:, 2], c="r", label="selected")
-
-    ##vis pca vector
-    if (type(eig_vecs) != None and len(eig_vecs) > 0):
-        for ind, vec in enumerate(eig_vecs):
-            ax.plot(xs=[0, 1 * vec[0]], ys=[0, 1 * vec[1]], zs=[0, 1 * vec[2]], label="pca" + str(ind))
-
-    ##vis tuning
-    ax.set_xlabel('X ')
-    ax.set_ylabel('Y ')
-    ax.set_zlabel('Z ')
-    ax.set_title("3DPCA " + title + " molecule")
-    # ax.legend()
-
-    fig.set_tight_layout("thight")
-    fig.show()

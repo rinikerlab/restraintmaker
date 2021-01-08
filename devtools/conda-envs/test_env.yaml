@@ -1,5 +1,7 @@
 name: test
 channels:
+  schrodinger
+  rdkit
 dependencies:
     # Base depends
   - python
@@ -9,6 +11,13 @@ dependencies:
   - pytest
   - pytest-cov
   - codecov
+
+    # Requirements
+  - pymol
+  - rdkit
+  - scipy
+  - numpy
+  - pandas
 
     # Pip-only installs
   #- pip:

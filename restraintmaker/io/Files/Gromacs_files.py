@@ -1,5 +1,4 @@
 """
-.. automodule:: Gromacs_files
-    :members:
-    TODO:write DOCU!
+    Gromacs_files
+    TODO:write DOCU! and code :)
 """

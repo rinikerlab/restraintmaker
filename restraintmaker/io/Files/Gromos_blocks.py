@@ -1,7 +1,6 @@
 """
-.. automodule:: Gromos_blocks
-    :members:
-    TODO:write DOCU!
+THIS CODE WAS BORROWED FROM PYGROMOSTOOLS - Check it out :)
+
 """
 
 import typing as t

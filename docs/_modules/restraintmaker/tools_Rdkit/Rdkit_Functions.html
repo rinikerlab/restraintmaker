@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>restraintmaker.tools_Rdkit.Rdkit_Functions &mdash; restraintMaker  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>restraintmaker.tools_Rdkit.Rdkit_Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for restraintmaker.tools_Rdkit.Rdkit_Functions</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This module is linking the restraintmaker functionality to rdkit</span>
+<span class="sd">     - MCS search</span>
+<span class="sd">     - molecule ring filter</span>
+<span class="sd">     - etc.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+
+<span class="kn">from</span> <span class="nn">restraintmaker.utils.Utilities</span> <span class="kn">import</span> <span class="nb">print</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">rdkit</span> <span class="kn">import</span> <span class="n">Chem</span>
+    <span class="kn">from</span> <span class="nn">rdkit.Chem</span> <span class="kn">import</span> <span class="n">AllChem</span>
+    <span class="kn">from</span> <span class="nn">rdkit.Chem</span> <span class="kn">import</span> <span class="n">Draw</span>
+    <span class="kn">from</span> <span class="nn">rdkit.Chem</span> <span class="kn">import</span> <span class="n">rdFMCS</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Could not import Rdkit package!&quot;</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="parse_pdb_blocks_to_rdkit"><a class="viewcode-back" href="../../../_source/restraintmaker.tools_Rdkit.html#restraintmaker.tools_Rdkit.Rdkit_Functions.parse_pdb_blocks_to_rdkit">[docs]</a><span class="k">def</span> <span class="nf">parse_pdb_blocks_to_rdkit</span><span class="p">(</span><span class="n">pdb_mols</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Chem</span><span class="o">.</span><span class="n">Mol</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a pdblock to and rdkit-Mol</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pdb_mols: str</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    rdkit.Mol</span>
+<span class="sd">        an rdkit mol obj</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rdk_mols</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">lig</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pdb_mols</span><span class="p">):</span>
+        <span class="n">mol</span> <span class="o">=</span> <span class="n">AllChem</span><span class="o">.</span><span class="n">MolFromPDBBlock</span><span class="p">(</span><span class="n">lig</span><span class="p">,</span> <span class="n">removeHs</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="s2">&quot;resi&quot;</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
+        <span class="n">rdk_mols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rdk_mols</span></div>
+
+
+<div class="viewcode-block" id="ring_atom_filter"><a class="viewcode-back" href="../../../_source/restraintmaker.tools_Rdkit.html#restraintmaker.tools_Rdkit.Rdkit_Functions.ring_atom_filter">[docs]</a><span class="k">def</span> <span class="nf">ring_atom_filter</span><span class="p">(</span><span class="n">selected</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">mols</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Chem</span><span class="o">.</span><span class="n">Mol</span><span class="p">],</span> <span class="n">selected_mols</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filter molecules for rings and remove non-ring atoms from the selection</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mols: t.List[Chem.Mol]</span>
+<span class="sd">        molecules to select from</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.List[int]</span>
+<span class="sd">        list of stil selected atom indices, inside a ring</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_get_mol_offset</span><span class="p">(</span><span class="n">selected_mol</span><span class="p">:</span> <span class="n">Chem</span><span class="o">.</span><span class="n">Mol</span><span class="p">,</span> <span class="n">mols</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Chem</span><span class="o">.</span><span class="n">Mol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            determines the molecule offset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># deal with offsets of ligands:</span>
+        <span class="n">mol_offset</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">mol</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mols</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">resi</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">selected_mol</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">mol</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FOUND_MOLNAME: &quot;</span><span class="p">,</span> <span class="n">mol</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mol_offset</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mol</span><span class="o">.</span><span class="n">GetAtoms</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The molecule is not a member of the list of moleucles.&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">mol_offset</span>
+
+    <span class="n">already_selected_atomIdx</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">collect</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">mol</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mols</span><span class="p">):</span>
+        <span class="c1"># deal with offsets:</span>
+        <span class="n">mol_offset</span> <span class="o">=</span> <span class="n">_get_mol_offset</span><span class="p">(</span><span class="n">selected_mol</span><span class="o">=</span><span class="n">mol</span><span class="p">,</span> <span class="n">mols</span><span class="o">=</span><span class="n">mols</span><span class="p">)</span>
+
+        <span class="c1"># print(&quot;Mol &quot; + str(mol_ind) +&quot; &quot;+str(mol.name)+&quot; has offset: &quot; + str(mol_offset))</span>
+        <span class="n">all_atoms</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">GetAtoms</span><span class="p">()</span>
+        <span class="c1"># print(&quot;All atoms:&quot;+str([atom.GetIdx() for atom in all_atoms]))</span>
+        <span class="c1"># get all ring atoms</span>
+        <span class="n">all_atoms_in_rings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">IsInRing</span><span class="p">(),</span> <span class="n">all_atoms</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;all_atoms in rings: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">([</span><span class="n">atom</span><span class="o">.</span><span class="n">GetIdx</span><span class="p">()</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">all_atoms_in_rings</span><span class="p">]))</span>
+        <span class="c1"># print out all ring atoms</span>
+        <span class="n">test</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">all_atoms_in_rings</span><span class="p">:</span>
+            <span class="n">test</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mol_offset</span> <span class="o">+</span> <span class="n">atom</span><span class="o">.</span><span class="n">GetIdx</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;all ring Atoms +offset: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">test</span><span class="p">))</span>
+        <span class="c1"># reduce ring atoms by already selected atoms</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">already_selected_atomIdx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">atoms_selected_in_rings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">GetIdx</span><span class="p">()</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">mol_offset</span><span class="p">))</span> <span class="ow">in</span> <span class="n">already_selected_atomIdx</span><span class="p">,</span> <span class="n">all_atoms_in_rings</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">atoms_selected_in_rings</span> <span class="o">=</span> <span class="n">all_atoms_in_rings</span>
+        <span class="c1"># collect filtered atoms</span>
+        <span class="c1"># print(&quot;only preselected atoms in rings+off&quot;+str([mol_offset + atom.GetIdx() for atom in atoms_selected_in_rings]))</span>
+        <span class="n">collect</span> <span class="o">+=</span> <span class="p">[</span><span class="n">mol_offset</span> <span class="o">+</span> <span class="n">atom</span><span class="o">.</span><span class="n">GetIdx</span><span class="p">()</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">atoms_selected_in_rings</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finally Selected atoms: &quot;</span><span class="p">,</span> <span class="n">collect</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">collect</span></div>
+
+
+<span class="c1"># get molecule selection</span>
+<div class="viewcode-block" id="mcs_selection"><a class="viewcode-back" href="../../../_source/restraintmaker.tools_Rdkit.html#restraintmaker.tools_Rdkit.Rdkit_Functions.mcs_selection">[docs]</a><span class="k">def</span> <span class="nf">mcs_selection</span><span class="p">(</span><span class="n">mols</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Chem</span><span class="o">.</span><span class="n">Mol</span><span class="p">],</span> <span class="n">min_MCS_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The selection is getting only the MCS of pairwise molecules</span>
+
+<span class="sd">        Warnings:  results do not seem reasonable YET.</span>
+<span class="sd">                TODO: Check what exactly is not going as expected</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mols: t.List[Chem.Mol]</span>
+<span class="sd">        molecules</span>
+<span class="sd">    min_MCS_size :</span>
+<span class="sd">        what is the minimal MCS size</span>
+<span class="sd">    verbose : bool</span>
+<span class="sd">        loud and noisy</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    List</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_get_mol_offset</span><span class="p">(</span><span class="n">selected_mol</span><span class="p">:</span> <span class="n">Chem</span><span class="o">.</span><span class="n">Mol</span><span class="p">,</span> <span class="n">mols</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Chem</span><span class="o">.</span><span class="n">Mol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># deal with offsets of ligands:</span>
+        <span class="n">mol_offset</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">mol</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mols</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">resi</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">selected_mol</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">mol</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+                <span class="c1"># print(&quot;FOUND_MOLNAME: &quot;, mol.name)</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mol_offset</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mol</span><span class="o">.</span><span class="n">GetAtoms</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">mol_offset</span>
+
+    <span class="c1"># generate MCS out of tools_Rdkit mols:</span>
+    <span class="c1">## most common substructres</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Calculate MCS&quot;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">mcs</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">mol</span> <span class="ow">in</span> <span class="n">mols</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">ind1</span><span class="p">,</span> <span class="n">mol1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mols</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">ind1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ind2</span><span class="p">,</span> <span class="n">mol2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mols</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ind2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">mol1</span> <span class="o">==</span> <span class="n">mol2</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tmp_mcs</span> <span class="o">=</span> <span class="n">rdFMCS</span><span class="o">.</span><span class="n">FindMCS</span><span class="p">([</span><span class="n">mol1</span><span class="p">,</span> <span class="n">mol2</span><span class="p">],</span> <span class="n">ringMatchesRingOnly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">mcs</span><span class="p">[</span><span class="n">ind1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp_mcs</span><span class="p">)</span>
+                <span class="n">mcs</span><span class="p">[</span><span class="n">ind2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp_mcs</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MCS: got &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mcs</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> aim &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mols</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">mols</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1">## convert result to smart strings and make these to new tools_Rdkit mols:</span>
+    <span class="n">smart_mols</span> <span class="o">=</span> <span class="p">[</span><span class="n">Chem</span><span class="o">.</span><span class="n">MolFromSmarts</span><span class="p">(</span><span class="n">mcs_s</span><span class="o">.</span><span class="n">smartsString</span><span class="p">)</span> <span class="k">for</span> <span class="n">molecule_smarts</span> <span class="ow">in</span> <span class="n">mcs</span> <span class="k">for</span> <span class="n">mcs_s</span> <span class="ow">in</span> <span class="n">molecule_smarts</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SMARTS: got &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">smart_mols</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> aim &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mols</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">mols</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># get atom nums of mcs_smart match for each row and col - Carefull there could be multiple matches!</span>
+    <span class="n">matching_atoms</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">mol_matrix</span> <span class="o">=</span> <span class="p">[</span><span class="n">mol2</span> <span class="k">for</span> <span class="n">mol2</span> <span class="ow">in</span> <span class="n">mols</span> <span class="k">for</span> <span class="n">mol1</span> <span class="ow">in</span> <span class="n">mols</span> <span class="k">if</span> <span class="p">(</span><span class="n">mol1</span> <span class="o">!=</span> <span class="n">mol2</span><span class="p">)]</span>  <span class="c1"># flattened mol matrix</span>
+    <span class="k">for</span> <span class="n">mol</span><span class="p">,</span> <span class="n">smart</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mol_matrix</span><span class="p">,</span> <span class="n">smart_mols</span><span class="p">):</span>
+        <span class="n">substructre</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">GetSubstructMatches</span><span class="p">(</span><span class="n">smart</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">substructre</span><span class="p">)</span>
+        <span class="n">matching_atoms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">substructre</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matching Atoms: got &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">matching_atoms</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> aim &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mols</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">mols</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MATRIX LENGHT: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">matching_atoms</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1">##add offset to atom indices</span>
+    <span class="n">offset_added_mol_matches</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">mol_matches</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">matching_atoms</span><span class="p">):</span>
+        <span class="n">offset_added_matches</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MOL: &quot;</span><span class="p">,</span> <span class="n">ind</span> <span class="o">//</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mols</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">mol_matches</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min_MCS_size</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span>
+                <span class="n">offset</span> <span class="o">=</span> <span class="n">_get_mol_offset</span><span class="p">(</span><span class="n">mols</span><span class="p">[</span><span class="n">ind</span> <span class="o">//</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mols</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">mols</span><span class="p">)</span>
+                <span class="n">offset_added_matches</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span> <span class="n">match</span><span class="p">)))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">continue</span>
+        <span class="n">offset_added_mol_matches</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">offset_added_matches</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MCS: got &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">offset_added_matches</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> aim &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mols</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">mols</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;len:&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">offset_added_mol_matches</span><span class="p">)),</span> <span class="s1">&#39; -&#39;</span><span class="p">,</span> <span class="n">offset_added_mol_matches</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">offset_added_mol_matches</span></div>
+
+
+<span class="c1"># PCA</span>
+<span class="c1"># FUNCS</span>
+<span class="c1"># Calc PCA</span>
+<span class="k">def</span> <span class="nf">_calc_pca</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">verbose</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PCA: &quot;</span><span class="p">)</span>
+    <span class="c1"># center data: (scale)</span>
+    <span class="n">geometric_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">centered_coords</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">-</span> <span class="n">geometric_mean</span>
+    <span class="c1"># get covariance_matrix</span>
+    <span class="n">covaricance_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">centered_coords</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">verbose</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">covariance: </span><span class="se">\n\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">covaricance_matrix</span><span class="p">))))</span>
+    <span class="c1"># eigenvalue decomp. =&gt; principle components</span>
+
+    <span class="n">eigen_values</span><span class="p">,</span> <span class="n">eigen_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">covaricance_matrix</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">verbose</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">PC: </span><span class="se">\n\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">eigen_vectors</span><span class="p">))))</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">verbose</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">eigenvalues: &quot;</span><span class="p">,</span> <span class="n">eigen_values</span><span class="p">)</span>
+
+    <span class="c1"># SORT for size</span>
+    <span class="n">sorted_eigen</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">eigen_values</span><span class="p">,</span> <span class="n">eigen_vectors</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+    <span class="n">reduced_eigenvalues</span> <span class="o">=</span> <span class="p">[</span><span class="n">eigen</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">eigen</span> <span class="ow">in</span> <span class="n">sorted_eigen</span><span class="p">][:</span><span class="n">dims</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">verbose</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="n">sorted_eigen</span><span class="p">)</span>
+
+    <span class="c1"># transform coordinates onto new coords.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">verbose</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">PC: </span><span class="se">\n\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">eigen_vectors</span><span class="p">))))</span>
+
+    <span class="n">transformed_coords</span> <span class="o">=</span> <span class="n">eigen_vectors</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">centered_coords</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">reduced_transformed_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">transf_dim</span> <span class="k">for</span> <span class="n">transf_dim</span><span class="p">,</span> <span class="n">eigen_val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">transformed_coords</span><span class="p">,</span> <span class="n">eigen_values</span><span class="p">)</span>
+                                           <span class="k">if</span> <span class="p">(</span><span class="n">eigen_val</span> <span class="ow">in</span> <span class="n">reduced_eigenvalues</span><span class="p">)])</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">verbose</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="n">reduced_transformed_coords</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">reduced_transformed_coords</span><span class="p">,</span> <span class="n">eigen_vectors</span><span class="p">,</span> <span class="n">eigen_values</span><span class="p">,</span> <span class="n">covaricance_matrix</span>
+
+
+<div class="viewcode-block" id="_calc_pca_without_scaling"><a class="viewcode-back" href="../../../_source/restraintmaker.tools_Rdkit.html#restraintmaker.tools_Rdkit.Rdkit_Functions._calc_pca_without_scaling">[docs]</a><span class="k">def</span> <span class="nf">_calc_pca_without_scaling</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Analogous to _calc_pca, but it does not do any coordinate transfromations. (Rescaling etc. This should be done before calling this function.</span>
+<span class="sd">    This will help save time, if the function is called many times&#39;&#39;&#39;</span>
+    <span class="c1"># if (verbose): print(&quot;PCA: &quot;)</span>
+
+    <span class="c1"># get covariance_matrix</span>
+    <span class="c1"># coords = list(list(c) for c in coords)</span>
+
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+    <span class="n">covaricance_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="c1"># if (verbose): print(&quot;\tcovariance: \n\t&quot;, &quot;\n\t &quot;.join(map(str, list(covaricance_matrix))))</span>
+    <span class="c1"># eigenvalue decomp. =&gt; principle components</span>
+
+    <span class="n">eigen_values</span><span class="p">,</span> <span class="n">eigen_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">covaricance_matrix</span><span class="p">)</span>
+    <span class="c1"># if (verbose): print(&quot;\tPC: \n\t&quot;, &quot;\n\t &quot;.join(map(str, list(eigen_vectors))))</span>
+    <span class="c1"># if (verbose): print(&quot;\teigenvalues: &quot;, eigen_values)</span>
+
+    <span class="c1"># SORT for size</span>
+    <span class="n">sorted_eigen</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">eigen_values</span><span class="p">,</span> <span class="n">eigen_vectors</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+    <span class="n">reduced_eigenvalues</span> <span class="o">=</span> <span class="p">[</span><span class="n">eigen</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">eigen</span> <span class="ow">in</span> <span class="n">sorted_eigen</span><span class="p">][:</span><span class="n">dims</span><span class="p">]</span>
+    <span class="c1"># print(sorted_eigen)</span>
+
+    <span class="k">return</span> <span class="n">reduced_eigenvalues</span></div>
+
+
+<span class="c1"># Calculate polygon area!    #from plotly -</span>
+<div class="viewcode-block" id="PolygonSort"><a class="viewcode-back" href="../../../_source/restraintmaker.tools_Rdkit.html#restraintmaker.tools_Rdkit.Rdkit_Functions.PolygonSort">[docs]</a><span class="k">def</span> <span class="nf">PolygonSort</span><span class="p">(</span><span class="n">corners</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">corners</span><span class="p">)</span>
+    <span class="n">cx</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">corners</span><span class="p">))</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">cy</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">corners</span><span class="p">))</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">cornersWithAngles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">corners</span><span class="p">:</span>
+        <span class="n">an</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">cy</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">cx</span><span class="p">)</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+        <span class="n">cornersWithAngles</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">an</span><span class="p">))</span>
+    <span class="n">cornersWithAngles</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">tup</span><span class="p">:</span> <span class="n">tup</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">an</span> <span class="ow">in</span> <span class="n">cornersWithAngles</span><span class="p">:</span>
+        <span class="n">last</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">last</span></div>
+
+
+<div class="viewcode-block" id="PolyArea"><a class="viewcode-back" href="../../../_source/restraintmaker.tools_Rdkit.html#restraintmaker.tools_Rdkit.Rdkit_Functions.PolyArea">[docs]</a><span class="k">def</span> <span class="nf">PolyArea</span><span class="p">(</span><span class="n">corners</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>  <span class="c1"># Shoelace formula#from plotly -</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;small&quot;</span><span class="p">,</span> <span class="n">corners</span><span class="p">)</span>
+    <span class="n">corners</span> <span class="o">=</span> <span class="n">PolygonSort</span><span class="p">(</span><span class="n">corners</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Corners&quot;</span><span class="p">,</span> <span class="n">corners</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">corners</span><span class="p">)</span>  <span class="c1"># of corners</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">n</span>
+        <span class="n">area</span> <span class="o">+=</span> <span class="n">corners</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">corners</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">area</span> <span class="o">-=</span> <span class="n">corners</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">corners</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="n">area</span><span class="p">)</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">area</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="k">return</span> <span class="n">area</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

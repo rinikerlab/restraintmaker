@@ -16,6 +16,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
+sys.path.insert(0, os.path.abspath('../../..'))
 
 import restraintmaker
 
@@ -43,6 +44,7 @@ release = ''
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'nbsphinx',
     'sphinx.ext.autosummary',
     'sphinx.ext.autodoc',
     'sphinx.ext.mathjax',
@@ -53,9 +55,28 @@ extensions = [
 ]
 
 autosummary_generate = True
+
+#Napoleon settings
 napoleon_google_docstring = False
+napoleon_numpy_docstring = True
 napoleon_use_param = False
 napoleon_use_ivar = True
+napoleon_include_init_with_doc = True
+napoleon_include_private_with_doc = True
+napoleon_include_special_with_doc = False
+
+#NB-SPHINX
+nbsphinx_allow_errors = True
+
+
+#README - MD->rst:
+from m2r import parse_from_file
+output = parse_from_file('../../README.md')
+print(output)
+out_rst_file = open(os.getcwd()+"/introduction.rst", "w")
+out_rst_file.writelines(output)
+out_rst_file.close()
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

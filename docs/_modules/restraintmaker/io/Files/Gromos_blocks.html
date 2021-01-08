@@ -1,0 +1,579 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>restraintmaker.io.Files.Gromos_blocks &mdash; restraintMaker  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_source/modules.html">restraintmaker</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>restraintmaker.io.Files.Gromos_blocks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for restraintmaker.io.Files.Gromos_blocks</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">THIS CODE WAS BORROWED FROM PYGROMOSTOOLS - Check it out :)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+
+<span class="c1"># enum</span>
+<span class="c1">##TOP</span>
+<div class="viewcode-block" id="distant_Restraint_Type"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.distant_Restraint_Type">[docs]</a><span class="k">class</span> <span class="nc">distant_Restraint_Type</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">half_harmonic_repulsive</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">full_harmonic_distance_restraint</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">half_harmonic_attractive</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="geometric_code"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.geometric_code">[docs]</a><span class="k">class</span> <span class="nc">geometric_code</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">real_atom</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">virtual_H_atom_aliphaticC</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">virtual_H_atom_aromaticC</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">virtual_H_atoms_goc_aliph</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">virtual_H_atom_aliphaticC_strange</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">pseudo_H_atom_goc_H_atoms_CH3</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">pseudo_H_atoms_goc_of_two_CH3</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">pseudo_H_atoms_goc_of_three_CH3</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">virtual_atoms_cog</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">virtual_atoms_com</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span></div>
+
+
+<span class="c1"># FIELDS</span>
+<span class="k">class</span> <span class="nc">_generic_field</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;to string method needs to be implemented!&quot;</span><span class="p">)</span>
+
+
+<span class="c1">##COORD</span>
+<div class="viewcode-block" id="atomP"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atomP">[docs]</a><span class="k">class</span> <span class="nc">atomP</span><span class="p">(</span><span class="n">_generic_field</span><span class="p">):</span>
+<div class="viewcode-block" id="atomP.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atomP.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resID</span><span class="p">,</span> <span class="n">resName</span><span class="p">,</span> <span class="n">atomType</span><span class="p">,</span> <span class="n">atomID</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">,</span> <span class="n">zp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            resID:</span>
+<span class="sd">            resName:</span>
+<span class="sd">            atomType:</span>
+<span class="sd">            atomID:</span>
+<span class="sd">            xp:</span>
+<span class="sd">            yp:</span>
+<span class="sd">            zp:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resID</span> <span class="o">=</span> <span class="n">resID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resName</span> <span class="o">=</span> <span class="n">resName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atomType</span> <span class="o">=</span> <span class="n">atomType</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atomID</span> <span class="o">=</span> <span class="n">atomID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xp</span> <span class="o">=</span> <span class="n">xp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yp</span> <span class="o">=</span> <span class="n">yp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zp</span> <span class="o">=</span> <span class="n">zp</span></div>
+
+<div class="viewcode-block" id="atomP.to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atomP.to_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{: &gt;5}</span><span class="s2"> </span><span class="si">{: &gt;3}</span><span class="s2">  </span><span class="si">{: &lt;5}{: &gt;7}{: 15.9f}{:15.9f}{:15.9f}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resName</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomType</span><span class="p">,</span>
+                                                                               <span class="bp">self</span><span class="o">.</span><span class="n">atomID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span>
+                                                                               <span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zp</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="atomV"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atomV">[docs]</a><span class="k">class</span> <span class="nc">atomV</span><span class="p">(</span><span class="n">_generic_field</span><span class="p">):</span>
+<div class="viewcode-block" id="atomV.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atomV.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resID</span><span class="p">,</span> <span class="n">resName</span><span class="p">,</span> <span class="n">atomType</span><span class="p">,</span> <span class="n">atomID</span><span class="p">,</span> <span class="n">xv</span><span class="p">,</span> <span class="n">yv</span><span class="p">,</span> <span class="n">zv</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            resID:</span>
+<span class="sd">            resName:</span>
+<span class="sd">            atomType:</span>
+<span class="sd">            atomID:</span>
+<span class="sd">            xv:</span>
+<span class="sd">            yv:</span>
+<span class="sd">            zv:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resID</span> <span class="o">=</span> <span class="n">resID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resName</span> <span class="o">=</span> <span class="n">resName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atomType</span> <span class="o">=</span> <span class="n">atomType</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atomID</span> <span class="o">=</span> <span class="n">atomID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xv</span> <span class="o">=</span> <span class="n">xv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yv</span> <span class="o">=</span> <span class="n">yv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zv</span> <span class="o">=</span> <span class="n">zv</span></div>
+
+<div class="viewcode-block" id="atomV.to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atomV.to_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{: &gt;5}</span><span class="s2"> </span><span class="si">{: &gt;3}</span><span class="s2">  </span><span class="si">{: &lt;5}{: &gt;7}{: 15.9f}{:15.9f}{:15.9f}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resName</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomType</span><span class="p">,</span>
+                                                                               <span class="bp">self</span><span class="o">.</span><span class="n">atomID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xv</span><span class="p">,</span>
+                                                                               <span class="bp">self</span><span class="o">.</span><span class="n">yv</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zv</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="lattice_shift"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.lattice_shift">[docs]</a><span class="k">class</span> <span class="nc">lattice_shift</span><span class="p">(</span><span class="n">_generic_field</span><span class="p">):</span>
+<div class="viewcode-block" id="lattice_shift.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.lattice_shift.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atomID</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            atomID:</span>
+<span class="sd">            x:</span>
+<span class="sd">            y:</span>
+<span class="sd">            z:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atomID</span> <span class="o">=</span> <span class="n">atomID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span></div>
+
+<div class="viewcode-block" id="lattice_shift.to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.lattice_shift.to_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:&gt;10}{:&gt;10}{:&gt;10}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">)</span></div></div>
+
+
+<span class="c1">##TOP</span>
+<div class="viewcode-block" id="atom_pair_distanceRes"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_pair_distanceRes">[docs]</a><span class="k">class</span> <span class="nc">atom_pair_distanceRes</span><span class="p">(</span><span class="n">_generic_field</span><span class="p">):</span>
+<div class="viewcode-block" id="atom_pair_distanceRes.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_pair_distanceRes.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">j1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">k1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">l1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">type1</span><span class="p">:</span> <span class="p">(</span><span class="n">geometric_code</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">),</span>
+                 <span class="n">i2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">j2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">k2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">l2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">type2</span><span class="p">:</span> <span class="p">(</span><span class="n">geometric_code</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">),</span>
+                 <span class="n">r0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">w0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rah</span><span class="p">:</span> <span class="p">(</span><span class="n">distant_Restraint_Type</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">),</span> <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            ..function: Constructor of Gromos atom_pair_distanceRes</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            i1 (int): id of atom i of first molecule</span>
+<span class="sd">            j1 (int): id of atom j of first molecule</span>
+<span class="sd">            k1 (int): id of atom k of first molecule</span>
+<span class="sd">            l1 (int): id of atom l of first molecule</span>
+<span class="sd">            type1: geometric restraintype of first molecule</span>
+<span class="sd">            i2 (int): id of atom i of second molecule</span>
+<span class="sd">            j2 (int): id of atom j of second molecule</span>
+<span class="sd">            k2 (int): id of atom k of second molecule</span>
+<span class="sd">            l2 (int): id of atom l of second molecule</span>
+<span class="sd">            type2:</span>
+<span class="sd">            r0 (float): radius_0 of restraint</span>
+<span class="sd">            w0 (float): weighting of restraint</span>
+<span class="sd">            rah: restraint_type</span>
+<span class="sd">            comment (str):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom1i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom1j</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">j1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom1k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">k1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom1l</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">type1</span><span class="p">)</span> <span class="ow">is</span> <span class="n">geometric_code</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">atom1ic</span> <span class="o">=</span> <span class="n">type1</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">type1</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">type1</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">type1</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">atom1ic</span> <span class="o">=</span> <span class="n">geometric_code</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">type1</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;geometric index atom1ic in atom_pair_distanceRes unknown</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">type1</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom2i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i2</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom2j</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">j2</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom2k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">k2</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom2l</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">l2</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">type2</span><span class="p">)</span> <span class="ow">is</span> <span class="n">geometric_code</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">atom2ic</span> <span class="o">=</span> <span class="n">type2</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">type2</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">type2</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">type2</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">atom2ic</span> <span class="o">=</span> <span class="n">geometric_code</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">type2</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;geometric index atom2ic in atom_pair_distanceRes unknown</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">type2</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius_0</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">r0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">w0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">rah</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">rah</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">rah</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">disResType</span> <span class="o">=</span> <span class="n">distant_Restraint_Type</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">rah</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">rah</span><span class="p">)</span> <span class="ow">is</span> <span class="n">distant_Restraint_Type</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">disResType</span> <span class="o">=</span> <span class="n">rah</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;DisresType in atom_pair_distanceRes unknown</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rah</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;COULD NOT convert a parameter for distancerestraint field into correct form!&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="atom_pair_distanceRes.to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_pair_distanceRes.to_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2">    </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2">  </span><span class="si">{:10.5f}</span><span class="s2"> </span><span class="si">{:10.5f}</span><span class="s2"> </span><span class="si">{:&gt;3}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom1i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom1j</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom1k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom1l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom1ic</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom2i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom2j</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom2k</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom2l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom2ic</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius_0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">disResType</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div></div>
+
+
+<span class="c1"># BLOCKS</span>
+<span class="c1">##genericblock:</span>
+<span class="k">class</span> <span class="nc">_generic_gromos_block</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">used</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>  <span class="c1"># content:str,</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            name (str):</span>
+<span class="sd">            used (bool):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">used</span> <span class="o">=</span> <span class="n">used</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line_seperator</span> <span class="o">=</span> <span class="s2">&quot; </span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field_seperator</span> <span class="o">=</span> <span class="s2">&quot; </span><span class="se">\t</span><span class="s2"> &quot;</span>
+        <span class="c1"># self.content = content</span>
+
+    <span class="k">def</span> <span class="nf">block_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_seperator</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_seperator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;END&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_seperator</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_to_string</span><span class="p">()</span>
+
+
+<span class="c1">##MISC</span>
+<div class="viewcode-block" id="timestep_block"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.timestep_block">[docs]</a><span class="k">class</span> <span class="nc">timestep_block</span><span class="p">(</span><span class="n">_generic_gromos_block</span><span class="p">):</span>
+<div class="viewcode-block" id="timestep_block.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.timestep_block.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subcontent</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            t (float):</span>
+<span class="sd">            step (int):</span>
+<span class="sd">            subcontent:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">used</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;TIMESTEP&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">t</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="n">step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subcontent</span> <span class="o">=</span> <span class="n">subcontent</span></div>
+
+<div class="viewcode-block" id="timestep_block.block_to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.timestep_block.block_to_string">[docs]</a>    <span class="k">def</span> <span class="nf">block_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot; </span><span class="se">\t</span><span class="si">{}</span><span class="s2"> </span><span class="se">\t</span><span class="si">{}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;END</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+
+<div class="viewcode-block" id="title_block"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.title_block">[docs]</a><span class="k">class</span> <span class="nc">title_block</span><span class="p">(</span><span class="n">_generic_gromos_block</span><span class="p">):</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="p">[[[</span><span class="s2">&quot;content&quot;</span><span class="p">]]]</span>
+
+<div class="viewcode-block" id="title_block.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.title_block.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            content:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">used</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;TITLE&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span></div>
+
+<div class="viewcode-block" id="title_block.block_to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.title_block.block_to_string">[docs]</a>    <span class="k">def</span> <span class="nf">block_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> &gt;&gt;&gt; Generated with python lib function_libs utilities. (riniker group)</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> &gt;&gt;&gt; Generated with python lib function_libs utilities. (riniker group)</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> &gt;&gt;&gt; line_seperator: &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_seperator</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> field_seperator: &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">field_seperator</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;END</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+
+<span class="c1">##COORD Blocks</span>
+<div class="viewcode-block" id="atom_pos_block"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_pos_block">[docs]</a><span class="k">class</span> <span class="nc">atom_pos_block</span><span class="p">(</span><span class="n">_generic_gromos_block</span><span class="p">):</span>
+<div class="viewcode-block" id="atom_pos_block.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_pos_block.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">atomP</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            content:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">content</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">used</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;POSITION&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;atom_pos block Constructor is missing correct argument combination!&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="atom_pos_block.block_to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_pos_block.block_to_string">[docs]</a>    <span class="k">def</span> <span class="nf">block_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">x</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;END</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+
+<div class="viewcode-block" id="atom_vel_block"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_vel_block">[docs]</a><span class="k">class</span> <span class="nc">atom_vel_block</span><span class="p">(</span><span class="n">_generic_gromos_block</span><span class="p">):</span>
+<div class="viewcode-block" id="atom_vel_block.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_vel_block.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">atomV</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            content:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">used</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;VELOCITY&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span></div>
+
+<div class="viewcode-block" id="atom_vel_block.block_to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_vel_block.block_to_string">[docs]</a>    <span class="k">def</span> <span class="nf">block_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">x</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;END</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+
+<div class="viewcode-block" id="atom_ref_pos_block"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_ref_pos_block">[docs]</a><span class="k">class</span> <span class="nc">atom_ref_pos_block</span><span class="p">(</span><span class="n">_generic_gromos_block</span><span class="p">):</span>
+
+<div class="viewcode-block" id="atom_ref_pos_block.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_ref_pos_block.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            content (list):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">content</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">used</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;REFPOSITION&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;atom_pos block Constructor is missing correct argument combination!&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="atom_ref_pos_block.block_to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.atom_ref_pos_block.block_to_string">[docs]</a>    <span class="k">def</span> <span class="nf">block_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">x</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;END</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+
+<div class="viewcode-block" id="lattice_shifts_block"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.lattice_shifts_block">[docs]</a><span class="k">class</span> <span class="nc">lattice_shifts_block</span><span class="p">(</span><span class="n">_generic_gromos_block</span><span class="p">):</span>
+<div class="viewcode-block" id="lattice_shifts_block.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.lattice_shifts_block.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">lattice_shift</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            content:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">used</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;LATTICESHIFTS&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span></div>
+
+<div class="viewcode-block" id="lattice_shifts_block.block_to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.lattice_shifts_block.block_to_string">[docs]</a>    <span class="k">def</span> <span class="nf">block_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">x</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;END</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+
+<div class="viewcode-block" id="genbox_block"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.genbox_block">[docs]</a><span class="k">class</span> <span class="nc">genbox_block</span><span class="p">(</span><span class="n">_generic_gromos_block</span><span class="p">):</span>
+<div class="viewcode-block" id="genbox_block.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.genbox_block.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pbc</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">angles</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">euler</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">origin</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            pbc (Enum):</span>
+<span class="sd">            length (list):</span>
+<span class="sd">            angles (list):</span>
+<span class="sd">            euler (list):</span>
+<span class="sd">            origin (list):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">used</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;GENBOX&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pbc</span> <span class="o">=</span> <span class="n">pbc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="n">angles</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">euler</span> <span class="o">=</span> <span class="n">euler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">origin</span></div>
+
+<div class="viewcode-block" id="genbox_block.block_to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.genbox_block.block_to_string">[docs]</a>    <span class="k">def</span> <span class="nf">block_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{:&gt;5}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pbc</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{:&gt;15.9f}{:&gt;15.9f}{:&gt;15.9f}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{:&gt;15.9f}{:&gt;15.9f}{:&gt;15.9f}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{:&gt;15.9f}{:&gt;15.9f}{:&gt;15.9f}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">euler</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">euler</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">euler</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{:&gt;15.9f}{:&gt;15.9f}{:&gt;15.9f}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;END</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+
+<span class="c1">##TOP</span>
+<div class="viewcode-block" id="distance_res_spec_block"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.distance_res_spec_block">[docs]</a><span class="k">class</span> <span class="nc">distance_res_spec_block</span><span class="p">(</span><span class="n">_generic_gromos_block</span><span class="p">):</span>
+<div class="viewcode-block" id="distance_res_spec_block.__init__"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.distance_res_spec_block.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">KDISH</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">KDISC</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">RESTRAINTHEADER</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">RESTRAINTS</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            KDISH (int):</span>
+<span class="sd">            KDISC (int):</span>
+<span class="sd">            RESTRAINTHEADER (list):</span>
+<span class="sd">            RESTRAINTS (list):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">used</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;DISTANCERESSPEC&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">KDISH</span> <span class="o">=</span> <span class="n">KDISH</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">KDISC</span> <span class="o">=</span> <span class="n">KDISC</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RESTRAINTHEADER</span> <span class="o">=</span> <span class="n">RESTRAINTHEADER</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RESTRAINTS</span> <span class="o">=</span> <span class="n">RESTRAINTS</span></div>
+
+<div class="viewcode-block" id="distance_res_spec_block.block_to_string"><a class="viewcode-back" href="../../../../_source/restraintmaker.io.Files.html#restraintmaker.io.Files.Gromos_blocks.distance_res_spec_block.block_to_string">[docs]</a>    <span class="k">def</span> <span class="nf">block_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_seperator</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;# KDISH&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_seperator</span> <span class="o">+</span> <span class="s2">&quot;KDISC&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_seperator</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_seperator</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">KDISH</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_seperator</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">KDISC</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_seperator</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;#</span><span class="si">{:&gt;4}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2">    </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2"> </span><span class="si">{:&gt;5}</span><span class="s2">  </span><span class="si">{:&gt;10}</span><span class="s2"> </span><span class="si">{:&gt;10}</span><span class="s2"> </span><span class="si">{:&gt;3}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">RESTRAINTHEADER</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESTRAINTS</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">x</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;END</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">result</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

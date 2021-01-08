@@ -1,10 +1,18 @@
 """
 restraintMaker
 The aim of the module is to help generating restrains for any method! :)
+
 """
+
 import sys
 from setuptools import setup, find_packages
 import versioneer
+
+REQUIRED = ["pymol",
+            "rdkit",
+            "pandas",
+            "numpy",
+            "scipy"]
 
 short_description = __doc__.split("\n")
 

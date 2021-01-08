@@ -48,3 +48,24 @@ tmtagsHistory
 # PyMOL tmps#
 #############
 **/*.cif
+
+# Documentation
+##################
+
+/docs/sphinx_project/_build/
+/docs/sphinx_project/_source/modules.rst
+/docs/sphinx_project/_source/restraintmaker.algorithm.rst
+/docs/sphinx_project/_source/restraintmaker.interface_Pymol.rst
+/docs/sphinx_project/_source/restraintmaker.io.Files.rst
+/docs/sphinx_project/_source/restraintmaker.io.rst
+/docs/sphinx_project/_source/restraintmaker.rst
+/docs/sphinx_project/_source/restraintmaker.test.rst
+/docs/sphinx_project/_source/restraintmaker.test.test_files.rst
+/docs/sphinx_project/_source/restraintmaker.tools_Rdkit.rst
+/docs/sphinx_project/_source/restraintmaker.types.rst
+/docs/sphinx_project/_source/restraintmaker.utils.rst
+/docs/sphinx_project/introduction.rst
+
+# IDE
+#################
+.idea
