@@ -13,6 +13,7 @@ dependencies:
   - pytest
   - pytest-cov
   - codecov
+  - flake8
 
     # Requirements
   - pymol
