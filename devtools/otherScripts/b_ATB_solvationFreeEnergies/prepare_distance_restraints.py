@@ -26,17 +26,19 @@ time.sleep(1)
 obj_list = cmd.get_object_list()
 for i, obj in enumerate(obj_list):
     cmd.alter(obj, "chain="+str(i))
+    cmd.alter(obj, "resi="+str(i))
+    cmd.alter(obj, "resn=mol" + str(i))
 
 cmd.save("merged.pdb")
 
 
-molecule_dir = "ATB_molecules"
+#molecule_dir = "ATB_molecules"
+
 
 
 cmd.reinitialize()
 
 cmd.load("merged.pdb")
-
 
 import restraintmaker
 restraintmaker.run_plugin_gui()

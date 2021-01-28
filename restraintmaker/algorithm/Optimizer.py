@@ -172,7 +172,6 @@ class _MoleculeRingOptimizer(_Optimizer):
                     # print(i_m1,i_m2,mv=0)
 
             # 2) Build a Ring using modified Kruskal
-
             i_chosen_pairs = maximal_weight_ring(edge_list=molecule_pair_list, value_list=value_list,
                                                  n_nodes=len(self.Molecules))
             chosen_restraints = []
@@ -988,10 +987,9 @@ def maximal_weight_ring(edge_list: t.List[t.Tuple[int, int]], value_list: t.List
         if len(neighbours_of_node[__i_1]) == 2 or len(neighbours_of_node[__i_2]) == 2:
             # print(__i_1,__i_2,'causes fork',mv=1)
             return False
+
         # 2 Does not close a Ring. Much easier here than in general Kruskal: Because there are no forks: Just follow the chain from one node of the new edge and see if you can reach the other node
-
         # Start at node1 and see if i can reach node 2
-
         if len(neighbours_of_node[__i_1]) > 0:
             i_current_node = neighbours_of_node[__i_1][0]
             coming_from = 0 if neighbours_of_node[i_current_node][0] == __i_1 else 1
@@ -1068,3 +1066,100 @@ def maximal_weight_ring(edge_list: t.List[t.Tuple[int, int]], value_list: t.List
 
     return i_chosen_edges
 
+
+def maximal_weight_chain(edge_list: t.List[t.Tuple[int, int]], value_list: t.List[float], n_nodes: int):
+    """
+    chooses from a list of edges the ones that form the biggest chain including all nodes.
+    Nodes are considered as ints (indices) and edges as tuples of nodes
+
+    @Warning: if the input is NOT a fully connected graph there might be no solution
+
+    Parameters
+    ----------
+    edge_list : t.List[t.Tuple[int,int]]
+        list of all edges as tuples of ints
+    value_list : t.List[float]
+        A list of all edge weights
+    n_nodes : int
+        Number of nodes
+
+    Returns
+    -------
+    t.List[ind]
+         Indices of the chosen edges
+    """
+
+    # 0)
+    if len(edge_list) != len(value_list):
+        raise u.BadArgumentException(
+            'The lengths of the list inidcating edges weights and edges must be equal')
+    if not len(edge_list) == n_nodes * (n_nodes - 1) / 2:
+        print('WARNING: Method maximal_weight_ring has not been tested for not fully connected graphs', mv=4)
+
+    def _edge_is_acceptable(__i_1, __i_2):
+        '''warning: Call BEFORE  new edge is added'''
+        # 1) Does not cause a fork (i.e create a node with 3 edges)
+        if len(neighbours_of_node[__i_1]) == 2 or len(neighbours_of_node[__i_2]) == 2:
+            # print(__i_1,__i_2,'causes fork',mv=1)
+            return False
+
+        # 2 Does not close a Ring. Much easier here than in general Kruskal: Because there are no forks: Just follow the chain from one node of the new edge and see if you can reach the other node
+        # Start at node1 and see if i can reach node 2
+        if len(neighbours_of_node[__i_1]) > 0:
+            i_current_node = neighbours_of_node[__i_1][0]
+            coming_from = 0 if neighbours_of_node[i_current_node][0] == __i_1 else 1
+        else:
+            i_current_node, coming_from = -1, -1
+
+        # Follow the chain until you reach the other node of the new edge, or a loose end
+        # print(' ',mv=1)
+        while (i_current_node >= 0):
+            if i_current_node == __i_2:  # Edge closes a ring
+                # print(__i_1, __i_2, 'closes ring', mv=1)
+                return False
+
+            if (len(neighbours_of_node[i_current_node]) == 2):  # Chain goes on
+                i_next_node = neighbours_of_node[i_current_node][0 if coming_from == 1 else 1]
+                coming_from = 0 if neighbours_of_node[i_next_node][0] == i_current_node else 1
+            else:
+                i_next_node, coming_from = -1, -1
+
+            # print(i_current_node, '-.>', i_next_node, mv=1)
+            i_current_node = i_next_node
+
+        return True
+
+    # 1) List of indices used to acess edges sorted by values
+    sorted_by_value = sorted(list(range(len(edge_list))), key=lambda i: value_list[i], reverse=True)
+
+    # 2) Iterate over edges in order of sorted list
+    neighbours_of_node = [[] for dummy_var in range(
+        n_nodes)]  # Carefull: [[]]*n_nodes will fill the list with the SAME empty list n_nodes times
+    i_chosen_edges = []
+    # TODO: Instead of iterating of ind, loop while total connections not big enough
+    for ind in sorted_by_value:  # CARFEULL: ind is reused in while loop to find last edge
+        i_m1 = edge_list[ind][0]
+        i_m2 = edge_list[ind][1]
+        #        print(neighbours_of_node,mv=1)
+
+        # Condition is stricter but easier to calculate than Kruskal
+        # ) 1) There can be no  node with more than two edges (because in the end we want to have a ring
+        # ) 2) We can not close the ring (because the last edge we add, will close it)
+        #   => Because no node can have more than 2 edges that means there must always be at least one node with one edge. (Actually there must be two,but it is impossible that there is just one as long as no rings are allowed.
+
+        if _edge_is_acceptable(i_m1, i_m2):
+            neighbours_of_node[i_m1].append(i_m2)
+            neighbours_of_node[i_m2].append(i_m1)
+            i_chosen_edges.append(ind)
+            print('ADDING', i_m1 + 1, i_m2 + 1, '(value =  ' + '{:05.2f}'.format(value_list[ind]) + ')', mv=1)
+            if len(i_chosen_edges) == n_nodes - 1:
+                last_position = sorted_by_value.index(ind)
+                break
+        else:
+            print('DISCARDING', i_m1 + 1, i_m2 + 1, mv=1)
+
+    else:   # For loop quit without break\
+        raise ValueError(
+            'Kruskal-like algorithm faild to connect all molecules. This can only happen if there is a serious bug in the Kruskal algorithm, or the input is not a fully connected graph.')
+
+    return i_chosen_edges

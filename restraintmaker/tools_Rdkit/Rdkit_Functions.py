@@ -37,6 +37,8 @@ def parse_pdb_blocks_to_rdkit(pdb_mols: str) -> t.List[Chem.Mol]:
     rdk_mols = []
     for ind, lig in enumerate(pdb_mols):
         mol = AllChem.MolFromPDBBlock(lig, removeHs=False)
+        if(mol is None):
+            raise ValueError("Rdkit Mol was None - "+str(mol)+"!\n got "+str(mol))
         setattr(mol, "name", 'mol_' + str(ind))
         setattr(mol, "resi", ind)
         rdk_mols.append(mol)
