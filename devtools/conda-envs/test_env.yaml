@@ -1,7 +1,10 @@
 name: test
 channels:
-  schrodinger
-  rdkit
+  - conda-forge
+  - rdkit
+  - schrodinger
+  - defaults
+
 dependencies:
     # Base depends
   - python
