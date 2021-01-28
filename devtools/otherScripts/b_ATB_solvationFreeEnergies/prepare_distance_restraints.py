@@ -12,46 +12,44 @@ from pymol import cmd
 #check pdbs
 molecule_dir= "ATB_molecules"
 pdbs = glob.glob(molecule_dir+"/*/*pdb")
+aligned_mol="aligned.pdb"
 orig_pdbs = [pdb for pdb in pdbs if (not len(os.path.basename(pdb).split("_")[0]) ==0) ]
 obj_names = [os.path.basename(pdb).split("_")[1] if (len(os.path.basename(pdb).split("_")[0]) ==0) else os.path.basename(pdb).split("_")[0] for pdb in pdbs]
+
+#orig_pdbs = [orig_pdbs[0], orig_pdbs[2], orig_pdbs[3], orig_pdbs[11], orig_pdbs[12]] #The challenging five
+
+#orig_pdbs = [orig_pdbs[i] for i in range(4, 11)] + [orig_pdbs[0], orig_pdbs[1]] #The nine singles
+
+#orig_pdbs = [orig_pdbs[i] for i in [0,1,3,4,5,7,8,9,10,11]] #The challenging five
+
+#orig_pdbs = [orig_pdbs[i] for i in [0,1,4,7,8]] #The easy five
 
 #Alignment
 
 from rdkit import Chem
 from rdkit.Chem import AllChem
-from rdkit.Chem import rdFMCS
+from rdkit.Chem import MCS as rdFMCS
 
-def alignLigs(ligands, lig1, lig2):
-  print(str(lig1) + " " + str(lig2))
-  print(mcs)
-  #print(Chem.MolToSmiles(patt))
-  ref = ligands[lig1]
-  refMatch = ref.GetSubstructMatch(patt)
-  #print(refMatch)
-  mv = ligands[lig2].GetSubstructMatch(patt)
-  #print(mv)
-  AllChem.AlignMol(ligands[lig2], ref, atomMap=list(zip(mv, refMatch)))
 
 num_orig_pdbs = len(orig_pdbs)
-mols =  [Chem.MolFromPDBFile(pdb) for pdb in orig_pdbs]
+mols = [Chem.MolFromPDBFile(pdb) for pdb in orig_pdbs]
 
-mcs = rdFMCS.FindMCS([mols[0], mols[1]], ringMatchesRingOnly=False,)
-patt = Chem.MolFromSmarts(mcs.smartsString)
-print(mcs.smartsString)
+mcs = rdFMCS.FindMCS(mols, ringMatchesRingOnly=True, atomCompare="any")
+#mols
+print(vars(mcs))
+patt = Chem.MolFromSmarts(mcs.smarts) #smartsString
 print(orig_pdbs)
 
-
-from rdkit.Chem import Subshape
-from rdkit.Chem.Subshape import SubshapeAligner
-from rdkit.Chem.Subshape import SubshapeBuilder
-
-
-for mol1ID in range(num_orig_pdbs):
+for mol1ID in range(0,num_orig_pdbs):
     ref = mols[mol1ID]
-    refMatch = ref.GetSubstructMatch(patt)
     for mol2ID in range(mol1ID+1, num_orig_pdbs):
+        print(orig_pdbs[mol2ID])
         mv = mols[mol2ID]
+        mcs = rdFMCS.FindMCS([ref, mv], ringMatchesRingOnly=True)
+        patt = Chem.MolFromSmarts(mcs.smarts)  # smartsString
+        refMatch = ref.GetSubstructMatch(patt)
         mvMatch = mv.GetSubstructMatch(patt)
+        print(mvMatch, refMatch)
         try:
             AllChem.AlignMol(mv, ref, atomMap=list(zip(mvMatch, refMatch)))
         except Exception as err:
@@ -84,9 +82,7 @@ obj_list = cmd.get_object_list()
 for i, obj in enumerate(obj_list):
     cmd.alter(obj, "chain="+str(i))
     cmd.alter(obj, "resi="+str(i))
-    cmd.alter(obj, "resn=\"mol" + str(i)+"\"")
-
-exit()
+#    cmd.alter(obj, "resn=\"mol" + str(i)+"\"")
 
 
 cmd.save("merged.pdb")
@@ -97,6 +93,6 @@ cmd.save("merged.pdb")
 cmd.reinitialize()
 
 cmd.load("merged.pdb")
-exit()
+
 import restraintmaker
 restraintmaker.run_plugin_gui()

@@ -239,6 +239,7 @@ class RingFilter(_Filter):
 
         input = input_function("A List of Molecules in the PDB FORMAT:")
         input = u.check_or_convert_argument(input, list)
+        print(input)
         molecules_pdb = [u.check_or_convert_argument(i, str) for i in input]
         self.molecules_rdk = Rdkit_Functions.parse_pdb_blocks_to_rdkit(molecules_pdb)
 
