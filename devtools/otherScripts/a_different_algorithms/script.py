@@ -18,12 +18,6 @@ from restraintmaker.utils import Utilities as u
 
 filtered_atoms = atom_list
 
-## Filtering for not H
-filter = Filter.ElementFilter(filtered_atoms)
-filter.get_args(lambda x: ("O, N, C"))
-filtered_atoms = filter.filter()
-print("Filter Step1 - Elements: ", len(atom_list), "->",len(filtered_atoms))
-
 ## Filtering for rings
 filter = Filter.RingFilter(filtered_atoms)
 pdb_blocks = u.convert_atoms_to_pdb_molecules(filtered_atoms)
@@ -41,7 +35,6 @@ cutoff_distance = 1.2
 
 
 #Optimize Restraints
-# Todo: fix this call
 optimizer = Optimizer.TreeHeuristicOptimizer(filtered_atoms)
 optimizer.get_args(lambda x: (number_of_restraints, cutoff_distance, 'shortest', 'pca_2d'))
 found_restraints = optimizer.make_restraints()
