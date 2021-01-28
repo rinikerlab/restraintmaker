@@ -1,4 +1,4 @@
-name: restraintmakerTest
+name: restraintmakerDev
 channels:
   - conda-forge
   - rdkit
@@ -20,6 +20,12 @@ dependencies:
   - scipy
   - numpy
   - pandas
+
+    #Doc
+  - sphinx
+  - nbsphinx
+  - sphinx_rtd_theme
+  - m2r
 
     # Pip-only installs
   #- pip:
