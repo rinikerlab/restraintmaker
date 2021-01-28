@@ -39,7 +39,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
         environment-file: devtools/conda-envs/test_env.yaml
 
-        channels: conda-forge,defaults
+        channels: conda-forge,defaults, schrodinger, rdkit
 
         activate-environment: test
         auto-update-conda: true
