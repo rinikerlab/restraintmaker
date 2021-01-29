@@ -1,0 +1,3 @@
+[submodule "restraintmaker/submodules/pygromos"]
+	path = restraintmaker/submodules/pygromos
+	url = https://gitlab.ethz.ch/rinikerlab/pygromos.git

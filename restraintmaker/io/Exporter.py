@@ -189,7 +189,7 @@ class Gromos_Distance_Restraint_Exporter(_Exporter):
         print("generate top_disres obj", mv=0)
         disres_file = Files.Gromos_files.disres()
         print("top_disres obj add:", mv=0)
-        disres_file.add_block(blocktitle="TITLE", content="generated disres file for BRD4 with PYMOL wizard\n",
+        disres_file.add_block(blocktitle="TITLE", content="generated disres file with restraintmaker\n",
                               verbose=True)
         disres_file.add_block(blocktitle="DISTANCERESSPEC", content=disres_out_dict, verbose=verbose)
         disres_file.write(self.out_path)
