@@ -3,13 +3,13 @@
 #
 # This file was generated at 08:41 on 2020-12-21 by
 #
-#                  Automatic Topology Builder
+#                  Automatic Topology Builder  
 #
 #                   REVISION 2020-12-16 14:31:35
 #---------------------------------------------------------------------------------------------------------------------------
 # Authors     : Martin Stroet, Bertrand Caron, Alpeshkumar K. Malde, Thomas Lee, Alan E. Mark
 #
-# Institute   : Molecular Dynamics group,
+# Institute   : Molecular Dynamics group, 
 #               School of Chemistry and Molecular Biosciences (SCMB),
 #               The University of Queensland, QLD 4072, Australia
 # URL         : https://atb.uq.edu.au
@@ -20,7 +20,7 @@
 #                  Automated Topology Builder version 3.0: Prediction of solvation free enthalpies in water and hexane.
 #                  DOI:10.1021/acs.jctc.8b00768
 #
-# Disclaimer  :
+# Disclaimer  : 
 #      While every effort has been made to ensure the accuracy and validity of parameters provided below
 #      the assignment of parameters is being based on an automated procedure combining data provided by a
 #      given user as well as calculations performed using third party software. They are provided as a guide.
@@ -29,7 +29,7 @@
 #      and to perform additional validation tests for their specific application if required. Neither the authors
 #      of the ATB or The University of Queensland except any responsibly for how the parameters may be used.
 #
-# Release notes and warnings:
+# Release notes and warnings: 
 #  (1) The topology is based on a set of atomic coordinates and other data provided by the user after
 #      after quantum mechanical optimization of the structure using different levels of theory depending on
 #      the nature of the molecule.
@@ -50,7 +50,7 @@
 # ATB molid: 3596
 # ATB Topology Hash: 5c1f8
 #---------------------------------------------------------------------------------------------------------------------------
-# Final Topology Generation was performed using:
+# Final Topology Generation was performed using: 
 # A B3LYP/6-31G* optimized geometry.
 # Bonded and van der Waals parameters were taken from the GROMOS 54A7 parameter set.
 # Initial charges were estimated using the ESP method of Merz-Kollman.
@@ -111,47 +111,47 @@ M218
    14
 # Alternative bond types are placed in comments.
 #  IB   JB   MCB
-    1    2    3
-    2    3   15
-    2   10   15
-    3    4    3
-    3    5   15
-    5    6    3
-    5    7   56 	#  non-standard
-    7    8   56 	#  non-standard
-    7   12   17
-    8    9    3
-    8   10   15
-   10   11    3
-   12   13   55 	#  non-standard
-   12   14   58 	#  non-standard
+    1    2    3 	
+    2    3   15 	
+    2   10   15 	
+    3    4    3 	
+    3    5   15 	
+    5    6    3 	
+    5    7   56 	#  non-standard 
+    7    8   56 	#  non-standard 
+    7   12   17 	
+    8    9    3 	
+    8   10   15 	
+   10   11    3 	
+   12   13   55 	#  non-standard 
+   12   14   58 	#  non-standard 
 # bond angles
 # NBA
    21
 # Alternative angle types are placed in comments.
 #  IB   JB   KB   MCB
-    1    2    3   25
-    1    2   10   25
-    3    2   10   27
-    2    3    4   25
-    2    3    5   27
-    4    3    5   25
-    3    5    6   25
-    3    5    7   27
-    6    5    7   25
-    5    7    8   27
-    5    7   12   27
-    8    7   12   27
-    7    8    9   25
-    7    8   10   27
-    9    8   10   25
-    2   10    8   27
-    2   10   11   25
-    8   10   11   25
-    7   12   13   18 	#  20   11
-    7   12   14   30
-   13   12   14   18 	#  20   11
-# improper dihedrals
+    1    2    3   25 	
+    1    2   10   25 	
+    3    2   10   27 	
+    2    3    4   25 	
+    2    3    5   27 	
+    4    3    5   25 	
+    3    5    6   25 	
+    3    5    7   27 	
+    6    5    7   25 	
+    5    7    8   27 	
+    5    7   12   27 	
+    8    7   12   27 	
+    7    8    9   25 	
+    7    8   10   27 	
+    9    8   10   25 	
+    2   10    8   27 	
+    2   10   11   25 	
+    8   10   11   25 	
+    7   12   13   18 	#  20   11   
+    7   12   14   30 	
+   13   12   14   18 	#  20   11   
+# improper dihedrals 
 # NIDA
     6
 #  IB   JB   KB   LB   MCB
@@ -176,4 +176,26 @@ M218
 # LJ Exceptions
 # NEX
     0
+END
+
+MTBUILDBLSOLVENT
+#@BLOCKTYPE 54a7.mtb BLK H2O SVT TYPE MOLE NAME water (SPC model)
+#solvent name
+#RNMES
+H2O
+#number of atoms
+    3
+#atoms
+#ATOM ANM   IAC MASS    CG
+    1 OW      5   16  -.82
+    2 HW1    21    1   .41
+    3 HW2    21    1   .41
+#constraints
+#number
+    3
+#  IB   JB  LENGTH
+    1    2    0.1
+    1    3    0.1
+    2    3    0.163299
+#@FREELINE
 END

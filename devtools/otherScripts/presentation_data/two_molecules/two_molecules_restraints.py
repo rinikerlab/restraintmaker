@@ -163,20 +163,8 @@ opt = Optimizer.TreeHeuristicOptimizer(filtered_atoms)
 opt.get_args(lambda x: (4, distance_treshold, 'shortest', None))
 res = opt.make_restraints()
 
-"""
-Optimizer.compare_pair_optimizers(criterion=Optimizer._calculate_value_unscaled_pca_2d,
-                                  atoms=filtered_atoms,
-                                  opt_types=[Optimizer.TreeHeuristicOptimizer, Optimizer.TreeHeuristicOptimizer,
-                                             Optimizer.TreeHeuristicOptimizer, Optimizer.TreeHeuristicOptimizer,
-                                             Optimizer.BestMoleculeRingOptimizer, Optimizer.BruteForceRingOptimzer,
-                                             Optimizer.BruteForceRingOptimzer],
-                                  opt_args=[(4, 1.2, 'prim', None), (4, 1.2, 'cog', None),
-                                            (4, 1.2, 'shortest', None), (4, 1.2, 'biased_avg', None),
-                                            (4, 1.2, 'pca', 'pca_2d'), (4, 1.2, 'pca', 'None'),
-                                            (4, 1.2, 'convex_hull', 'None')],
-                                  out_path="tmp_res",
-                                  new_dir_name="optOut")  # Name of the Ligands without path and .pdb
-"""
+
+
 cmd.disable()
 
 i=200

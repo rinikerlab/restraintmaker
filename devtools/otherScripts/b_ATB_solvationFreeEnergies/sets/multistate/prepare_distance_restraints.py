@@ -88,11 +88,11 @@ for i, obj in enumerate(obj_list):
 
     cmd.alter(obj, "resn=resn.replace(\"_\", \"T\")")
 
-cmd.save("merged.pdb")
+#cmd.save("merged.pdb")
 
 #For Restraint generation
-cmd.reinitialize()
-cmd.load("merged.pdb")
+#cmd.reinitialize()
+#cmd.load("merged.pdb")
 
-import restraintmaker
-restraintmaker.run_plugin_gui()
+#import restraintmaker
+#restraintmaker.run_plugin_gui()

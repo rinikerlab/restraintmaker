@@ -1,0 +1,24 @@
+COMPND    UNCLASSIFIED
+HETATM    1  C12 G07     0      -1.521  -1.440   0.050  1.00  0.00           C  
+HETATM    2   C5 G07     0      -0.738  -0.148   0.020  1.00  0.00           C  
+HETATM    3   C4 G07     0      -1.390   1.067   0.032  1.00  0.00           C  
+HETATM    4   C3 G07     0      -0.682   2.293   0.015  1.00  0.00           C  
+HETATM    5   C2 G07     0       0.696   2.336  -0.014  1.00  0.00           C  
+HETATM    6   C1 G07     0       1.423   3.661  -0.021  1.00  0.00           C  
+HETATM    7  C11 G07     0       1.416   1.094  -0.035  1.00  0.00           C  
+HETATM    8   C6 G07     0       0.697  -0.152  -0.018  1.00  0.00           C  
+HETATM    9   C7 G07     0       1.441  -1.364  -0.038  1.00  0.00           C  
+HETATM   10   C8 G07     0       2.819  -1.363  -0.072  1.00  0.00           C  
+HETATM   11   C9 G07     0       3.526  -0.139  -0.089  1.00  0.00           C  
+HETATM   12  C10 G07     0       2.837   1.056  -0.072  1.00  0.00           C  
+CONECT    1    2
+CONECT    2    3    8
+CONECT    3    4
+CONECT    4    5
+CONECT    5    6    7
+CONECT    7    8   12
+CONECT    8    9
+CONECT    9   10
+CONECT   10   11
+CONECT   11   12
+END

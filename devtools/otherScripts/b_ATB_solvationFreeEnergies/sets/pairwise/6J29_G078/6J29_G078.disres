@@ -1,0 +1,18 @@
+TITLE
+generated disres file with restraintmaker
+	 >>> Generated with python lib function_libs utilities. (riniker group)
+	 >>> line_seperator: ' \n'	 field_seperator: ' \t '
+END
+DISTANCERESSPEC 
+# KDISH 	 KDISC 
+ 	 0.1 	 0.153 
+#   i     j     k     l  type        i     j     k     l  type          r0         w0 rah
+##	6J2/C3 8 - G07/C9 29
+    8     0     0     0     0       29     0     0     0     0     0.14700    1.00000   1
+##	6J2/C10 18 - G07/C4 21
+   18     0     0     0     0       21     0     0     0     0     0.00600    1.00000   1
+##	6J2/C7 4 - G07/C7 27
+    4     0     0     0     0       27     0     0     0     0     0.00700    1.00000   1
+##	6J2/C12 15 - G07/C11 25
+   15     0     0     0     0       25     0     0     0     0     0.14100    1.00000   1
+END

@@ -207,7 +207,7 @@ def convert_atoms_to_pdb_molecules(atoms: t.List[Atom]) -> t.List[str]:
         # molecule_as_str = molecule_as_str.replace('\t','    ')
         pdb_molecules.append(molecule_as_str)
 
-        print(pdb_molecules[-1], mv=0)
+        print(pdb_molecules[-1])
 
     return pdb_molecules
 

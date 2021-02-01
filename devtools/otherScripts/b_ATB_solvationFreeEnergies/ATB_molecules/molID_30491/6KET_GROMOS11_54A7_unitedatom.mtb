@@ -177,3 +177,25 @@ MTBUILDBLSOLUTE
 # NEX
     0
 END
+
+MTBUILDBLSOLVENT
+#@BLOCKTYPE 54a7.mtb BLK H2O SVT TYPE MOLE NAME water (SPC model)
+#solvent name
+#RNMES
+H2O
+#number of atoms
+    3
+#atoms
+#ATOM ANM   IAC MASS    CG
+    1 OW      5   16  -.82
+    2 HW1    21    1   .41
+    3 HW2    21    1   .41
+#constraints
+#number
+    3
+#  IB   JB  LENGTH
+    1    2    0.1
+    1    3    0.1
+    2    3    0.163299
+#@FREELINE
+END
