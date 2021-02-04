@@ -190,7 +190,7 @@ def convert_atoms_to_pdb_molecules(atoms: t.List[Atom]) -> t.List[str]:
 
     # 2) CONSTUCT PDB BLOCKS
     #ref: https://www.cgl.ucsf.edu/chimera/docs/UsersGuide/tutorials/pdbintro.html
-    pdb_format = "ATOM  {:>5d}  {:<3}{:1}{:>3}  {:1}{:>3d}{:1}   {:>7.3f}{:>7.3f}{:>7.3f}{:>5f}{:>6f}{:<3}{:>2} {:>2d}"
+    pdb_format = "ATOM  {:>5d}  {:<2}{:1}{:>3}  {:1}{:>3d}{:1}   {:>7.3f}{:>7.3f}{:>7.3f}{:>5}{:>6}{:<3}{:>2} {:>2d}"
     dummy_occupancy= dummy_bfactor= dummy_charge = 0.0
     dummy_alt_location= dummy_chain= dummy_insertion_code= dummy_segment = ""
 

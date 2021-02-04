@@ -1,0 +1,30 @@
+TITLE
+New empyt resn_lib-file
+	generated with PyGromosTools.
+
+	 >>> Generated with python lib function_libs utilities. (riniker group)
+	 >>> line_seperator: '\n'	 field_seperator: '\t'	 comments_char: '#'
+END
+RESIDUENAMELIB
+#pdb_name 	 g96top_name
+ 	 6J2 	 6J29
+ 	 6KE 	 6KET
+ 	 801 	 8018
+ 	 E1V 	 E1VB
+ 	 F31 	 F313
+ 	 G07 	 G078
+ 	 G20 	 G209
+ 	 G27 	 G277
+ 	 M03 	 M030
+ 	 M09 	 M097
+ 	 M21 	 M218
+ 	 TO6 	 _O6T
+ 	 TO7 	 _O70
+ 	 O71 	 _O71
+ 	 TP8 	 _P8I
+ 	 S00 	 S002
+ 	 TVV 	 TVVS
+END
+ATOMNAMELIB
+#top_resn 	 atom_pdb 	 atom_top
+END

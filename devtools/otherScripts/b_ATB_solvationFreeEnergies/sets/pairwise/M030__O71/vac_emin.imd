@@ -1,0 +1,74 @@
+TITLE
+steepest descent energy minimization of the peptide in water
+
+	 >>> Generated with python lib function_libs utilities. (riniker group)
+	 >>> line_seperator: '\n'	 field_seperator: '\t'	 comments_char: '#'
+END
+BOUNDCOND
+# 	 NTB 	 NDFMIN
+ 	 1 	 1 	 
+END
+CONSTRAINT
+# 	 NTC
+ 	 3 	 
+# 	 NTCP 	 NTCP0(1)
+ 	 1 	 0.00010 	 
+# 	 NTCS 	 NTCS0(1)
+ 	 1 	 0.00010 	 
+END
+ENERGYMIN
+# 	 NTEM 	 NCYC 	 DELE 	 DX0 	 DXM 	 NMIN 	 FLIM
+ 	 1 	 0 	 0.1 	 0.01 	 0.05 	 2000 	 0.0 	 
+END
+FORCE
+# 	 BONDS 	 ANGLES 	 IMPROPER 	 DIHEDRAL 	 ELECTROSTATIC 	 VDW
+ 	 0 	 1 	 1 	 1 	 1 	 1 	 
+# 	 NEGR 	 NRE
+ 	 2 	 12 	 28 	 
+END
+INITIALISE
+# 	 NTIVEL 	 NTISHK 	 NTINHT 	 NTINHB
+ 	 0 	 0 	 0 	 0 	 
+# 	 NTISHI 	 NTIRTC 	 NTICOM
+ 	 1 	 0 	 0 	 
+# 	 NTISTI
+ 	 0 	 
+# 	 IG 	 TEMPI
+ 	 210185 	 300.0 	 
+END
+NONBONDED
+# 	 NLRELE
+ 	 1 	 
+# 	 APPAK 	 RCRF 	 EPSRF 	 NSLFEXCL
+ 	 0.0 	 1.4 	 61 	 1 	 
+# 	 NSHAPE 	 ASHAPE 	 NA2CLC 	 TOLA2 	 EPSLS
+ 	 -1 	 1.4 	 2 	 1e-10 	 0 	 
+# 	 NKX 	 NKY 	 NKZ 	 KCUT
+ 	 10 	 10 	 10 	 100 	 
+# 	 NGX 	 NGY 	 NGZ 	 NASORD 	 NFDORD 	 NALIAS 	 NSPORD
+ 	 32 	 32 	 32 	 3 	 2 	 3 	 4 	 
+# 	 NQEVAL 	 FACCUR 	 NRDGRD 	 NWRGRD
+ 	 100000 	 1.6 	 0 	 0 	 
+# 	 NLRLJ 	 SLVDNS
+ 	 0 	 33.3 	 
+END
+PAIRLIST
+# 	 ALGORITHM 	 NSNB 	 RCUTP 	 RCUTL 	 SIZE 	 TYPE
+ 	 0 	 5 	 0.8 	 1.4 	 0.4 	 0 	 
+END
+POSITIONRES
+# 	 NTPOR 	 NTPORB 	 NTPORS 	 CPOR
+ 	 1 	 1 	 0 	 2.5E4 	 
+END
+PRINTOUT
+# 	 NTPR 	 NTPP
+ 	 10 	 0 	 
+END
+STEP
+# 	 NSTLIM 	 T 	 DT
+ 	 10 	 0.0 	 0.002 	 
+END
+SYSTEM
+# 	 NPM 	 NSM
+ 	 1 	 0 	 
+END

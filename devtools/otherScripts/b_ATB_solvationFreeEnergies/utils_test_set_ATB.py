@@ -9,10 +9,10 @@ translate={
     2905: {"orig_name":"S002", "short":"S00"},
     3348: {"orig_name":"M030", "short":"M03"},
     3596: {"orig_name":"M218", "short":"M21"},
-    8021: {"orig_name":"_O6T", "short":"O6T"},
-    8028: {"orig_name":"_O70", "short":"O70"},
+    8021: {"orig_name":"_O6T", "short":"TO6"},
+    8028: {"orig_name":"_O70", "short":"TO7"},
     8029: {"orig_name":"_O71", "short":"O71"},
-    9378: {"orig_name":"_P8I", "short":"P8I"},
+    9378: {"orig_name":"_P8I", "short":"TP8"},
     26135: {"orig_name":"6J29", "short":"6J2"},
     30212: {"orig_name":"TVVS", "short":"TVV"},
     30253: {"orig_name":"E1VB", "short":"E1V"},
@@ -38,10 +38,10 @@ solvation_free_energy_kJ = pd.DataFrame({
     30491: {"exp": -32.05, "TI": -36.29, "exp_std": 1.255, "TI_std": 0.54},
 }).T
 
-multistate_ligand_sets = {"all": ['_O6T', '_O71', 'G277', 'S002', 'M097', '8018', 'M030', '6KET', 'F313', '_P8I', 'M097', 'G078', 'M218', '6J29', 'G209', 'E1VB', 'TVVS', '_O70'],
-                          "many": ['_O6T', '_O71', 'M097', '8018', 'M030', '6KET', 'F313', '_P8I', 'M097', 'G078', 'M218', '6J29', 'G209', 'E1VB'],
-                          "challenging": ['_O6T', 'G277', 'S002', 'G078', 'M218'],
-                          "singles": ['M097', '8018', 'M030', '6KET', 'F313', '_P8I', 'M097', '_O6T', '_O71'],
-                          "flat": ['_O6T', '_O71', 'S002', 'M097', '8018', '6KET', 'F313', '_P8I', 'M097', 'G078'],
-                          "easy": ['_O6T', '_O71', 'M097', '6KET', 'F313']
+multistate_ligand_sets = {"all": ['_O6T', '_O71', 'G277', 'S002', '8018', 'M030', '6KET', 'F313', '_P8I', 'M097', 'G078', 'M218', '6J29', 'G209', 'E1VB', 'TVVS', '_O70'],
+                          #"many": ['_O6T', '_O71', 'M097', '8018', 'M030', '6KET', 'F313', '_P8I', 'M097', 'G078', 'M218', '6J29', 'G209', 'E1VB'],
+                          "challenging": ['_O6T', '6J29', 'G078', 'G209', '8018', ],
+                          "singles": ['_O6T', '_O71', 'G277', 'S002', 'M030', '6KET', 'F313', 'M097', 'M218', 'TVVS', ],
+                          "flat": ['_O6T', '_O71', 'S002', 'M030', '6KET', 'F313', 'M097', 'G078', 'M218', 'TVVS'],
+                          "easy": ['_O6T', 'G277', "M030", 'M097', '6KET', 'F313']
                           }
