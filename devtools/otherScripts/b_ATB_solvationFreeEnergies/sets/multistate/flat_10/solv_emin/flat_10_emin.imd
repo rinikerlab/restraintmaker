@@ -16,6 +16,20 @@ CONSTRAINT
 # 	 NTCS 	 NTCS0(1)
  	 1 	 0.00010 	 
 END
+EDS
+# 	 EDS
+ 	 1 	 
+# 	 ALPHLJ 	 ALPHC
+ 	 0.000000 	 0.000000 	 
+# 	 FUNCTIONAL FORM
+ 	 1 	 
+# 	 NUMSTATES
+ 	 10 	 
+# 	 S
+ 	 1 	 
+# 	 EIR
+ 	 0 	 0 	 0 	 0 	 0 	 0 	 0 	 0 	 0 	 0 	 
+END
 ENERGYMIN
 # 	 NTEM 	 NCYC 	 DELE 	 DX0 	 DXM 	 NMIN 	 FLIM
  	 1 	 0 	 0.1 	 0.01 	 0.05 	 2000 	 0.0 	 
@@ -24,7 +38,7 @@ FORCE
 # 	 BONDS 	 ANGLES 	 IMPROPER 	 DIHEDRAL 	 ELECTROSTATIC 	 VDW
  	 0 	 1 	 1 	 1 	 1 	 1 	 
 # 	 NEGR 	 NRE
- 	 2 	 12 	 28 	 
+ 	 2 	 71 	 2801 	 
 END
 INITIALISE
 # 	 NTIVEL 	 NTISHK 	 NTINHT 	 NTINHB
@@ -35,6 +49,20 @@ INITIALISE
  	 0 	 
 # 	 IG 	 TEMPI
  	 210185 	 300.0 	 
+END
+MULTIBATH
+# ALGORITHM
+  1
+# NBATHS
+  2
+# TEMP0(1 ... NBATHS)	TAU(1 ... NBATHS)
+  298	0.1
+  298	0.1
+# DOFSET
+  2
+# LAST(1 ... DOFSET)	COMBATH(1 ... DOFSET)	IRBATH(1 ... DOFSET)
+  143		1	1
+  4682		2	2
 END
 NONBONDED
 # 	 NLRELE
@@ -66,9 +94,9 @@ PRINTOUT
 END
 STEP
 # 	 NSTLIM 	 T 	 DT
- 	 10 	 0.0 	 0.002 	 
+ 	 3000 	 0.0 	 0.002 	 
 END
 SYSTEM
 # 	 NPM 	 NSM
- 	 1 	 0 	 
+ 	 1 	 1513 	 
 END

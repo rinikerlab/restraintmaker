@@ -209,8 +209,8 @@ def align_mols_mcs(system_pdbs, align_to=0):
 for set_name_prefix in  utils.multistate_ligand_sets:
 
     print(set_name_prefix)
-    if(set_name_prefix in ["all", "challenging", "singles", "flat"]):
-        continue
+    #if(set_name_prefix in ["all", "challenging", "singles", "flat"]):
+    #    continue
 
     state_set = utils.multistate_ligand_sets[set_name_prefix]
     system_pdbs = [state_all_pdbs[x] for x in state_set]
