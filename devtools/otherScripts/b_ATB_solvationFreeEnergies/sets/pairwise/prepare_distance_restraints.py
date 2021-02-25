@@ -30,9 +30,8 @@ obj_names = [os.path.basename(pdb).split("_")[1] if (len(os.path.basename(pdb).s
 
 print(obj_names)
 for indA, molA in enumerate(orig_pdbs):
-    print(indA)
-    for indB, molB in enumerate(orig_pdbs):
 
+    for indB, molB in enumerate(orig_pdbs):
 
         molA_name_partI = os.path.basename(molA).split(".")[0]
         molB_name_partI = os.path.basename(molB).split(".")[0]
@@ -53,6 +52,9 @@ for indA, molA in enumerate(orig_pdbs):
         else:
             continue
 
+        if(not ((molA_name == "M030" and "G277" == molB_name) or (molA_name == "8018" and "6J29" == molB_name))):
+            continue
+        print(molA_name, molB_name)
 
         if(not os.path.exists(out_dir)):
             os.mkdir(out_dir)
@@ -83,12 +85,12 @@ for indA, molA in enumerate(orig_pdbs):
         for mol in mols:
             out_text+=Chem.MolToPDBBlock(mol)
 
-        #print(out_text)
+        print(out_text)
+        print(out_pdb_path)
 
         file_out = open(out_pdb_path, "w")
         file_out.write(out_text)
         file_out.close()
-
 
         ###############################
         #BUILD DISRES
@@ -116,6 +118,8 @@ for indA, molA in enumerate(orig_pdbs):
             cmd.alter(obj, "resn=resn.replace(\"_\", \"T\")")   #replace underscores
         cmd.sync()
         cmd.save(out_pdb_path)
+
+        print(out_pdb_path)
 
         ## GET ATOMS
         atom_list = up.pymol_selection_to_atom_list("all")

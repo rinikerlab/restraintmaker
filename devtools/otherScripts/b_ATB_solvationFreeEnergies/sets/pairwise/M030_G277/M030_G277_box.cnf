@@ -4,7 +4,7 @@ pdb2g96: Reordered atoms from /home/bschroed/Documents/code/restraintmaker/devto
 	 >>> Generated with python lib function_libs utilities. (riniker group)
 	 >>> line_seperator: '\n'	 field_seperator: '\t'	 comments_char: '#'
 END
-POSRESSPEC
+POSITION
 # 	 
     1 M030  C9         1   -0.286600000    0.058400000   -0.000500000
     1 M030  C6         2   -0.138399900    0.027999900    0.000899900
@@ -30,4 +30,11 @@ POSRESSPEC
     2 G277  H3        22    0.164102100    0.189897900    0.000897900
     2 G277  C5        23   -0.042997800    0.138297800    0.001297800
     2 G277  H4        24   -0.081897700    0.239797700    0.002797700
+END
+GENBOX
+    1
+    3.610220118    3.610220118    3.610220118
+   90.000000000   90.000000000   90.000000000
+    0.000000000    0.000000000    0.000000000
+    0.000000000    0.000000000    0.000000000
 END

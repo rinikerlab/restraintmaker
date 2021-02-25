@@ -111,7 +111,7 @@ FORCEFIELD
 
 	perturbation        on                            
 		lambda         : 0
-		exponent       : 1
+		exponent       : 2
 		dlambda        : 0
 		scaling        : off
 		using unperturbed nonbonded routines as no atoms are perturbed

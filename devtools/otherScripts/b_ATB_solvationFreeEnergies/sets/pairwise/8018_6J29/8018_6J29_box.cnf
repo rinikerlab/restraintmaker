@@ -4,7 +4,7 @@ pdb2g96: Reordered atoms from /home/bschroed/Documents/code/restraintmaker/devto
 	 >>> Generated with python lib function_libs utilities. (riniker group)
 	 >>> line_seperator: '\n'	 field_seperator: '\t'	 comments_char: '#'
 END
-REFPOSITION
+POSITION
 # 	 
     1 8018  Cl6        1    0.241900000   -0.250600000    0.090900000
     1 8018  C7         2    0.166600100   -0.103500100    0.045799900
