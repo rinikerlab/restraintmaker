@@ -33,7 +33,7 @@ all_combos = list(combinations(all_ligs,2))
 print(all_combos)
 
 print(obj_names)
-all_combos = [("M097", "G277"), ("G277", "6KET"), ("_O6T", "F313"), ("_O6T", "6KET"), ("6KET", "F313")]
+all_combos = [("M097", "F313")]#, ("G277", "6KET"), ("_O6T", "F313"), ("_O6T", "6KET"), ("6KET", "F313")]
 
 for indA, molA in enumerate(orig_pdbs):
 
