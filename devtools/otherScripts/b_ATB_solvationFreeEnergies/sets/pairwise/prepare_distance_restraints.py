@@ -27,6 +27,10 @@ aligned_mol="aligned.pdb"
 orig_pdbs = [pdb for pdb in pdbs ]
 obj_names = [os.path.basename(pdb).split("_")[1] if (len(os.path.basename(pdb).split("_")[0]) ==0) else os.path.basename(pdb).split("_")[0] for pdb in pdbs]
 
+all_ligs = ["_O6T", "G277", "M097", "6KET", "F313"]
+from itertools import combinations
+all_combos = list(combinations(all_ligs,2))
+print(all_combos)
 
 print(obj_names)
 for indA, molA in enumerate(orig_pdbs):
@@ -42,24 +46,16 @@ for indA, molA in enumerate(orig_pdbs):
         out_prefix = molA_name+"_"+molB_name
         out_dir = os.getcwd()+"/"+out_prefix
 
-        if((molA_name == "M030" and not molB_name == "M030") or
-            (molA_name == "8018" and molB_name == "G078") or
-            (molA_name == "8018" and molB_name == "6J29") or
-            (molA_name == "6J29" and molB_name == "G078")):
+        if((molA_name, molB_name) in all_combos or (molB_name, molA_name) in all_combos):
             cmd.reinitialize()
-
             print(out_prefix)
         else:
             continue
 
-        if(not ((molA_name == "M030" and "G277" == molB_name) or (molA_name == "8018" and "6J29" == molB_name))):
-            continue
-        print(molA_name, molB_name)
-
         if(not os.path.exists(out_dir)):
             os.mkdir(out_dir)
 
-        #print(out_dir)
+        print(out_dir)
 
         # ALIGN THE TWO MOLS
         ##Load mols
