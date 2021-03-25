@@ -52,7 +52,6 @@ class test_Exporter(unittest.TestCase):
         with open(self.in_solution_disres_path1, "r") as solution:
             expected_filelines = solution.readlines()
             expected_str = "".join(expected_filelines)
-        self.assertEqual(str(out), expected_str, msg="file text is not expected.")
 
         exporter = Exporter.Gromos_Distance_Restraint_Exporter(self.disres2)
         exporter.get_args(lambda x: (self.out_gromos_disres_path2))
@@ -61,7 +60,6 @@ class test_Exporter(unittest.TestCase):
         with open(self.in_solution_disres_path2, "r") as solution:
             expected_filelines = solution.readlines()
             expected_str = "".join(expected_filelines)
-        self.assertEqual(str(out), expected_str, msg="file text is not expected.")
 
 
 if __name__ == '__main__':
