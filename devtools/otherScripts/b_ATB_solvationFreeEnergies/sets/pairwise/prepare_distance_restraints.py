@@ -33,9 +33,12 @@ all_combos = list(combinations(all_ligs,2))
 print(all_combos)
 
 print(obj_names)
+all_combos = [("M097", "G277"), ("G277", "6KET"), ("_O6T", "F313"), ("_O6T", "6KET"), ("6KET", "F313")]
+
 for indA, molA in enumerate(orig_pdbs):
 
     for indB, molB in enumerate(orig_pdbs):
+
 
         molA_name_partI = os.path.basename(molA).split(".")[0]
         molB_name_partI = os.path.basename(molB).split(".")[0]
@@ -46,7 +49,9 @@ for indA, molA in enumerate(orig_pdbs):
         out_prefix = molA_name+"_"+molB_name
         out_dir = os.getcwd()+"/"+out_prefix
 
-        if((molA_name, molB_name) in all_combos or (molB_name, molA_name) in all_combos):
+        print(molA_name, molB_name)
+
+        if((molA_name, molB_name) in all_combos):
             cmd.reinitialize()
             print(out_prefix)
         else:
