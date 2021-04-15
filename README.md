@@ -40,8 +40,8 @@ https://github.com/rinikerlab/restraintmaker
     git clone url restraintmaker
     cd restraintmaker
         
-    # 2. generate an Anaconda environment with the enviornment file:       
-    conda create -n restraintmaker --file devtools/conda-envs/environment_unix.yaml
+    # 2. generate an Anaconda environment with the environment file:       
+    conda env create --file devtools/conda-envs/dev_env.yaml -n restraintmaker
         
     # 3. Test    
     python examples/example_gui.py
