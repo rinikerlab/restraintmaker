@@ -33,13 +33,13 @@ all_combos = list(combinations(all_ligs,2))
 print(all_combos)
 
 print(obj_names)
-all_combos = [("M097", "F313")]#, ("G277", "6KET"), ("_O6T", "F313"), ("_O6T", "6KET"), ("6KET", "F313")]
+all_combos = [("8018", "6J29")]
+#
+#("M097", "F313")]#, ("G277", "6KET"), ("_O6T", "F313"), ("_O6T", "6KET"), ("6KET", "F313")]
 
 for indA, molA in enumerate(orig_pdbs):
 
     for indB, molB in enumerate(orig_pdbs):
-
-
         molA_name_partI = os.path.basename(molA).split(".")[0]
         molB_name_partI = os.path.basename(molB).split(".")[0]
 
@@ -69,7 +69,7 @@ for indA, molA in enumerate(orig_pdbs):
         ##Align with mcs
         ref = mols[0]
         mv = mols[1]
-        mcs = rdFMCS.FindMCS([ref, mv], atomCompare=rdFMCS.AtomCompare.CompareAnyHeavyAtom)
+        mcs = rdFMCS.FindMCS([ref, mv])
         patt = Chem.MolFromSmarts(mcs.smartsString)  # smartsString
         refMatch = ref.GetSubstructMatch(patt)
         mvMatch = mv.GetSubstructMatch(patt)
@@ -92,6 +92,7 @@ for indA, molA in enumerate(orig_pdbs):
         file_out = open(out_pdb_path, "w")
         file_out.write(out_text)
         file_out.close()
+
 
         ###############################
         #BUILD DISRES
