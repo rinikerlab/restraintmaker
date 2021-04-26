@@ -1,5 +1,13 @@
-import sys
+import sys, os
 import traceback
+
+##Import submodules
+### PyGromos
+print(os.path.dirname(__file__)+"/submodules/PyGromosTools")
+sys.path.append(os.path.dirname(__file__)+"/submodules/PyGromosTools")
+import pygromos
+
+
 
 from restraintmaker.restraintMaker import run_plugin_gui, run_plugin, _check_importing_packages
 
