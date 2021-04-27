@@ -39,8 +39,7 @@ jobs:
 
     - name: Test with pytest
       run: |
-        conda install pytest
-        pytest -v --color=yes restraintmaker/tests
+        pytest -v --color=yes test
 
     - name: CodeCov
       uses: codecov/codecov-action@v1
