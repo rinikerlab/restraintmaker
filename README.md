@@ -1,6 +1,10 @@
 ![Logo here](.img/RestraintMaker_logo_withBackground.png)
 
-# Welcome RestraintMaker
+[//]: # (Badges)
+[![AutoTest](https://github.com/rinikerlab/restraintmaker/actions/workflows/python-package-conda.yml/badge.svg)](https://github.com/rinikerlab/restraintmaker/actions/workflows/python-package-conda.yml)
+
+
+# Welcome to RestraintMaker
 
 This repository is heavy under development! It will be nicer soon ;)
 
