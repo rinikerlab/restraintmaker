@@ -37,7 +37,7 @@ jobs:
 
         activate-environment: restraintmakerTest
         auto-update-conda: true
-        auto-activate-base: false
+        auto-activate-base: true
         show-channel-urls: true
 
     - name: Test with pytest
