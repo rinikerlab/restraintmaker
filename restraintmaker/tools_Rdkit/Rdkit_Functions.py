@@ -42,6 +42,7 @@ def parse_pdb_blocks_to_rdkit(pdb_mols: str) -> t.List[Chem.Mol]:
 
         setattr(mol, "name", 'mol_' + str(ind))
         setattr(mol, "resi", ind)
+
         rdk_mols.append(mol)
 
     return rdk_mols

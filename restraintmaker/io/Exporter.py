@@ -169,7 +169,7 @@ class Gromos_Distance_Restraint_Exporter(_Exporter):
                     a1.id) + " - " + a2.resn + "/" + a2.name + " " + str(a2.id) + "\n"
                 distance = r.atoms
                 new_entry = Files.Gromos_blocks.atom_pair_distanceRes(i1=a1.id, j1=0, k1=0, l1=0, type1=0, i2=a2.id,
-                                                                      j2=0, k2=0, l2=0, type2=0, r0=np.floor(distance_nm*100)/100, w0=1.0,
+                                                                      j2=0, k2=0, l2=0, type2=0, r0=np.floor(distance_nm*10)/10, w0=1.0,
                                                                       rah=fullharm,
                                                                       comment=comment)
                 # print(new_entry)

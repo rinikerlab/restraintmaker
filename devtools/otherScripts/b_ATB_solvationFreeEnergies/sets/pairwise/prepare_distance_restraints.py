@@ -28,16 +28,49 @@ aligned_mol="aligned.pdb"
 orig_pdbs = [pdb for pdb in pdbs ]
 obj_names = [os.path.basename(pdb).split("_")[1] if (len(os.path.basename(pdb).split("_")[0]) ==0) else os.path.basename(pdb).split("_")[0] for pdb in pdbs]
 all_ligs = obj_names
+
 from itertools import combinations
 all_combos = list(combinations(all_ligs,2))
 
-all_combos = list(filter(lambda x: "M030" in x, all_combos))
+M030_TI_pairwise = list(filter(lambda x: "M030" in x, all_combos))
 
 REEDS_sub_combos = ['G277', "O6T", "M097", "6KET", "F313",]
 all_add_reeds = list(combinations(REEDS_sub_combos,2))
-all_combos = all_combos+all_add_reeds
-all_combos = [('M030', '_P8I'), ('M030', '_O71'), ('M030', '_O70')]
-print(all_combos)
+
+#selected_pairs = M030_TI_pairwise
+selected_pairs = all_add_reeds
+selected_pairs = [('M030', '_O6T'), ('M030', '_O71'), ('M030', '_O70'), ('M030', "_P8I")]
+#selected_pairs = [("M030", "G078")]
+#selected_pairs = [("M097", "G277")]
+
+print(selected_pairs)
+
+def vis( res, path_prefix, c=["firebrick", "forest", 'purple', 'salmon', "gold", "red"]):
+
+
+    for ind, r in enumerate(res):
+        for a in r.atoms:
+            cmd.show("spheres", "id " + str(a.id))
+            cmd.set("sphere_color", c[ind], "id " + str(a.id))
+        cmd.distance("d" + str(ind), "id " + str(r.atoms[0].id), "id " + str(r.atoms[1].id))
+        cmd.hide("labels")
+        cmd.set("grid_slot", -2, "d" + str(ind))
+
+    # cmd.ray(1200)
+    time.sleep(2)
+    cmd.set("grid_mode", 0)
+    cmd.png(path_prefix + "_restraints.png")
+    #cmd.set("grid_mode", 1)
+    cmd.move("zoom", -10)
+
+    # cmd.ray(1200,)
+    #time.sleep(4)
+    #cmd.png(path_prefix + "_grid_restraints.png")
+    #cmd.set("grid_mode", 0)
+    cmd.hide("spheres")
+    cmd.delete("d*")
+
+
 
 for indA, molA in enumerate(orig_pdbs):
     for indB, molB in enumerate(orig_pdbs):
@@ -51,9 +84,13 @@ for indA, molA in enumerate(orig_pdbs):
         out_dir = os.getcwd()+"/"+out_prefix
 
         print(molA_name, molB_name)
+        print(molA_name)
+        print(molB_name)
 
-        if((molA_name, molB_name) in all_combos):
+        if((molA_name, molB_name) in selected_pairs or (molB_name, molA_name) in selected_pairs ):
             cmd.reinitialize()
+            time.sleep(1)
+
             print(out_prefix)
         else:
             continue
@@ -70,7 +107,9 @@ for indA, molA in enumerate(orig_pdbs):
         ##Align with mcs
         ref = mols[0]
         mv = mols[1]
-        mcs = rdFMCS.FindMCS([ref, mv],ringMatchesRingOnly=True)
+        #mcs = rdFMCS.FindMCS([ref, mv], completeRingsOnly=True, matchValences=True, ringMatchesRingOnly=True) # G078
+        mcs = rdFMCS.FindMCS([ref, mv], ringMatchesRingOnly=True)
+
         smartsString = mcs.smartsString
         #from rdkit.Chem import MCS
         #smartsString = MCS.FindMCS(mols, atomCompare="any").smarts
@@ -91,8 +130,6 @@ for indA, molA in enumerate(orig_pdbs):
         for mol in mols:
             out_text+=Chem.MolToPDBBlock(mol)
 
-        print(out_text)
-        print(out_pdb_path)
 
         file_out = open(out_pdb_path, "w")
         file_out.write(out_text)
@@ -137,6 +174,7 @@ for indA, molA in enumerate(orig_pdbs):
             pdb_blocks = [cmd.get_pdbstr(obj) for obj in cmd.get_object_list()] #u.convert_atoms_to_pdb_molecules(atom_list)
             RingFilter.get_args(lambda x: (pdb_blocks))
             filtered_atoms = RingFilter.filter()
+
             print(filtered_atoms)
         except Exception as err:
             print("failed ", err.args)
@@ -157,6 +195,9 @@ for indA, molA in enumerate(orig_pdbs):
         #import restraintmaker
         #restraintmaker.run_plugin_gui()
         ##
+        cmd.set("sphere_scale", 0.2)
+        cmd.color("vanadium", "elem C")
+        cmd.color("copper", "ID " + "+".join([str(a.id) for a in filtered_atoms]))
 
         cmd.ray(1200,800)
         cmd.png(out_dir+"/"+out_prefix+"_overlay.png")
@@ -164,6 +205,7 @@ for indA, molA in enumerate(orig_pdbs):
         cmd.ray(1200,800)
         cmd.png(out_dir+"/"+out_prefix+"_grid.png")
         cmd.set("grid_mode", "0")
+        vis(res,out_dir+"/"+out_prefix)
 
 print("fini")
 exit()
