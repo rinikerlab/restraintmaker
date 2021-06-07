@@ -1,4 +1,4 @@
-name: Python Package using Conda
+name: AutoTest
 
 on:
   push:
@@ -7,44 +7,51 @@ on:
   pull_request:
     branches:
       - "main"
+  schedule:
+    # Nightly tests run on master by default:
+    #   Scheduled workflows run on the latest commit on the default or base branch.
+    #   (from https://help.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events-schedule)
+    - cron: "0 0 * * *"
 
 jobs:
-  build-linux:
-    runs-on: ubuntu-latest
+  test:
+    name: Test on ${{ matrix.os }}, Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
     strategy:
-      max-parallel: 5
+      matrix:
+        os: [ ubuntu-latest, macOS-latest ] #macOS-latest, windows-latest
+
+        python-version: [ 3.7 ]
 
     steps:
     - uses: actions/checkout@v2
       with:
           submodules: recursive
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    - name: Add conda to system path
-      run: |
-        # $CONDA is an environment variable pointing to the root of the miniconda directory
-        echo $CONDA/bin >> $GITHUB_PATH
 
-    - name: Install dependencies
+
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+        environment-file:  devtools/conda-envs/test_env.yaml
+        channels: conda-forge,defaults
+
+        activate-environment: test
+        auto-update-conda: true
+        auto-activate-base: false
+        show-channel-urls: true
+
+    - name: Install package
+
+      # conda setup requires this special shell
+      shell: bash -l {0}
       run: |
-        conda env update --file devtools/conda-envs/test_env.yaml --name restraintmakerTest
+        python -m pip install . --no-deps
+        conda list
 
     - name: Test with pytest
       run: |
         conda install pytest
         pytest -v --color=yes restraintmaker/test
-
-    - name: CodeCov
-      uses: codecov/codecov-action@v1
-      with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-${{ matrix.os }}-py${{ matrix.python-version }}
-        #--cov=restraintmaker --cov-report=xml
-
-
 
     #- name: Lint with flake8
     #  run: |
