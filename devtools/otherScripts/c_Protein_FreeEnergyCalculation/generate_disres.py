@@ -20,7 +20,7 @@ pdb_singles_path2 = glob.glob(molecule_dir+"/single_ligs_good/*.pdb")
 
 pymol.finish_launching()
 
-cmd.load(pdb_path2)
+cmd.load(pdb_path3)
 
 
 import restraintmaker
