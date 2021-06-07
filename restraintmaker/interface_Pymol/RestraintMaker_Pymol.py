@@ -320,9 +320,9 @@ class Restraints_Wizard(Wizard):
                                                          Optimizer.TreeHeuristicOptimizer,
                                                          Optimizer.BruteForceRingOptimzer,
                                                          Optimizer.BruteForceRingOptimzer], \
-                                              opt_args=[(4, 1.2, 'prim', None), (4, 1.2, 'cog', None),
-                                                        (4, 1.2, 'shortest', None), (4, 1.2, 'pca', None),
-                                                        (4, 1.2, 'convex_hull', None)], \
+                                              opt_args=[(4, 1.0, 'prim', 'convex_hull'), (4, 1.0, 'cog', 'convex_hull'),
+                                                        (4, 1.0, 'shortest', 'convex_hull'), (4, 1.0, 'pca', 'convex_hull'),
+                                                        (4, 1.0, 'convex_hull', 'convex_hull')], \
                                               out_path=QFileDialog.getExistingDirectory(
                                                   caption='Where should all restraints be saved?'),
                                               new_dir_name=
@@ -657,31 +657,43 @@ class Restraints_Wizard(Wizard):
 
             # 0) Recolour all atoms to standard colour
             try:
-                self.cmd.util.cba(
-                    'vanadium')  # The colour for carbon atoms needs to be given explicitly. WARNING; The python cba command does not work properly. It does not work at all with gray. It raises an exception with vanadium, but it does paint it corectly.
+                self.cmd.util.cba('vanadium')  # The colour for carbon atoms needs to be given explicitly. WARNING; The python cba command does not work properly. It does not work at all with gray. It raises an exception with vanadium, but it does paint it corectly.
             except:
                 pass
 
             # 1) Colour selected atoms
-            pu.help_pymol_with_big_atom_list(self.cmd.color, self.logic_handler.selected_atoms, color="orange")
+            pu.help_pymol_with_big_atom_list(self.cmd.color, self.logic_handler.selected_atoms, color='copper')
 
             # 2) Colour atoms in current selection
             if self.logic_handler.my_selection != None:
-                pu.help_pymol_with_big_atom_list(self.cmd.color, self.logic_handler.my_selection.atoms, color='yellow')
+                pu.help_pymol_with_big_atom_list(self.cmd.color, self.logic_handler.my_selection.atoms, color='hassium')
 
             # 3) Colour atoms in restraints
-
             # Have the restraints changed?
             if restraints_hash != self.last_hashes['restraints']:
                 self.last_hashes.update(restraints=restraints_hash)
                 self.create_pymol_objects_for_restraints()
 
+            already_colored=False
             restrained_atoms = []
-            for r in self.logic_handler.selected_restraints:
-                for a in r.atoms: restrained_atoms.append(a)
+            for i, r in enumerate(self.logic_handler.selected_restraints):
+                pair = []
+                for a in r.atoms:
+                    if(a in restrained_atoms):
+                        already_colored = True
+                    restrained_atoms.append(a)
+                    pair.append(a)
+                if(already_colored):
+                    pu.help_pymol_with_big_atom_list(self.cmd.color, pair, color=i%54 )
+                else:
+                    pu.help_pymol_with_big_atom_list(self.cmd.set, pair, name="sphere_color", value=i % 54)
+
+                already_colored=False
+                cmd.set
 
             # 3a) Colour all restrained atoms
-            pu.help_pymol_with_big_atom_list(self.cmd.color, restrained_atoms, color='marine')
+            pu.help_pymol_with_big_atom_list(self.cmd.show, restrained_atoms, representation='spheres')
+
 
             # 3b) In test mode: Colour atoms in restraints we are looking at at the moment
             if self.check_results_mode in [4, 6] and test_mode_hash != self.last_hashes['test_mode']:

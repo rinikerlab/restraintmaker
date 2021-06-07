@@ -206,7 +206,11 @@ def align_mols_mcs(system_pdbs, align_to=0):
 
 ############################################3
 #DO
-for set_name_prefix in  utils.multistate_ligand_sets:
+print(utils.multistate_ligand_sets)
+#'challenging'
+#"flat"
+#'easy'
+for set_name_prefix in ['challenging']:
 
     print(set_name_prefix)
     #if(set_name_prefix in ["all", "challenging", "singles", "flat"]):

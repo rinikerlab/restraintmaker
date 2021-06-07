@@ -2,7 +2,7 @@
     The optimizers of this package are contained in this module. The optimizers can be used too....
 
 """
-
+import copy
 import typing as t
 import numpy as np
 from collections import namedtuple
@@ -354,7 +354,7 @@ class BruteForceRingOptimzer(_MoleculeRingOptimizer):
         self.n = u.check_or_convert_argument(inputs[0],
                                              int)  # TODO: Add condition for acceptable values, once check_or_convert accepts bool functions as cirterion
         self.cutoff = u.check_or_convert_argument(inputs[1], float)
-        self.algo = u.check_or_convert_argument(inputs[2], str, ['convex_hull', 'pca'])
+        self.algo = u.check_or_convert_argument(inputs[2], str, ['convex_hull', 'pca', "dist"])
         self.arrange_algo = u.check_or_convert_argument(inputs[3], str, ['None', 'convex_hull', 'pca_2d'])
 
         if self.algo == 'convex_hull' and self.n < 4:
@@ -397,6 +397,8 @@ class BruteForceRingOptimzer(_MoleculeRingOptimizer):
             calculate_value = _calculate_value_convex_hull
         elif self.algo == 'pca':
             calculate_value = _calculate_value_unscaled_pca_2d
+        elif self.algo == 'dist':
+            calculate_value = _calculate_value_dist
         else:
             raise u.BadArgumentException(
                 self.algo + 'is not an known criterion for optimization.')
@@ -453,6 +455,58 @@ class BruteForceRingOptimzer(_MoleculeRingOptimizer):
                     if new_val > max_val:
                         max_val = new_val
                         best_restraint_indices = new_best_restraint_indices
+                return max_val, best_restraint_indices
+
+
+
+        def find_max_val_recursively(max_depth: int, current_depth: int = 0, restraint_indices=[]):
+            if current_depth == max_depth:
+
+                # Find positions of the restraints from their indices and return the volume of their Convex hull
+                points = [restraint_positions[i] for i in restraint_indices]
+                try:
+                    max_val = calculate_value(points)
+                except QhullError:  # TODO: Catch corresponding math errors for the other calculate value function. consider creating a CalculationError that the differen functions can throw if necessarz. I think we save ime if we only have one try block instead oftwo neste ones
+                    max_val, best_ir = -1, []
+                    nonlocal count_precision_errors
+                    count_precision_errors += 1
+
+                return max_val, restraint_indices
+
+            else:
+                if current_depth == 1:
+                    nonlocal progres
+                    print('>{:3d}'.format(int(progres)) + '%', mv=3, end=" ")
+                    progres += progres_step
+
+                max_val = 0
+                best_restraint_indices = []
+
+                start = restraint_indices[-1] + 1 if len(restraint_indices) > 0 else 0
+                stop = len(potential_restraints) - (max_depth - current_depth - 1)
+                for i_r in range(start, stop):
+                    point= potential_restraints[i_r]
+
+                    a1 = point.atomA
+                    a2 = point.atomB
+                    a1_already_in_use = any([a1.id == potential_restraints[i].atomA.id or a1.id == potential_restraints[i].atomB.id for i in restraint_indices])
+                    a2_already_in_use = any([a2.id == potential_restraints[i].atomA.id or a2.id == potential_restraints[i].atomB.id for i in restraint_indices])
+
+                    if( a1_already_in_use or a2_already_in_use):
+                        print("in use!")
+                        continue
+
+                    new_val, new_best_restraint_indices = find_max_val_recursively(max_depth=max_depth,
+                                                                                   current_depth=current_depth + 1,
+                                                                                   restraint_indices=restraint_indices + [
+                                                                                       i_r])
+                    if (current_depth == 1):
+                        print("max_val: " + str(max_val))
+
+                    if new_val > max_val:
+                        max_val = new_val
+                        best_restraint_indices = new_best_restraint_indices
+                    #rank_res.extend(rank_res)
 
                 return max_val, best_restraint_indices
 
@@ -718,8 +772,7 @@ def maximal_spanning_tree_greedy(potential_restraints: t.List[Types.Distance_Res
         """
 
         # Shorter means -m > priority
-        if m_sq[v.index][
-            chosen_v.index] < v.priority or v.priority == 0:  # TODO Find a more general way to initialize, so I do not have to check for 0
+        if m_sq[v.index][chosen_v.index] < v.priority or v.priority == 0:  # TODO Find a more general way to initialize, so I do not have to check for 0
             v.priority = m_sq[v.index][chosen_v.index]
 
     def _update_priority_cog(v: priority_node):
@@ -730,7 +783,6 @@ def maximal_spanning_tree_greedy(potential_restraints: t.List[Types.Distance_Res
             In return we make no use of the distance matrix => Maybe make a different function for this
 
          """
-
 
         x_cog = 0
         y_cog = 0
@@ -754,7 +806,6 @@ def maximal_spanning_tree_greedy(potential_restraints: t.List[Types.Distance_Res
         # v.prioirity changes everytime
         v.priority = np.sqrt((x_cog - x_node)**2 + (y_cog - y_node)**2 + (z_cog - z_node)**2)
 
-
     def _update_priority_biased_avg(v: priority_node):
         """Choose the node, farthest from the average position of all chosen restraints
 
@@ -769,7 +820,7 @@ def maximal_spanning_tree_greedy(potential_restraints: t.List[Types.Distance_Res
         sum_of_biased_distances = 0
 
         for old_node in chosen_nodes:
-            sum_of_biased_distances += (m_sq[old_node.index][v.index], corrected_exponent)**2
+            sum_of_biased_distances += np.power(m_sq[old_node.index][v.index], corrected_exponent)#**2
 
         v.priority = sum_of_biased_distances
 
@@ -806,17 +857,15 @@ def maximal_spanning_tree_greedy(potential_restraints: t.List[Types.Distance_Res
     # Create the empty matrix
     empty_line = []
     for i in range(len(potential_restraints)):
-        empty_line.append(None)
+        empty_line.append(np.nan)
     for i in range(len(potential_restraints)):
-        m_sq.append(
-            empty_line[:])  # Slicing necessary: attach a copy of new_line, do NOT attach the samelist several times
+        m_sq.append(empty_line[:])  # Slicing necessary: attach a copy of new_line, do NOT attach the samelist several times
 
     # Fill matrix with distance_sq values
     for i_r1 in range(len(potential_restraints) - 1):
         line = []
         for i_r2 in range(i_r1 + 1, len(potential_restraints)):
-            dis_sq = ((pos_x[i_r1] - pos_x[i_r2])**2 + (pos_y[i_r1] - pos_y[i_r2])**2 + (
-                pos_z[i_r1] - pos_z[i_r2])**2)
+            dis_sq = np.array(((pos_x[i_r1] - pos_x[i_r2])**2 + (pos_y[i_r1] - pos_y[i_r2])**2 + (pos_z[i_r1] - pos_z[i_r2])**2))
             m_sq[i_r1][i_r2] = dis_sq
             m_sq[i_r2][i_r1] = dis_sq
         m_sq.append(line)  # append, not extend.
@@ -837,25 +886,43 @@ def maximal_spanning_tree_greedy(potential_restraints: t.List[Types.Distance_Res
 
     priority_q = [priority_node(0, i_r) for i_r in range(len(potential_restraints))]
     chosen_nodes: t.list[priority_node] = [first_node]
-    priority_q.remove(
-        priority_q[first_node.index])  # Only works here because priority_q is still a copy of potential restraints
+    priority_q.remove(priority_q[first_node.index])  # Only works here because priority_q is still a copy of potential restraints
     # ANCHOR 20Mar M: Check if correct ind is removed
 
     # STEP 4) Update priority of all  nodes, according to distance to FARTHEST (for pure Prim algo) node that is already in tree
-
     while len(chosen_nodes) < n:
         # Update priorities
         chosen_v = chosen_nodes[-1]  # Last node that was selected
         for v in priority_q:
             update_priority(v)
-
         new_node = max(priority_q)
+        #print("ID: "+str([n.index for n in priority_q]), mv=2)
+        #print("Priorities: "+str([n.priority for n in priority_q]), mv=2)
+
+        #Fix for Ties - break wit cog
+        cog_threshold = 0.3
+        if(update_priority == _update_priority_shortest):
+            subpriority_q = [copy.deepcopy(n) for n in priority_q if(new_node.priority-cog_threshold < n.priority)]
+            if(len(subpriority_q)>1):
+                [_update_priority_cog(v) for v in subpriority_q]
+                new_node = [n for n in priority_q if(max(subpriority_q).index == n.index)][0]
+                #print("SUB-ID: " + str([n.index for n in subpriority_q]), mv=2)
+                #print("SUB-Priorities: " + str([n.priority for n in subpriority_q]), mv=2)
+
+
+
+        #print("chose: ", new_node.index, new_node.priority, mv=2)
         priority_q.remove(new_node)
         chosen_nodes.append(new_node)
 
     return [potential_restraints[x.index] for x in chosen_nodes]
 
 priority_node = namedtuple('priority_node', 'priority node')
+
+def _calculate_value_dist(restraint_pos: t.List[t.Tuple[float, float, float]])->float:
+    print(restraint_pos)
+    eucledean_dist = lambda a1, a2: np.sqrt(np.sum(np.square([a1[0] - a2[0], a1[1] - a2[1], a1[2] - a2[2]])))
+    return np.round(np.sum([np.sum([eucledean_dist(a1,a2) for a2 in restraint_pos[ind:]]) for  ind, a1 in enumerate(restraint_pos)]), 5)
 
 
 def _calculate_value_convex_hull(restraint_pos: t.List[t.Tuple[float, float, float]])->float:

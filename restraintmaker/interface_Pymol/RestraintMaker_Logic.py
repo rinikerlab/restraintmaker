@@ -493,9 +493,9 @@ class Logic_Handler:
                          'optimize molecules pairs by': ['None', 'convex_hull',
                                                          'pca_2d']}, \
                 default={'number of restraints': '4',
-                         'maximal distance of restraints': '1.2',
+                         'maximal distance of restraints': '1.0',
                          'algorithm': 'shortest',
-                         'optimize molecules pairs by': 'pca_2d'})
+                         'optimize molecules pairs by': 'convex_hull'})
 
 
         elif isinstance(self.my_optimizer, Optimizer.BruteForceRingOptimzer):

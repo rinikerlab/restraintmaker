@@ -255,5 +255,4 @@ class RingFilter(_Filter):
 
         ids_of_atoms_in_rings = Rdkit_Functions.ring_atom_filter(selected=None, mols=self.molecules_rdk,
                                                                  selected_mols=None)
-        print(ids_of_atoms_in_rings)
         return [a for a in self.atoms if a.id in ids_of_atoms_in_rings]

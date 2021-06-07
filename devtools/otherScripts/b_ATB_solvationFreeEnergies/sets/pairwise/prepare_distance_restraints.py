@@ -23,22 +23,23 @@ from restraintmaker.utils import Utilities as u
 #check pdbs
 molecule_dir= "../../ATB_molecules"
 pdbs = glob.glob(molecule_dir+"/*/*pdb")
+
 aligned_mol="aligned.pdb"
 orig_pdbs = [pdb for pdb in pdbs ]
 obj_names = [os.path.basename(pdb).split("_")[1] if (len(os.path.basename(pdb).split("_")[0]) ==0) else os.path.basename(pdb).split("_")[0] for pdb in pdbs]
-
-all_ligs = ["_O6T", "G277", "M097", "6KET", "F313"]
+all_ligs = obj_names
 from itertools import combinations
 all_combos = list(combinations(all_ligs,2))
+
+all_combos = list(filter(lambda x: "M030" in x, all_combos))
+
+REEDS_sub_combos = ['G277', "O6T", "M097", "6KET", "F313",]
+all_add_reeds = list(combinations(REEDS_sub_combos,2))
+all_combos = all_combos+all_add_reeds
+all_combos = [('M030', '_P8I'), ('M030', '_O71'), ('M030', '_O70')]
 print(all_combos)
 
-print(obj_names)
-all_combos = [("8018", "6J29")]
-#
-#("M097", "F313")]#, ("G277", "6KET"), ("_O6T", "F313"), ("_O6T", "6KET"), ("6KET", "F313")]
-
 for indA, molA in enumerate(orig_pdbs):
-
     for indB, molB in enumerate(orig_pdbs):
         molA_name_partI = os.path.basename(molA).split(".")[0]
         molB_name_partI = os.path.basename(molB).split(".")[0]
@@ -69,8 +70,12 @@ for indA, molA in enumerate(orig_pdbs):
         ##Align with mcs
         ref = mols[0]
         mv = mols[1]
-        mcs = rdFMCS.FindMCS([ref, mv])
-        patt = Chem.MolFromSmarts(mcs.smartsString)  # smartsString
+        mcs = rdFMCS.FindMCS([ref, mv],ringMatchesRingOnly=True)
+        smartsString = mcs.smartsString
+        #from rdkit.Chem import MCS
+        #smartsString = MCS.FindMCS(mols, atomCompare="any").smarts
+
+        patt = Chem.MolFromSmarts(smartsString)  # smartsString
         refMatch = ref.GetSubstructMatch(patt)
         mvMatch = mv.GetSubstructMatch(patt)
 
@@ -97,12 +102,13 @@ for indA, molA in enumerate(orig_pdbs):
         ###############################
         #BUILD DISRES
 
-        distance_treshold=1.5
+        distance_treshold=1.0
         nrestraints = 4
 
             ##load data
         cmd.load(out_pdb_path)
         time.sleep(1)
+
 
         # set nice scene
         obj_list = cmd.get_object_list()
@@ -120,7 +126,6 @@ for indA, molA in enumerate(orig_pdbs):
             cmd.alter(obj, "resn=resn.replace(\"_\", \"T\")")   #replace underscores
         cmd.sync()
         cmd.save(out_pdb_path)
-
         print(out_pdb_path)
 
         ## GET ATOMS
@@ -160,4 +165,5 @@ for indA, molA in enumerate(orig_pdbs):
         cmd.png(out_dir+"/"+out_prefix+"_grid.png")
         cmd.set("grid_mode", "0")
 
+print("fini")
 exit()
