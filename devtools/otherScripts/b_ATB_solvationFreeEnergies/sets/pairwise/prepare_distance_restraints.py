@@ -34,16 +34,16 @@ all_combos = list(combinations(all_ligs,2))
 
 M030_TI_pairwise = list(filter(lambda x: "M030" in x, all_combos))
 
-REEDS_sub_combos = ['G277', "O6T", "M097", "6KET", "F313",]
+REEDS_sub_combos = ['G277', "_O6T", "M097", "6KET", "F313",]
 all_add_reeds = list(combinations(REEDS_sub_combos,2))
 
 #selected_pairs = M030_TI_pairwise
 selected_pairs = all_add_reeds
-selected_pairs = [('M030', '_O6T'), ('M030', '_O71'), ('M030', '_O70'), ('M030', "_P8I")]
+#selected_pairs = [('M030', '_O6T'), ('M030', '_O71'), ('M030', '_O70'), ('M030', "_P8I")]
 #selected_pairs = [("M030", "G078")]
 #selected_pairs = [("M097", "G277")]
-selected_pairs = [("M030", "G209"), ("8018", "M030")]
-
+#selected_pairs = [("M030", "G209"), ("8018", "M030")]
+selected_pairs = (("6KET", "_O6T"), ("M097", "_O6T"),("G277", "_O6T"), ("F313", "G277"), ("F313", "_O6T"))
 print(selected_pairs)
 
 def vis( res, path_prefix, c=["firebrick", "forest", 'purple', 'salmon', "gold", "red"]):
@@ -109,7 +109,7 @@ for indA, molA in enumerate(orig_pdbs):
         ref = mols[0]
         mv = mols[1]
         #mcs = rdFMCS.FindMCS([ref, mv], completeRingsOnly=True, matchValences=True, ringMatchesRingOnly=True) # G078
-        mcs = rdFMCS.FindMCS([ref, mv], ringMatchesRingOnly=True)
+        mcs = rdFMCS.FindMCS([ref, mv],  completeRingsOnly=True, ringMatchesRingOnly=True)
 
         smartsString = mcs.smartsString
         #from rdkit.Chem import MCS
