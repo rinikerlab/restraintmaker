@@ -35,7 +35,7 @@ jobs:
         environment-file:  devtools/conda-envs/test_env.yaml
         channels: conda-forge,defaults
 
-        activate-environment: test
+        activate-environment: restraintmakerTest
         auto-update-conda: true
         auto-activate-base: false
         show-channel-urls: true
