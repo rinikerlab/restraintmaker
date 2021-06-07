@@ -7,6 +7,7 @@
 """
 
 import os
+import pickle
 import unittest
 from pymol import cmd
 
@@ -67,6 +68,7 @@ class test_Importer(unittest.TestCase):
         gromos_importer = Importer.Gromos_Distance_Restraint_Importer(self.all_atoms2)
         gromos_importer.get_args(lambda x: (self.in_disres2))
         disres2 = gromos_importer.import_restraints()
+
         print("\n".join(map(str, disres2)))
         print()
 
