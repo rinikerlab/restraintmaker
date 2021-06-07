@@ -92,11 +92,15 @@ for nrestraints in [4]: #3,6
             continue
 
         pair_str = os.path.basename(pair_path)
+        out_disres_dir = pair_path
         out_pdb_path = pair_path+"/"+pair_str+".pdb"
         approach_path=bash.make_folder(os.getcwd()+"/disres_n" + str(nrestraints))
 
         molA_name = pair_str.split("_")[0]
         molB_name = pair_str.split("_")[1] if(len(pair_str.split("_")) == 2) else  "_"+ pair_str.split("_")[2]
+        if("F313" in molB_name or os.path.exists(out_disres_dir+"/"+pair_str+"_greedy_shortest.disres")):
+            continue
+
         print(molA_name, molB_name)
 
         data.update({pair_str:{}})
@@ -114,8 +118,8 @@ for nrestraints in [4]: #3,6
         obj_list = cmd.get_object_list()
         cmd.create("res1", "resn "+molA_name[:3])
         cmd.create("res2", "resn "+molB_name[:3].replace("_", "T"))
-
         cmd.delete(obj_list[0])
+
         obj_list = cmd.get_object_list()
         cmd.set("pdb_retain_ids", 0)
         cmd.color("vanadium", "elem C")
@@ -156,21 +160,21 @@ for nrestraints in [4]: #3,6
         # Optimizers
         ## Greedy
         ### COG
-        startt = datetime.datetime.now()
-        opt = Optimizer.TreeHeuristicOptimizer(filtered_atoms)
-        opt.get_args(lambda x: (nrestraints, distance_treshold, 'cog', None))
-        res = opt.make_restraints()
-        endt = datetime.datetime.now()
-        duration = (endt - startt).seconds
+        #startt = datetime.datetime.now()
+        #opt = Optimizer.TreeHeuristicOptimizer(filtered_atoms)
+        #opt.get_args(lambda x: (nrestraints, distance_treshold, 'cog', None))
+        #res = opt.make_restraints()
+        #endt = datetime.datetime.now()
+        #duration = (endt - startt).seconds
 
         ####Vis:
         #vis(res=res, path_prefix=approach_path+"/"+pair_str+"_greedy_cog")
 
         ####Analysis:
-        data = analysis(res=res, data=data, pair_str=pair_str, approach="greedy_cog", duration=duration)
+        #data = analysis(res=res, data=data, pair_str=pair_str, approach="greedy_cog", duration=duration)
 
         #### Write out:
-        write_out(res, outpath=approach_path+"/"+pair_str+"_greedy_cog.disres")
+        #write_out(res, outpath=approach_path+"/"+pair_str+"_greedy_cog.disres")
 
         ### shortest
         startt = datetime.datetime.now()
@@ -181,9 +185,12 @@ for nrestraints in [4]: #3,6
         duration = (endt - startt).seconds
 
         ####Vis:
-        vis(res=res, path_prefix=approach_path+"/"+pair_str+"_greedy_shortest")
+        vis(res=res, path_prefix=out_disres_dir+"/"+pair_str+"_greedy_shortest")
         ####Analysis:
         data = analysis(res=res, data=data, pair_str=pair_str, approach="greedy_shortest", duration=duration)
+
+        #### Write out:
+        write_out(res, outpath=out_disres_dir+"/"+pair_str+"_greedy_shortest.disres")
         continue
 
         ### biased avg.
