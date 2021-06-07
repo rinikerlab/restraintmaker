@@ -42,6 +42,7 @@ selected_pairs = all_add_reeds
 selected_pairs = [('M030', '_O6T'), ('M030', '_O71'), ('M030', '_O70'), ('M030', "_P8I")]
 #selected_pairs = [("M030", "G078")]
 #selected_pairs = [("M097", "G277")]
+selected_pairs = [("M030", "G209"), ("8018", "M030")]
 
 print(selected_pairs)
 
