@@ -1,7 +1,7 @@
 ![Logo here](.img/RestraintMaker_logo_withBackground.png)
 
 [//]: # (Badges)
-[![AutoTest](https://github.com/rinikerlab/restraintmaker/actions/workflows/python-package-conda.yml/badge.svg)](https://github.com/rinikerlab/restraintmaker/actions/workflows/python-package-conda.yml)
+[![AutoTest](https://github.com/rinikerlab/restraintmaker/actions/workflows/autoTest.yml/badge.svg)](https://github.com/rinikerlab/restraintmaker/actions/workflows/autoTest.yml)
 
 
 # Welcome to RestraintMaker
