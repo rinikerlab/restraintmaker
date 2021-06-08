@@ -1,4 +1,4 @@
-name: restraintmakerTest
+name: test
 channels:
   - conda-forge
   - rdkit
