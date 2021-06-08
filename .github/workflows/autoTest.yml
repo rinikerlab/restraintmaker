@@ -46,13 +46,12 @@ jobs:
         auto-activate-base: false
         show-channel-urls: true
 
-    - name: Install package
-
+    #- name: Install package
       # conda setup requires this special shell
-      shell: bash -l {0}
-      run: |
-        python -m pip install . --no-deps
-        conda list
+    #  shell: bash -l {0}
+    #  run: |
+    #    python -m pip install . --no-deps
+    #    conda list
 
 
     - name: pytest
