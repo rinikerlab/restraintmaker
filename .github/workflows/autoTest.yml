@@ -59,6 +59,7 @@ jobs:
       # conda setup requires this special shell
       shell: bash -l {0}
       run: |
+        conda activate test
         pytest -v --color=yes restraintmaker/test
 
     #- name: Lint with flake8
