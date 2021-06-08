@@ -12,21 +12,18 @@ on:
     #   Scheduled workflows run on the latest commit on the default or base branch.
     #   (from https://help.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events-schedule)
     - cron: "0 0 * * *"
-
+    
 jobs:
   test:
     name: Test on ${{ matrix.os }}, Python ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, macOS-latest ] #macOS-latest, windows-latest
-
-        python-version: [ 3.7 ]
+        os: [macOS-latest, ubuntu-latest] #, windows-latest
+        python-version: [3.7] #
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-          submodules: recursive
+    - uses: actions/checkout@v1
 
     - name: Additional info about the build
       shell: bash
@@ -35,23 +32,27 @@ jobs:
         df -h
         ulimit -a
 
+
     - uses: conda-incubator/setup-miniconda@v2
       with:
         python-version: ${{ matrix.python-version }}
-        environment-file:  devtools/conda-envs/test_env.yaml
+        environment-file:  dev/conda_envs/test_env.yaml
         channels: conda-forge,defaults
-
-        activate-environment: restraintmakerTest
+        
+        activate-environment: test
         auto-update-conda: true
         auto-activate-base: false
         show-channel-urls: true
-      
+
+    - name: Install package
+
       # conda setup requires this special shell
       shell: bash -l {0}
       run: |
         python -m pip install . --no-deps
         conda list
-        
+
+
     - name: pytest
       # conda setup requires this special shell
       shell: bash -l {0}
