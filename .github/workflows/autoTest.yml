@@ -42,7 +42,7 @@ jobs:
 
     - name: Test with pytest
       run: |
-        conda install pytest 
+        conda activate restraintmakerTest 
         pytest -v --color=yes restraintmaker/test
 
     #- name: Lint with flake8
