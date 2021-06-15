@@ -12,6 +12,7 @@ The package can be used either in a scripting mode or with a GUI-based in PyMol.
 **This repository is heavy under development! It will be nicer soon ;)**
 
 ## Introduction
+  coming soon
 
 ## Examples
   coming soon
