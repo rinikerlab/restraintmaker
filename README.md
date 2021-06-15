@@ -68,6 +68,7 @@ Project based on the
 
 ## References
 [1] **RDKit**: **Cheminformatics** and machine learning software (2021) - http://www.rdkit.org
+
 [2] The PyMOL Molecular Graphics System, Version 2.5 Schrödinger, LLC.  (Anaconda OpenSource Version)
 
 ## Copyright
