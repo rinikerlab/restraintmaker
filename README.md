@@ -58,12 +58,12 @@ Benjamin Ries,
 Salomé Rieder
 Clemens Rhiner
     
+## Acknowledgments
+The authors want to thank Carmen Esposito and Dominik Sidler for the great discussions.
+Project based on the 
+[Computational Molecular Science Python Cookiecutter](https://github.com/molssi/cookiecutter-cms) version 1.3.
+
 ## Copyright
 
 Copyright (c) 2021, Benjamin Ries, Salomé Rieder, Clemens Rhiner
 
-
-#### Acknowledgments
-The authors want to thank Carmen Esposito and Dominik Sidler for the great discussions.
-Project based on the 
-[Computational Molecular Science Python Cookiecutter](https://github.com/molssi/cookiecutter-cms) version 1.3.
