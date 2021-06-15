@@ -6,16 +6,21 @@
 
 # Welcome to RestraintMaker
 
-This repository is heavy under development! It will be nicer soon ;)
+RestraintMaker is a tool that allows automatic distance restraint assignment for dual-topology relative free energy calculations.
+The package can be used either in a scripting mode or with a GUI-based in PyMol. 
+
+**This repository is heavy under development! It will be nicer soon ;)**
 
 ## Introduction
 
 ## Examples
-
+  coming soon
+  
 ## Content
 
 ### Using
-
+  For usage examples, checkout the examples folder.
+  
 ### Development
 Restraint make is split two parts.
 * RestraintMaker
@@ -31,30 +36,34 @@ Restraint make is split two parts.
 You can retrieve the repository from GitHub:
 https://github.com/rinikerlab/restraintmaker
 
-### Using
-  * Install via Pymol Plugin Manager
-    WIP
-  * Install via Anaconda
-    WIP
+  * Install via Pymol Plugin Manager **coming soon**
 
-### Development
-  For development purposes: 
-   * Install with Anaconda
+  * Install with Anaconda
    
-    #!/usr/bash
-    # 1. Retrieve the repository
-    git clone url restraintmaker
-    cd restraintmaker
-        
-    # 2. generate an Anaconda environment with the environment file:       
-    conda env create --file devtools/conda-envs/dev_env.yaml -n restraintmaker
-        
-    # 3. Test    
-    python examples/example_gui.py
-       
+        #!/usr/bash
+        # 1. Retrieve the repository
+        git clone https://github.com/rinikerlab/restraintmaker.git
+        cd restraintmaker
+
+        # 2. generate an Anaconda environment with the environment file:       
+        conda env create --file devtools/conda-envs/dev_env.yaml -n restraintmaker
+
+        # 3. Test    
+        conda activate restraintmaker
+        python examples/example_gui.py
+
 
 ## Author
 Benjamin Ries,
+Salomé Rieder
 Clemens Rhiner
     
-## Acknowledgments
+## Copyright
+
+Copyright (c) 2021, Benjamin Ries, Salomé Rieder, Clemens Rhiner
+
+
+#### Acknowledgments
+The authors want to thank Carmen Esposito and Dominik Sidler for the great discussions.
+Project based on the 
+[Computational Molecular Science Python Cookiecutter](https://github.com/molssi/cookiecutter-cms) version 1.3.
