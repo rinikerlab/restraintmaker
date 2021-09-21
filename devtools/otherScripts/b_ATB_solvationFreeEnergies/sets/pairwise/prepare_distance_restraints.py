@@ -26,6 +26,8 @@ pdbs = glob.glob(molecule_dir+"/*/*pdb")
 
 aligned_mol="aligned.pdb"
 orig_pdbs = [pdb for pdb in pdbs ]
+print(orig_pdbs)
+
 obj_names = [os.path.basename(pdb).split("_")[1] if (len(os.path.basename(pdb).split("_")[0]) ==0) else os.path.basename(pdb).split("_")[0] for pdb in pdbs]
 all_ligs = obj_names
 
@@ -43,8 +45,13 @@ selected_pairs = all_add_reeds
 #selected_pairs = [("M030", "G078")]
 #selected_pairs = [("M097", "G277")]
 #selected_pairs = [("M030", "G209"), ("8018", "M030")]
-selected_pairs = (("6KET", "_O6T"), ("M097", "_O6T"),("G277", "_O6T"), ("F313", "G277"), ("F313", "_O6T"))
-print(selected_pairs)
+#selected_pairs = (("6KET", "_O6T"), ("M097", "_O6T"),("G277", "_O6T"), ("F313", "G277"), ("F313", "_O6T"))
+selected_pairs = (('M030', '_O6T')) # list(filter( lambda x: not "G209" in x, M030_TI_pairwise))
+
+
+print(M030_TI_pairwise)
+
+
 
 def vis( res, path_prefix, c=["firebrick", "forest", 'purple', 'salmon', "gold", "red"]):
 
@@ -57,17 +64,18 @@ def vis( res, path_prefix, c=["firebrick", "forest", 'purple', 'salmon', "gold",
         cmd.hide("labels")
         cmd.set("grid_slot", -2, "d" + str(ind))
 
-    # cmd.ray(1200)
+    cmd.ray(1200)
     time.sleep(2)
     cmd.set("grid_mode", 0)
     cmd.png(path_prefix + "_restraints.png")
     #cmd.set("grid_mode", 1)
     cmd.move("zoom", -10)
 
-    # cmd.ray(1200,)
-    #time.sleep(4)
-    #cmd.png(path_prefix + "_grid_restraints.png")
-    #cmd.set("grid_mode", 0)
+
+    cmd.ray(1200,)
+    time.sleep(4)
+    cmd.png(path_prefix + "_grid_restraints.png")
+    cmd.set("grid_mode", 0)
     cmd.hide("spheres")
     cmd.delete("d*")
 
@@ -82,19 +90,17 @@ for indA, molA in enumerate(orig_pdbs):
         molB_name = "_"+molB_name_partI.split("_")[1] if(molB_name_partI.startswith("_")) else molB_name_partI.split("_")[0]
 
         out_prefix = molA_name+"_"+molB_name
-        out_dir = os.getcwd()+"/"+out_prefix
+        out_dir = "pictures/"+out_prefix  #os.getcwd()+"/"+out_prefix
 
-        print(molA_name, molB_name)
         print(molA_name)
-        print(molB_name)
+        print("\t", molB_name)
 
-        if((molA_name, molB_name) in selected_pairs or (molB_name, molA_name) in selected_pairs ):
-            cmd.reinitialize()
-            time.sleep(1)
-
-            print(out_prefix)
-        else:
-            continue
+        #if((molA_name, molB_name) in selected_pairs or (molB_name, molA_name) in selected_pairs ):
+        #    cmd.reinitialize()
+        #    time.sleep(1)
+        #    print(out_prefix)
+        #else:
+        #    continue
 
         if(not os.path.exists(out_dir)):
             os.mkdir(out_dir)
@@ -196,6 +202,8 @@ for indA, molA in enumerate(orig_pdbs):
         #import restraintmaker
         #restraintmaker.run_plugin_gui()
         ##
+        cmd.bg_color("white")
+        cmd.set("stick_radius", 0.1)
         cmd.set("sphere_scale", 0.2)
         cmd.color("vanadium", "elem C")
         cmd.color("copper", "ID " + "+".join([str(a.id) for a in filtered_atoms]))
@@ -207,6 +215,7 @@ for indA, molA in enumerate(orig_pdbs):
         cmd.png(out_dir+"/"+out_prefix+"_grid.png")
         cmd.set("grid_mode", "0")
         vis(res,out_dir+"/"+out_prefix)
+
 
 print("fini")
 exit()

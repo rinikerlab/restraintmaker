@@ -18,6 +18,9 @@ translate={
     30253: {"orig_name":"E1VB", "short":"E1V"},
     30491: {"orig_name":"6KET", "short":"6KE"},
 }
+
+#TI == ATB Absolute Hydr. FE
+#
 solvation_free_energy_kJ = pd.DataFrame({
     647: {"exp": -31.30, "TI": -30.38, "exp_std": 1.255, "TI_std": 0.44},
     824: {"exp": -11.80, "TI": -6.65, "exp_std": 1.255, "TI_std": 0.465},
