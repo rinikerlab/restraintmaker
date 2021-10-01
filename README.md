@@ -47,11 +47,16 @@ https://github.com/rinikerlab/restraintmaker
         # 1. Retrieve the repository
         git clone https://github.com/rinikerlab/restraintmaker.git
         cd restraintmaker
+        
+        # 2. activate submodules
+        git submodule init
+        git submodule update
 
-        # 2. generate an Anaconda environment with the environment file:       
+        # 3. generate an Anaconda environment with the environment file and add the repository to its path:       
         conda env create --file devtools/conda-envs/dev_env.yaml -n restraintmaker
+        conda develop -n restraintmaker /absolute_path/to/restraintmaker
 
-        # 3. Test    
+        # 4. Test    
         conda activate restraintmaker
         python examples/example_gui.py
 
