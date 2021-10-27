@@ -286,7 +286,7 @@ for set_name_prefix in ['challenging']:
         opt.get_args(lambda x: (nrestraints, distance_treshold, 'shortest', None))
         res = opt.make_restraints()
         ## Export
-        exporter = Exporter.Gromos_Distance_Restraint_Exporter(restraints=res)
+        exporter = Exporter.export_Gromos_Distance_Restraints(restraints=res)
         exporter.get_args(lambda x: out_dir_path + "/" + set_name + ".disres")
         exporter.export_restraints()
     except:
