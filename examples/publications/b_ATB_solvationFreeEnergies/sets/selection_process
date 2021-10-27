@@ -1,0 +1,6 @@
+#Large set
+Restraints = 4
+cutoff = 1.0
+Algo = Shortestlongest
+scoring = ConvexHull
+
