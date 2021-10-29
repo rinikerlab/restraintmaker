@@ -66,6 +66,7 @@ https://github.com/rinikerlab/restraintmaker
 
 ### Optimized Distance Restraints
 #### Start by loading
+You can checkout the file provided in examples on how to start the GUI.
 ![pyMol](.img/pyMol_Wiz_start.png)
 
 #### Select \& Filter
@@ -79,9 +80,7 @@ https://github.com/rinikerlab/restraintmaker
 ![pyMol](.img/pyMol_Wiz_export.png)
 
 ## Author
-Benjamin Ries,
-Salomé Rieder
-Clemens Rhiner
+Benjamin Ries (@SchroederB), Salomé R. Rieder (@SalomeRonja), Clemens Rhiner (@ClemensRhiner)
     
 ## Acknowledgments
 The authors want to thank Carmen Esposito and Dominik Sidler for the great discussions.
