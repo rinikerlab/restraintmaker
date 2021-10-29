@@ -25,7 +25,7 @@ file_handle_bruteForce = open(out_result_bruteForce_optimizer_path, "rb")
 class test_Optimizer(unittest.TestCase):
 
     def test_prim_optimizer(self):
-        my_Optimizer = Optimizer.TreeHeuristicOptimizer(input)
+        my_Optimizer = Optimizer.GreedyGraphOptimizer(input)
         my_Optimizer.get_args(lambda x: (3, 1.2, 'prim', 'None'))  # nRes, distance, algo, ordering of chain
         found_restraints = my_Optimizer.make_restraints()
 
@@ -36,7 +36,7 @@ class test_Optimizer(unittest.TestCase):
         self.check_restraint_results(found_restraints=found_restraints, expected_restraints=expected_prim_soultion)
 
     def test_shortest_optimizer(self):
-        my_Optimizer = Optimizer.TreeHeuristicOptimizer(input)
+        my_Optimizer = Optimizer.GreedyGraphOptimizer(input)
         my_Optimizer.get_args(lambda x: (3, 1.2, 'shortest', 'None'))
         found_restraints = my_Optimizer.make_restraints()
 
@@ -48,7 +48,7 @@ class test_Optimizer(unittest.TestCase):
                                      expected_restraints=expected_longestShortest_MAD_solution)
 
     def test_cog_optimizer(self):
-        my_Optimizer = Optimizer.TreeHeuristicOptimizer(input)
+        my_Optimizer = Optimizer.GreedyGraphOptimizer(input)
         my_Optimizer.get_args(lambda x: (3, 1.2, 'cog', "None"))
         found_restraints = my_Optimizer.make_restraints()
 

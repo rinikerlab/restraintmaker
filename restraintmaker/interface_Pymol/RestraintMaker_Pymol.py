@@ -33,7 +33,6 @@ class Restraints_Wizard(Wizard):
         ----------
         _self
         """
-        cmd.sync()
         self.logic_handler = Logic.Logic_Handler(pu.pymol_selection_to_atom_list('all'))
 
         Wizard.__init__(self, _self)
@@ -72,7 +71,6 @@ class Restraints_Wizard(Wizard):
         self.redraw()
         self.cmd.refresh_wizard()
         self.cmd.viewing.reset()
-        cmd.sync()
 
     """
         Pymol event handling
@@ -84,7 +82,7 @@ class Restraints_Wizard(Wizard):
                       [[1, i.__name__.replace("import_", ""), 'cmd.get_wizard()._action_button_pressed(\"' + i.__name__ + '\")'] for i in
                        self.logic_handler.available_importer_types],
             'Restraint': [[2, 'Restraint', '']] +
-                         [[1, r.__name__, 'cmd.get_wizard()._action_button_pressed(\"' + r.__name__ + '\")'] for r in
+                         [[1, r.__name__.replace("_Type", ""), 'cmd.get_wizard()._action_button_pressed(\"' + r.__name__.replace("_Type", "") + '\")'] for r in
                           self.logic_handler.available_restraint_types],
             'Selection': [[2, "Selection", '']] +
                          [[1, s.__name__, 'cmd.get_wizard()._action_button_pressed(\"' + str(s.__name__) + '\")'] for s
@@ -318,9 +316,9 @@ class Restraints_Wizard(Wizard):
 
             Optimizer.compare_pair_optimizers(criterion=Optimizer._calculate_value_convex_hull, \
                                               atoms=self.logic_handler.selected_atoms, \
-                                              opt_types=[Optimizer.TreeHeuristicOptimizer,
-                                                         Optimizer.TreeHeuristicOptimizer,
-                                                         Optimizer.TreeHeuristicOptimizer,
+                                              opt_types=[Optimizer.GreedyGraphOptimizer,
+                                                         Optimizer.GreedyGraphOptimizer,
+                                                         Optimizer.GreedyGraphOptimizer,
                                                          Optimizer.BruteForceRingOptimzer,
                                                          Optimizer.BruteForceRingOptimzer], \
                                               opt_args=[(4, 1.0, 'prim', 'convex_hull'), (4, 1.0, 'cog', 'convex_hull'),
@@ -412,7 +410,7 @@ class Restraints_Wizard(Wizard):
         # Restraint
         if x_type == None:
             for r_type in self.logic_handler.available_restraint_types:
-                if r_type.__name__ == x_name:
+                if r_type.__name__.replace("_Type", "")  == x_name:
                     x_type = r_type
 
         # Selection
@@ -592,7 +590,7 @@ class Restraints_Wizard(Wizard):
         menu += [[str(self.logic_handler._action_states['Reset']), 'Reset',  'cmd.get_wizard()._reset()' ]]
         menu += empty_panel
         menu += [[str(self.logic_handler._action_states['Restraint']),
-                  'Type:' + get_name(self.logic_handler.current_restraint_type), 'Restraint']]
+                  'Type:' + get_name(self.logic_handler.current_restraint_type).replace("_Type", ""), 'Restraint']]
         menu += [[str(self.logic_handler._action_states['Importer']),
                   'Import:' + get_name(self.logic_handler.current_importer_type), 'Import']]
         menu += [[str(self.logic_handler._action_states['Selection']),
@@ -718,9 +716,9 @@ class Restraints_Wizard(Wizard):
                     pu.help_pymol_with_big_atom_list(self.cmd.set, pair, name="sphere_color", value=i % 54)
 
                 already_colored=False
-                cmd.set
 
             # 3a) Colour all restrained atoms
+            cmd.hide("spheres", "all")
             pu.help_pymol_with_big_atom_list(self.cmd.show, restrained_atoms, representation='spheres')
 
 

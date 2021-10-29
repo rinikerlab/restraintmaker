@@ -71,7 +71,7 @@ https://github.com/rinikerlab/restraintmaker
 #### Select \& Filter
 ![pyMol](.img/pyMol_Wiz_select.png)
 
-#### Start by loading
+#### Optimize restraints
 ![pyMol](.img/pyMol_Wiz_optimize.png)
 ![pyMol](.img/pyMol_Wiz_optimize_grid.png)
 

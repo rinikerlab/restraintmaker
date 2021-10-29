@@ -1,7 +1,8 @@
 """
     The module Selections contains the selection logics. A selected atom will be considered for restraint placement.
+    These Selections are mostly useful for the GUI mode.
 """
-
+import cmd
 import math
 import typing as t
 
@@ -619,9 +620,12 @@ class MCS_Selection(_Selection):
         NoReturn
 
         """
+        print("EXECUTING MCS Selection: please Wait - this can take a bit longer.", mv=5)
         mcs_ids = Rdkit_Functions.mcs_selection(self.molecules_rdk)
         self.atoms = list(filter(lambda a: a.id in mcs_ids, self.all_atoms))
         self.has_finished = True
+        print("EXECUTING MCS Selection: DONE", mv=5)
+
 
     def _update_select(self, new_atoms: t.List[u.Atom]):
         """

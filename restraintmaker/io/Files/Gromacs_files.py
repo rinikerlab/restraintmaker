@@ -8,6 +8,7 @@ from collections import namedtuple
 
 
 gmx_disres = namedtuple("distanceRestraint", ["i", "j","type", "index", "typeb", "low", "up1", "up2", "fac", "comment"])
+gmx_posres = namedtuple("positionRestraint", ["i", "r", "funct", "fc", "comment"])
 
 class Gromacs_distanceRestraint_file():
     header:List[str] = ["i", "j", "type", "index", "type'", "low", "up1", "up2", "fac"]
@@ -69,8 +70,6 @@ class Gromacs_distanceRestraint_file():
                     atoms_list.append(atoms)
         return atoms_list
 
-
-
     def build_disres(self, selected_restraints: List):
 
         restraints = []
@@ -102,3 +101,77 @@ class Gromacs_distanceRestraint_file():
             restraints.append(res)
 
         self.disres = restraints
+
+
+class Gromacs_positionRestraint_file():
+    header:List[str] = ["ai", "funct", "fc"]
+    block_name = "position_restraints"
+    posres = []
+    std_fc:float = tuple([1000,1000,1000])
+    std_funct:float = 0.0
+
+    def __init__(self,  std_funct:int=1, std_fc:float=tuple([1000,1000,1000])):
+        self.std_funct = std_funct
+        self.std_fc=std_fc
+        pass
+
+    def __str__(self):
+        msg = ["[ "+self.block_name+" ]"]
+        msg.append(";"+" ".join(self.header))
+
+        format_str = "{:>4} {:>5} {:>8} {:>8} {:>8} ;{}"
+        for res in self.posres:
+            msg.append(format_str.format(res.i, res.funct, res.fc[0], res.fc[1], res.fc[2], res.comment))
+
+        return "\n".join(msg)
+
+    def write(self, out_path:str)->str:
+        out_file = open(out_path, "w")
+        out_file.write(str(self))
+        out_file.close()
+        return out_path
+
+    @staticmethod
+    def load(in_path:str)->List[Tuple[int, int]]:
+        """
+        This function is a very simple loading function, that gets the atom IDs of selected restratins in the in_file.
+        """
+        in_file = open(in_path, "r")
+        lines = in_file.readlines()
+
+        block_start = False
+        atoms_list = []
+        for line in lines:
+            if(line.strip().startswith("[") and Gromacs_positionRestraint_file.block_name in line and not block_start):
+                block_start = True
+            elif(line.strip().startswith("[") and block_start):
+                block_start = False
+                break
+            elif(block_start):
+                if(line.strip().startswith(";")):
+                    continue
+                else:
+                    res_list = line.split()
+                    atom = int(res_list[0])
+                    atoms_list.append(atom)
+        return atoms_list
+
+
+
+    def build_posres(self, selected_restraints: List):
+
+        restraints = []
+        for i, r in enumerate(selected_restraints):
+            a1 = r.atomA
+            aR = r.reference_atom
+
+            distance_A = np.sqrt((float(a1.x) - float(aR.x)) ** 2 + (float(a1.y) - float(aR.y)) ** 2 + (
+                    float(a1.z) - float(aR.z)) ** 2)
+            distance_nm = round(distance_A, 2) / 10
+
+
+            res = gmx_posres(i=a1.id, r=aR.id, funct=self.std_funct, fc=self.std_fc,
+                             comment=a1.resn+"/"+a1.name+" to "+aR.resn+"/"+aR.name)
+            restraints.append(res)
+
+        self.posres = restraints

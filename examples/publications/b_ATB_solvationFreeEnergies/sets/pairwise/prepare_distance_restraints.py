@@ -180,7 +180,7 @@ for indA, molA in enumerate(orig_pdbs):
             continue
 
             ## Optimizers
-        opt = Optimizer.TreeHeuristicOptimizer(filtered_atoms)
+        opt = Optimizer.GreedyGraphOptimizer(filtered_atoms)
         opt.get_args(lambda x: (nrestraints, distance_treshold, 'shortest', None))
         res = opt.make_restraints()
 
