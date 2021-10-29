@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>restraintmaker.tools_Rdkit package &mdash; restraintMaker  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="restraintmaker.utils package" href="restraintmaker.utils.html" />
+    <link rel="prev" title="restraintmaker.test.test_files package" href="restraintmaker.test.test_files.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Welcome to RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">restraintmaker</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="restraintmaker.html">restraintmaker package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="restraintmaker.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.algorithm.html">restraintmaker.algorithm package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.interface_Pymol.html">restraintmaker.interface_Pymol package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.io.html">restraintmaker.io package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.test.html">restraintmaker.test package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">restraintmaker.tools_Rdkit package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="restraintmaker.utils.html">restraintmaker.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="restraintmaker.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="restraintmaker.html#module-restraintmaker.restraintMaker">restraintmaker.restraintMaker module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="restraintmaker.html#module-restraintmaker.wizard">restraintmaker.wizard module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="restraintmaker.html#module-restraintmaker">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">restraintmaker</a> &raquo;</li>
+        
+          <li><a href="restraintmaker.html">restraintmaker package</a> &raquo;</li>
+        
+      <li>restraintmaker.tools_Rdkit package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/_source/restraintmaker.tools_Rdkit.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="restraintmaker-tools-rdkit-package">
+<h1>restraintmaker.tools_Rdkit package<a class="headerlink" href="#restraintmaker-tools-rdkit-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-restraintmaker.tools_Rdkit.Rdkit_Functions">
+<span id="restraintmaker-tools-rdkit-rdkit-functions-module"></span><h2>restraintmaker.tools_Rdkit.Rdkit_Functions module<a class="headerlink" href="#module-restraintmaker.tools_Rdkit.Rdkit_Functions" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>This module is linking the restraintmaker functionality to rdkit</dt><dd><ul class="simple">
+<li><p>MCS search</p></li>
+<li><p>molecule ring filter</p></li>
+<li><p>etc.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="restraintmaker.tools_Rdkit.Rdkit_Functions.PolyArea">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.tools_Rdkit.Rdkit_Functions.</span></span><span class="sig-name descname"><span class="pre">PolyArea</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corners</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/tools_Rdkit/Rdkit_Functions.html#PolyArea"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.tools_Rdkit.Rdkit_Functions.PolyArea" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="restraintmaker.tools_Rdkit.Rdkit_Functions.PolygonSort">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.tools_Rdkit.Rdkit_Functions.</span></span><span class="sig-name descname"><span class="pre">PolygonSort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corners</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/tools_Rdkit/Rdkit_Functions.html#PolygonSort"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.tools_Rdkit.Rdkit_Functions.PolygonSort" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="restraintmaker.tools_Rdkit.Rdkit_Functions._calc_pca_without_scaling">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.tools_Rdkit.Rdkit_Functions.</span></span><span class="sig-name descname"><span class="pre">_calc_pca_without_scaling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/tools_Rdkit/Rdkit_Functions.html#_calc_pca_without_scaling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.tools_Rdkit.Rdkit_Functions._calc_pca_without_scaling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analogous to _calc_pca, but it does not do any coordinate transfromations. (Rescaling etc. This should be done before calling this function.
+This will help save time, if the function is called many times</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="restraintmaker.tools_Rdkit.Rdkit_Functions.mcs_selection">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.tools_Rdkit.Rdkit_Functions.</span></span><span class="sig-name descname"><span class="pre">mcs_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mols</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">rdkit.Chem.rdchem.Mol</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_MCS_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span></span></span><a class="reference internal" href="../_modules/restraintmaker/tools_Rdkit/Rdkit_Functions.html#mcs_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.tools_Rdkit.Rdkit_Functions.mcs_selection" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>The selection is getting only the MCS of pairwise molecules</p>
+<dl class="simple">
+<dt>Warnings:  results do not seem reasonable YET.</dt><dd><p>TODO: Check what exactly is not going as expected</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mols</strong> (<em>t.List[Chem.Mol]</em>) – molecules</p></li>
+<li><p><strong>min_MCS_size</strong> – what is the minimal MCS size</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – loud and noisy</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="restraintmaker.tools_Rdkit.Rdkit_Functions.parse_pdb_blocks_to_rdkit">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.tools_Rdkit.Rdkit_Functions.</span></span><span class="sig-name descname"><span class="pre">parse_pdb_blocks_to_rdkit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pdb_mols</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">rdkit.Chem.rdchem.Mol</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/tools_Rdkit/Rdkit_Functions.html#parse_pdb_blocks_to_rdkit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.tools_Rdkit.Rdkit_Functions.parse_pdb_blocks_to_rdkit" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Convert a pdblock to and rdkit-Mol</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pdb_mols</strong> (<em>str</em>)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an rdkit mol obj</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rdkit.Mol</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="restraintmaker.tools_Rdkit.Rdkit_Functions.ring_atom_filter">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.tools_Rdkit.Rdkit_Functions.</span></span><span class="sig-name descname"><span class="pre">ring_atom_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mols</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">rdkit.Chem.rdchem.Mol</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_mols</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/tools_Rdkit/Rdkit_Functions.html#ring_atom_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.tools_Rdkit.Rdkit_Functions.ring_atom_filter" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Filter molecules for rings and remove non-ring atoms from the selection</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mols</strong> (<em>t.List[Chem.Mol]</em>) – molecules to select from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of stil selected atom indices, inside a ring</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>t.List[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-restraintmaker.tools_Rdkit">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-restraintmaker.tools_Rdkit" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="restraintmaker.utils.html" class="btn btn-neutral float-right" title="restraintmaker.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="restraintmaker.test.test_files.html" class="btn btn-neutral float-left" title="restraintmaker.test.test_files package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

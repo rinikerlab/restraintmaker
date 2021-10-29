@@ -1,0 +1,463 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>restraintmaker.algorithm.Filter &mdash; restraintMaker  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome to RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>restraintmaker.algorithm.Filter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for restraintmaker.algorithm.Filter</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The module Filters contains functionality of filtering selections by criteria like in ring structure or element.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+<span class="kn">from</span> <span class="nn">rdkit</span> <span class="kn">import</span> <span class="n">Chem</span>
+
+<span class="kn">from</span> <span class="nn">restraintmaker.tools_Rdkit</span> <span class="kn">import</span> <span class="n">Rdkit_Functions</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.utils</span> <span class="kn">import</span> <span class="n">Utilities</span> <span class="k">as</span> <span class="n">u</span>
+
+
+<span class="k">class</span> <span class="nc">_Filter</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;_Filter</span>
+<span class="sd">        This is the private parent class to all filter Classes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        atoms : t.List[u.Atom]</span>
+<span class="sd">            List of atoms to be filtered</span>
+<span class="sd">        args : t..List[str]</span>
+<span class="sd">            Extra Arguments the subclasses might need</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">atoms</span>
+
+    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            get_args(...) should be called by every subclass of _Filter, right after it is created.</span>
+
+<span class="sd">            It uses an input function to find all arguments required by a certain instance of a _Filter</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function : function(str)</span>
+<span class="sd">            A function that can get the input</span>
+<span class="sd">        message : str</span>
+<span class="sd">            A string that is displayed if if input function needs to communicate with the user</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">             If the input function does not provide all arguments in the necessary format</span>
+<span class="sd">        NotImplementedError</span>
+<span class="sd">             If _Filter.get_args is called directly.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Call of function get_args(...) of abstract parent class _Filter&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            filter must be overridden by every subclass of _Filter. Returns a filtered list of atoms</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        t.List[u.Atom]</span>
+<span class="sd">            Filtered List of Atoms</span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        NotImplementedErrror</span>
+<span class="sd">            If _Filter.filter is called directly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Call of function filter() of abstract parent class _Filter&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PropertyFilter"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.PropertyFilter">[docs]</a><span class="k">class</span> <span class="nc">PropertyFilter</span><span class="p">(</span><span class="n">_Filter</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PropertyFilter.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.PropertyFilter.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filters by any attribute of atom</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        atoms : t.List[u.Atom]</span>
+<span class="sd">            List of atoms that are filtered over</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+
+        <span class="c1"># Attributes that will be set in get_args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Filter criterion</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Desired Value. Is introduced as string and then cast to datatype of the chosen criterion</span></div>
+
+<div class="viewcode-block" id="PropertyFilter.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.PropertyFilter.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            get_args(...) Needs to be called, before filter() can be used. For the Property_Filter it finds out which</span>
+<span class="sd">                property should be filter-criterion and then which value it should have.</span>
+
+<span class="sd">            Todo: think about multiple property selections</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function : function(str)</span>
+<span class="sd">            A function that will find the input needed ofr the filter.</span>
+<span class="sd">        message : str</span>
+<span class="sd">            A string that is displayed if if input function needs to communicate with the user</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">            if the input function does not provide all arguments in the necessary format</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">input</span> <span class="o">=</span> <span class="n">input_function</span><span class="p">(</span><span class="s1">&#39;Which atom-property should be the filter critrion?&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span> <span class="ow">in</span> <span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="o">.</span><span class="n">_fields</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+                <span class="s2">&quot;The filter criterion </span><span class="se">\&#39;</span><span class="s2"> &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span> <span class="o">+</span> <span class="s2">&quot; </span><span class="se">\&#39;</span><span class="s2"> provided by the input function is not an attribute of an Atom.&quot;</span><span class="p">)</span>
+
+        <span class="nb">input</span> <span class="o">=</span> <span class="n">input_function</span><span class="p">(</span><span class="s1">&#39;What value should &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span> <span class="o">+</span> <span class="s1">&#39; have?&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">)</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>  <span class="c1"># Happens when len(self.atoms) is 0. No special handling necessary. It just means no atoms will be selected.</span>
+            <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="PropertyFilter.filter"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.PropertyFilter.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Returns a list of atoms, filtered using the provided criterion and value</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        t.List[u.Atom]</span>
+<span class="sd">            Filtered atom list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="ElementFilter"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.ElementFilter">[docs]</a><span class="k">class</span> <span class="nc">ElementFilter</span><span class="p">(</span><span class="n">_Filter</span><span class="p">):</span>
+<div class="viewcode-block" id="ElementFilter.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.ElementFilter.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Filter for certain Element(s)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        atoms: t.List[u.Atom]</span>
+<span class="sd">            List of atoms that are filtered over</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ElementFilter.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.ElementFilter.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            get_args(...) Needs to be called, before filter() can be used.</span>
+<span class="sd">             For the Element_Filter it finds out which element should be filtered</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function: function(str)</span>
+<span class="sd">            A function that will find the input needed ofr the filter.</span>
+<span class="sd">        message: str</span>
+<span class="sd">            A string that is displayed if if input function needs to communicate with the user</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">input</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">input_function</span><span class="p">(</span>
+            <span class="s2">&quot;Which Element do do you want to filter for?</span><span class="se">\n</span><span class="s2"> (select multiple elements seperated by , ; e.g. &#39;O, N&#39;)&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="nb">input</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="nb">input</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_path</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elem</span> <span class="o">=</span> <span class="nb">input</span></div>
+
+<div class="viewcode-block" id="ElementFilter.filter"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.ElementFilter.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns a filtered version of the class attribute atoms, filtered by the class attribute element</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        t.List[u.Atom]</span>
+<span class="sd">            Filtered atom list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Use the built in python function filter(expression, iterable)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">elem</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="RingFilter"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.RingFilter">[docs]</a><span class="k">class</span> <span class="nc">RingFilter</span><span class="p">(</span><span class="n">_Filter</span><span class="p">):</span>
+
+<div class="viewcode-block" id="RingFilter.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.RingFilter.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Ring Filter chooses all Atoms that are part of a Ring</span>
+<span class="sd">            Warnings: using tools_Rdkit. Needs conversion to tools_Rdkit molecules. =&gt; Needs the pdb as input</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        atoms : t.List[u.Atom]</span>
+<span class="sd">            List of atoms to be</span>
+<span class="sd">        args : t.List[str]</span>
+<span class="sd">            Extra Arguments the subclasses might need</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">atoms</span>
+
+        <span class="c1"># Attributes set in get_args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">molecules_rdk</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Chem</span><span class="o">.</span><span class="n">Mol</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="RingFilter.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.RingFilter.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            get_args(...) Needs to be called, before filter() can be used. It uses an input function to find all arguments required by a certain instance of a _Filter.</span>
+
+<span class="sd">            For RingFilter that is a List of all Molecules in the pdb format (CAREFULL: The Molecules need to contain ALL atoms in the Molecules, not just the selected one.)</span>
+
+<span class="sd">            TODO: What Kind of Error will I get if tools_Rdkit conversion fails?/ Catch it here</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function: function(str)</span>
+<span class="sd">            A function that can get the input</span>
+<span class="sd">        message: str</span>
+<span class="sd">            A string that is displayed if if input function needs to communicate with the user</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">            if the input function does not provide all arguments in the necessary format</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">input</span> <span class="o">=</span> <span class="n">input_function</span><span class="p">(</span><span class="s2">&quot;A List of Molecules in the PDB FORMAT:&quot;</span><span class="p">)</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+        <span class="n">molecules_pdb</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">input</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">molecules_rdk</span> <span class="o">=</span> <span class="n">Rdkit_Functions</span><span class="o">.</span><span class="n">parse_pdb_blocks_to_rdkit</span><span class="p">(</span><span class="n">molecules_pdb</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RingFilter.filter"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Filter.RingFilter.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                filter should be overridden by every subclass of _Filter. Returns a filtered List of atoms</span>
+<span class="sd">        In the case of Ring Filter: All atoms which are in rings</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        t.List[u.Atom]</span>
+<span class="sd">            Filtered atom list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">ids_of_atoms_in_rings</span> <span class="o">=</span> <span class="n">Rdkit_Functions</span><span class="o">.</span><span class="n">ring_atom_filter</span><span class="p">(</span><span class="n">selected</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">molecules_rdk</span><span class="p">,</span>
+                                                                 <span class="n">selected_mols</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">ids_of_atoms_in_rings</span><span class="p">]</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

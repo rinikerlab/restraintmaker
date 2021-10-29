@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>restraintmaker.test.test_restraintMaker_PyMol &mdash; restraintMaker  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome to RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>restraintmaker.test.test_restraintMaker_PyMol</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for restraintmaker.test.test_restraintMaker_PyMol</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+<span class="kn">from</span> <span class="nn">pymol</span> <span class="kn">import</span> <span class="n">cmd</span>
+
+<span class="kn">from</span> <span class="nn">restraintmaker.interface_Pymol</span> <span class="kn">import</span> <span class="n">pymol_utilities</span> <span class="k">as</span> <span class="n">pu</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.utils.Utilities</span> <span class="kn">import</span> <span class="nb">print</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.algorithm</span> <span class="kn">import</span> <span class="n">Optimizer</span>
+
+<span class="c1"># ----------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="c1"># -----------------------------------------------------------------    Testing       -----------------------------------------------------------------</span>
+<span class="c1"># -----------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="c1"># TODO CREATE AN OWN CLASS OPTIMIZER TESTER</span>
+<span class="c1"># Would be nice if we had just one object my_tester_that we can deal with</span>
+
+<div class="viewcode-block" id="_check_optimzer_results_pairwise_6"><a class="viewcode-back" href="../../../_source/restraintmaker.test.html#restraintmaker.test.test_restraintMaker_PyMol._check_optimzer_results_pairwise_6">[docs]</a><span class="k">def</span> <span class="nf">_check_optimzer_results_pairwise_6</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_next</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">exit_test_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Creates groups for all pairs which are connected. Then allow to cycle thorugh these this groups as in test mode 4</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># CASE 0: EXIT TEST MODE</span>
+    <span class="k">if</span> <span class="n">exit_test_mode</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;pairs&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;pair_&#39;</span> <span class="o">+</span> <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_mode&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_results_mode</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">refresh_wizard</span><span class="p">()</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># CASE 1: TEST MODE STARTED FRESHLY</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;pairs&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_results_mode</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+        <span class="c1"># 1) Check which molecule pairs have connections</span>
+
+        <span class="n">pair_exists</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i_m1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pymol_molecule_objects</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">i_m2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pymol_molecule_objects</span><span class="p">)):</span>
+                <span class="n">pair_exists</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="nb">str</span><span class="p">(</span><span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span> <span class="kc">False</span><span class="p">})</span>
+
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">:</span>
+            <span class="n">pair_exists</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">resi</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">resi</span><span class="p">):</span> <span class="kc">True</span><span class="p">})</span>
+
+        <span class="n">mol_pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">str</span><span class="p">(</span><span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">i_m1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pymol_molecule_objects</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i_m2</span>
+                     <span class="ow">in</span>
+                     <span class="nb">range</span><span class="p">(</span><span class="n">i_m1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pymol_molecule_objects</span><span class="p">))</span> <span class="k">if</span>
+                     <span class="n">pair_exists</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="ow">or</span> <span class="n">pair_exists</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]]</span>
+
+        <span class="c1"># Create   pairwise restraints. Distance restraints are added to the specifed group upon creation</span>
+        <span class="c1"># Distance objects cant be copied, so I have to vreate two sepearte ones here</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">:</span>
+            <span class="n">__mol1</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">resi</span>
+            <span class="n">__mol2</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">resi</span>
+
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">__mol1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">__mol2</span><span class="p">):</span>
+                <span class="n">__mol1</span><span class="p">,</span> <span class="n">__mol2</span> <span class="o">=</span> <span class="n">__mol2</span><span class="p">,</span> <span class="n">__mol1</span>
+
+            <span class="n">restr_name</span> <span class="o">=</span> <span class="s1">&#39;rest_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">__mol1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">__mol2</span><span class="p">)</span>
+
+            <span class="n">cmd</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">restr_name</span><span class="p">,</span> \
+                         <span class="n">selection1</span><span class="o">=</span><span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]]),</span> \
+                         <span class="n">selection2</span><span class="o">=</span><span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]]))</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="n">restr_name</span><span class="p">)</span>  <span class="c1"># Will be enabled on demand</span>
+
+            <span class="n">cmd</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;copy_&#39;</span> <span class="o">+</span> <span class="n">restr_name</span><span class="p">,</span> \
+                         <span class="n">selection1</span><span class="o">=</span><span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]]),</span> \
+                         <span class="n">selection2</span><span class="o">=</span><span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]]))</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;copy_&#39;</span> <span class="o">+</span> <span class="n">restr_name</span><span class="p">)</span>  <span class="c1"># Must be enabled, so it is shown when the grpout is enabled</span>
+
+        <span class="n">group_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">group_expressions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">mol_pairs</span><span class="p">:</span>
+            <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">)</span>
+
+            <span class="c1"># Create copy for group shown separatelt</span>
+            <span class="n">name_copy_m1</span> <span class="o">=</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s1">&#39;copy&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">m2</span>
+            <span class="n">name_copy_m2</span> <span class="o">=</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m2</span> <span class="o">+</span> <span class="s1">&#39;copy&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">m2</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">name_copy_m1</span><span class="p">,</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m1</span><span class="p">)</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">name_copy_m2</span><span class="p">,</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+
+            <span class="c1"># Create copy of restraints</span>
+
+            <span class="n">group_name</span> <span class="o">=</span> <span class="s1">&#39;pair_&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">m2</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">group_name</span><span class="p">,</span> <span class="n">name_copy_m1</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">name_copy_m2</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="s1">&#39;copy_rest_&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+
+            <span class="c1"># Important: An object is only shown when it AND its group are enabled</span>
+            <span class="c1"># =&gt; Enable all objects, but disable the groups.</span>
+            <span class="c1"># cmd.enable(group_expression)</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+
+            <span class="n">group_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+
+        <span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_mode&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">refresh_wizard</span><span class="p">()</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;pairs&#39;</span><span class="p">:</span> <span class="n">mol_pairs</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;i_pair&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">})</span>  <span class="c1"># Will be adjusted in next block</span>
+
+    <span class="c1"># CASE 2: Show next pair also called in Case 1</span>
+    <span class="c1"># A) Disable old displays</span>
+    <span class="n">i_pair</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;i_pair&#39;</span><span class="p">]</span>
+    <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;pairs&#39;</span><span class="p">][</span><span class="n">i_pair</span><span class="p">]</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m1</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="s1">&#39;pair_&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="s1">&#39;rest_&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+
+    <span class="c1"># B) Enable next pair</span>
+    <span class="n">i_pair</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">show_next</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">i_pair</span> <span class="o">%=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;pairs&#39;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;i_pair&#39;</span><span class="p">:</span> <span class="n">i_pair</span><span class="p">})</span>
+    <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;pairs&#39;</span><span class="p">][</span><span class="n">i_pair</span><span class="p">]</span>
+
+    <span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m1</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_slot&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m1</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_slot&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;pair_&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_slot&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;pair_&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;rest_&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_slot&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;rest_&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span></div>
+    <span class="c1"># self.cmd.reset()</span>
+
+
+<div class="viewcode-block" id="_check_optimzer_results_pairwise_5"><a class="viewcode-back" href="../../../_source/restraintmaker.test.html#restraintmaker.test.test_restraintMaker_PyMol._check_optimzer_results_pairwise_5">[docs]</a><span class="k">def</span> <span class="nf">_check_optimzer_results_pairwise_5</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exit_test_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Creates groups for all pairs which are connected. And show them all in grid mode</span>
+<span class="sd">        :warning: only designed for pairwise restraints</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">check_results_mode</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="c1"># 1) Check which molecule pairs have connections</span>
+
+    <span class="n">pair_exists</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i_m1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pymol_molecule_objects</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i_m2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pymol_molecule_objects</span><span class="p">)):</span>
+            <span class="n">pair_exists</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="nb">str</span><span class="p">(</span><span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span> <span class="kc">False</span><span class="p">})</span>
+
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">:</span>
+        <span class="n">pair_exists</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">resi</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">resi</span><span class="p">):</span> <span class="kc">True</span><span class="p">})</span>
+
+    <span class="n">mol_pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">str</span><span class="p">(</span><span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">i_m1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pymol_molecule_objects</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i_m2</span> <span class="ow">in</span>
+                 <span class="nb">range</span><span class="p">(</span><span class="n">i_m1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pymol_molecule_objects</span><span class="p">))</span> <span class="k">if</span>
+                 <span class="n">pair_exists</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="ow">or</span> <span class="n">pair_exists</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">mol_pairs</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">mol_pairs</span><span class="p">:</span>
+        <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">m1_name</span> <span class="o">=</span> <span class="n">m1</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">m2</span> <span class="o">+</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m1</span>
+        <span class="n">m2_name</span> <span class="o">=</span> <span class="n">m1</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">m2</span> <span class="o">+</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m2</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">m1</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">m2</span> <span class="o">+</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m1</span><span class="p">,</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m1</span><span class="p">)</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">m1</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">m2</span> <span class="o">+</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">,</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+        <span class="n">group_expression</span> <span class="o">=</span> <span class="n">m1_name</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">m2_name</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;pair_&#39;</span> <span class="o">+</span> <span class="n">m1</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">m2</span><span class="p">,</span> <span class="n">group_expression</span><span class="p">)</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">group_expression</span><span class="p">)</span>
+
+    <span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_mode&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">exit_test_mode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_results_mode</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">mol_pairs</span><span class="p">:</span>
+            <span class="n">m1_name</span> <span class="o">=</span> <span class="n">m1</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">m2</span> <span class="o">+</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m1</span>
+            <span class="n">m2_name</span> <span class="o">=</span> <span class="n">m1</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">m2</span> <span class="o">+</span> <span class="s1">&#39;mol_&#39;</span> <span class="o">+</span> <span class="n">m2</span>
+            <span class="n">group_expression</span> <span class="o">=</span> <span class="n">m1_name</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">m2_name</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">m1_name</span><span class="p">)</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">m2_name</span><span class="p">)</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">ungroup</span><span class="p">(</span><span class="s1">&#39;group_expression&#39;</span><span class="p">)</span>
+
+        <span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_mode&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_check_optimzer_results_pairwise_4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mol1</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mol2</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">exit_test_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="c1"># TODO: Make the group of copies instead of the objects themselves. Then show the two moleucles and the restraints between them in grid mode</span>
+
+    <span class="c1"># Look at 2 molecules at once, use interface_Pymol group command to select relevant molecules and restraints</span>
+    <span class="c1"># Stores in cro: mol1, mol2. The mmoleucles we are currently looking at</span>
+
+    <span class="c1"># -1) DELETE OLD GROUPS, if they exits</span>
+    <span class="k">if</span> <span class="s1">&#39;mol1&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;mol2&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">ungroup</span><span class="p">(</span><span class="s1">&#39;rest_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;mol1&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">ungroup</span><span class="p">(</span><span class="s1">&#39;rest_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;mol2&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;mol1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_copy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;mol2&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_copy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;group_name&#39;</span><span class="p">])</span>
+
+    <span class="c1"># 0) CHECK IF WE SHOUDL EXIST TEST MODE</span>
+    <span class="k">if</span> <span class="n">exit_test_mode</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_results_mode</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># 1) CHECK WHAT MOLECULES SHOULD BE DISPLAYED</span>
+    <span class="c1"># 1 - Check that the user either provided two inputs, or decide what moeules to display from dcurretn input</span>
+
+    <span class="c1"># 1a) Case 1: The user speciefied both molecules =&gt; Check that they are valid molecules. Leave them as they are</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">check_results_mode</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="k">if</span> <span class="n">mol1</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mol2</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_objects_exists</span><span class="p">(</span><span class="n">mol1</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There is no molecule called &#39;</span> <span class="o">+</span> <span class="n">mol1</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_objects_exists</span><span class="p">(</span><span class="n">mol2</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There is no molecule called &#39;</span> <span class="o">+</span> <span class="n">mol1</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="k">return</span>
+
+    <span class="c1"># 1b) Case 2: The user speciefied one molecule -&gt; Check that that Molecule is valid, and let the other one unchanged</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">mol1</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="n">mol2</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>  <span class="c1"># ^ i s xor</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">mol1</span> <span class="o">==</span> <span class="kc">None</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">mol2</span> <span class="o">==</span> <span class="kc">None</span><span class="p">),</span> <span class="nb">str</span><span class="p">((</span><span class="n">mol1</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="n">mol2</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mol1</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_objects_exists</span><span class="p">(</span><span class="n">mol1</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There is no molecule called &#39;</span> <span class="o">+</span> <span class="n">mol1</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mol2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;mol2&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">mol2</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_objects_exists</span><span class="p">(</span><span class="n">mol2</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There is no molecule called &#39;</span> <span class="o">+</span> <span class="n">mol2</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mol1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;mol1&#39;</span><span class="p">]</span>
+
+
+    <span class="c1"># 1c) Case 3: The user specified no moleule =&gt; Move thorugh the list by one molecule</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mol1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;mol2&#39;</span><span class="p">]</span>
+        <span class="n">all_mols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pymol_molecule_objects</span>
+        <span class="n">mol2</span> <span class="o">=</span> <span class="n">all_mols</span><span class="p">[(</span><span class="n">all_mols</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span><span class="p">[</span><span class="s1">&#39;mol2&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_mols</span><span class="p">)]</span>
+
+    <span class="c1"># 2) Update the currently displayed moleucles</span>
+    <span class="k">if</span> <span class="n">mol1</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">mol2</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Please specify which molecules you want to look at using test mode 4&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">mol1</span> <span class="o">+</span> <span class="s1">&#39;_copy&#39;</span><span class="p">,</span> <span class="n">mol1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">mol2</span> <span class="o">+</span> <span class="s1">&#39;_copy&#39;</span><span class="p">,</span> <span class="n">mol2</span><span class="p">)</span>
+
+    <span class="n">group_name</span> <span class="o">=</span> <span class="n">mol1</span> <span class="o">+</span> <span class="s1">&#39;+&#39;</span> <span class="o">+</span> <span class="n">mol2</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mol1&#39;</span><span class="p">:</span> <span class="n">mol1</span><span class="p">,</span> <span class="s1">&#39;mol2&#39;</span><span class="p">:</span> <span class="n">mol2</span><span class="p">,</span> <span class="s1">&#39;group_name&#39;</span><span class="p">:</span> <span class="n">group_name</span><span class="p">}</span>
+
+    <span class="n">group_expression</span> <span class="o">=</span> <span class="n">mol1</span> <span class="o">+</span> <span class="s1">&#39;_copy or &#39;</span> <span class="o">+</span> <span class="n">mol2</span> <span class="o">+</span> <span class="s1">&#39;_copy or rest_&#39;</span> <span class="o">+</span> <span class="n">mol1</span> <span class="o">+</span> <span class="s1">&#39; and rest_&#39;</span> <span class="o">+</span> <span class="n">mol2</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_mode&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">group_name</span><span class="p">,</span> <span class="n">members</span><span class="o">=</span><span class="n">group_expression</span><span class="p">)</span>
+    <span class="c1">#        self.cmd.show(&#39;sticks&#39;,group_name)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">group_expression</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">mol1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">mol2</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">refresh_wizard</span><span class="p">()</span>
+
+    <span class="c1"># TODO: Draw a fourth grop containing only the restraints, not overlayed on the molecule. Not so easz becasue we can not copy restraints</span>
+    <span class="c1"># =&gt; Need to create new objects</span>
+
+
+<div class="viewcode-block" id="_test_optimizer_1"><a class="viewcode-back" href="../../../_source/restraintmaker.test.html#restraintmaker.test.test_restraintMaker_PyMol._test_optimizer_1">[docs]</a><span class="k">def</span> <span class="nf">_test_optimizer_1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sele</span><span class="p">,</span> <span class="n">Optimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   Only used during programming to test some things about the optimizer.</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># all_atoms = pymol_selection_to_atom_list(&quot;all&quot;)</span>
+    <span class="n">cons</span> <span class="o">=</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">get_all_short_connections</span><span class="p">(</span><span class="n">atoms</span><span class="o">=</span><span class="n">pu</span><span class="o">.</span><span class="n">pymol_selection_to_atom_list</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">),</span> <span class="n">max_dis</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+
+    <span class="c1"># for a in all_atoms:</span>
+    <span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">pu</span><span class="o">.</span><span class="n">pymol_selection_to_atom_list</span><span class="p">(</span><span class="n">sele</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">neighbours</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># TODO: If I ever use this in efficient context I can speed it up with the knowledge, that the atoms are ordered: the lower of the two atoms is always the first one in the list</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cons</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">Atom1</span> <span class="o">==</span> <span class="n">a</span><span class="p">:</span>
+                <span class="n">neighbours</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">Atom2</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">c</span><span class="o">.</span><span class="n">Atom2</span> <span class="o">==</span> <span class="n">a</span><span class="p">:</span>
+                <span class="n">neighbours</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">Atom1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">neighbours</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">([</span><span class="n">a</span><span class="p">]))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;mypseudo&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">pseudoatom</span><span class="p">(</span><span class="s1">&#39;mypseudo&#39;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">z</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;spheres&#39;</span><span class="p">,</span> <span class="s1">&#39;mypseudo&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;sphere_scale&#39;</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;sphere_transparency&#39;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;SphericalSelection&#39;</span><span class="p">)</span></div>
+
+        <span class="c1"># time.sleep(0.1)</span>
+    <span class="c1">#  pass #Set a breakpoint here to watch result</span>
+
+
+<span class="k">def</span> <span class="nf">_test_optimizer_2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># TODO: Can not create selection in constructor,because molecules ar not yet loeaded. =&gt; Find reasonable order</span>
+
+    <span class="c1"># Need to define some global variables, so the show next molecule fkt can see them. Mark them with _to2_ for test_optimizer_2</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_to2_i_m</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_to2_n_restraints</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">pu</span><span class="o">.</span><span class="n">pymol_selection_to_atom_list</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">selected_atoms</span>
+    <span class="n">my_Optimizer</span> <span class="o">=</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">Volume_Optimzier</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">my_Optimizer</span><span class="o">.</span><span class="n">get_args</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to2_n_restraints</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;avg&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_to2_restraints</span> <span class="o">=</span> <span class="n">my_Optimizer</span><span class="o">.</span><span class="n">make_restraints</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_mode&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_optimzer_show_next_molecule_pair_2</span><span class="p">()</span>
+
+    <span class="c1"># Display the restraints one after the other</span>
+
+
+<div class="viewcode-block" id="_test_optimizer_3"><a class="viewcode-back" href="../../../_source/restraintmaker.test.html#restraintmaker.test.test_restraintMaker_PyMol._test_optimizer_3">[docs]</a><span class="k">def</span> <span class="nf">_test_optimizer_3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer_runs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;_test_optimizer_3 can be used to compare the results of the different optimizers. if timer_runs is specified the optimizers will be timed by running their make_restraint functions timer_runs time.</span>
+<span class="sd">    The results will be printed to the log.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_to3_i_m</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_to3_n_restraints</span> <span class="o">=</span> <span class="mi">3</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">pu</span><span class="o">.</span><span class="n">pymol_selection_to_atom_list</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">selected_atoms</span>
+
+    <span class="n">prim_Optimizer</span> <span class="o">=</span> <span class="n">pu</span><span class="o">.</span><span class="n">Optimizer</span><span class="o">.</span><span class="n">MoleculeRingOptimizer_1_0</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">shortest_Optimizer</span> <span class="o">=</span> <span class="n">pu</span><span class="o">.</span><span class="n">Optimizer</span><span class="o">.</span><span class="n">MoleculeRingOptimizer_1_0</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">avg_Optimizer</span> <span class="o">=</span> <span class="n">pu</span><span class="o">.</span><span class="n">Optimizer</span><span class="o">.</span><span class="n">MoleculeRingOptimizer_1_0</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+    <span class="n">prim_Optimizer</span><span class="o">.</span><span class="n">get_args</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to3_n_restraints</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;prim&#39;</span><span class="p">)</span>
+    <span class="n">shortest_Optimizer</span><span class="o">.</span><span class="n">get_args</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to3_n_restraints</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;shortest&#39;</span><span class="p">)</span>
+    <span class="n">avg_Optimizer</span><span class="o">.</span><span class="n">get_args</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to3_n_restraints</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;avg&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">timer_runs</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;PRIM&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">prim_Optimizer</span><span class="o">.</span><span class="n">make_restraints</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">timer_runs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;SHORTEST&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">shortest_Optimizer</span><span class="o">.</span><span class="n">make_restraints</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">timer_runs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;AVG&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">shortest_Optimizer</span><span class="o">.</span><span class="n">make_restraints</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">timer_runs</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_prim_restraints</span> <span class="o">=</span> <span class="n">prim_Optimizer</span><span class="o">.</span><span class="n">make_restraints</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_shortest_restraints</span> <span class="o">=</span> <span class="n">shortest_Optimizer</span><span class="o">.</span><span class="n">make_restraints</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_avg_restraints</span> <span class="o">=</span> <span class="n">avg_Optimizer</span><span class="o">.</span><span class="n">make_restraints</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prim_restraints</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shortest_restraints</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_avg_restraints</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="s1">&#39;_prim&#39;</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="s1">&#39;_shortest&#39;</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="s1">&#39;_avg&#39;</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_mode&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_optimzer_show_next_molecule_pair_3</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="_optimzer_show_next_molecule_pair_2"><a class="viewcode-back" href="../../../_source/restraintmaker.test.html#restraintmaker.test.test_restraintMaker_PyMol._optimzer_show_next_molecule_pair_2">[docs]</a><span class="k">def</span> <span class="nf">_optimzer_show_next_molecule_pair_2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Only for debugging and testing.</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">molecules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">()</span>
+
+    <span class="n">color</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;magenta&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>  <span class="c1"># TODO: There also seems to be a self.cmd.redraw attribute. =&gt; Change name of my function to avoid confusion</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="s1">&#39;spheres&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">molecules</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_to2_i_m</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">molecules</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">_to2_i_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">molecules</span><span class="p">)])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to2_restraints</span><span class="p">[</span>
+             <span class="bp">self</span><span class="o">.</span><span class="n">_to2_n_restraints</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to2_i_m</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to2_n_restraints</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to2_i_m</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to2_n_restraints</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_to2_restraints</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to2_n_restraints</span><span class="p">],</span>
+                       <span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;spheres&#39;</span><span class="p">,</span> <span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="_optimzer_show_next_molecule_pair_3"><a class="viewcode-back" href="../../../_source/restraintmaker.test.html#restraintmaker.test.test_restraintMaker_PyMol._optimzer_show_next_molecule_pair_3">[docs]</a><span class="k">def</span> <span class="nf">_optimzer_show_next_molecule_pair_3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Only for debugging and testing.</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">molecules</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">())</span>
+
+    <span class="n">color</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;magenta&#39;</span><span class="p">,</span> <span class="s1">&#39;brown&#39;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>  <span class="c1"># TODO: There also seems to be a self.cmd.redraw attribute. =&gt; Change name of my function to avoid confusion</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="s1">&#39;spheres&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+    <span class="n">m1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to3_i_m</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># convert ot counting from 1 to n, instead of 0 to n-1</span>
+    <span class="n">m2</span> <span class="o">=</span> <span class="n">m1</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">molecules</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="k">else</span> <span class="s1">&#39;1&#39;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_prim&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_shortest&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_avg&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_prim&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_shortest&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_avg&#39;</span><span class="p">)</span>
+
+    <span class="n">my_slice</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_to3_n_restraints</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to3_i_m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to3_n_restraints</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_to3_i_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">r_prim</span><span class="p">,</span> <span class="n">r_shortest</span><span class="p">,</span> <span class="n">r_avg</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prim_restraints</span><span class="p">[</span><span class="n">my_slice</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shortest_restraints</span><span class="p">[</span><span class="n">my_slice</span><span class="p">],</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">_avg_restraints</span><span class="p">[</span><span class="n">my_slice</span><span class="p">]):</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">color</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_prim_restraints</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">r_prim</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to3_n_restraints</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">r_prim</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &amp; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+            <span class="n">m1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_prim&#39;</span><span class="p">)</span>  <span class="c1"># After using the create command the corresponding atoms have the same id =&gt; need to specify molecule</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">r_prim</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &amp; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_prim&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">r_shortest</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &amp; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_shortest&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">r_shortest</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &amp; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_shortest&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">r_avg</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &amp; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_avg&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">r_avg</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &amp; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_avg&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;spheres&#39;</span><span class="p">,</span> <span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">r_prim</span><span class="o">.</span><span class="n">atoms</span> <span class="o">+</span> <span class="n">r_shortest</span><span class="o">.</span><span class="n">atoms</span> <span class="o">+</span> <span class="n">r_avg</span><span class="o">.</span><span class="n">atoms</span><span class="p">))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">pu</span><span class="o">.</span><span class="n">_atom_list_to_pymol_selection</span><span class="p">(</span><span class="n">r_avg</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &amp; m1_avg&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+    <span class="c1"># for r in self._to2_restraints[</span>
+    <span class="c1">#          self._to2_n_restraints * self._to2_i_m: self._to2_n_restraints * self._to2_i_m + self._to2_n_restraints]:</span>
+    <span class="c1">#     self.cmd.color(color[self._to2_restraints.index(r) % self._to2_n_restraints],</span>
+    <span class="c1">#                    atom_list_to_pymol_selection(r.atoms))</span>
+    <span class="c1">#     self.cmd.show(&#39;spheres&#39;, atom_list_to_pymol_selection(r.atoms))</span>
+
+
+<div class="viewcode-block" id="timer"><a class="viewcode-back" href="../../../_source/restraintmaker.test.html#restraintmaker.test.test_restraintMaker_PyMol.timer">[docs]</a><span class="k">def</span> <span class="nf">timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">runs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Timer: Can be used&#39;&#39;&#39;</span>
+    <span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">runs</span><span class="p">):</span>
+        <span class="n">func</span><span class="p">()</span>
+    <span class="n">t_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="c1"># Correct for time of loop execution etc</span>
+    <span class="n">t_corr_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">runs</span><span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="n">t_corr_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="c1"># TODO: Round to sign digits. No direct built in function in python</span>
+    <span class="n">upper</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_end</span> <span class="o">-</span> <span class="n">t_start</span><span class="p">)</span> <span class="o">/</span> <span class="n">runs</span>
+    <span class="n">lower</span> <span class="o">=</span> <span class="p">((</span><span class="n">t_end</span> <span class="o">-</span> <span class="n">t_start</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">t_corr_end</span> <span class="o">-</span> <span class="n">t_corr_start</span><span class="p">))</span> <span class="o">/</span> <span class="n">runs</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Timer estimates:&#39;</span><span class="p">,</span> <span class="n">min_verbosity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Lower: &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">%10.3e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">lower</span> <span class="o">+</span> <span class="s1">&#39; s&#39;</span><span class="p">,</span> <span class="n">min_verbosity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Upper: &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">%10.3e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">upper</span> <span class="o">+</span> <span class="s1">&#39; s&#39;</span><span class="p">,</span> <span class="n">min_verbosity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

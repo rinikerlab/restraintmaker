@@ -1,0 +1,1437 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>restraintmaker.algorithm.Optimizer &mdash; restraintMaker  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> restraintMaker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome to RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">restraintMaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>restraintmaker.algorithm.Optimizer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for restraintmaker.algorithm.Optimizer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The optimizers of this package are contained in this module. The optimizers can be used too....</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+
+<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">ConvexHull</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.qhull</span> <span class="kn">import</span> <span class="n">QhullError</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">binom</span>
+
+<span class="kn">from</span> <span class="nn">restraintmaker.tools_Rdkit</span> <span class="kn">import</span> <span class="n">Rdkit_Functions</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.utils</span> <span class="kn">import</span> <span class="n">Utilities</span> <span class="k">as</span> <span class="n">u</span><span class="p">,</span> <span class="n">Types</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.utils.Utilities</span> <span class="kn">import</span> <span class="nb">print</span><span class="p">,</span> <span class="n">NoOptimalSolutionException</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Optimizer Classes</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">_Optimizer</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            This is the private parent class to all Optimizer Classes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        atoms :  t.List[u.Atom]</span>
+<span class="sd">            list of atoms to be considered</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="n">atoms</span>
+
+    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Optimize</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Direct call of abstract function  _Optimizer.get_args(...)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">make_restraints</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                make_restraints() return a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        t.List[RestraintType.RestraintType]</span>
+<span class="sd">            The list of optimized Restraints</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        NoOptimalSolutionException</span>
+<span class="sd">            if no Solution fulfilling all criteria can be found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Direct call of abstract function  _Optimizer.make_restraints()&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_MoleculeRingOptimizer</span><span class="p">(</span><span class="n">_Optimizer</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Abstract parent class for all Molecule Ring Optimziers.</span>
+<span class="sd">        Molecule Ring Optimziers set their restraints by finding the best set of restraints between pairs of Molecules.</span>
+<span class="sd">        In the end everz molecule is connected to two other molecules</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]]</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">order_atoms_by_molecule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>  <span class="c1"># Every Molecules is a list of atoms, with the Molecule attribute as key</span>
+
+        <span class="c1"># get_args: inherited from _Optimizer</span>
+
+        <span class="c1"># to be set in get_args of children:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>  <span class="c1"># criterion for how molecules should be sorted</span>
+
+    <span class="k">def</span> <span class="nf">make_restraints</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used:</span>
+
+<span class="sd">        All MoleculeRingOptimizers inherit make_restraint form _Molecule RingOptimizer. Only the function connect_two_Molecules differs. Connects Molecules pairwise, forming a topological ring. (Not all Molecules are connected to each other. Each is only connected to 2 neighbours).</span>
+<span class="sd">        The Molecules are connected in alphanumerical order of their name. No Optimization.</span>
+<span class="sd">        The molecules are connected, by applying a Pairwise distance restraint to n pairs of Atoms.</span>
+<span class="sd">        These Atoms are chosen heuristically by finding distance restraints that are as far apart as possilbe. (Non optimal solution)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        t.list[RestraintType.PairRestraint]</span>
+<span class="sd">             A List of Restraints</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        NoOptimalSolutionException</span>
+<span class="sd">            if no Solution fulfilling all criteria can be found. For MoleculeRingOptimizer: Not enough restraints shorter than cutoff</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">restraints</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+                <span class="s1">&#39;A Molecule Ring Optimizer needs at least 2 Molecules to connect&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">restraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect_two_molecules</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">==</span> <span class="s1">&#39;None&#39;</span><span class="p">:</span>  <span class="c1"># Str &#39;None&#39;, not None:</span>
+
+            <span class="k">for</span> <span class="n">i_m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Connecting molecules #&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; and #&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m</span> <span class="o">+</span> <span class="mi">2</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                <span class="n">restraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connect_two_molecules</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">[</span><span class="n">i_m</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">[</span><span class="n">i_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+                <span class="c1"># Connect last molecule to first</span>
+                <span class="c1"># TODO: Parallellize: Every moleucle pair gets one thread</span>
+
+                <span class="c1"># Connect last Molecules to first</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Connecting molecules #&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39; and #&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">restraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connect_two_molecules</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+        <span class="c1"># An Optimization algorithm has been given</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="c1"># 0) Choose the algo from a predefined list</span>
+            <span class="c1"># Do not just use the value returned by connect_two_molecules, because I want to be able to use a different criterion here.</span>
+            <span class="c1"># TODO: Now the scaling is automatically done by taking calculate_value of all atom positions. For other criteria, it might be better to define a function scale, along with</span>
+            <span class="c1"># calculate_value</span>
+
+            <span class="c1"># TODO: Move to get-args and make calculate_value an attribute</span>
+            <span class="n">calculate_value</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">do_nothing</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">==</span> <span class="s1">&#39;pca_2d&#39;</span><span class="p">:</span>
+                <span class="n">calculate_value</span> <span class="o">=</span> <span class="n">_calculate_value_unscaled_pca_2d</span>
+                <span class="c1"># print(&#39;Warning: Optimization of Molecule pairs is done using unscaled pca values&#39;,mv=4)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">==</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">:</span>
+                <span class="n">calculate_value</span> <span class="o">=</span> <span class="n">_calculate_value_convex_hull</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">+</span> <span class="s1">&#39;is not a known algorithm to arrange the molecules&#39;</span><span class="p">)</span>
+
+            <span class="c1"># 1) Calclulate ALL PAIRS and their value</span>
+
+            <span class="c1"># Save restraints and the value of a molecule pair in a list</span>
+            <span class="c1"># Also create a list indicting which molecule pair is at what index of the list, to save time later on</span>
+
+            <span class="n">restraints_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># List containing all restraints of each molecule pair</span>
+            <span class="n">value_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># List containing all values of molecules pairs</span>
+            <span class="n">molecule_pair_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Needed later. Construct it here, as we are doing the loop anywaz</span>
+
+            <span class="k">for</span> <span class="n">i_m1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">i_m2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">)):</span>  <span class="c1"># Cant use enumerate because i_m2 would start from 0</span>
+                    <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">[</span><span class="n">i_m1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">[</span><span class="n">i_m2</span><span class="p">]</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Connecting molecules #&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; and #&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">pairwise_restraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect_two_molecules</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+
+                        <span class="n">atom_positions_of_both_molecules</span> <span class="o">=</span> <span class="p">[(</span><span class="n">a</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">z</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">m1</span> <span class="o">+</span> <span class="n">m2</span><span class="p">]</span>
+                        <span class="n">scaling_factor</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">calculate_value</span><span class="p">(</span><span class="n">atom_positions_of_both_molecules</span><span class="p">)</span>
+                        <span class="n">restr_pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">cog_distance_restraint</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">pairwise_restraints</span><span class="p">]</span>
+                        <span class="n">unscaled_value</span> <span class="o">=</span> <span class="n">calculate_value</span><span class="p">(</span><span class="n">restr_pos</span><span class="p">)</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="n">unscaled_value</span> <span class="o">*</span> <span class="n">scaling_factor</span>
+
+                    <span class="k">except</span> <span class="n">NoOptimalSolutionException</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Warning: Failed to connect molecule #&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; and #&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+                        <span class="n">restraints_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pairwise_restraints</span><span class="p">)</span>
+                        <span class="n">value_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                        <span class="n">molecule_pair_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i_m1</span><span class="p">,</span> <span class="n">i_m2</span><span class="p">))</span>
+
+                    <span class="c1"># print(i_m1,i_m2,mv=0)</span>
+
+            <span class="c1"># 2) Build a Ring using modified Kruskal</span>
+            <span class="n">i_chosen_pairs</span> <span class="o">=</span> <span class="n">maximal_weight_ring</span><span class="p">(</span><span class="n">edge_list</span><span class="o">=</span><span class="n">molecule_pair_list</span><span class="p">,</span> <span class="n">value_list</span><span class="o">=</span><span class="n">value_list</span><span class="p">,</span>
+                                                 <span class="n">n_nodes</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">))</span>
+            <span class="n">chosen_restraints</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">i_chosen_pairs</span><span class="p">:</span>
+                <span class="n">chosen_restraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">restraints_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+            <span class="k">return</span> <span class="n">chosen_restraints</span>
+
+        <span class="k">return</span> <span class="n">restraints</span>
+
+    <span class="k">def</span> <span class="nf">connect_two_molecules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m1</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">],</span> <span class="n">m2</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span>
+        <span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">             connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        m1 : t.List[u.Atom]</span>
+<span class="sd">            Molecule 1</span>
+<span class="sd">        m2 : t.List[u.Atom]</span>
+<span class="sd">            Molecule 2</span>
+<span class="sd">        n</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        t.List[RestraintType._RestraintType]</span>
+<span class="sd">            Restraints between those atoms</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">         NotImplementedError</span>
+<span class="sd">            if _MoleculeRingOptimizer.connect_two_molecules is called directly.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s1">&#39;Direct call of abstract parent function _MoleculeRingOptimizer.connect_two_molecules&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TreeHeuristicOptimizer"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer">[docs]</a><span class="k">class</span> <span class="nc">TreeHeuristicOptimizer</span><span class="p">(</span><span class="n">_MoleculeRingOptimizer</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TreeHeuristicOptimizer.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            First the all Molecules pairs are connected. Then a ring is formed by using the best pairs.</span>
+<span class="sd">            These restraints between two molecules are chosen heuristically by finding distance restraints that are as far apart as possilbe. (Non optimal solution)</span>
+
+<span class="sd">            TODO: Speed is far from optimal, because some of the taks done by the utility functions are redundant:</span>
+<span class="sd">                 1)  We do not need to construct the whole spanning tree. We could stop, after we have found best connections</span>
+<span class="sd">                 2)  The info about which atom belongs to which molecule is lost when we call get_all_short_connections(...), and get_all_short_connections checks it again</span>
+<span class="sd">                 3)  The info about connectiviy in the tree is lost when it is returned as a list as has to be tediouly reconstructed while walking the tree</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        atoms: t.List[u.Atom]</span>
+<span class="sd">            list of selected atoms</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+
+        <span class="c1"># Attributes inherited from _MoleculeRingOptiimzer:</span>
+        <span class="c1"># self.Molecules</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Check for duplicates:</span>
+        <span class="k">for</span> <span class="n">a1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">a2</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
+                <span class="k">if</span> <span class="n">a1</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">a2</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING: Optimizer has duplicates in its atom list:  i=&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">a1</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; must be initialized with atoms from at least 2 Molecules.&quot;</span><span class="p">)</span></div>
+
+    <span class="c1"># TODO STRUC: Only Optimizer uses argument unpacking after the input function. Exporters, Filters etc call the input_functions several times if the y need more than one arg</span>
+    <span class="c1"># =&gt;Unify that!</span>
+<div class="viewcode-block" id="TreeHeuristicOptimizer.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function:  t.Callable[str]</span>
+<span class="sd">            A function that can get the input</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">            if the input function does not provide all arguments in the necessary format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">input_function</span><span class="p">(</span>
+            <span class="s1">&#39;List of all args for TreeHeuristicOptimizer&#39;</span><span class="p">)</span>  <span class="c1"># TODO: See TODO at u.create_multi_dialog</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+                <span class="s2">&quot;A MoleculeRingOptimizer_0_1 needs to set at least 2 connection per Molecules pair. &quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;prim&#39;</span><span class="p">,</span> <span class="s1">&#39;shortest&#39;</span><span class="p">,</span> <span class="s1">&#39;cog&#39;</span><span class="p">,</span> <span class="s2">&quot;biased_avg&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span> <span class="s1">&#39;pca_2d&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TreeHeuristicOptimizer.connect_two_molecules"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.TreeHeuristicOptimizer.connect_two_molecules">[docs]</a>    <span class="k">def</span> <span class="nf">connect_two_molecules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m1</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">],</span> <span class="n">m2</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span>
+        <span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For three heurstic Optimizer that is by greedly picking restraints according to a criterion depending on the already chosen restraints</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        m1 : t.List[u.Atom]</span>
+<span class="sd">            Molecule 1</span>
+<span class="sd">        m2 : t.List[u.Atom]</span>
+<span class="sd">            Molecule 2</span>
+<span class="sd">        n</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        t.List[RestraintType._RestraintType]</span>
+<span class="sd">            Restraints between those atoms</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">maximal_spanning_tree_greedy</span><span class="p">(</span><span class="n">get_all_short_pair_restraints</span><span class="p">(</span><span class="n">m1</span> <span class="o">+</span> <span class="n">m2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span><span class="p">),</span> <span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="BruteForceRingOptimzer"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer">[docs]</a><span class="k">class</span> <span class="nc">BruteForceRingOptimzer</span><span class="p">(</span><span class="n">_MoleculeRingOptimizer</span><span class="p">):</span>
+
+<div class="viewcode-block" id="BruteForceRingOptimzer.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        A Molecule Ring Optimzier that connects TwoMolecules by finding Optimizing some criterion by brute force</span>
+<span class="sd">        TODO: Think: Could we use a version of volume optimizer that does not do pairwise connections?</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        atoms : t.List[u.Atom]</span>
+<span class="sd">            list of atoms</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]]</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">order_atoms_by_molecule</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>  <span class="c1"># Every Molecules is a list of atoms, with the Molecule attribute as key</span>
+
+        <span class="c1"># attributes to be set in get_args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Number of restrained Atoms per molecule</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="c1"># Check for duplicates:</span>
+        <span class="k">for</span> <span class="n">a1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">a2</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
+                <span class="k">if</span> <span class="n">a1</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">a2</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING: Optimizer has duplicates in its atom list:  i=&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">a1</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Molecules</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; must be initialized with atoms from at least 2 Molecules.&quot;</span><span class="p">)</span></div>
+
+    <span class="c1"># TODO STRUC:Either use argumetn unpacking for all get arg functions or for none</span>
+<div class="viewcode-block" id="BruteForceRingOptimzer.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function : t.Callable[str]</span>
+<span class="sd">            A function that can get the input</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">            if the input function does not provide all arguments in the necessary format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># TODO: Consitency Change the string for self.algo to pca_2d as well</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">input_function</span><span class="p">(</span><span class="s1">&#39;List of all args for BruteForceOptimizer&#39;</span><span class="p">)</span>  <span class="c1"># TODO: See TODO at u.create_multi_dialog</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                             <span class="nb">int</span><span class="p">)</span>  <span class="c1"># TODO: Add condition for acceptable values, once check_or_convert accepts bool functions as cirterion</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span> <span class="s1">&#39;pca&#39;</span><span class="p">,</span> <span class="s2">&quot;dist&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span> <span class="s1">&#39;pca_2d&#39;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;convex_hull&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+                <span class="s2">&quot;A VolumeOptimizer needs to set at least 4 connections per Molecules pair. &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BruteForceRingOptimzer.connect_two_molecules"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.BruteForceRingOptimzer.connect_two_molecules">[docs]</a>    <span class="k">def</span> <span class="nf">connect_two_molecules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m1</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">],</span> <span class="n">m2</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span>
+        <span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">             connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        m1 :  t.List[u.Atom]</span>
+<span class="sd">            Molecule 1</span>
+<span class="sd">        m2 :  t.List[u.Atom]</span>
+<span class="sd">            Molecule 1</span>
+<span class="sd">        n</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        t.List[RestraintType._RestraintType]</span>
+<span class="sd">            Restraints between those atoms</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">         NotImplementedError</span>
+<span class="sd">            if _MoleculeRingOptimizer.connect_two_molecules is called directly.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="c1"># TODO: Each function call will cost time =&gt; For the Brute force Optimzer it might be better to have a single class for each case, instead of different functions</span>
+        <span class="c1"># 1) set the get value function and prepare the restraint positions (e.g ifthey need to be moved, normalized etc)</span>
+
+        <span class="c1"># TODO IMPORTANT, PROGRAM STRUCTURE: To generalize to different restraints and more sophisticated criteria, whihc do not only depend on atom position: Give restraints a property position, whichis set at creation.</span>
+        <span class="c1"># Then: Do not pass restraint positions but restraints themselves to calculate_value, which could then use the involved atoms as well.</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">:</span>
+            <span class="n">calculate_value</span> <span class="o">=</span> <span class="n">_calculate_value_convex_hull</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;pca&#39;</span><span class="p">:</span>
+            <span class="n">calculate_value</span> <span class="o">=</span> <span class="n">_calculate_value_unscaled_pca_2d</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;dist&#39;</span><span class="p">:</span>
+            <span class="n">calculate_value</span> <span class="o">=</span> <span class="n">_calculate_value_dist</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">+</span> <span class="s1">&#39;is not an known criterion for optimization.&#39;</span><span class="p">)</span>
+
+        <span class="n">potential_restraints</span> <span class="o">=</span> <span class="n">get_all_short_pair_restraints</span><span class="p">(</span><span class="n">m1</span> <span class="o">+</span> <span class="n">m2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NoOptimalSolutionException</span><span class="p">(</span><span class="s1">&#39;There are not enough restraints to connect the two molecules&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Iterate (recursively) over all combinations of self.n restraints from the potential restraints</span>
+        <span class="c1"># TODO: Generalize the algorithm to maximize anything using lambda functions</span>
+        <span class="n">count_precision_errors</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Precision Errors happen, when the points are to close to one plane for calculating QHull</span>
+        <span class="n">progres</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">progres_step</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">find_max_val_recursively</span><span class="p">(</span><span class="n">max_depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">current_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">restraint_indices</span><span class="o">=</span><span class="p">[]):</span>
+            <span class="c1"># #print(restraint_indices)</span>
+            <span class="c1"># if current_depth &lt; max_depth-1:</span>
+            <span class="c1">#     print(current_depth,end=&#39;-&#39;)</span>
+            <span class="c1">#     if current_depth == max_depth - 2:</span>
+            <span class="c1">#         print(&#39;---&#39;)</span>
+
+            <span class="c1"># print(restraint_indices,mv=1)</span>
+
+            <span class="k">if</span> <span class="n">current_depth</span> <span class="o">==</span> <span class="n">max_depth</span><span class="p">:</span>
+
+                <span class="c1"># Find positions of the restraints from their indices and return the volume of their Convex hull</span>
+                <span class="n">points</span> <span class="o">=</span> <span class="p">[</span><span class="n">restraint_positions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">restraint_indices</span><span class="p">]</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">max_val</span> <span class="o">=</span> <span class="n">calculate_value</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">QhullError</span><span class="p">:</span>  <span class="c1"># TODO: Catch corresponding math errors for the other calculate value function. consider creating a CalculationError that the differen functions can throw if necessarz. I think we save ime if we only have one try block instead oftwo neste ones</span>
+                    <span class="n">max_val</span><span class="p">,</span> <span class="n">best_ir</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">[]</span>
+                    <span class="k">nonlocal</span> <span class="n">count_precision_errors</span>
+                    <span class="n">count_precision_errors</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">return</span> <span class="n">max_val</span><span class="p">,</span> <span class="n">restraint_indices</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">current_depth</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">nonlocal</span> <span class="n">progres</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&gt;</span><span class="si">{:3d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">progres</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+                    <span class="n">progres</span> <span class="o">+=</span> <span class="n">progres_step</span>
+
+                <span class="n">max_val</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">best_restraint_indices</span> <span class="o">=</span> <span class="p">[]</span>
+
+                <span class="n">start</span> <span class="o">=</span> <span class="n">restraint_indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">restraint_indices</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="n">stop</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">max_depth</span> <span class="o">-</span> <span class="n">current_depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i_r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">):</span>
+                    <span class="n">new_val</span><span class="p">,</span> <span class="n">new_best_restraint_indices</span> <span class="o">=</span> <span class="n">find_max_val_recursively</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
+                                                                                   <span class="n">current_depth</span><span class="o">=</span><span class="n">current_depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                                                                   <span class="n">restraint_indices</span><span class="o">=</span><span class="n">restraint_indices</span> <span class="o">+</span> <span class="p">[</span>
+                                                                                       <span class="n">i_r</span><span class="p">])</span>
+
+                    <span class="k">if</span> <span class="n">new_val</span> <span class="o">&gt;</span> <span class="n">max_val</span><span class="p">:</span>
+                        <span class="n">max_val</span> <span class="o">=</span> <span class="n">new_val</span>
+                        <span class="n">best_restraint_indices</span> <span class="o">=</span> <span class="n">new_best_restraint_indices</span>
+                <span class="k">return</span> <span class="n">max_val</span><span class="p">,</span> <span class="n">best_restraint_indices</span>
+
+
+
+        <span class="k">def</span> <span class="nf">find_max_val_recursively</span><span class="p">(</span><span class="n">max_depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">current_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">restraint_indices</span><span class="o">=</span><span class="p">[]):</span>
+            <span class="k">if</span> <span class="n">current_depth</span> <span class="o">==</span> <span class="n">max_depth</span><span class="p">:</span>
+
+                <span class="c1"># Find positions of the restraints from their indices and return the volume of their Convex hull</span>
+                <span class="n">points</span> <span class="o">=</span> <span class="p">[</span><span class="n">restraint_positions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">restraint_indices</span><span class="p">]</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">max_val</span> <span class="o">=</span> <span class="n">calculate_value</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">QhullError</span><span class="p">:</span>  <span class="c1"># TODO: Catch corresponding math errors for the other calculate value function. consider creating a CalculationError that the differen functions can throw if necessarz. I think we save ime if we only have one try block instead oftwo neste ones</span>
+                    <span class="n">max_val</span><span class="p">,</span> <span class="n">best_ir</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">[]</span>
+                    <span class="k">nonlocal</span> <span class="n">count_precision_errors</span>
+                    <span class="n">count_precision_errors</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">return</span> <span class="n">max_val</span><span class="p">,</span> <span class="n">restraint_indices</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">current_depth</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">nonlocal</span> <span class="n">progres</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&gt;</span><span class="si">{:3d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">progres</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+                    <span class="n">progres</span> <span class="o">+=</span> <span class="n">progres_step</span>
+
+                <span class="n">max_val</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">best_restraint_indices</span> <span class="o">=</span> <span class="p">[]</span>
+
+                <span class="n">start</span> <span class="o">=</span> <span class="n">restraint_indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">restraint_indices</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="n">stop</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">max_depth</span> <span class="o">-</span> <span class="n">current_depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i_r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">):</span>
+                    <span class="n">point</span><span class="o">=</span> <span class="n">potential_restraints</span><span class="p">[</span><span class="n">i_r</span><span class="p">]</span>
+
+                    <span class="n">a1</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">atomA</span>
+                    <span class="n">a2</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">atomB</span>
+                    <span class="n">a1_already_in_use</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">a1</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">potential_restraints</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">atomA</span><span class="o">.</span><span class="n">id</span> <span class="ow">or</span> <span class="n">a1</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">potential_restraints</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">atomB</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">restraint_indices</span><span class="p">])</span>
+                    <span class="n">a2_already_in_use</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">a2</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">potential_restraints</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">atomA</span><span class="o">.</span><span class="n">id</span> <span class="ow">or</span> <span class="n">a2</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">potential_restraints</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">atomB</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">restraint_indices</span><span class="p">])</span>
+
+                    <span class="k">if</span><span class="p">(</span> <span class="n">a1_already_in_use</span> <span class="ow">or</span> <span class="n">a2_already_in_use</span><span class="p">):</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;in use!&quot;</span><span class="p">)</span>
+                        <span class="k">continue</span>
+
+                    <span class="n">new_val</span><span class="p">,</span> <span class="n">new_best_restraint_indices</span> <span class="o">=</span> <span class="n">find_max_val_recursively</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
+                                                                                   <span class="n">current_depth</span><span class="o">=</span><span class="n">current_depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                                                                   <span class="n">restraint_indices</span><span class="o">=</span><span class="n">restraint_indices</span> <span class="o">+</span> <span class="p">[</span>
+                                                                                       <span class="n">i_r</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">current_depth</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;max_val: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">max_val</span><span class="p">))</span>
+
+                    <span class="k">if</span> <span class="n">new_val</span> <span class="o">&gt;</span> <span class="n">max_val</span><span class="p">:</span>
+                        <span class="n">max_val</span> <span class="o">=</span> <span class="n">new_val</span>
+                        <span class="n">best_restraint_indices</span> <span class="o">=</span> <span class="n">new_best_restraint_indices</span>
+                    <span class="c1">#rank_res.extend(rank_res)</span>
+
+                <span class="k">return</span> <span class="n">max_val</span><span class="p">,</span> <span class="n">best_restraint_indices</span>
+
+        <span class="n">restraint_positions</span> <span class="o">=</span> <span class="p">[</span><span class="n">cog_distance_restraint</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">potential_restraints</span><span class="p">]</span>
+
+        <span class="n">maximal_value</span><span class="p">,</span> <span class="n">best_indices</span> <span class="o">=</span> <span class="n">find_max_val_recursively</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Value of the Optimal Solution: &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">{:05.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">maximal_value</span><span class="p">),</span> <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Checked  &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">binom</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">))</span> <span class="o">-</span> <span class="n">count_precision_errors</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; of &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">binom</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)))</span> <span class="o">+</span> <span class="s1">&#39; sets of restraints.&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Encountered &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count_precision_errors</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; precision_errors&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">potential_restraints</span><span class="p">[</span><span class="n">i_r</span><span class="p">]</span> <span class="k">for</span> <span class="n">i_r</span> <span class="ow">in</span> <span class="n">best_indices</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="MetaMoleculeRingOptimizer"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer">[docs]</a><span class="k">class</span> <span class="nc">MetaMoleculeRingOptimizer</span><span class="p">(</span><span class="n">_MoleculeRingOptimizer</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MetaMoleculeRingOptimizer.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Meta Optimizer which compares the solution of different Optimizers for each Molecule pair  and picks the best</span>
+
+<span class="sd">            Warning: As implemented now, it can NOT be generalized to other Optimizer types than RingOptimizers.</span>
+<span class="sd">            Warning: The complete solution of the BestMoleculesRingOPtimizer is NOT equal to any of the Optimizers it test. It will pick the best solution for each pair of molecules, leading to a different ring than any of the single Optimizers</span>
+<span class="sd">            Warning: As Implemented now, it can not deal with future Molecule Ring Optimizers, which might have additional arguments</span>
+
+<span class="sd">             TODO GENERALIZE: 1) Allow to indicate which Optimizers to include, instead of hardcoding all of them</span>
+<span class="sd">                              2) Allow to give the arguments for each single Optimizer, instead of using the same ones for each Optimizer(except of course criterion/update function.)</span>
+<span class="sd">              Would be perfect if we could pass Optimizers as arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+
+        <span class="c1"># Arguments set in get_args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sub_optimizers</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">_MoleculeRingOptimizer</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">t</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Arguments inherited from _MoleculeRingOptimzier, to be set in ger_args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>  <span class="c1"># criterion for how molecules should be sorted</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>  <span class="c1"># Number of restraints</span></div>
+
+<div class="viewcode-block" id="MetaMoleculeRingOptimizer.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            needs to be called by every Optimizer after its creation, t It uses an input function to find all arguments required by a certain instance of a _Filter</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_function : t.Callable[str]</span>
+<span class="sd">            A function that can get the input</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoReturn</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        BadArgumentException</span>
+<span class="sd">            if the input function does not provide all arguments in the necessary format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">input_function</span><span class="p">(</span><span class="s1">&#39;List of all args for BestMoleculeRingOptimizer&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+                <span class="s2">&quot;A MoleculeRingOptimizer_0_1 needs to set at least 2 connection per Molecules pair. &quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span>
+                                                                      <span class="s1">&#39;pca&#39;</span><span class="p">])</span>  <span class="c1"># would be nice to pass a function instead of just a description here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">check_or_convert_argument</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span> <span class="s1">&#39;pca_2d&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Create sub optimizers</span>
+        <span class="n">tree_algos</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;prim&quot;</span><span class="p">,</span> <span class="s2">&quot;cog&quot;</span><span class="p">,</span> <span class="s2">&quot;shortest&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;biased_avg&quot;</span><span class="p">]</span>  <span class="c1"># TODO: Remove Hardcoded algorithms and allow to pass a list of all algos of interest</span>
+
+        <span class="k">for</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">tree_algos</span><span class="p">:</span>
+            <span class="n">new_optimizer</span> <span class="o">=</span> <span class="n">TreeHeuristicOptimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>
+            <span class="n">new_optimizer</span><span class="o">.</span><span class="n">get_args</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span>
+                                              <span class="kc">None</span><span class="p">))</span>  <span class="c1"># TODO: Allow to use different kinds of Molecules Ring Optimizers, does not have to be TreeOptimizer</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sub_optimizers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_optimizer</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetaMoleculeRingOptimizer.connect_two_molecules"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.MetaMoleculeRingOptimizer.connect_two_molecules">[docs]</a>    <span class="k">def</span> <span class="nf">connect_two_molecules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m1</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">],</span> <span class="n">m2</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span>
+        <span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">],</span> <span class="n">n</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        m1</span>
+<span class="sd">        m2</span>
+<span class="sd">        n</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO:Move this block to get_args of _MoleculeRingOptimzer and make calculate value an atribute of MoelculeRing Optimzer.</span>
+        <span class="c1"># At the moment we have to put this block into make restraints and connect two molecules</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">==</span> <span class="s1">&#39;pca_2d&#39;</span><span class="p">:</span>
+            <span class="n">calculate_value</span> <span class="o">=</span> <span class="n">_calculate_value_unscaled_pca_2d</span>
+            <span class="c1"># print(&#39;Warning: Optimization of Molecule pairs is done using unscaled pca values&#39;,mv=4)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">==</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">:</span>
+            <span class="n">calculate_value</span> <span class="o">=</span> <span class="n">_calculate_value_convex_hull</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arrange_algo</span> <span class="o">+</span> <span class="s1">&#39;is not a known algorithm to arrange the molecules&#39;</span><span class="p">)</span>
+
+        <span class="n">best_restraint_set</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">value_of_best_set</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">best_algorithm</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">sub_optimizer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_optimizers</span><span class="p">:</span>
+            <span class="n">new_restraint_set</span> <span class="o">=</span> <span class="n">sub_optimizer</span><span class="o">.</span><span class="n">connect_two_molecules</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="n">calculate_value</span><span class="p">([</span><span class="n">cog_distance_restraint</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">new_restraint_set</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">new_value</span> <span class="o">&gt;</span> <span class="n">value_of_best_set</span><span class="p">:</span>
+                <span class="n">value_of_best_set</span> <span class="o">=</span> <span class="n">new_value</span>
+                <span class="n">best_restraint_set</span> <span class="o">=</span> <span class="n">new_restraint_set</span>
+                <span class="n">best_algorithm</span> <span class="o">=</span> <span class="n">sub_optimizer</span><span class="o">.</span><span class="n">algo</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best algorithm: &quot;</span><span class="p">,</span> <span class="n">best_algorithm</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">best_restraint_set</span></div></div>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Static Utilitiy functions for optimizers-&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="get_all_short_pair_restraints"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.get_all_short_pair_restraints">[docs]</a><span class="k">def</span> <span class="nf">get_all_short_pair_restraints</span><span class="p">(</span><span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">],</span> <span class="n">max_dis</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span>
+    <span class="n">Types</span><span class="o">.</span><span class="n">Distance_Restraint</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         finds all pairs of atoms within a certain cutoff distance of each other. Atoms withing the same molecules can are not connected</span>
+
+<span class="sd">         TODO: SPEED: first sort bymolecules and then only compare the molecule list, to avaiod all forbidden combinations of atoms within the samemolecules</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    atoms : t.List[u.Atom]</span>
+<span class="sd">        List of atoms</span>
+<span class="sd">    max_dis : float</span>
+<span class="sd">        maximal distance of two connected atoms in nm</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.List[RestraintType.Pair_Restraint]</span>
+<span class="sd">         A list of all connections, shorter than max_dis</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="n">max_dis_sq</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">max_dis</span> <span class="o">*</span> <span class="n">max_dis</span>
+
+    <span class="c1"># Check for all pairs of atoms if they are within the specified cutoff of each other. Try to minimize necessary calculations using shortcut function of and and or</span>
+    <span class="c1"># TODO: Instead of first checking if distance in all three spacial directions is , cutoff it might be quicker to first check x distance, then x^2 + y^2 distance and then to add z^2</span>
+    <span class="c1"># =&gt; Decrease cost in case of success a bit, increas cost in case of failure after first square. Decrease chance to onlzy fail after the last calculation</span>
+    <span class="n">__atom_pairs</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">Distance_Restraint</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i_a1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">a1</span> <span class="o">=</span> <span class="n">atoms</span><span class="p">[</span>
+            <span class="n">i_a1</span><span class="p">]</span>  <span class="c1"># Quicker to loop over index of a1 and then acess it once for all inner loops, than findix index of a1 once for every onner loop</span>
+        <span class="k">for</span> <span class="n">a2</span> <span class="ow">in</span> <span class="n">atoms</span><span class="p">[(</span><span class="n">i_a1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):]:</span>
+            <span class="k">if</span> <span class="n">a1</span><span class="o">.</span><span class="n">resi</span> <span class="o">!=</span> <span class="n">a2</span><span class="o">.</span><span class="n">resi</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a1</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">a2</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">max_dis</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a1</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">a2</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">max_dis</span> <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">a1</span><span class="o">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">a2</span><span class="o">.</span><span class="n">z</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">max_dis</span><span class="p">:</span>
+                <span class="n">dis_sq</span> <span class="o">=</span> <span class="p">(</span><span class="n">a1</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">a2</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">a1</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">a2</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">a1</span><span class="o">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">a2</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+                <span class="k">if</span> <span class="n">dis_sq</span> <span class="o">&lt;=</span> <span class="n">max_dis_sq</span><span class="p">:</span>
+                    <span class="n">__atom_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Types</span><span class="o">.</span><span class="n">Distance_Restraint</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">))</span>
+
+    <span class="c1"># Convert the atom pairs to restraints</span>
+    <span class="k">return</span> <span class="n">__atom_pairs</span></div>
+
+
+<div class="viewcode-block" id="maximal_spanning_tree_greedy"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.maximal_spanning_tree_greedy">[docs]</a><span class="k">def</span> <span class="nf">maximal_spanning_tree_greedy</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">Distance_Restraint</span><span class="p">],</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">priority_algo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> \
+        <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">Distance_Restraint</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finds a maximal spanning tree in which the nodes represent distance restraints and edges the distance between their middles.</span>
+<span class="sd">    The &#39;tree&#39; will be provided in the form of a list. Connectivity info is not explicitly given. Due to the working of Prims Algorithm it is guaranteed, that every vortex in the list is connected to one vortex before it in the list</span>
+<span class="sd">    WARNING: But it is not guaranteed that the edges are ordered by size</span>
+<span class="sd">    WARNING: Involves calculating distances between all Restraint pairs. =&gt; O(n!). Only use on preselected lists of connections</span>
+
+
+<span class="sd">    TODO: Implement different options for distance calculation within this function.</span>
+<span class="sd">    I think passing a function get_priority as argument would become really dirty really, quickly. But I can define some options as inner functions</span>
+<span class="sd">    BUT: Do I slow it down thisway. What is the cost of a function call?</span>
+
+<span class="sd">    Options i want: 1) Prim: Distance to farthest node in tree not yet in tree</span>
+<span class="sd">                    2) closest: Distance to closeest node in maximal_spanning_tree_prim)</span>
+<span class="sd">                    3) Average: Average distance to all nodes already in tree</span>
+
+<span class="sd">    Have to define priority_node as class for now, even though it is totally overkill. I need it to be mutable, so I can update priorities. But now I actually have to use opeator overloading to make it heapq compatible =&gt;</span>
+<span class="sd">    TODO: Find a better solution</span>
+
+<span class="sd">    Give each node its initial priority: The dstance to the FARTHEST node</span>
+<span class="sd">    Read carefully: I sacrificed readability to mimize having to call certain attributes to often. Use _ as . operator</span>
+
+<span class="sd">    TODO: Move those inner functions out, so they can be reused in othre places</span>
+<span class="sd">    Define the different Algorithms</span>
+
+<span class="sd">    TODO: The current setup is a bit confusing:</span>
+<span class="sd">    _update_priority_(v) accesses the newly chosen node from within the function. Would be cleaner to give list of chosen restraints as arg as well</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    potential_restraints :  t.List[u.connections]</span>
+<span class="sd">        List of connections (Pairwise Distance Restraints)</span>
+<span class="sd">    n : int</span>
+<span class="sd">         how many restraints should be set?</span>
+<span class="sd">    priority_algo : str</span>
+<span class="sd">        Which algorithm should be used to update priorities of not yet chosen nodes?</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.List[u.RestraintPair]</span>
+<span class="sd">        The tree in the form of Pairs of connections and their distances</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="k">class</span> <span class="nc">priority_node</span><span class="p">:</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">priority</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Used to assign priorities to nodes of a tree. A node can be any object. For speed reasons the node does not save the object itself, but only a index</span>
+<span class="sd">            indicating the position of the &#39;node&#39; in a list.</span>
+<span class="sd">            The &lt; (lt) operator is overloaded, to only compare by priority</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            priority : float</span>
+<span class="sd">            index : int</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">priority</span> <span class="o">=</span> <span class="n">priority</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>  <span class="c1"># index in list of potential restraints</span>
+            <span class="c1"># self.restraint = restraint</span>
+
+
+        <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">                 This is super dirty, because in python I cant even overload the , operator JUST for two p_nodes. This will now be used if i compare a priority_node to anything.</span>
+<span class="sd">                 (But not if I compare anything to a priority_node )</span>
+<span class="sd">                 =&gt; TODO: Kill it with fire</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            other</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">!=</span> <span class="n">priority_node</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s1">&#39;The &lt; (lt) operator is overloaded for priority_node. It should only be called tocompare it to another priority_node&#39;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">priority</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">priority</span>
+
+
+    <span class="k">def</span> <span class="nf">_update_priority_prim</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">priority_node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            The priority of the node is the MAXIMAL distance it has to any node in the tree</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">m_sq</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="n">chosen_v</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">v</span><span class="o">.</span><span class="n">priority</span><span class="p">:</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">priority</span> <span class="o">=</span> <span class="n">m_sq</span><span class="p">[</span><span class="n">chosen_v</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_update_priority_shortest</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">priority_node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            The priority of the_node is the SHORTEST distance to any node in the tree</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Shorter means -m &gt; priority</span>
+        <span class="k">if</span> <span class="n">m_sq</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="n">chosen_v</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">v</span><span class="o">.</span><span class="n">priority</span> <span class="ow">or</span> <span class="n">v</span><span class="o">.</span><span class="n">priority</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># TODO Find a more general way to initialize, so I do not have to check for 0</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">priority</span> <span class="o">=</span> <span class="n">m_sq</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="n">chosen_v</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_update_priority_cog</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">priority_node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Choose the node, farthest from the average position of all chosen restraints</span>
+
+<span class="sd">            TODO: Would be Quicker if we did not have to calculate center from scratch, but could keep it saved outside of fkt and update it</span>
+<span class="sd">            In return we make no use of the distance matrix =&gt; Maybe make a different function for this</span>
+
+<span class="sd">         &quot;&quot;&quot;</span>
+
+        <span class="n">x_cog</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">y_cog</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">z_cog</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">chosen_nodes</span><span class="p">:</span>
+            <span class="n">x_cog</span> <span class="o">+=</span> <span class="n">pos_x</span><span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+            <span class="n">y_cog</span> <span class="o">+=</span> <span class="n">pos_y</span><span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+            <span class="n">z_cog</span> <span class="o">+=</span> <span class="n">pos_z</span><span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="n">x_cog</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chosen_nodes</span><span class="p">)</span>
+        <span class="n">y_cog</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chosen_nodes</span><span class="p">)</span>
+        <span class="n">z_cog</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chosen_nodes</span><span class="p">)</span>
+
+        <span class="n">x_node</span> <span class="o">=</span> <span class="n">pos_x</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">y_node</span> <span class="o">=</span> <span class="n">pos_y</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">z_node</span> <span class="o">=</span> <span class="n">pos_z</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="c1"># TODO: Speed up by doing intermediate checks (if x_dis&gt;dis_sq do not calulate further)</span>
+
+        <span class="c1"># v.prioirity changes everytime</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">priority</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x_cog</span> <span class="o">-</span> <span class="n">x_node</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y_cog</span> <span class="o">-</span> <span class="n">y_node</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">z_cog</span> <span class="o">-</span> <span class="n">z_node</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_priority_biased_avg</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">priority_node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Choose the node, farthest from the average position of all chosen restraints</span>
+
+<span class="sd">            # TODO: Implement the avg method: Average of distance to all chosen restraints, not distance to cog (average_position)</span>
+<span class="sd">            # TODO: Ithink we could get a similar result quicker if we first simply summed the squares ofthe distances and then  took an cubic or bigger root?</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="n">bias_exponent</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># Must be between 0 and 1</span>
+        <span class="n">corrected_exponent</span> <span class="o">=</span> <span class="n">bias_exponent</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># Corrected Exponent can be used on the matrix containing the squared distances directlz</span>
+        <span class="n">sum_of_biased_distances</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">old_node</span> <span class="ow">in</span> <span class="n">chosen_nodes</span><span class="p">:</span>
+            <span class="n">sum_of_biased_distances</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">m_sq</span><span class="p">[</span><span class="n">old_node</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">],</span> <span class="n">corrected_exponent</span><span class="p">)</span><span class="c1">#**2</span>
+
+        <span class="n">v</span><span class="o">.</span><span class="n">priority</span> <span class="o">=</span> <span class="n">sum_of_biased_distances</span>
+
+    <span class="c1"># TODO: Implement the avg method: Average of distance to all chosen restraints, not distance to cog (average_position)</span>
+
+    <span class="n">update_priority</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">priority_algo</span> <span class="o">==</span> <span class="s1">&#39;prim&#39;</span><span class="p">:</span>
+        <span class="n">update_priority</span> <span class="o">=</span> <span class="n">_update_priority_prim</span>
+    <span class="k">elif</span> <span class="n">priority_algo</span> <span class="o">==</span> <span class="s1">&#39;shortest&#39;</span><span class="p">:</span>
+        <span class="n">update_priority</span> <span class="o">=</span> <span class="n">_update_priority_shortest</span>
+    <span class="k">elif</span> <span class="n">priority_algo</span> <span class="o">==</span> <span class="s1">&#39;cog&#39;</span><span class="p">:</span>
+        <span class="n">update_priority</span> <span class="o">=</span> <span class="n">_update_priority_cog</span>
+    <span class="k">elif</span> <span class="n">priority_algo</span> <span class="o">==</span> <span class="s1">&#39;biased_avg&#39;</span><span class="p">:</span>
+        <span class="n">update_priority</span> <span class="o">=</span> <span class="n">_update_priority_biased_avg</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+            <span class="n">priority_algo</span> <span class="o">+</span> <span class="s1">&#39; is not an acceptable algorithm for maximal_spanning_tree_heuristic(...). Accepted values are: </span><span class="se">\&#39;</span><span class="s1">prim</span><span class="se">\&#39;</span><span class="s1"> and </span><span class="se">\&#39;</span><span class="s1">shortest</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># STEP 0) Check if there are enough restraints</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">NoOptimalSolutionException</span><span class="p">(</span><span class="s2">&quot;There are not enough possible restraints to connect the two molecules&quot;</span><span class="p">)</span>
+
+    <span class="c1"># STEP 1) Find positions of all restraints</span>
+    <span class="n">pos_x</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span> <span class="o">=</span> <span class="p">[(</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">potential_restraints</span><span class="p">]</span>
+    <span class="n">pos_y</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span> <span class="o">=</span> <span class="p">[(</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">potential_restraints</span><span class="p">]</span>
+    <span class="n">pos_z</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span> <span class="o">=</span> <span class="p">[(</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">potential_restraints</span><span class="p">]</span>
+
+    <span class="c1"># STEP 2) Find pairwise distances of all restraints</span>
+
+    <span class="n">m_sq</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Save squared distances. No need to waste time taking the sqrt</span>
+    <span class="c1"># TODO SPEED: saving coords of r1 instead of calling them each time</span>
+    <span class="c1"># TODO: Is there really no better 2d data structure than that? Maybe I implement it myself as array using multiplication to get 2d</span>
+
+    <span class="c1"># Create the empty matrix</span>
+    <span class="n">empty_line</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">)):</span>
+        <span class="n">empty_line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">)):</span>
+        <span class="n">m_sq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">empty_line</span><span class="p">[:])</span>  <span class="c1"># Slicing necessary: attach a copy of new_line, do NOT attach the samelist several times</span>
+
+    <span class="c1"># Fill matrix with distance_sq values</span>
+    <span class="k">for</span> <span class="n">i_r1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i_r2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i_r1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">)):</span>
+            <span class="n">dis_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(((</span><span class="n">pos_x</span><span class="p">[</span><span class="n">i_r1</span><span class="p">]</span> <span class="o">-</span> <span class="n">pos_x</span><span class="p">[</span><span class="n">i_r2</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">pos_y</span><span class="p">[</span><span class="n">i_r1</span><span class="p">]</span> <span class="o">-</span> <span class="n">pos_y</span><span class="p">[</span><span class="n">i_r2</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">pos_z</span><span class="p">[</span><span class="n">i_r1</span><span class="p">]</span> <span class="o">-</span> <span class="n">pos_z</span><span class="p">[</span><span class="n">i_r2</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">m_sq</span><span class="p">[</span><span class="n">i_r1</span><span class="p">][</span><span class="n">i_r2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dis_sq</span>
+            <span class="n">m_sq</span><span class="p">[</span><span class="n">i_r2</span><span class="p">][</span><span class="n">i_r1</span><span class="p">]</span> <span class="o">=</span> <span class="n">dis_sq</span>
+        <span class="n">m_sq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>  <span class="c1"># append, not extend.</span>
+    <span class="c1">#</span>
+    <span class="c1"># Print Matrix to check format</span>
+    <span class="c1"># for i in range(len(m_sq)):</span>
+    <span class="c1">#     print(&#39;&#39;)</span>
+    <span class="c1">#     for j in range(len(m_sq[i])):</span>
+    <span class="c1">#         print(str(m_sq[i][j]),end= &#39; &#39;)</span>
+
+    <span class="c1"># STEP 3) Set up priority queue and Choose the first node: One of the nodes, which is part of the longest edge</span>
+
+    <span class="n">first_node</span> <span class="o">=</span> <span class="n">priority_node</span><span class="p">(</span><span class="n">priority</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i_line</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i_col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i_line</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">m_sq</span><span class="p">[</span><span class="n">i_line</span><span class="p">][</span><span class="n">i_col</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">first_node</span><span class="o">.</span><span class="n">priority</span><span class="p">:</span>
+                <span class="n">first_node</span> <span class="o">=</span> <span class="n">priority_node</span><span class="p">(</span><span class="n">priority</span><span class="o">=</span><span class="n">m_sq</span><span class="p">[</span><span class="n">i_line</span><span class="p">][</span><span class="n">i_col</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">i_line</span><span class="p">)</span>
+
+    <span class="n">priority_q</span> <span class="o">=</span> <span class="p">[</span><span class="n">priority_node</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i_r</span><span class="p">)</span> <span class="k">for</span> <span class="n">i_r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">potential_restraints</span><span class="p">))]</span>
+    <span class="n">chosen_nodes</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">list</span><span class="p">[</span><span class="n">priority_node</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">first_node</span><span class="p">]</span>
+    <span class="n">priority_q</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">priority_q</span><span class="p">[</span><span class="n">first_node</span><span class="o">.</span><span class="n">index</span><span class="p">])</span>  <span class="c1"># Only works here because priority_q is still a copy of potential restraints</span>
+    <span class="c1"># ANCHOR 20Mar M: Check if correct ind is removed</span>
+
+    <span class="c1"># STEP 4) Update priority of all  nodes, according to distance to FARTHEST (for pure Prim algo) node that is already in tree</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">chosen_nodes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="c1"># Update priorities</span>
+        <span class="n">chosen_v</span> <span class="o">=</span> <span class="n">chosen_nodes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Last node that was selected</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">priority_q</span><span class="p">:</span>
+            <span class="n">update_priority</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">new_node</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">priority_q</span><span class="p">)</span>
+        <span class="c1">#print(&quot;ID: &quot;+str([n.index for n in priority_q]), mv=2)</span>
+        <span class="c1">#print(&quot;Priorities: &quot;+str([n.priority for n in priority_q]), mv=2)</span>
+
+        <span class="c1">#Fix for Ties - break wit cog</span>
+        <span class="n">cog_threshold</span> <span class="o">=</span> <span class="mf">0.3</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">update_priority</span> <span class="o">==</span> <span class="n">_update_priority_shortest</span><span class="p">):</span>
+            <span class="n">subpriority_q</span> <span class="o">=</span> <span class="p">[</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">priority_q</span> <span class="k">if</span><span class="p">(</span><span class="n">new_node</span><span class="o">.</span><span class="n">priority</span><span class="o">-</span><span class="n">cog_threshold</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">.</span><span class="n">priority</span><span class="p">)]</span>
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">subpriority_q</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">):</span>
+                <span class="p">[</span><span class="n">_update_priority_cog</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">subpriority_q</span><span class="p">]</span>
+                <span class="n">new_node</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">priority_q</span> <span class="k">if</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">subpriority_q</span><span class="p">)</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">n</span><span class="o">.</span><span class="n">index</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="c1">#print(&quot;SUB-ID: &quot; + str([n.index for n in subpriority_q]), mv=2)</span>
+                <span class="c1">#print(&quot;SUB-Priorities: &quot; + str([n.priority for n in subpriority_q]), mv=2)</span>
+
+
+
+        <span class="c1">#print(&quot;chose: &quot;, new_node.index, new_node.priority, mv=2)</span>
+        <span class="n">priority_q</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+        <span class="n">chosen_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">potential_restraints</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">chosen_nodes</span><span class="p">]</span></div>
+
+<span class="n">priority_node</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;priority_node&#39;</span><span class="p">,</span> <span class="s1">&#39;priority node&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_calculate_value_dist</span><span class="p">(</span><span class="n">restraint_pos</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]])</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">restraint_pos</span><span class="p">)</span>
+    <span class="n">eucledean_dist</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">([</span><span class="n">a1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">a2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">a2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">a2</span><span class="p">[</span><span class="mi">2</span><span class="p">]])))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">eucledean_dist</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">)</span> <span class="k">for</span> <span class="n">a2</span> <span class="ow">in</span> <span class="n">restraint_pos</span><span class="p">[</span><span class="n">ind</span><span class="p">:]])</span> <span class="k">for</span>  <span class="n">ind</span><span class="p">,</span> <span class="n">a1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">restraint_pos</span><span class="p">)]),</span> <span class="mi">5</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="_calculate_value_convex_hull"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._calculate_value_convex_hull">[docs]</a><span class="k">def</span> <span class="nf">_calculate_value_convex_hull</span><span class="p">(</span><span class="n">restraint_pos</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]])</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate the conves hull volume of a set of restraint cogs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    restraint_pos</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        volume of the convex hull</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ConvexHull</span><span class="p">(</span><span class="n">restraint_pos</span><span class="p">)</span><span class="o">.</span><span class="n">volume</span></div>
+
+
+<div class="viewcode-block" id="_calculate_value_unscaled_pca_2d"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._calculate_value_unscaled_pca_2d">[docs]</a><span class="k">def</span> <span class="nf">_calculate_value_unscaled_pca_2d</span><span class="p">(</span><span class="n">restraint_pos</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Quantity to optimize is the 2d-volume of the PCA of the restraint positions</span>
+
+<span class="sd">            TODO: Test!!!!!!</span>
+<span class="sd">            TODO: Think about other possibilities: 3d-volume / covariance / pca of all involved atoms instead of restraint</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    restraint_pos</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        eigenvalue product -&gt; in twoD, a square area of &quot;deviation&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">eigen_vals</span> <span class="o">=</span> <span class="n">Rdkit_Functions</span><span class="o">.</span><span class="n">_calc_pca_without_scaling</span><span class="p">(</span><span class="n">restraint_pos</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">eigen_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">eigen_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># TODO GEneralize for other dimensions</span></div>
+
+
+<div class="viewcode-block" id="calculate_value_pca_relative_to_pca_of_both_molecules"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.calculate_value_pca_relative_to_pca_of_both_molecules">[docs]</a><span class="k">def</span> <span class="nf">calculate_value_pca_relative_to_pca_of_both_molecules</span><span class="p">(</span><span class="n">restraint_pos</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate eigenvalues for restraints-cogs</span>
+<span class="sd">        Todo: to be removed</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    restraint_pos</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    List[float]</span>
+<span class="sd">        eigenvals</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eigen_vals</span> <span class="o">=</span> <span class="n">Rdkit_Functions</span><span class="o">.</span><span class="n">_calc_pca_without_scaling</span><span class="p">(</span><span class="n">restraint_pos</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_calculate_value_scaled_pca_2d"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer._calculate_value_scaled_pca_2d">[docs]</a><span class="k">def</span> <span class="nf">_calculate_value_scaled_pca_2d</span><span class="p">(</span><span class="n">restraint_pos</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Todo: to be removed</span>
+<span class="sd">            # TODO: Scaling before pca is not really reasonable, because we do prefer a big relative variance in the biggest dimensions</span>
+<span class="sd">            # TODO: Function returns a lot of stuff we do not need.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    restraint_pos</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+        <span class="s1">&#39;Scaled PCA is not implemented. WARNING: The tools_Rdkit function calc_pca only CENTERS the atoms, it does not scale!!!!&#39;</span><span class="p">)</span>
+    <span class="n">eigen_vals</span> <span class="o">=</span> <span class="n">Rdkit_Functions</span><span class="o">.</span><span class="n">_calc_pca</span><span class="p">(</span><span class="n">restraint_pos</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">eigen_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">eigen_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># TODO GEneralize for other dimensions</span></div>
+
+
+<span class="c1"># ------------utilites------------------------------------------</span>
+<div class="viewcode-block" id="cog_distance_restraint"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.cog_distance_restraint">[docs]</a><span class="k">def</span> <span class="nf">cog_distance_restraint</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">Types</span><span class="o">.</span><span class="n">Distance_Restraint</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">t</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the cog of a distance restraint</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r: Types.Distance_Restraint</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple[float, float, float]</span>
+<span class="sd">        the cog between two atoms building a distance restraint</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="maximal_weight_ring"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.maximal_weight_ring">[docs]</a><span class="k">def</span> <span class="nf">maximal_weight_ring</span><span class="p">(</span><span class="n">edge_list</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">value_list</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">n_nodes</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    chooses from a list of edges the ones that form the biggest ring including all nodes.</span>
+<span class="sd">    Nodes are considered as ints (indices) and edges as tuples of nodes</span>
+
+<span class="sd">    @Warning: if the input is NOT a fully connected graph there might be no solution</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    edge_list : t.List[t.Tuple[int,int]]</span>
+<span class="sd">        list of all edges as tuples of ints</span>
+<span class="sd">    value_list : t.List[float]</span>
+<span class="sd">        A list of all edge weights</span>
+<span class="sd">    n_nodes : int</span>
+<span class="sd">        Number of nodes</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.List[ind]</span>
+<span class="sd">         Indices of the chosen edges</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># 0)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">value_list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+            <span class="s1">&#39;The lengths of the list inidcating edges weights and edges must be equal&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span> <span class="o">==</span> <span class="n">n_nodes</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_nodes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING: Method maximal_weight_ring has not been tested for not fully connected graphs&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_edge_is_acceptable</span><span class="p">(</span><span class="n">__i_1</span><span class="p">,</span> <span class="n">__i_2</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;warning: Call BEFORE  new edge is added&#39;&#39;&#39;</span>
+        <span class="c1"># 1) Does not cause a fork (i.e create a node with 3 edges)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">__i_1</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">__i_2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># print(__i_1,__i_2,&#39;causes fork&#39;,mv=1)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># 2 Does not close a Ring. Much easier here than in general Kruskal: Because there are no forks: Just follow the chain from one node of the new edge and see if you can reach the other node</span>
+        <span class="c1"># Start at node1 and see if i can reach node 2</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">__i_1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">i_current_node</span> <span class="o">=</span> <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">__i_1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">coming_from</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_current_node</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">__i_1</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i_current_node</span><span class="p">,</span> <span class="n">coming_from</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># Follow the chain until you reach the other node of the new edge, or a loose end</span>
+        <span class="c1"># print(&#39; &#39;,mv=1)</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">i_current_node</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i_current_node</span> <span class="o">==</span> <span class="n">__i_2</span><span class="p">:</span>  <span class="c1"># Edge closes a ring</span>
+                <span class="c1"># print(__i_1, __i_2, &#39;closes ring&#39;, mv=1)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_current_node</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>  <span class="c1"># Chain goes on</span>
+                <span class="n">i_next_node</span> <span class="o">=</span> <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_current_node</span><span class="p">][</span><span class="mi">0</span> <span class="k">if</span> <span class="n">coming_from</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="n">coming_from</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_next_node</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">i_current_node</span> <span class="k">else</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">i_next_node</span><span class="p">,</span> <span class="n">coming_from</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+
+            <span class="c1"># print(i_current_node, &#39;-.&gt;&#39;, i_next_node, mv=1)</span>
+            <span class="n">i_current_node</span> <span class="o">=</span> <span class="n">i_next_node</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># 1) List of indices used to acess edges sorted by values</span>
+    <span class="n">sorted_by_value</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">value_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 2) Iterate over edges in order of sorted list</span>
+    <span class="n">neighbours_of_node</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">dummy_var</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+        <span class="n">n_nodes</span><span class="p">)]</span>  <span class="c1"># Carefull: [[]]*n_nodes will fill the list with the SAME empty list n_nodes times</span>
+    <span class="n">i_chosen_edges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># TODO: Instead of iterating of ind, loop while total connections not big enough</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">sorted_by_value</span><span class="p">:</span>  <span class="c1"># CARFEULL: ind is reused in while loop to find last edge</span>
+        <span class="n">i_m1</span> <span class="o">=</span> <span class="n">edge_list</span><span class="p">[</span><span class="n">ind</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">i_m2</span> <span class="o">=</span> <span class="n">edge_list</span><span class="p">[</span><span class="n">ind</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1">#        print(neighbours_of_node,mv=1)</span>
+
+        <span class="c1"># Condition is stricter but easier to calculate than Kruskal</span>
+        <span class="c1"># ) 1) There can be no  node with more than two edges (because in the end we want to have a ring</span>
+        <span class="c1"># ) 2) We can not close the ring (because the last edge we add, will close it)</span>
+        <span class="c1">#   =&gt; Because no node can have more than 2 edges that means there must always be at least one node with one edge. (Actually there must be two,but it is impossible that there is just one as long as no rings are allowed.</span>
+
+        <span class="k">if</span> <span class="n">_edge_is_acceptable</span><span class="p">(</span><span class="n">i_m1</span><span class="p">,</span> <span class="n">i_m2</span><span class="p">):</span>
+            <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_m1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i_m2</span><span class="p">)</span>
+            <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_m2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i_m1</span><span class="p">)</span>
+            <span class="n">i_chosen_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ADDING&#39;</span><span class="p">,</span> <span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;(value =  &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">{:05.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value_list</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">i_chosen_edges</span><span class="p">)</span> <span class="o">==</span> <span class="n">n_nodes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">last_position</span> <span class="o">=</span> <span class="n">sorted_by_value</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;DISCARDING&#39;</span><span class="p">,</span> <span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># For loop quit without break\</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s1">&#39;Kruskal-like algorithm faild to connect all molecules. This can only happen if there is a serious bug in the Kruskal algorithm, or the input is not a fully connected graph.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># TODO: Clean: Start a new for loop, which starts where the one above ended. Do not check in loop if ind is bigger than possible, but just check with a for else statement that an edge was found</span>
+    <span class="c1"># ADD the last edge: Does close ring, but is not allowed to fork</span>
+    <span class="n">found_last_edge</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">sorted_by_value</span><span class="p">[</span><span class="n">last_position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">i_m1</span> <span class="o">=</span> <span class="n">edge_list</span><span class="p">[</span><span class="n">ind</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">i_m2</span> <span class="o">=</span> <span class="n">edge_list</span><span class="p">[</span><span class="n">ind</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_m1</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_m2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ADDING&#39;</span><span class="p">,</span> <span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;(value =  &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">{:05.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value_list</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">i_chosen_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;DISCARDING&#39;</span><span class="p">,</span> <span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># No break =&gt; Did not find last edge</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s1">&#39;Kruskal-like algorithm faild to connect all nodes. This can only happen if there is a serious bug in the Kruskal algorithm, or the input has a bad format&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">i_chosen_edges</span></div>
+
+
+<div class="viewcode-block" id="maximal_weight_chain"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Optimizer.maximal_weight_chain">[docs]</a><span class="k">def</span> <span class="nf">maximal_weight_chain</span><span class="p">(</span><span class="n">edge_list</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">value_list</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">n_nodes</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    chooses from a list of edges the ones that form the biggest chain including all nodes.</span>
+<span class="sd">    Nodes are considered as ints (indices) and edges as tuples of nodes</span>
+
+<span class="sd">    @Warning: if the input is NOT a fully connected graph there might be no solution</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    edge_list : t.List[t.Tuple[int,int]]</span>
+<span class="sd">        list of all edges as tuples of ints</span>
+<span class="sd">    value_list : t.List[float]</span>
+<span class="sd">        A list of all edge weights</span>
+<span class="sd">    n_nodes : int</span>
+<span class="sd">        Number of nodes</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t.List[ind]</span>
+<span class="sd">         Indices of the chosen edges</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># 0)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">value_list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">u</span><span class="o">.</span><span class="n">BadArgumentException</span><span class="p">(</span>
+            <span class="s1">&#39;The lengths of the list inidcating edges weights and edges must be equal&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span> <span class="o">==</span> <span class="n">n_nodes</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_nodes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING: Method maximal_weight_ring has not been tested for not fully connected graphs&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_edge_is_acceptable</span><span class="p">(</span><span class="n">__i_1</span><span class="p">,</span> <span class="n">__i_2</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;warning: Call BEFORE  new edge is added&#39;&#39;&#39;</span>
+        <span class="c1"># 1) Does not cause a fork (i.e create a node with 3 edges)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">__i_1</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">__i_2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># print(__i_1,__i_2,&#39;causes fork&#39;,mv=1)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># 2 Does not close a Ring. Much easier here than in general Kruskal: Because there are no forks: Just follow the chain from one node of the new edge and see if you can reach the other node</span>
+        <span class="c1"># Start at node1 and see if i can reach node 2</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">__i_1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">i_current_node</span> <span class="o">=</span> <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">__i_1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">coming_from</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_current_node</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">__i_1</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i_current_node</span><span class="p">,</span> <span class="n">coming_from</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># Follow the chain until you reach the other node of the new edge, or a loose end</span>
+        <span class="c1"># print(&#39; &#39;,mv=1)</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">i_current_node</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i_current_node</span> <span class="o">==</span> <span class="n">__i_2</span><span class="p">:</span>  <span class="c1"># Edge closes a ring</span>
+                <span class="c1"># print(__i_1, __i_2, &#39;closes ring&#39;, mv=1)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_current_node</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>  <span class="c1"># Chain goes on</span>
+                <span class="n">i_next_node</span> <span class="o">=</span> <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_current_node</span><span class="p">][</span><span class="mi">0</span> <span class="k">if</span> <span class="n">coming_from</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="n">coming_from</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_next_node</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">i_current_node</span> <span class="k">else</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">i_next_node</span><span class="p">,</span> <span class="n">coming_from</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+
+            <span class="c1"># print(i_current_node, &#39;-.&gt;&#39;, i_next_node, mv=1)</span>
+            <span class="n">i_current_node</span> <span class="o">=</span> <span class="n">i_next_node</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># 1) List of indices used to acess edges sorted by values</span>
+    <span class="n">sorted_by_value</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">value_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 2) Iterate over edges in order of sorted list</span>
+    <span class="n">neighbours_of_node</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">dummy_var</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+        <span class="n">n_nodes</span><span class="p">)]</span>  <span class="c1"># Carefull: [[]]*n_nodes will fill the list with the SAME empty list n_nodes times</span>
+    <span class="n">i_chosen_edges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># TODO: Instead of iterating of ind, loop while total connections not big enough</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">sorted_by_value</span><span class="p">:</span>  <span class="c1"># CARFEULL: ind is reused in while loop to find last edge</span>
+        <span class="n">i_m1</span> <span class="o">=</span> <span class="n">edge_list</span><span class="p">[</span><span class="n">ind</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">i_m2</span> <span class="o">=</span> <span class="n">edge_list</span><span class="p">[</span><span class="n">ind</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1">#        print(neighbours_of_node,mv=1)</span>
+
+        <span class="c1"># Condition is stricter but easier to calculate than Kruskal</span>
+        <span class="c1"># ) 1) There can be no  node with more than two edges (because in the end we want to have a ring</span>
+        <span class="c1"># ) 2) We can not close the ring (because the last edge we add, will close it)</span>
+        <span class="c1">#   =&gt; Because no node can have more than 2 edges that means there must always be at least one node with one edge. (Actually there must be two,but it is impossible that there is just one as long as no rings are allowed.</span>
+
+        <span class="k">if</span> <span class="n">_edge_is_acceptable</span><span class="p">(</span><span class="n">i_m1</span><span class="p">,</span> <span class="n">i_m2</span><span class="p">):</span>
+            <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_m1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i_m2</span><span class="p">)</span>
+            <span class="n">neighbours_of_node</span><span class="p">[</span><span class="n">i_m2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i_m1</span><span class="p">)</span>
+            <span class="n">i_chosen_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ADDING&#39;</span><span class="p">,</span> <span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;(value =  &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">{:05.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value_list</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">i_chosen_edges</span><span class="p">)</span> <span class="o">==</span> <span class="n">n_nodes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">last_position</span> <span class="o">=</span> <span class="n">sorted_by_value</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;DISCARDING&#39;</span><span class="p">,</span> <span class="n">i_m1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i_m2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>   <span class="c1"># For loop quit without break\</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s1">&#39;Kruskal-like algorithm faild to connect all molecules. This can only happen if there is a serious bug in the Kruskal algorithm, or the input is not a fully connected graph.&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">i_chosen_edges</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

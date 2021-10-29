@@ -1,0 +1,37 @@
+restraintmaker.algorithm package
+================================
+
+Submodules
+----------
+
+restraintmaker.algorithm.Filter module
+--------------------------------------
+
+.. automodule:: restraintmaker.algorithm.Filter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+restraintmaker.algorithm.Optimizer module
+-----------------------------------------
+
+.. automodule:: restraintmaker.algorithm.Optimizer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+restraintmaker.algorithm.Selection module
+-----------------------------------------
+
+.. automodule:: restraintmaker.algorithm.Selection
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: restraintmaker.algorithm
+   :members:
+   :undoc-members:
+   :show-inheritance:

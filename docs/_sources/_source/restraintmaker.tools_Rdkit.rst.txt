@@ -1,0 +1,21 @@
+restraintmaker.tools\_Rdkit package
+===================================
+
+Submodules
+----------
+
+restraintmaker.tools\_Rdkit.Rdkit\_Functions module
+---------------------------------------------------
+
+.. automodule:: restraintmaker.tools_Rdkit.Rdkit_Functions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: restraintmaker.tools_Rdkit
+   :members:
+   :undoc-members:
+   :show-inheritance:
