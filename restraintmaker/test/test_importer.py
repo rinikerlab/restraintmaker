@@ -42,12 +42,12 @@ class test_Importer(unittest.TestCase):
 
 
     def test_Importer_Gromos_construct(self):
-        gromos_importer = Importer.Gromos_Distance_Restraint_Importer(self.all_atoms1)
+        gromos_importer = Importer.import_Gromos_Distance_Restraints(self.all_atoms1)
         print(vars(gromos_importer))
 
     def test_Importer_Gromos_import_file_notFound(self):
         try:
-            gromos_importer = Importer.Gromos_Distance_Restraint_Importer(self.all_atoms1)
+            gromos_importer = Importer.import_Gromos_Distance_Restraints(self.all_atoms1)
             gromos_importer.get_args(lambda x: self.in_disres1+"df")
             print(vars(gromos_importer))
             raise Exception("There should be an Error!")
@@ -58,14 +58,14 @@ class test_Importer(unittest.TestCase):
     def test_Importer_Gromos_import_disresDat(self):
         # Atom Ifds of all Pair restraints
         print("SubTest1")
-        gromos_importer = Importer.Gromos_Distance_Restraint_Importer(self.all_atoms1)
+        gromos_importer = Importer.import_Gromos_Distance_Restraints(self.all_atoms1)
         gromos_importer.get_args(lambda x: (self.in_disres1))
         disres1 = gromos_importer.import_restraints()
         print("\n".join(map(str, disres1)))
         print()
 
         print("SubTest2")
-        gromos_importer = Importer.Gromos_Distance_Restraint_Importer(self.all_atoms2)
+        gromos_importer = Importer.import_Gromos_Distance_Restraints(self.all_atoms2)
         gromos_importer.get_args(lambda x: (self.in_disres2))
         disres2 = gromos_importer.import_restraints()
 

@@ -287,7 +287,7 @@ class PairSelection(LimitedSelection):
         super().get_args(lambda *args: 2)
 
 
-class UniversalSelection(_Selection):
+class AllSelection(_Selection):
 
     def __init__(self, all_atoms: t.List[u.Atom]):
         """

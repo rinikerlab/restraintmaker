@@ -59,7 +59,9 @@ class Logic_Handler:
         self.selected_restraints: t.List[Types._Restraint] = []
 
         # Define Restraint-Types
-        self.available_restraint_types = u.get_all_subclasses(Types._Restraint)
+        self.all_restraint_types = u.get_all_subclasses(Types._Restraint)
+        self.available_restraint_types = []
+
         self.current_restraint_type = None
         self.my_restraint = None
 
@@ -84,18 +86,18 @@ class Logic_Handler:
         self.my_optimizer = None
 
         # Define-Exporter-Types
+        self.all_exporter_types = u.get_all_subclasses(Exporter._Exporter)
         self.available_exporter_types = u.get_all_subclasses(Exporter._Exporter)
         self.current_exporter_type = None
         self.my_exporter = None
 
         # Modes & Action_States (Modes: What do to atoms, when they are selected. Action states: Which actions are possible right now)
         # which contains one attribute indicating actions AND one for each mode
-        self.select_or_delete_mode = True  # True = select, False = delte
-        self.atom_or_restraint_mode = True  # True = atom, False = Restraint
 
         self._action_states: dict = {
             'toggle_select_delete': program_states.ActionState.ALWAYS_ENABLED,
             'toggle_atom_restraint': program_states.ActionState.ALWAYS_ENABLED,
+            'Reset':  program_states.ActionState.ALWAYS_ENABLED,
             'Importer': program_states.ActionState.ALWAYS_DISABLED,
             'Restraint': program_states.ActionState.ALWAYS_DISABLED,
             'Selection': program_states.ActionState.ALWAYS_DISABLED,
@@ -103,7 +105,12 @@ class Logic_Handler:
             'Optimizer': program_states.ActionState.ALWAYS_DISABLED,
             'Exporter': program_states.ActionState.ALWAYS_DISABLED,
             'Done': program_states.ActionState.ALWAYS_ENABLED}
+
+        #initialize
+        self.set_mode(select_delete=True, atom_restraint=True)
         self.set_action_states()
+        self._set_restraint_type(Types.Distance_Restraint)
+
 
     """
         event_functions
@@ -234,19 +241,22 @@ class Logic_Handler:
 
         # 'Depending' on the mode some actions (e.g creating restraints) are not possible
 
-        # Select or delte atoms mode
+        # Select or delete atoms mode
         if self.atom_or_restraint_mode:
-            self._set_restraint_type(None)  # restraint Option not needed
+            self.available_restraint_types = [x for x in self.all_restraint_types if(x.optimizable)]
+            set_type = self.current_restraint_type if(self.current_restraint_type in self.available_restraint_types) else self.available_restraint_types[0]
+            self._set_restraint_type(set_type)  # restraint Option not needed
 
         # Select restraint mode
         elif (not self.atom_or_restraint_mode) and self.select_or_delete_mode:
-            self._set_restraint_type(
-                None)  # Restraint should be chosen by hand. Reset to None in case an old Restraint type is still active
             self._set_selection_type(None)  # Selection Type will be set by the Restraint
+            self.available_restraint_types = self.all_restraint_types
+            set_type = self.current_restraint_type if(self.current_restraint_type in self.available_restraint_types) else self.available_restraint_types[0]
+            self._set_restraint_type(set_type)
 
-        # Delte Restraint Mode
+            # Delete Restraint Mode
         else:
-            self._set_restraint_type(None)  # To clerly show, that any restraint can be deleted
+            self._set_restraint_type(None)  # To clearly show, that any restraint can be deleted
             self._set_selection_type(Selection.SingleAtomSelection)
 
         self.set_action_states()
@@ -283,7 +293,7 @@ class Logic_Handler:
 
             # SELECT RESTRAINT MODE
             elif not self.atom_or_restraint_mode and self.select_or_delete_mode:
-                new_restraint = self.current_restraint_type(self.my_selection.atoms)
+                new_restraint = self.current_restraint_type(*self.my_selection.atoms)
                 self.selected_restraints.append(new_restraint)
                 self.my_selection.reset()
 
@@ -358,7 +368,10 @@ class Logic_Handler:
         # TODO: In theory a restraint could accept several selection types. Would be nice to give the user the possibilitz to choose between all of them
         # TODO: If the first selection in the list is e.g a Limited selection the user will be asked for input. At a moment I just check for all lists that that is not the case.
         #   Would be nicer if there was a way to pass an input function that does not require user input in this context
+        self.available_selection_types = self.current_restraint_type.accepted_selection_types
         self._set_selection_type(self.current_restraint_type.accepted_selection_types[0])
+
+
 
     def _set_selection_type(self, new_selection_type: type, ):
         """
@@ -584,13 +597,12 @@ class Logic_Handler:
         # if the structure beomces more complex consider first checking the toggle modes (atom?restraint, delete/select) and go through each state in iach state
         self._action_states['toggle_select_delete']: program_states.ActionState.ALWAYS_ENABLED
         self._action_states['toggle_atom_restraint']: program_states.ActionState.ALWAYS_ENABLED
+
         self._action_states['Importer'] = program_states.ActionState.CURRENTLY_ENABLED if len(
             self.selected_restraints) == 0 else program_states.ActionState.CURRENTLY_DISABLED  # TODO Later: Check if there is any Molecules loaded.
-        self._action_states['Restraint'] = program_states.ActionState.CURRENTLY_ENABLED if (
-                                                                                                                    not self.atom_or_restraint_mode) and self.select_or_delete_mode \
-            else program_states.ActionState.CURRENTLY_DISABLED  # TODO Later: Always Enabled, can be changed as much as we like
-        self._action_states[
-            'Selection'] = program_states.ActionState.CURRENTLY_ENABLED if self.atom_or_restraint_mode else program_states.ActionState.CURRENTLY_DISABLED  # TODO Later: Check if any atoms are loaded
+        self._action_states['Restraint'] = program_states.ActionState.CURRENTLY_ENABLED
+        self._action_states['Selection'] = program_states.ActionState.CURRENTLY_ENABLED if self.atom_or_restraint_mode else \
+            program_states.ActionState.CURRENTLY_DISABLED  # TODO Later: Check if any atoms are loaded
         self._action_states['Filter'] = program_states.ActionState.CURRENTLY_ENABLED if len(
             self.selected_atoms) > 0 \
                                                                                         and len(
@@ -604,4 +616,7 @@ class Logic_Handler:
         self._action_states['Exporter'] = program_states.ActionState.CURRENTLY_ENABLED if len(
             self.selected_restraints) > 0 \
             else program_states.ActionState.CURRENTLY_DISABLED
+
         self._action_states['Done'] = program_states.ActionState.ALWAYS_ENABLED
+        self._action_states['Reset']: program_states.ActionState.ALWAYS_ENABLED
+

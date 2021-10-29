@@ -7,13 +7,16 @@
 import typing as t
 import numpy as np
 
-#from restraintmaker.algorithm import Selection
+from restraintmaker.algorithm import Selection
 from restraintmaker.utils.Utilities import Atom
+#from restraintmaker.algorithm import Optimizer
 
 
 class _Restraint():
     # Selections types from whose atoms this Restraint can be cosnsturcted
     accepted_selection_types = []
+    #accepted_optimizer_types = []
+
 
     def __init__(self, atoms):
         """
@@ -44,7 +47,10 @@ class _Restraint():
 
 
 class Position_restraint(_Restraint):
-    #accepted_selection_types = [Selection.SingleAtomSelection]
+    accepted_selection_types: t.List[Selection._Selection] = [Selection.SingleAtomSelection, Selection.AllSelection, Selection.MCS_Selection, Selection.PaintSelection, Selection.SphericalSelection]
+    accepted_imports: t.List = []
+    #accepted_optimizer_types: t.List[Optimizer._Optimizer] = []
+    optimizable: bool = False
     atom_limit: int = 1
 
     def __init__(self, atomA: Atom, reference_atom: Atom = None):
@@ -84,7 +90,8 @@ class Position_restraint(_Restraint):
 class Distance_Restraint(_Restraint):
     # 'static' variables
     atom_limit: int = 2
-    #accepted_selection_types: t.List[type] = [Selection.PairSelection]
+    accepted_selection_types: t.List[Selection._Selection] = [Selection.PairSelection, Selection.AllSelection, Selection.MCS_Selection, Selection.SphericalSelection, Selection.PaintSelection]
+    optimizable: bool = True #accepted_optimizer_types: t.List = [Optimizer.TreeHeuristicOptimizer]
 
     def __init__(self, atomA: Atom, atomB: Atom):
         """
@@ -119,7 +126,7 @@ class Distance_Restraint(_Restraint):
         return self._distance
 
 
-class CoM_Restraint(_Restraint):
+class __CoM_Restraint(_Restraint):
     #accepted_selection_types = [Selection.PairSelection, Selection.LimitedSelection, Selection.SphericalSelection,
     #                            Selection.PaintSelection, Selection.UniversalSelection]
 
