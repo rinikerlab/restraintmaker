@@ -133,8 +133,10 @@ class PropertyFilter(_Filter):
         t.List[u.Atom]
             Filtered atom list
         """
-
-        return list(filter(lambda x: x.__getattribute__(self.criterion) == self.value, self.atoms))
+        
+        selection = list(filter(lambda x: x.__getattribute__(self.criterion) == self.value, self.atoms))
+        print(str(len(selection)) + " atoms are selected after the filtering")
+        return selection
 
 
 class ElementFilter(_Filter):
