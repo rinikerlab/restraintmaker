@@ -534,7 +534,7 @@ class Restraints_Wizard(Wizard):
                            'cnfrm: shft+up']
                 if 'SphericalSelection' in self.cmd.get_object_list():
                     prompt += [
-                        'size: left / right' \
+                        'size: left / right', \
                         'move/rotate: mouse, left', \
                         'activate rota: up',
                         'activate move: down']
