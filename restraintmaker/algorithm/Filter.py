@@ -112,7 +112,7 @@ class PropertyFilter(_Filter):
 
         """
 
-        input = input_function('Which atom-property should be the filter critrion?')
+        input = input_function('Which atom-property should be the filter criterion?\nPossible criteria are: ' + ", ".join(u.Atom._fields))
         self.criterion: str = u.check_or_convert_argument(input, str)
         if not self.criterion in u.Atom._fields:
             raise u.BadArgumentException(
