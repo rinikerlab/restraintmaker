@@ -43,7 +43,7 @@ class _Restraint():
         return np.sqrt((atomA.x - atomB.x) ** 2 + (atomA.y - atomB.y) ** 2 + (atomA.z - atomB.z) ** 2)
 
 
-class Position_restraint(_Restraint):
+class PositionRestraint(_Restraint):
     atom_limit: int = 1
 
     def __init__(self, atomA: Atom, reference_atom: Atom = None):
@@ -80,7 +80,7 @@ class Position_restraint(_Restraint):
         return self._distance_to_reference_position
 
 
-class Distance_Restraint(_Restraint):
+class DistanceRestraint(_Restraint):
     # 'static' variables
     atom_limit: int = 2
 

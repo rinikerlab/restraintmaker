@@ -632,7 +632,7 @@ class MetaMoleculeRingOptimizer(_MoleculeRingOptimizer):
     Static Utilitiy functions for optimizers->
 """
 def get_all_short_pair_restraints(atoms: t.List[u.Atom], max_dis: float) -> t.List[
-    Restraints.Distance_Restraint]:
+    Restraints.DistanceRestraint]:
     """
          finds all pairs of atoms within a certain cutoff distance of each other. Atoms withing the same molecules can are not connected
 
@@ -656,7 +656,7 @@ def get_all_short_pair_restraints(atoms: t.List[u.Atom], max_dis: float) -> t.Li
     # Check for all pairs of atoms if they are within the specified cutoff of each other. Try to minimize necessary calculations using shortcut function of and and or
     # TODO: Instead of first checking if distance in all three spacial directions is , cutoff it might be quicker to first check x distance, then x^2 + y^2 distance and then to add z^2
     # => Decrease cost in case of success a bit, increas cost in case of failure after first square. Decrease chance to onlzy fail after the last calculation
-    __atom_pairs: t.List[Restraints.Distance_Restraint] = []
+    __atom_pairs: t.List[Restraints.DistanceRestraint] = []
     for i_a1 in range(0, len(atoms) - 1):
         a1 = atoms[
             i_a1]  # Quicker to loop over index of a1 and then acess it once for all inner loops, than findix index of a1 once for every onner loop
@@ -665,14 +665,14 @@ def get_all_short_pair_restraints(atoms: t.List[u.Atom], max_dis: float) -> t.Li
                     a1.z - a2.z) <= max_dis:
                 dis_sq = (a1.x - a2.x)**2 + (a1.y - a2.y)**2 + (a1.z - a2.z)**2
                 if dis_sq <= max_dis_sq:
-                    __atom_pairs.append(Restraints.Distance_Restraint(a1, a2))
+                    __atom_pairs.append(Restraints.DistanceRestraint(a1, a2))
 
     # Convert the atom pairs to restraints
     return __atom_pairs
 
 
-def maximal_spanning_tree_greedy(potential_restraints: t.List[Restraints.Distance_Restraint], n: int, priority_algo: str= "minmax") -> \
-        t.List[Restraints.Distance_Restraint]:
+def maximal_spanning_tree_greedy(potential_restraints: t.List[Restraints.DistanceRestraint], n: int, priority_algo: str= "minmax") -> \
+        t.List[Restraints.DistanceRestraint]:
     """
     Finds a maximal spanning tree in which the nodes represent distance restraints and edges the distance between their middles.
     The 'tree' will be provided in the form of a list. Connectivity info is not explicitly given. Due to the working of Prims Algorithm it is guaranteed, that every vortex in the list is connected to one vortex before it in the list
@@ -1000,13 +1000,13 @@ def _calculate_value_scaled_pca_2d(restraint_pos):
 
 
 # ------------utilites------------------------------------------
-def cog_distance_restraint(r: Restraints.Distance_Restraint)->t.Tuple[float, float, float]:
+def cog_distance_restraint(r: Restraints.DistanceRestraint)->t.Tuple[float, float, float]:
     """
         Calculate the cog of a distance restraint
     
     Parameters
     ----------
-    r: Restraints.Distance_Restraint
+    r: Restraints.DistanceRestraint
 
     Returns
     -------

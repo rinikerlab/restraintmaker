@@ -68,7 +68,7 @@ class _Exporter():
 
 
 class _Export_Distance_Restraints(_Exporter):
-    def __init__(self, restraints: t.List[Restraints.Distance_Restraint]):
+    def __init__(self, restraints: t.List[Restraints.DistanceRestraint]):
         """
             This is a exporting class for Gromos Distance Restraints
 
@@ -78,7 +78,7 @@ class _Export_Distance_Restraints(_Exporter):
             Restraints to be saved
         """
         for r in restraints:
-            if not isinstance(r, Restraints.Distance_Restraint):
+            if not isinstance(r, Restraints.DistanceRestraint):
                 raise TypeError('Distance_Pair_Restraint_Exporter only accepts Pair restraints as input')
         super().__init__(restraints)
 
@@ -257,7 +257,7 @@ class export_JSON_Distance_Restraints(_Export_Distance_Restraints):
 
 
 class _Export_Position_Restraints(_Exporter):
-    def __init__(self, restraints: t.List[Restraints.Position_restraint]):
+    def __init__(self, restraints: t.List[Restraints.PositionRestraint]):
         """
             This is a exporting class for Gromos Distance Restraints
 
@@ -267,7 +267,7 @@ class _Export_Position_Restraints(_Exporter):
             Restraints to be saved
         """
         for r in restraints:
-            if not isinstance(r, Restraints.Position_restraint):
+            if not isinstance(r, Restraints.PositionRestraint):
                 raise TypeError('Position_Restriant_Exporter only accepts Position restraints as input')
         super().__init__(restraints)
 

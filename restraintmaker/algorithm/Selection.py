@@ -568,7 +568,7 @@ class PaintSelection(SphericalSelection):
         self.atoms += list(filter(lambda a: not a in self.atoms, atoms_in_sphere))
 
 
-class MCS_Selection(_Selection):
+class MCSSelection(_Selection):
 
     def __init__(self, all_atoms):
         """

@@ -263,6 +263,7 @@ class Restraints_Wizard(Wizard):
             elif hasattr(self, 'to_3_i_m'):
                 self._to3_i_m = int((self._to3_i_m - 1) % (len(self.cmd.get_object_list()) / 3))
                 self._optimzer_show_next_molecule_pair_3()
+
         elif k == 32:  # Space
             self.cmd.set('grid_mode', (int(self.cmd.get('grid_mode')) + 1) % 2)
 
@@ -300,9 +301,11 @@ class Restraints_Wizard(Wizard):
 
         # Shf Q: Choose all atoms, start brute force optimizer, start test mode 4
         if k == 81 and mod == 1:
-            self._action_button_pressed('UniversalSelection')
+            self._action_button_pressed('AllSelection')
             self.trigger_event(program_states.EventType.CONFIRM)
-            self._action_button_pressed('TreeHeuristicOptimizer')
+            self._action_button_pressed("RingFilter")
+            self.trigger_event(program_states.EventType.CONFIRM)
+            self._action_button_pressed('GreedyGraphOptimizer')
 
             # Make sure Optimizatyion was sucessfull
             if (len(self.logic_handler.selected_restraints) > 0):
@@ -718,7 +721,12 @@ class Restraints_Wizard(Wizard):
                 already_colored=False
 
             # 3a) Colour all restrained atoms
-            cmd.hide("spheres", "all")
+            if not self.check_objects_exists('SphericalSelection'):
+                cmd.hide("spheres", "all")
+            else:
+                cmd.hide("spheres", "not SphericalSelection")
+                cmd.show("spheres", "SphericalSelection")
+
             pu.help_pymol_with_big_atom_list(self.cmd.show, restrained_atoms, representation='spheres')
 
 
