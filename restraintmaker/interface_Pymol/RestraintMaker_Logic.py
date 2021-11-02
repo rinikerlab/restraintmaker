@@ -75,7 +75,8 @@ class Logic_Handler:
         self.my_selection = None  # Unlike my_filter my_selection needs to be accessed by several methods: do_pick, set_selection
 
         # Define Filter-Types
-        self.available_filter_types: t.List[t.Type] = u.get_all_subclasses(Filter._Filter)
+        self.all_filters = u.get_all_subclasses(Filter._Filter)
+        self.available_filter_types: t.List[t.Type] = self.all_filters
         self.current_filter_type = None
         self.my_filter = None
 
@@ -248,6 +249,8 @@ class Logic_Handler:
 
             if(not self.select_or_delete_mode):
                 self.available_filter_types = []
+            else:
+                self.available_filter_types = self.all_filters
 
             if(self.my_restraint is not None):
                 self.available_optimizer_types = self.my_restraint.accepted_optimizer_types
@@ -257,6 +260,7 @@ class Logic_Handler:
             self.available_restraint_types = self.all_restraint_types
             set_type = self.current_restraint_type if(self.current_restraint_type in self.available_restraint_types) else self.available_restraint_types[0]
             self._set_restraint_type(set_type)
+            self.available_filter_types = []
             self.available_optimizer_types = []
 
         # Delete Restraint Mode
