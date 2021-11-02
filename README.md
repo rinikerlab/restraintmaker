@@ -65,7 +65,7 @@ RestraintMaker adds a menu to the pymol GUI on the bottom right. This is the eas
 ![pyMol](.img/pyMol_Wiz_menu.png)
 
 ### GUI Instructions
-On the top left you'll find some helpful instructions for RestraintMaker
+On the top left you'll find some helpful instructions and hot keys for RestraintMaker
 
 ![pyMol](.img/pyMol_Wiz_instructions.png)
 
