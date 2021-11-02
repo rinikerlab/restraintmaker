@@ -1,26 +1,37 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>restraintmaker.algorithm.Selection &mdash; restraintMaker  documentation</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -29,10 +40,6 @@
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -71,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -78,9 +86,9 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome to RestraintMaker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
 </ul>
@@ -88,6 +96,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -122,11 +131,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -435,9 +446,9 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_args</span><span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="UniversalSelection"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection">[docs]</a><span class="k">class</span> <span class="nc">UniversalSelection</span><span class="p">(</span><span class="n">_Selection</span><span class="p">):</span>
+<div class="viewcode-block" id="AllSelection"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.AllSelection">[docs]</a><span class="k">class</span> <span class="nc">AllSelection</span><span class="p">(</span><span class="n">_Selection</span><span class="p">):</span>
 
-<div class="viewcode-block" id="UniversalSelection.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+<div class="viewcode-block" id="AllSelection.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.AllSelection.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Universial Selections can be used to select all present atoms with one click. (Actually it 2 Clicks)</span>
 
@@ -448,7 +459,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">all_atoms</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="UniversalSelection.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+<div class="viewcode-block" id="AllSelection.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.AllSelection.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            should be overridden by every subclass of _Selection. It will assign all necessary variables using input function.</span>
 <span class="sd">            In Universal selection, the selection will be set directly by this function to all atoms.</span>
@@ -470,7 +481,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="UniversalSelection.update"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AllSelection.update"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.AllSelection.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            will be called by get_args, to initially set all atoms as selected. =&gt; The Selection will start the first time it will be checked</span>
 
@@ -482,7 +493,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">has_finished</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="UniversalSelection._update_select"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection._update_select">[docs]</a>    <span class="k">def</span> <span class="nf">_update_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+<div class="viewcode-block" id="AllSelection._update_select"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.AllSelection._update_select">[docs]</a>    <span class="k">def</span> <span class="nf">_update_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Dummy no selection possible</span>
 
@@ -497,7 +508,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="UniversalSelection._update_move"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection._update_move">[docs]</a>    <span class="k">def</span> <span class="nf">_update_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<div class="viewcode-block" id="AllSelection._update_move"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.AllSelection._update_move">[docs]</a>    <span class="k">def</span> <span class="nf">_update_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Dummy no selection possible</span>
 
@@ -512,7 +523,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="UniversalSelection._update_size"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection._update_size">[docs]</a>    <span class="k">def</span> <span class="nf">_update_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">increase</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<div class="viewcode-block" id="AllSelection._update_size"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.AllSelection._update_size">[docs]</a>    <span class="k">def</span> <span class="nf">_update_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">increase</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Dummy no selection possible</span>
 
@@ -527,7 +538,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="UniversalSelection._update_confirm"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.UniversalSelection._update_confirm">[docs]</a>    <span class="k">def</span> <span class="nf">_update_confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AllSelection._update_confirm"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.AllSelection._update_confirm">[docs]</a>    <span class="k">def</span> <span class="nf">_update_confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Dummy no selection possible</span>
 
@@ -836,20 +847,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -857,7 +873,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

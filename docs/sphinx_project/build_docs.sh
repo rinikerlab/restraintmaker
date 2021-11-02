@@ -3,7 +3,7 @@ make clean;
 
 #make doku
 ##configurations
-sphinx-apidoc -o _source ../../restraintmaker/*
+sphinx-apidoc -o _source ../../restraintmaker
 
 cp ../../examples/*ipynb ./examples
 

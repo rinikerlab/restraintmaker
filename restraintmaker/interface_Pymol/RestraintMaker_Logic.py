@@ -13,7 +13,7 @@ from restraintmaker.algorithm import Selection
 from restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities import _convert_molecules_to_pdb, try_to_get_args
 
 from restraintmaker.io import Exporter, Importer
-from restraintmaker.utils import Utilities as u, Types
+from restraintmaker.utils import Utilities as u, Restraints, Restraint_Types
 from restraintmaker.interface_Pymol.pymol_utilities import program_states, qt_dialogs
 from restraintmaker.utils.Utilities import print
 
@@ -56,12 +56,13 @@ class Logic_Handler:
 
         self.all_atoms: t.List[u.Atom] = all_atoms
         self.selected_atoms: t.List[u.Atom] = []
-        self.selected_restraints: t.List[Types._Restraint] = []
+        self.selected_restraints: t.List[Restraints._Restraint] = []
 
         # Define Restraint-Types
-        self.available_restraint_types = u.get_all_subclasses(Types._Restraint)
-        self.current_restraint_type = None
-        self.my_restraint = None
+        self.all_restraint_types = u.get_all_subclasses(Restraint_Types._Restraint_Type)
+        self.available_restraint_types = []
+        self.current_restraint_type:Restraint_Types._Restraint_Type = Restraint_Types.DistanceRestraintType
+        self.my_restraint: Restraint_Types._Restraint_Type = None
 
         # Define Importer-Types
         self.available_importer_types = u.get_all_subclasses(Importer._Importer)
@@ -79,23 +80,23 @@ class Logic_Handler:
         self.my_filter = None
 
         # Define-Optimizer Types
-        self.available_optimizer_types: t.List[t.Type] = u.get_all_subclasses(Optimizer._Optimizer)
+        self.available_optimizer_types: t.List[t.Type] = [x for x in u.get_all_subclasses(Optimizer._Optimizer) if (not x == Optimizer.MetaMoleculeRingOptimizer)]
         self.current_optimizer_type = None
         self.my_optimizer = None
 
         # Define-Exporter-Types
-        self.available_exporter_types = u.get_all_subclasses(Exporter._Exporter)
+        self.all_exporter_types = u.get_all_subclasses(Exporter._Exporter)
+        self.available_exporter_types = u.get_all_subclasses(Exporter._Export_Distance_Restraints)
         self.current_exporter_type = None
         self.my_exporter = None
 
         # Modes & Action_States (Modes: What do to atoms, when they are selected. Action states: Which actions are possible right now)
         # which contains one attribute indicating actions AND one for each mode
-        self.select_or_delete_mode = True  # True = select, False = delte
-        self.atom_or_restraint_mode = True  # True = atom, False = Restraint
 
         self._action_states: dict = {
             'toggle_select_delete': program_states.ActionState.ALWAYS_ENABLED,
             'toggle_atom_restraint': program_states.ActionState.ALWAYS_ENABLED,
+            'Reset':  program_states.ActionState.ALWAYS_ENABLED,
             'Importer': program_states.ActionState.ALWAYS_DISABLED,
             'Restraint': program_states.ActionState.ALWAYS_DISABLED,
             'Selection': program_states.ActionState.ALWAYS_DISABLED,
@@ -103,7 +104,12 @@ class Logic_Handler:
             'Optimizer': program_states.ActionState.ALWAYS_DISABLED,
             'Exporter': program_states.ActionState.ALWAYS_DISABLED,
             'Done': program_states.ActionState.ALWAYS_ENABLED}
+
+        #initialize
+        self.set_mode(select_delete=True, atom_restraint=True)
         self.set_action_states()
+        self._set_restraint_type(self.current_restraint_type)
+
 
     """
         event_functions
@@ -234,20 +240,31 @@ class Logic_Handler:
 
         # 'Depending' on the mode some actions (e.g creating restraints) are not possible
 
-        # Select or delte atoms mode
+        # Select or delete atoms mode
         if self.atom_or_restraint_mode:
-            self._set_restraint_type(None)  # restraint Option not needed
+            self.available_restraint_types = [x for x in self.all_restraint_types if(len(x.accepted_optimizer_types)>0)]
+            set_type = self.current_restraint_type if(self.current_restraint_type in self.available_restraint_types) else self.available_restraint_types[0]
+            self._set_restraint_type(set_type)  # restraint Option not needed
+
+            if(not self.select_or_delete_mode):
+                self.available_filter_types = []
+
+            if(self.my_restraint is not None):
+                self.available_optimizer_types = self.my_restraint.accepted_optimizer_types
 
         # Select restraint mode
         elif (not self.atom_or_restraint_mode) and self.select_or_delete_mode:
-            self._set_restraint_type(
-                None)  # Restraint should be chosen by hand. Reset to None in case an old Restraint type is still active
-            self._set_selection_type(None)  # Selection Type will be set by the Restraint
+            self.available_restraint_types = self.all_restraint_types
+            set_type = self.current_restraint_type if(self.current_restraint_type in self.available_restraint_types) else self.available_restraint_types[0]
+            self._set_restraint_type(set_type)
+            self.available_optimizer_types = []
 
-        # Delte Restraint Mode
+        # Delete Restraint Mode
         else:
-            self._set_restraint_type(None)  # To clerly show, that any restraint can be deleted
+            self._set_restraint_type(None)  # To clearly show, that any restraint can be deleted
             self._set_selection_type(Selection.SingleAtomSelection)
+            self._set_filter_type(None)
+            self.available_optimizer_types = []
 
         self.set_action_states()
 
@@ -267,9 +284,7 @@ class Logic_Handler:
             return
 
         if self.my_selection.has_finished:
-
             # CHECK ALL FOR POSSIBLE MODES
-
             # SELECT ATOM MODE
             if self.atom_or_restraint_mode and self.select_or_delete_mode:
                 self.selected_atoms.extend(filter(lambda x: not x in self.selected_atoms,
@@ -283,17 +298,21 @@ class Logic_Handler:
 
             # SELECT RESTRAINT MODE
             elif not self.atom_or_restraint_mode and self.select_or_delete_mode:
-                new_restraint = self.current_restraint_type(self.my_selection.atoms)
-                self.selected_restraints.append(new_restraint)
+                if(Restraint_Types.PositionRestraintType == self.current_restraint_type):
+                    new_restraint = [self.current_restraint_type.restraint(atomA=x) for x in self.my_selection.atoms]
+                    self.selected_restraints.extend(new_restraint)
+                else:
+                    new_restraint = self.current_restraint_type.restraint(*self.my_selection.atoms)
+                    self.selected_restraints.append(new_restraint)
                 self.my_selection.reset()
 
             # DELETE RESTRAINT MODE
             else:
+
                 # In delete Restraint Mode the Selection is a Single Atom Selection
-                # TODO DELETE_RESTRAINT_MODE (2): Allow to use every kind of Selection in Delete-Restraint_mode. Upon confirmation: Delete everz restraint containing an atom in that selection
-                atom = self.my_selection.atoms[0]
+                atoms = self.my_selection.atoms
                 # Remove all restraints containing the selected atom
-                self.selected_restraints = [r for r in self.selected_restraints if not atom in r.atoms]
+                self.selected_restraints = [r for r in self.selected_restraints if not any([atom in r.atoms for atom in atoms])]
                 # open a new SingleAtomSelection
                 self.my_selection.reset()
 
@@ -331,7 +350,7 @@ class Logic_Handler:
             self.my_importer = None
             self.current_importer_type = None
 
-    def _set_restraint_type(self, new_restraint_type: t.Type[Types._Restraint]):
+    def _set_restraint_type(self, new_restraint_type: t.Type[Restraints._Restraint]):
         '''
         _set_restraint_type changes the current type of Restraint.
 
@@ -345,7 +364,7 @@ class Logic_Handler:
 
         if new_restraint_type == None:
             self.current_restraint_type = None
-            self.my_restraint == None
+            self.my_restraint = None
             return
 
         if not new_restraint_type in self.available_restraint_types + [None]:
@@ -354,11 +373,17 @@ class Logic_Handler:
         print("SET TYPE: " + str(new_restraint_type))
         self.current_restraint_type = new_restraint_type
 
+        # self.current_restraint_type.accepted_selection_types_atoms if(self.atom_or_restraint_mode) else
         # Set the Selection type to the preferred selection of this restraint type. set_mode will deactivate the selection, button, so it cant be changed
         # TODO: In theory a restraint could accept several selection types. Would be nice to give the user the possibilitz to choose between all of them
         # TODO: If the first selection in the list is e.g a Limited selection the user will be asked for input. At a moment I just check for all lists that that is not the case.
         #   Would be nicer if there was a way to pass an input function that does not require user input in this context
-        self._set_selection_type(self.current_restraint_type.accepted_selection_types[0])
+        self.set_action_states()
+        self.available_selection_types =  self.current_restraint_type.accepted_selection_types_atoms if(self.atom_or_restraint_mode) else self.current_restraint_type.accepted_selection_types_res
+        self._set_selection_type(self.available_selection_types[0])
+        self.available_optimizer_types = self.current_restraint_type.accepted_optimizer_types
+        self.available_exporter_types = self.current_restraint_type.accepted_exporter_types
+        self.available_importer_types = self.current_restraint_type.accepted_importer_types
 
     def _set_selection_type(self, new_selection_type: type, ):
         """
@@ -382,7 +407,7 @@ class Logic_Handler:
             self.my_selection = None
             return
 
-        if not new_selection_type in self.available_selection_types:
+        if not new_selection_type in self.available_selection_types and self.select_or_delete_mode:
             raise TypeError(str(new_selection_type) + ' is not an  available type of Selection')
 
         self.current_selection_type = new_selection_type
@@ -396,7 +421,7 @@ class Logic_Handler:
             input_function = qt_dialogs.create_input_dialog(parent_window=None, title='Selection')
         elif isinstance(self.my_selection, Selection.SphericalSelection):
             input_function = lambda _: 5
-        elif isinstance(self.my_selection, Selection.MCS_Selection):
+        elif isinstance(self.my_selection, Selection.MCSSelection):
             input_function = lambda dummy_arg: _convert_molecules_to_pdb()
 
         if not try_to_get_args(self.my_selection, input_function):
@@ -451,6 +476,7 @@ class Logic_Handler:
 
         if try_to_get_args(self.my_filter, input_function):
             self.selected_atoms = self.my_filter.filter()
+
         else:
             self.my_filter = None
             self.current_filter_type = None
@@ -484,17 +510,17 @@ class Logic_Handler:
         # SWITCHTABLE FOR input function
         input_functions = u.do_nothing()
 
-        if isinstance(self.my_optimizer, Optimizer.TreeHeuristicOptimizer):
+        if isinstance(self.my_optimizer, Optimizer.GreedyGraphOptimizer):
             input_function = qt_dialogs.create_multi_dialog(
-                title='Parameters for TreeHeuristicOptimizer', \
+                title='Parameters for GreedyGraphOptimizer', \
                 inputs=['number of restraints', 'maximal distance of restraints',
                         'tree-algorithm', 'optimize molecules pairs by'], \
-                options={'tree-algorithm': ['shortest', 'cog', 'prim', "biased_avg"],
+                options={'tree-algorithm': ['minmax', 'cog', 'prim', "biased_avg"],
                          'optimize molecules pairs by': ['None', 'convex_hull',
                                                          'pca_2d']}, \
                 default={'number of restraints': '4',
                          'maximal distance of restraints': '1.0',
-                         'algorithm': 'shortest',
+                         'algorithm': 'minmax',
                          'optimize molecules pairs by': 'convex_hull'})
 
 
@@ -584,24 +610,26 @@ class Logic_Handler:
         # if the structure beomces more complex consider first checking the toggle modes (atom?restraint, delete/select) and go through each state in iach state
         self._action_states['toggle_select_delete']: program_states.ActionState.ALWAYS_ENABLED
         self._action_states['toggle_atom_restraint']: program_states.ActionState.ALWAYS_ENABLED
+
         self._action_states['Importer'] = program_states.ActionState.CURRENTLY_ENABLED if len(
             self.selected_restraints) == 0 else program_states.ActionState.CURRENTLY_DISABLED  # TODO Later: Check if there is any Molecules loaded.
-        self._action_states['Restraint'] = program_states.ActionState.CURRENTLY_ENABLED if (
-                                                                                                                    not self.atom_or_restraint_mode) and self.select_or_delete_mode \
-            else program_states.ActionState.CURRENTLY_DISABLED  # TODO Later: Always Enabled, can be changed as much as we like
-        self._action_states[
-            'Selection'] = program_states.ActionState.CURRENTLY_ENABLED if self.atom_or_restraint_mode else program_states.ActionState.CURRENTLY_DISABLED  # TODO Later: Check if any atoms are loaded
-        self._action_states['Filter'] = program_states.ActionState.CURRENTLY_ENABLED if len(
-            self.selected_atoms) > 0 \
+        self._action_states['Restraint'] = program_states.ActionState.CURRENTLY_ENABLED
+
+        self._action_states['Selection'] = program_states.ActionState.CURRENTLY_ENABLED if (self.atom_or_restraint_mode or (not self.atom_or_restraint_mode and self.current_restraint_type == Restraint_Types.PositionRestraintType)) else \
+            program_states.ActionState.CURRENTLY_DISABLED  # TODO Later: Check if any atoms are loaded
+        self._action_states['Filter'] = program_states.ActionState.CURRENTLY_ENABLED if (len(
+            self.selected_atoms) > 0 and len(self.available_filter_types) > 0  and not (self.current_restraint_type == Restraint_Types.DistanceRestraintType and not self.atom_or_restraint_mode)) \
                                                                                         and len(
             self.selected_restraints) == 0 else program_states.ActionState.CURRENTLY_DISABLED
-        self._action_states['Optimizer'] = program_states.ActionState.CURRENTLY_ENABLED if len(
-            self.selected_atoms) >= 2 \
-                                                                                           and len(
-            self.selected_restraints) == 0 else program_states.ActionState.CURRENTLY_DISABLED
+        self._action_states['Optimizer'] = program_states.ActionState.CURRENTLY_ENABLED if (len(
+            self.selected_atoms) >= 2 and len(self.available_optimizer_types) >0) \
+            and len(self.selected_restraints) == 0 else program_states.ActionState.CURRENTLY_DISABLED
         # TODO: Check if we have Atoms from at least 2 Molecules
         # TODO: Check indivudiual Optimizers depending on Restraint type
         self._action_states['Exporter'] = program_states.ActionState.CURRENTLY_ENABLED if len(
             self.selected_restraints) > 0 \
             else program_states.ActionState.CURRENTLY_DISABLED
+
         self._action_states['Done'] = program_states.ActionState.ALWAYS_ENABLED
+        self._action_states['Reset']: program_states.ActionState.ALWAYS_ENABLED
+

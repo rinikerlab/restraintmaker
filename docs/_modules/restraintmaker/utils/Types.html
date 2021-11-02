@@ -1,26 +1,37 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>restraintmaker.utils.Types &mdash; restraintMaker  documentation</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -29,10 +40,6 @@
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -71,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -78,9 +86,9 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome to RestraintMaker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
 </ul>
@@ -88,6 +96,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -122,11 +131,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -155,13 +166,16 @@
 <span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="c1">#from restraintmaker.algorithm import Selection</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.algorithm</span> <span class="kn">import</span> <span class="n">Selection</span>
 <span class="kn">from</span> <span class="nn">restraintmaker.utils.Utilities</span> <span class="kn">import</span> <span class="n">Atom</span>
+<span class="c1">#from restraintmaker.algorithm import Optimizer</span>
 
 
 <span class="k">class</span> <span class="nc">_Restraint</span><span class="p">():</span>
     <span class="c1"># Selections types from whose atoms this Restraint can be cosnsturcted</span>
     <span class="n">accepted_selection_types</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1">#accepted_optimizer_types = []</span>
+
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -192,7 +206,9 @@
 
 
 <div class="viewcode-block" id="Position_restraint"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Types.Position_restraint">[docs]</a><span class="k">class</span> <span class="nc">Position_restraint</span><span class="p">(</span><span class="n">_Restraint</span><span class="p">):</span>
-    <span class="c1">#accepted_selection_types = [Selection.SingleAtomSelection]</span>
+    <span class="n">accepted_selection_types</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Selection</span><span class="o">.</span><span class="n">_Selection</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">Selection</span><span class="o">.</span><span class="n">SingleAtomSelection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">AllSelection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">MCS_Selection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">PaintSelection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">SphericalSelection</span><span class="p">]</span>
+    <span class="c1">#accepted_optimizer_types: t.List[Optimizer._Optimizer] = []</span>
+
     <span class="n">atom_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
 
 <div class="viewcode-block" id="Position_restraint.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Types.Position_restraint.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atomA</span><span class="p">:</span> <span class="n">Atom</span><span class="p">,</span> <span class="n">reference_atom</span><span class="p">:</span> <span class="n">Atom</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -232,7 +248,8 @@
 <div class="viewcode-block" id="Distance_Restraint"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint">[docs]</a><span class="k">class</span> <span class="nc">Distance_Restraint</span><span class="p">(</span><span class="n">_Restraint</span><span class="p">):</span>
     <span class="c1"># &#39;static&#39; variables</span>
     <span class="n">atom_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="c1">#accepted_selection_types: t.List[type] = [Selection.PairSelection]</span>
+    <span class="n">accepted_selection_types</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Selection</span><span class="o">.</span><span class="n">_Selection</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">Selection</span><span class="o">.</span><span class="n">PairSelection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">AllSelection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">MCS_Selection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">SphericalSelection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">PaintSelection</span><span class="p">]</span>
+    <span class="c1">#accepted_optimizer_types: t.List = [Optimizer.TreeHeuristicOptimizer]</span>
 
 <div class="viewcode-block" id="Distance_Restraint.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Types.Distance_Restraint.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atomA</span><span class="p">:</span> <span class="n">Atom</span><span class="p">,</span> <span class="n">atomB</span><span class="p">:</span> <span class="n">Atom</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -267,11 +284,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distance</span></div>
 
 
-<div class="viewcode-block" id="CoM_Restraint"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Types.CoM_Restraint">[docs]</a><span class="k">class</span> <span class="nc">CoM_Restraint</span><span class="p">(</span><span class="n">_Restraint</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">__CoM_Restraint</span><span class="p">(</span><span class="n">_Restraint</span><span class="p">):</span>
     <span class="c1">#accepted_selection_types = [Selection.PairSelection, Selection.LimitedSelection, Selection.SphericalSelection,</span>
     <span class="c1">#                            Selection.PaintSelection, Selection.UniversalSelection]</span>
 
-<div class="viewcode-block" id="CoM_Restraint.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.utils.html#restraintmaker.utils.Types.CoM_Restraint.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Atom</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Atom</span><span class="p">]):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            This class is a type Class, defining the properties of CoM restraints</span>
 <span class="sd">            TODO: Implement</span>
@@ -281,7 +298,7 @@
 <span class="sd">        atoms :  t.List[u.Atom]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">raise</span> <span class="bp">NotImplemented</span><span class="p">(</span><span class="s2">&quot;WIP&quot;</span><span class="p">)</span></div></div>
+        <span class="k">raise</span> <span class="bp">NotImplemented</span><span class="p">(</span><span class="s2">&quot;WIP&quot;</span><span class="p">)</span>
         <span class="c1"># super().__init__(atoms)</span>
 </pre></div>
 
@@ -289,20 +306,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -310,7 +332,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

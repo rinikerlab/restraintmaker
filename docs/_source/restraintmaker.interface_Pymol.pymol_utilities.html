@@ -1,26 +1,37 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>restraintmaker.interface_Pymol.pymol_utilities package &mdash; restraintMaker  documentation</title>
   
 
   
-  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -29,10 +40,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="restraintmaker.io package" href="restraintmaker.io.html" />
@@ -73,6 +80,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -80,9 +88,9 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Welcome to RestraintMaker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">restraintmaker</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="restraintmaker.html">restraintmaker package</a><ul class="current">
@@ -108,6 +116,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -142,11 +151,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="modules.html">restraintmaker</a> &raquo;</li>
         
@@ -159,7 +170,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../_sources/_source/restraintmaker.interface_Pymol.pymol_utilities.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -205,55 +216,55 @@
 <div class="section" id="module-restraintmaker.interface_Pymol.pymol_utilities.program_states">
 <span id="restraintmaker-interface-pymol-pymol-utilities-program-states-module"></span><h2>restraintmaker.interface_Pymol.pymol_utilities.program_states module<a class="headerlink" href="#module-restraintmaker.interface_Pymol.pymol_utilities.program_states" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState">
-<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.program_states.</code><code class="sig-name descname">ActionState</code><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/program_states.html#ActionState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.program_states.</span></span><span class="sig-name descname"><span class="pre">ActionState</span></span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/program_states.html#ActionState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>ActionState defines the different states the possible actions (filter, optimize etc.) can be in</p>
 <dl class="py attribute">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.ALWAYS_DISABLED">
-<code class="sig-name descname">ALWAYS_DISABLED</code><em class="property"> = 4</em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.ALWAYS_DISABLED" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.ALWAYS_DISABLED">
+<span class="sig-name descname"><span class="pre">ALWAYS_DISABLED</span></span><em class="property"> <span class="pre">=</span> <span class="pre">4</span></em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.ALWAYS_DISABLED" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.ALWAYS_ENABLED">
-<code class="sig-name descname">ALWAYS_ENABLED</code><em class="property"> = 2</em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.ALWAYS_ENABLED" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.ALWAYS_ENABLED">
+<span class="sig-name descname"><span class="pre">ALWAYS_ENABLED</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.ALWAYS_ENABLED" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.CURRENTLY_DISABLED">
-<code class="sig-name descname">CURRENTLY_DISABLED</code><em class="property"> = 1</em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.CURRENTLY_DISABLED" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.CURRENTLY_DISABLED">
+<span class="sig-name descname"><span class="pre">CURRENTLY_DISABLED</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.CURRENTLY_DISABLED" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.CURRENTLY_ENABLED">
-<code class="sig-name descname">CURRENTLY_ENABLED</code><em class="property"> = 3</em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.CURRENTLY_ENABLED" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.CURRENTLY_ENABLED">
+<span class="sig-name descname"><span class="pre">CURRENTLY_ENABLED</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.ActionState.CURRENTLY_ENABLED" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType">
-<em class="property">class </em><code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.program_states.</code><code class="sig-name descname">EventType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/program_states.html#EventType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.program_states.</span></span><span class="sig-name descname"><span class="pre">EventType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/program_states.html#EventType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
 <p>EventType defines the different events that a selection can deal with</p>
 <dl class="py attribute">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.CONFIRM">
-<code class="sig-name descname">CONFIRM</code><em class="property"> = 'confirm'</em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.CONFIRM" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.CONFIRM">
+<span class="sig-name descname"><span class="pre">CONFIRM</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'confirm'</span></em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.CONFIRM" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.MOVE">
-<code class="sig-name descname">MOVE</code><em class="property"> = 'move'</em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.MOVE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.MOVE">
+<span class="sig-name descname"><span class="pre">MOVE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'move'</span></em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.MOVE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.SELECT">
-<code class="sig-name descname">SELECT</code><em class="property"> = 'select'</em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.SELECT" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.SELECT">
+<span class="sig-name descname"><span class="pre">SELECT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'select'</span></em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.SELECT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.SIZE">
-<code class="sig-name descname">SIZE</code><em class="property"> = 'size'</em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.SIZE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.SIZE">
+<span class="sig-name descname"><span class="pre">SIZE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'size'</span></em><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.program_states.EventType.SIZE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -264,8 +275,8 @@
 <p>contains functions that are useful to the restraintmaker_PyMOL module, but do not need to be within the Distance_restraints class
 This also includes  functions that are only usefull for debugging and testing</p>
 <dl class="py function">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._atom_list_to_pymol_selection">
-<code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</code><code class="sig-name descname">_atom_list_to_pymol_selection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atom_list</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#_atom_list_to_pymol_selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._atom_list_to_pymol_selection" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._atom_list_to_pymol_selection">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</span></span><span class="sig-name descname"><span class="pre">_atom_list_to_pymol_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#_atom_list_to_pymol_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._atom_list_to_pymol_selection" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>atom_list_to_pymol_selection converts a List of Atoms to a string that pymool can understand.
 &#64;warning Pymol can only handle a string with a length of ca 1000. (ca 200 atoms.) Consider using help_pymol_with_big_atoms_List</p>
@@ -284,8 +295,8 @@ This also includes  functions that are only usefull for debugging and testing</p
 </dd></dl>
 
 <dl class="py function">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._convert_molecules_to_pdb">
-<code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</code><code class="sig-name descname">_convert_molecules_to_pdb</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#_convert_molecules_to_pdb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._convert_molecules_to_pdb" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._convert_molecules_to_pdb">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</span></span><span class="sig-name descname"><span class="pre">_convert_molecules_to_pdb</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#_convert_molecules_to_pdb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities._convert_molecules_to_pdb" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><dl class="simple">
 <dt>convert_molecules_to_pdb  gives a list containing one pdb string for each molecule</dt><dd><p>&#64;Warnings  atoms willbeassigned different IDS than they currently have in interface_Pymol!!!!!</p>
@@ -303,8 +314,8 @@ This also includes  functions that are only usefull for debugging and testing</p
 </dd></dl>
 
 <dl class="py function">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.colorize">
-<code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</code><code class="sig-name descname">colorize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#colorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.colorize" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.colorize">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</span></span><span class="sig-name descname"><span class="pre">colorize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#colorize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.colorize" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>sets the pymol colors - FOOLING AROUND :)
 colorize_atoms: Some tests for different ways of colouring atoms.</p>
@@ -315,8 +326,8 @@ colour numbering schemes (s for spectrum, c for complementary etc.)
 </dd></dl>
 
 <dl class="py function">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.create_pymol_objects_for_molecules">
-<code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</code><code class="sig-name descname">create_pymol_objects_for_molecules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">exclude</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">[]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#create_pymol_objects_for_molecules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.create_pymol_objects_for_molecules" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.create_pymol_objects_for_molecules">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</span></span><span class="sig-name descname"><span class="pre">create_pymol_objects_for_molecules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#create_pymol_objects_for_molecules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.create_pymol_objects_for_molecules" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>creates separate selecetions for all molecules in interface_Pymol</p>
 <p>TODO; WRITE THE NAME OF THE MOLECULE IN TO THE ATOM SOMEHOW
@@ -336,8 +347,8 @@ TODO: make more stable if protein is present!</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.help_pymol_with_big_atom_list">
-<code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</code><code class="sig-name descname">help_pymol_with_big_atom_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pymol_function</span><span class="p">:</span> <span class="n">Callable</span></em>, <em class="sig-param"><span class="n">atom_list</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw_args</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#help_pymol_with_big_atom_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.help_pymol_with_big_atom_list" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.help_pymol_with_big_atom_list">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</span></span><span class="sig-name descname"><span class="pre">help_pymol_with_big_atom_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pymol_function</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw_args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#help_pymol_with_big_atom_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.help_pymol_with_big_atom_list" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>help_pymol_with_big_atom_list can be wrapped around any interface_Pymol function, that takes ‘selection’ as an argument.</p>
 <blockquote>
@@ -366,8 +377,8 @@ TODO: make more stable if protein is present!</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.pymol_selection_to_atom_list">
-<code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</code><code class="sig-name descname">pymol_selection_to_atom_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sele</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom">restraintmaker.utils.Utilities.Atom</a><span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#pymol_selection_to_atom_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.pymol_selection_to_atom_list" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.pymol_selection_to_atom_list">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</span></span><span class="sig-name descname"><span class="pre">pymol_selection_to_atom_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sele</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="restraintmaker.utils.html#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#pymol_selection_to_atom_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.pymol_selection_to_atom_list" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>converts a interface_Pymol selection and returns a list of restraintmaker_Logic.utilities.Atom</p>
 </div></blockquote>
@@ -385,8 +396,8 @@ TODO: make more stable if protein is present!</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.try_to_get_args">
-<code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</code><code class="sig-name descname">try_to_get_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">my_x</span></em>, <em class="sig-param"><span class="n">input_function</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#try_to_get_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.try_to_get_args" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.try_to_get_args">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.</span></span><span class="sig-name descname"><span class="pre">try_to_get_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">my_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_function</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/pymol_utitlities.html#try_to_get_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities.try_to_get_args" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>wrapper function for get_args. Takes care of the error handling</p>
 </div></blockquote>
@@ -410,8 +421,8 @@ TODO: make more stable if protein is present!</p>
 <div class="section" id="module-restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs">
 <span id="restraintmaker-interface-pymol-pymol-utilities-qt-dialogs-module"></span><h2>restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs module<a class="headerlink" href="#module-restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_file_open_dialog">
-<code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.</code><code class="sig-name descname">create_file_open_dialog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/qt_dialogs.html#create_file_open_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_file_open_dialog" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_file_open_dialog">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.</span></span><span class="sig-name descname"><span class="pre">create_file_open_dialog</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/qt_dialogs.html#create_file_open_dialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_file_open_dialog" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>create_file_dialog returns a function which:
 Opens a pyQt5 file Dialog with the speciefed message. In this format it can be provided to the get_args functions</p>
@@ -427,8 +438,8 @@ Opens a pyQt5 file Dialog with the speciefed message. In this format it can be p
 </dd></dl>
 
 <dl class="py function">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_file_save_dialog">
-<code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.</code><code class="sig-name descname">create_file_save_dialog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/qt_dialogs.html#create_file_save_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_file_save_dialog" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_file_save_dialog">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.</span></span><span class="sig-name descname"><span class="pre">create_file_save_dialog</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/qt_dialogs.html#create_file_save_dialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_file_save_dialog" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>create_file_dialog returns a function which:
 Opens a pyQt5 file Dialog with the speciefed message. In this format it can be provided to the get_args functions</p>
@@ -444,8 +455,8 @@ Opens a pyQt5 file Dialog with the speciefed message. In this format it can be p
 </dd></dl>
 
 <dl class="py function">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_input_dialog">
-<code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.</code><code class="sig-name descname">create_input_dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parent_window</span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Callable<span class="p">[</span><span class="p">[</span>str<span class="p">]</span><span class="p">, </span>str<span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/qt_dialogs.html#create_input_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_input_dialog" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_input_dialog">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.</span></span><span class="sig-name descname"><span class="pre">create_input_dialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/qt_dialogs.html#create_input_dialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_input_dialog" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>create_input_dialog returns a function which:</p>
 </div></blockquote>
@@ -467,8 +478,8 @@ Opens a pyQt5 file Dialog with the speciefed message. In this format it can be p
 </dd></dl>
 
 <dl class="py function">
-<dt id="restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_multi_dialog">
-<code class="sig-prename descclassname">restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.</code><code class="sig-name descname">create_multi_dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">inputs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">options</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>List<span class="p">[</span>str<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">{}</span></em>, <em class="sig-param"><span class="n">default</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="default_value">{}</span></em><span class="sig-paren">)</span> &#x2192; Callable<span class="p">[</span><span class="p">[</span>str<span class="p">]</span><span class="p">, </span>List<span class="p">[</span>str<span class="p">]</span><span class="p">]</span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/qt_dialogs.html#create_multi_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_multi_dialog" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_multi_dialog">
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.</span></span><span class="sig-name descname"><span class="pre">create_multi_dialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/interface_Pymol/pymol_utilities/qt_dialogs.html#create_multi_dialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.interface_Pymol.pymol_utilities.qt_dialogs.create_multi_dialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>create_multi_dialog return</p>
 <dl>
 <dt>TODO get_args: I am not happpy with the create_multi_dialog solution: Now we have to ‘prepare’ the input function in set_x_type by checking what x(optimizer, filter…) type we want to create.</dt><dd><p>The initial idea was that input_function is passed to get_args, which can then call it as needed, without having to know the format of its arguments
@@ -510,29 +521,29 @@ We have to choose either:1) input function returns exactly one str. if more inpu
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="restraintmaker.io.html" class="btn btn-neutral float-right" title="restraintmaker.io package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="restraintmaker.interface_Pymol.html" class="btn btn-neutral float-left" title="restraintmaker.interface_Pymol package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="restraintmaker.io.html" class="btn btn-neutral float-right" title="restraintmaker.io package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="restraintmaker.interface_Pymol.html" class="btn btn-neutral float-left" title="restraintmaker.interface_Pymol package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -540,7 +551,6 @@ We have to choose either:1) input function returns exactly one str. if more inpu
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

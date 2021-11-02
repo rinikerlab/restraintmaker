@@ -12,7 +12,7 @@ from scipy.spatial.qhull import QhullError
 from scipy.special import binom
 
 from restraintmaker.tools_Rdkit import Rdkit_Functions
-from restraintmaker.utils import Utilities as u, Types
+from restraintmaker.utils import Utilities as u, Restraints
 from restraintmaker.utils.Utilities import print, NoOptimalSolutionException
 
 """
@@ -43,7 +43,7 @@ class _Optimizer():
 
         raise NotImplementedError("Direct call of abstract function  _Optimizer.get_args(...)")
 
-    def make_restraints(self) -> t.List[Types._Restraint]:
+    def make_restraints(self) -> t.List[Restraints._Restraint]:
         """
                 make_restraints() return a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used.
 
@@ -78,7 +78,7 @@ class _MoleculeRingOptimizer(_Optimizer):
         self.cutoff = -1
         self.arrange_algo = ''  # criterion for how molecules should be sorted
 
-    def make_restraints(self) -> t.List[Types._Restraint]:
+    def make_restraints(self) -> t.List[Restraints._Restraint]:
         """
         returns a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used:
 
@@ -99,7 +99,7 @@ class _MoleculeRingOptimizer(_Optimizer):
 
         """
 
-        restraints: t.List[Types._Restraint] = []
+        restraints: t.List[Restraints._Restraint] = []
 
         if len(self.Molecules) < 2:
             raise u.BadArgumentException(
@@ -183,7 +183,7 @@ class _MoleculeRingOptimizer(_Optimizer):
         return restraints
 
     def connect_two_molecules(self, m1: t.List[u.Atom], m2: t.List[
-        u.Atom], n) -> t.List[Types._Restraint]:
+        u.Atom], n) -> t.List[Restraints._Restraint]:
         """
              connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer
 
@@ -210,7 +210,7 @@ class _MoleculeRingOptimizer(_Optimizer):
             'Direct call of abstract parent function _MoleculeRingOptimizer.connect_two_molecules')
 
 
-class TreeHeuristicOptimizer(_MoleculeRingOptimizer):
+class GreedyGraphOptimizer(_MoleculeRingOptimizer):
 
     def __init__(self, atoms):
         """
@@ -271,11 +271,11 @@ class TreeHeuristicOptimizer(_MoleculeRingOptimizer):
             raise u.BadArgumentException(
                 "A MoleculeRingOptimizer_0_1 needs to set at least 2 connection per Molecules pair. ")
         self.cutoff = u.check_or_convert_argument(inputs[1], float)
-        self.algo = u.check_or_convert_argument(inputs[2], str, ['prim', 'shortest', 'cog', "biased_avg"])
+        self.algo = u.check_or_convert_argument(inputs[2], str, ['prim', 'minmax', 'cog', "biased_avg"])
         self.arrange_algo = u.check_or_convert_argument(inputs[3], str, ['None', 'convex_hull', 'pca_2d'])
 
     def connect_two_molecules(self, m1: t.List[u.Atom], m2: t.List[
-        u.Atom], n) -> t.List[Types._Restraint]:
+        u.Atom], n) -> t.List[Restraints._Restraint]:
         """
         For three heurstic Optimizer that is by greedly picking restraints according to a criterion depending on the already chosen restraints
 
@@ -362,7 +362,7 @@ class BruteForceRingOptimzer(_MoleculeRingOptimizer):
                 "A VolumeOptimizer needs to set at least 4 connections per Molecules pair. ")
 
     def connect_two_molecules(self, m1: t.List[u.Atom], m2: t.List[
-        u.Atom], n) -> t.List[Types._Restraint]:
+        u.Atom], n) -> t.List[Restraints._Restraint]:
         """
              connect_two_molecules places n restraint between 2 molecules, using criteria depending on the Optimizer
 
@@ -579,11 +579,10 @@ class MetaMoleculeRingOptimizer(_MoleculeRingOptimizer):
         self.arrange_algo = u.check_or_convert_argument(inputs[3], str, ['None', 'convex_hull', 'pca_2d'])
 
         # Create sub optimizers
-        tree_algos = ["prim", "cog", "shortest",
-                      "biased_avg"]  # TODO: Remove Hardcoded algorithms and allow to pass a list of all algos of interest
+        tree_algos = ["prim", "cog", "minmax", "biased_avg"]
 
         for algorithm in tree_algos:
-            new_optimizer = TreeHeuristicOptimizer(self.atoms)
+            new_optimizer = GreedyGraphOptimizer(self.atoms)
             new_optimizer.get_args(lambda _: (self.n, self.cutoff, algorithm,
                                               None))  # TODO: Allow to use different kinds of Molecules Ring Optimizers, does not have to be TreeOptimizer
             self.sub_optimizers.append(new_optimizer)
@@ -633,7 +632,7 @@ class MetaMoleculeRingOptimizer(_MoleculeRingOptimizer):
     Static Utilitiy functions for optimizers->
 """
 def get_all_short_pair_restraints(atoms: t.List[u.Atom], max_dis: float) -> t.List[
-    Types.Distance_Restraint]:
+    Restraints.DistanceRestraint]:
     """
          finds all pairs of atoms within a certain cutoff distance of each other. Atoms withing the same molecules can are not connected
 
@@ -657,7 +656,7 @@ def get_all_short_pair_restraints(atoms: t.List[u.Atom], max_dis: float) -> t.Li
     # Check for all pairs of atoms if they are within the specified cutoff of each other. Try to minimize necessary calculations using shortcut function of and and or
     # TODO: Instead of first checking if distance in all three spacial directions is , cutoff it might be quicker to first check x distance, then x^2 + y^2 distance and then to add z^2
     # => Decrease cost in case of success a bit, increas cost in case of failure after first square. Decrease chance to onlzy fail after the last calculation
-    __atom_pairs: t.List[Types.Distance_Restraint] = []
+    __atom_pairs: t.List[Restraints.DistanceRestraint] = []
     for i_a1 in range(0, len(atoms) - 1):
         a1 = atoms[
             i_a1]  # Quicker to loop over index of a1 and then acess it once for all inner loops, than findix index of a1 once for every onner loop
@@ -666,14 +665,14 @@ def get_all_short_pair_restraints(atoms: t.List[u.Atom], max_dis: float) -> t.Li
                     a1.z - a2.z) <= max_dis:
                 dis_sq = (a1.x - a2.x)**2 + (a1.y - a2.y)**2 + (a1.z - a2.z)**2
                 if dis_sq <= max_dis_sq:
-                    __atom_pairs.append(Types.Distance_Restraint(a1, a2))
+                    __atom_pairs.append(Restraints.DistanceRestraint(a1, a2))
 
     # Convert the atom pairs to restraints
     return __atom_pairs
 
 
-def maximal_spanning_tree_greedy(potential_restraints: t.List[Types.Distance_Restraint], n: int, priority_algo: str) -> \
-        t.List[Types.Distance_Restraint]:
+def maximal_spanning_tree_greedy(potential_restraints: t.List[Restraints.DistanceRestraint], n: int, priority_algo: str= "minmax") -> \
+        t.List[Restraints.DistanceRestraint]:
     """
     Finds a maximal spanning tree in which the nodes represent distance restraints and edges the distance between their middles.
     The 'tree' will be provided in the form of a list. Connectivity info is not explicitly given. Due to the working of Prims Algorithm it is guaranteed, that every vortex in the list is connected to one vortex before it in the list
@@ -766,9 +765,9 @@ def maximal_spanning_tree_greedy(potential_restraints: t.List[Types.Distance_Res
         if m_sq[v.index][chosen_v.index] > v.priority:
             v.priority = m_sq[chosen_v.index][v.index]
 
-    def _update_priority_shortest(v: priority_node):
+    def _update_priority_minmax(v: priority_node):
         """
-            The priority of the_node is the SHORTEST distance to any node in the tree
+            The priority of the_node is the minimal distance to any node in the tree 0
         """
 
         # Shorter means -m > priority
@@ -829,15 +828,15 @@ def maximal_spanning_tree_greedy(potential_restraints: t.List[Types.Distance_Res
     update_priority: t.Callable = None
     if priority_algo == 'prim':
         update_priority = _update_priority_prim
-    elif priority_algo == 'shortest':
-        update_priority = _update_priority_shortest
+    elif priority_algo == 'minmax':
+        update_priority = _update_priority_minmax
     elif priority_algo == 'cog':
         update_priority = _update_priority_cog
     elif priority_algo == 'biased_avg':
         update_priority = _update_priority_biased_avg
     else:
         raise u.BadArgumentException(
-            priority_algo + ' is not an acceptable algorithm for maximal_spanning_tree_heuristic(...). Accepted values are: \'prim\' and \'shortest\'')
+            priority_algo + ' is not an acceptable algorithm for maximal_spanning_tree_heuristic(...). Accepted values are: \'prim\' and \'minmax\'')
 
     # STEP 0) Check if there are enough restraints
     if len(potential_restraints) < n:
@@ -901,7 +900,7 @@ def maximal_spanning_tree_greedy(potential_restraints: t.List[Types.Distance_Res
 
         #Fix for Ties - break wit cog
         cog_threshold = 0.3
-        if(update_priority == _update_priority_shortest):
+        if(update_priority == _update_priority_minmax):
             subpriority_q = [copy.deepcopy(n) for n in priority_q if(new_node.priority-cog_threshold < n.priority)]
             if(len(subpriority_q)>1):
                 [_update_priority_cog(v) for v in subpriority_q]
@@ -1001,13 +1000,13 @@ def _calculate_value_scaled_pca_2d(restraint_pos):
 
 
 # ------------utilites------------------------------------------
-def cog_distance_restraint(r: Types.Distance_Restraint)->t.Tuple[float, float, float]:
+def cog_distance_restraint(r: Restraints.DistanceRestraint)->t.Tuple[float, float, float]:
     """
         Calculate the cog of a distance restraint
     
     Parameters
     ----------
-    r: Types.Distance_Restraint
+    r: Restraints.DistanceRestraint
 
     Returns
     -------

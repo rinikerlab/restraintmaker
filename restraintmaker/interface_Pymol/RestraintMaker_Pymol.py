@@ -46,31 +46,7 @@ class Restraints_Wizard(Wizard):
         ##generate Menu drop down
         ### Pymols python interpreter will not be able to understand a reference to self. But we can find the Way back here via cmd.get_wizard.
         ### We can not use the __class__  attribute: The function will be passed as a string to the interface_Pymol Python interpreter. So its ars have to be strings themselves
-        self.menu = {
-
-            'Import': [[2, "Importer", '']] +
-                      [[1, i.__name__, 'cmd.get_wizard()._action_button_pressed(\"' + i.__name__ + '\")'] for i in
-                       self.logic_handler.available_importer_types],
-            'Restraint': [[2, 'Restraint', '']] +
-                         [[1, r.__name__, 'cmd.get_wizard()._action_button_pressed(\"' + r.__name__ + '\")'] for r in
-                          self.logic_handler.available_restraint_types],
-            'Selection': [[2, "Selection", '']] +
-                         [[1, s.__name__, 'cmd.get_wizard()._action_button_pressed(\"' + str(s.__name__) + '\")'] for s
-                          in self.logic_handler.available_selection_types],
-
-            'Filter': [[2, "Filter", '']] +
-                      [[1, f.__name__, 'cmd.get_wizard()._action_button_pressed(\"' + str(f.__name__) + '\")'] for f in
-                       self.logic_handler.available_filter_types],
-            'Optimizer': [[2, 'Optimizer', '']] +
-                         [[1, o.__name__, 'cmd.get_wizard()._action_button_pressed(\"' + str(o.__name__) + '\")'] for o
-                          in self.logic_handler.available_optimizer_types],
-
-            'Exporter': [[2, 'Exporter', '']] +
-                        [[1, e.__name__, 'cmd.get_wizard()._action_button_pressed(\"' + e.__name__ + '\")'] for e in
-                         self.logic_handler.available_exporter_types],
-            'Done': [[1, 'Done', 'cmd.set_wizard()']]
-
-        }
+        self.update_menu()
 
         ##Settings
         self.show_message = True
@@ -99,6 +75,31 @@ class Restraints_Wizard(Wizard):
     """
         Pymol event handling
     """
+
+    def update_menu(self):
+        self.menu = {
+            'Import': [[2, "Importer", '']] +
+                      [[1, i.__name__.replace("import_", ""), 'cmd.get_wizard()._action_button_pressed(\"' + i.__name__ + '\")'] for i in
+                       self.logic_handler.available_importer_types],
+            'Restraint': [[2, 'Restraint', '']] +
+                         [[1, r.__name__.replace("_Type", ""), 'cmd.get_wizard()._action_button_pressed(\"' + r.__name__.replace("_Type", "") + '\")'] for r in
+                          self.logic_handler.available_restraint_types],
+            'Selection': [[2, "Selection", '']] +
+                         [[1, s.__name__, 'cmd.get_wizard()._action_button_pressed(\"' + str(s.__name__) + '\")'] for s
+                          in self.logic_handler.available_selection_types],
+
+            'Filter': [[2, "Filter", '']] +
+                      [[1, f.__name__, 'cmd.get_wizard()._action_button_pressed(\"' + str(f.__name__) + '\")'] for f in
+                       self.logic_handler.available_filter_types],
+            'Optimizer': [[2, 'Optimizer', '']] +
+                         [[1, o.__name__, 'cmd.get_wizard()._action_button_pressed(\"' + str(o.__name__) + '\")'] for o
+                          in self.logic_handler.available_optimizer_types],
+
+            'Exporter': [[2, 'Exporter', '']] +
+                        [[1, e.__name__.replace("export_", ""), 'cmd.get_wizard()._action_button_pressed(\"' + e.__name__ + '\")'] for e in
+                         self.logic_handler.available_exporter_types],
+            'Done': [[1, 'Done', 'cmd.set_wizard()']]
+        }
 
     # The trigger-event method is used to translate the interface_Pymol events into events the selections can deal with, by calling the corresponding Logic_handler.react_to_*_event function
     # TODO STUC: Decide wether to redraw automatically after each event, or wether to trigger the redrawing from the Logic module.
@@ -262,6 +263,7 @@ class Restraints_Wizard(Wizard):
             elif hasattr(self, 'to_3_i_m'):
                 self._to3_i_m = int((self._to3_i_m - 1) % (len(self.cmd.get_object_list()) / 3))
                 self._optimzer_show_next_molecule_pair_3()
+
         elif k == 32:  # Space
             self.cmd.set('grid_mode', (int(self.cmd.get('grid_mode')) + 1) % 2)
 
@@ -299,9 +301,11 @@ class Restraints_Wizard(Wizard):
 
         # Shf Q: Choose all atoms, start brute force optimizer, start test mode 4
         if k == 81 and mod == 1:
-            self._action_button_pressed('UniversalSelection')
+            self._action_button_pressed('AllSelection')
             self.trigger_event(program_states.EventType.CONFIRM)
-            self._action_button_pressed('TreeHeuristicOptimizer')
+            self._action_button_pressed("RingFilter")
+            self.trigger_event(program_states.EventType.CONFIRM)
+            self._action_button_pressed('GreedyGraphOptimizer')
 
             # Make sure Optimizatyion was sucessfull
             if (len(self.logic_handler.selected_restraints) > 0):
@@ -315,9 +319,9 @@ class Restraints_Wizard(Wizard):
 
             Optimizer.compare_pair_optimizers(criterion=Optimizer._calculate_value_convex_hull, \
                                               atoms=self.logic_handler.selected_atoms, \
-                                              opt_types=[Optimizer.TreeHeuristicOptimizer,
-                                                         Optimizer.TreeHeuristicOptimizer,
-                                                         Optimizer.TreeHeuristicOptimizer,
+                                              opt_types=[Optimizer.GreedyGraphOptimizer,
+                                                         Optimizer.GreedyGraphOptimizer,
+                                                         Optimizer.GreedyGraphOptimizer,
                                                          Optimizer.BruteForceRingOptimzer,
                                                          Optimizer.BruteForceRingOptimzer], \
                                               opt_args=[(4, 1.0, 'prim', 'convex_hull'), (4, 1.0, 'cog', 'convex_hull'),
@@ -409,7 +413,7 @@ class Restraints_Wizard(Wizard):
         # Restraint
         if x_type == None:
             for r_type in self.logic_handler.available_restraint_types:
-                if r_type.__name__ == x_name:
+                if r_type.__name__.replace("_Type", "")  == x_name:
                     x_type = r_type
 
         # Selection
@@ -441,7 +445,9 @@ class Restraints_Wizard(Wizard):
                 'The x_name argument of button_pressed must be the __name__ of an Importer, Restraint, Selection, Filter, Optimizer or Exporter. Not: ' + str(
                     x_name))
 
+
         self.logic_handler.set_action_type(x_type)
+        self.update_menu()
         self.redraw()  # Actually only necessary after Optimizer
         self.cmd.refresh_wizard()
 
@@ -463,8 +469,29 @@ class Restraints_Wizard(Wizard):
         else:
             raise ValueError(
                 '_toggle_button_pressed needs to be called with \'button\' = toggle_delte or toggle_atom. Not ' + button)
+        self.update_menu()
         self.get_panel()
         self.cmd.refresh_wizard()
+
+    def _reset(self):
+        self.cmd.unpick()
+        self.cmd.deselect()
+        self.cmd.set('mouse_selection_mode', 0)
+
+        self.check_result_dict = {}  # crd (check_results_dict) is an dict that can beused by the test mode to store information
+        self.check_results_mode = 0  # Check results mode indicates if we are using a special test mode at the moment.
+        self.tmp_cnt = 0  # The different check_opzimier_results functions indicate in whihc mode they are called
+
+        self.logic_handler.selected_atoms = []
+        self.logic_handler.selected_restraints = []
+
+        self.logic_handler.set_action_states()
+        self.redraw()
+        cmd.hide("spheres") #this is a bit hacky
+
+        self.cmd.refresh_wizard()
+        pass
+
 
     """
         Utility functions
@@ -510,7 +537,7 @@ class Restraints_Wizard(Wizard):
                            'cnfrm: shft+up']
                 if 'SphericalSelection' in self.cmd.get_object_list():
                     prompt += [
-                        'size: left / right' \
+                        'size: left / right', \
                         'move/rotate: mouse, left', \
                         'activate rota: up',
                         'activate move: down']
@@ -556,18 +583,21 @@ class Restraints_Wizard(Wizard):
 
         menu = []
         menu += empty_panel
-        menu += [[str(self.logic_handler._action_states['toggle_select_delete']), text_select_delete,
-                  'cmd.get_wizard()._toggle_button_pressed(\"toggle_delete\")']]
+        menu += [[str(program_states.ActionState.CURRENTLY_DISABLED),  "RestraintMaker", ""]]  #Should actually be Always_Disabled, but not nice colored!
+        menu += [[0, '--------------', '']]
+        menu += [[str(program_states.ActionState.CURRENTLY_DISABLED),  "Selection Options: ", ""]]  #Should actually be Always_Disabled, but not nice colored!
         menu += [[str(self.logic_handler._action_states['toggle_select_delete']), text_atom_restraint_mode,
                   'cmd.get_wizard()._toggle_button_pressed(\"toggle_atom\")']]
-
+        menu += [[str(self.logic_handler._action_states['toggle_select_delete']), text_select_delete,
+                  'cmd.get_wizard()._toggle_button_pressed(\"toggle_delete\")']]
+        menu += [[str(self.logic_handler._action_states['Reset']), 'Reset',  'cmd.get_wizard()._reset()' ]]
         menu += empty_panel
+        menu += [[str(self.logic_handler._action_states['Restraint']),
+                  'Type:' + get_name(self.logic_handler.current_restraint_type).replace("_Type", ""), 'Restraint']]
         menu += [[str(self.logic_handler._action_states['Importer']),
                   'Import:' + get_name(self.logic_handler.current_importer_type), 'Import']]
-        menu += [[str(self.logic_handler._action_states['Restraint']),
-                  'Restraint:' + get_name(self.logic_handler.current_restraint_type), 'Restraint']]
         menu += [[str(self.logic_handler._action_states['Selection']),
-                  'Selection: ' + get_name(self.logic_handler.current_selection_type), 'Selection']]
+                  'Mode: ' + get_name(self.logic_handler.current_selection_type), 'Selection']]
         menu += [[str(self.logic_handler._action_states['Filter']),
                   'Filter: ' + get_name(self.logic_handler.current_filter_type), 'Filter']]
         menu += [[str(self.logic_handler._action_states['Optimizer']),
@@ -689,9 +719,14 @@ class Restraints_Wizard(Wizard):
                     pu.help_pymol_with_big_atom_list(self.cmd.set, pair, name="sphere_color", value=i % 54)
 
                 already_colored=False
-                cmd.set
 
             # 3a) Colour all restrained atoms
+            if not self.check_objects_exists('SphericalSelection'):
+                cmd.hide("spheres", "all")
+            else:
+                cmd.hide("spheres", "not SphericalSelection")
+                cmd.show("spheres", "SphericalSelection")
+
             pu.help_pymol_with_big_atom_list(self.cmd.show, restrained_atoms, representation='spheres')
 
 

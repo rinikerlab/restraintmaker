@@ -180,12 +180,12 @@ for indA, molA in enumerate(orig_pdbs):
             continue
 
             ## Optimizers
-        opt = Optimizer.TreeHeuristicOptimizer(filtered_atoms)
+        opt = Optimizer.GreedyGraphOptimizer(filtered_atoms)
         opt.get_args(lambda x: (nrestraints, distance_treshold, 'shortest', None))
         res = opt.make_restraints()
 
             ## Export
-        exporter = Exporter.Gromos_Distance_Restraint_Exporter(restraints=res)
+        exporter = Exporter.export_Gromos_Distance_Restraints(restraints=res)
         exporter.get_args(lambda x: out_dir+"/"+out_prefix+".disres")
         exporter.export_restraints()
 

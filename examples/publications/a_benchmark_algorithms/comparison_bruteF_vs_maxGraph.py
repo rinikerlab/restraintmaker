@@ -138,7 +138,7 @@ for it in range(iterations):
             print("shortest")
             startt = datetime.datetime.now()
 
-            opt = Optimizer.TreeHeuristicOptimizer(filtered_atoms)
+            opt = Optimizer.GreedyGraphOptimizer(filtered_atoms)
             opt.get_args(lambda x: (nrestraints, distance_treshold, 'shortest', None))
             res = opt.make_restraints()
 

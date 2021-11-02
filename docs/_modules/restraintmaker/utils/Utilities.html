@@ -1,26 +1,37 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>restraintmaker.utils.Utilities &mdash; restraintMaker  documentation</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -29,10 +40,6 @@
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -71,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -78,9 +86,9 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome RestraintMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome to RestraintMaker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
 </ul>
@@ -88,6 +96,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -122,11 +131,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -338,7 +349,7 @@
 
     <span class="c1"># 2) CONSTUCT PDB BLOCKS</span>
     <span class="c1">#ref: https://www.cgl.ucsf.edu/chimera/docs/UsersGuide/tutorials/pdbintro.html</span>
-    <span class="n">pdb_format</span> <span class="o">=</span> <span class="s2">&quot;ATOM  </span><span class="si">{:&gt;5d}</span><span class="s2">  </span><span class="si">{:&lt;3}{:1}{:&gt;3}</span><span class="s2">  </span><span class="si">{:1}{:&gt;3d}{:1}</span><span class="s2">   </span><span class="si">{:&gt;7.3f}{:&gt;7.3f}{:&gt;7.3f}{:&gt;5f}{:&gt;6f}{:&lt;3}{:&gt;2}</span><span class="s2"> </span><span class="si">{:&gt;2d}</span><span class="s2">&quot;</span>
+    <span class="n">pdb_format</span> <span class="o">=</span> <span class="s2">&quot;ATOM  </span><span class="si">{:&gt;5d}</span><span class="s2">  </span><span class="si">{:&lt;2}{:1}{:&gt;3}</span><span class="s2">  </span><span class="si">{:1}{:&gt;3d}{:1}</span><span class="s2">   </span><span class="si">{:&gt;7.3f}{:&gt;7.3f}{:&gt;7.3f}{:&gt;5}{:&gt;6}{:&lt;3}{:&gt;2}</span><span class="s2"> </span><span class="si">{:&gt;2d}</span><span class="s2">&quot;</span>
     <span class="n">dummy_occupancy</span><span class="o">=</span> <span class="n">dummy_bfactor</span><span class="o">=</span> <span class="n">dummy_charge</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="n">dummy_alt_location</span><span class="o">=</span> <span class="n">dummy_chain</span><span class="o">=</span> <span class="n">dummy_insertion_code</span><span class="o">=</span> <span class="n">dummy_segment</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
@@ -355,7 +366,7 @@
         <span class="c1"># molecule_as_str = molecule_as_str.replace(&#39;\t&#39;,&#39;    &#39;)</span>
         <span class="n">pdb_molecules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">molecule_as_str</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="n">pdb_molecules</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">mv</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">pdb_molecules</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">pdb_molecules</span></div>
 
@@ -523,20 +534,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3
+        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -544,7 +560,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -37,15 +37,15 @@ class test_Exporter(unittest.TestCase):
         file_handle1.close()
         file_handle2.close()
 
-    def test_Exporter_Gromos_construct(self):
-        gromos_Exporter = Exporter.Gromos_Distance_Restraint_Exporter(self.disres1)
+    def test_Exporter_Gromacs_construct(self):
+        gromos_Exporter = Exporter.export_Gromacs_Distance_Restraints(self.disres1)
 
-    def test_Exporter_Gromos_getargs(self):
-        exporter = Exporter.Gromos_Distance_Restraint_Exporter(self.disres1)
+    def test_Exporter_Gromacs_getargs(self):
+        exporter = Exporter.export_Gromacs_Distance_Restraints(self.disres1)
         exporter.get_args(lambda x: self.out_gromos_disres_path1)
 
-    def test_Exporter_Gromos_export_disresDat(self):
-        exporter = Exporter.Gromos_Distance_Restraint_Exporter(self.disres1)
+    def test_Exporter_Gromacs_export_disresDat(self):
+        exporter = Exporter.export_Gromos_Distance_Restraints(self.disres1)
         exporter.get_args(lambda x: (self.out_gromos_disres_path1))
         out = exporter.export_restraints()
 
@@ -53,7 +53,7 @@ class test_Exporter(unittest.TestCase):
             expected_filelines = solution.readlines()
             expected_str = "".join(expected_filelines)
 
-        exporter = Exporter.Gromos_Distance_Restraint_Exporter(self.disres2)
+        exporter = Exporter.export_Gromos_Distance_Restraints(self.disres2)
         exporter.get_args(lambda x: (self.out_gromos_disres_path2))
         out = exporter.export_restraints()
 

@@ -60,11 +60,27 @@ https://github.com/rinikerlab/restraintmaker
         conda activate restraintmaker
         python examples/example_gui.py
 
+## GUI Tutorial
+### GUI Menu
+![pyMol](.img/pyMol_Wiz_menu.png)
+
+### Optimized Distance Restraints
+#### Start by loading
+You can checkout the file provided in examples on how to start the GUI.
+![pyMol](.img/pyMol_Wiz_start.png)
+
+#### Select \& Filter
+![pyMol](.img/pyMol_Wiz_select.png)
+
+#### Optimize restraints
+![pyMol](.img/pyMol_Wiz_optimize.png)
+![pyMol](.img/pyMol_Wiz_optimize_grid.png)
+
+#### Export restraints to files
+![pyMol](.img/pyMol_Wiz_export.png)
 
 ## Author
-Benjamin Ries,
-Salomé Rieder
-Clemens Rhiner
+Benjamin Ries (@SchroederB), Salomé R. Rieder (@SalomeRonja), Clemens Rhiner (@ClemensRhiner)
     
 ## Acknowledgments
 The authors want to thank Carmen Esposito and Dominik Sidler for the great discussions.
@@ -77,5 +93,5 @@ Project based on the
 [2] The PyMOL Molecular Graphics System, Version 2.5 Schrödinger, LLC.  (Anaconda OpenSource Version)
 
 ## Copyright
-Copyright (c) 2021, Benjamin Ries, Salomé Rieder, Clemens Rhiner
+Copyright (c) 2021, Benjamin Ries (@SchroederB), Salomé R. Rieder (@SalomeRonja), Clemens Rhiner (@ClemensRhiner)
 
