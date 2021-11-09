@@ -6,21 +6,18 @@
 
 # Welcome to RestraintMaker
 
-RestraintMaker is a tool that allows automatic distance restraint assignment for dual-topology relative free energy (RFE) calculations.
-The package can be used either in a scripting mode or with a GUI-based in PyMOL(see [1]). 
+RestraintMaker is a tool for MD-simulation restraint preparation. The package can be used to manually pick position - or distance restraints or automatically assign well-spread distance restraint over multiple molecules (e.g., used for dual-topology relative free energy (RFE) calculations). The package can be used either in a scripting mode or with a GUI-based in PyMOL(see [1]).
 
 ## Introduction
-Thanks to the methodological, software and harware improvements of recent years, RFE calculations are able to tackle more and more complex transformations. This also causes a growing need for more efficient setups of such calculations, namely automatization. Our aim is to provide a link in the automatization chain which can be integrated into workflows for RFE calculations.
-RestraintMaker contains a greedy approach to determine good placements of atom distance and/or position restraints based on geometric measures. It can be used to generated distance/position restraints for RFE calculations with a dual state approach, such as TI. Further, it can be used to generate distance/position restraints for multistate methods such as Replica Exchange Enveloping Distribution Sampling (RE-EDS) [3,4].
-
-For more details on the history of distance restraints in RFE calculations, the algorithm of RestraintMaker and an application to the calculation of relative hydration free energies you can checkout (in the near future): Ries, B.; Rieder, S.R.; Rhiner, C.; Hünenberger, P.H.; Riniker, S. - A Graph-Based Approach to the Restraint Problem in Dual Topology Approaches with RestraintMaker. to be submitted
+Thanks to recent years' methodological, software, and hardware improvements, RFE calculations can tackle more and more complex transformations. This development also causes a growing need for more efficient setups of such calculations, namely automatization. We aim to provide a link in the automatization chain which can easily be integrated into python workflows for RFE calculations or used with a GUI in PyMol. RestraintMaker contains a greedy approach to determine good placements of atom distance and/or position restraints based on geometric measures. It can generate distance/position restraints for RFE calculations with a dual state approach, such as TI. Further, it can be used to create distance/position restraints for multistate methods such as Replica Exchange Enveloping Distribution Sampling (RE-EDS) [3,4].
+For more details on the history of distance restraints in RFE calculations, the algorithm of RestraintMaker, and an application to the calculation of relative hydration free energies you can check out (soon): Ries, B.\*; Rieder, S.R.\*; Rhiner, C.; Hünenberger, P.H.; Riniker, S. - A Graph-Based Approach to the Restraint Problem in Dual Topology Approaches with RestraintMaker. to be submitted
 
 ## Content
 ### Development
-RestraintMaker is split two parts:
+RestraintMaker is split into two parts:
 
 * RestraintMaker
-  This part is the core of the program. It can be executed as standalone.
+   This part is the core of the program. It can be executed as a standalone.
     * algorithm: restraint selecting algorithms
     * tools_Rdkit: additional functions for filtering or selecting (see [2])
     * io: writing/importing outputfiles
