@@ -2,7 +2,7 @@
     The module Selections contains the selection logics. A selected atom will be considered for restraint placement.
     These Selections are mostly useful for the GUI mode.
 """
-import cmd
+from pymol import cmd
 import math
 import typing as t
 
