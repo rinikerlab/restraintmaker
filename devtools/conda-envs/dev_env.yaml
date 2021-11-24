@@ -1,8 +1,6 @@
 name: restraintmakerDev
 channels:
   - conda-forge
-  - rdkit
-  - schrodinger
   - defaults
 dependencies:
     # Base depends
@@ -11,15 +9,13 @@ dependencies:
 
     # Testing
   - pytest
-  - pytest-cov
-  - codecov
 
     # Requirements
-  - pymol
-  - rdkit
   - scipy
   - numpy
   - pandas
+  - rdkit
+  - pymol-open-source
 
     #Doc
   - sphinx

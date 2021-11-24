@@ -2,7 +2,6 @@ name: test
 channels:
   - conda-forge
   - rdkit
-  - schrodinger
   - defaults
 dependencies:
     # Base depends
@@ -15,7 +14,7 @@ dependencies:
   - flake8
 
     # Requirements
-  - pymol
+  - pymol-open-source
   - rdkit
   - scipy
   - numpy
