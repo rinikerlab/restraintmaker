@@ -10,7 +10,9 @@ RestraintMaker is a tool for MD-simulation restraint preparation. The package ca
 
 ## Introduction
 Thanks to recent years' methodological, software, and hardware improvements, RFE calculations can tackle more and more complex transformations. This development also causes a growing need for more efficient setups of such calculations, namely automatization. We aim to provide a link in the automatization chain which can easily be integrated into python workflows for RFE calculations or used with a GUI in PyMol. RestraintMaker contains a greedy approach to determine good placements of atom distance and/or position restraints based on geometric measures. It can generate distance/position restraints for RFE calculations with a dual state approach, such as TI. Further, it can be used to create distance/position restraints for multistate methods such as Replica Exchange Enveloping Distribution Sampling (RE-EDS) [3,4].
-For more details on the history of distance restraints in RFE calculations, the algorithm of RestraintMaker, and an application to the calculation of relative hydration free energies you can check out (soon): Ries, B.\*; Rieder, S.R.\*; Rhiner, C.; Hünenberger, P.H.; Riniker, S. - A Graph-Based Approach to the Restraint Problem in Dual Topology Approaches with RestraintMaker. to be submitted
+For more details on the history of distance restraints in RFE calculations, the algorithm of RestraintMaker, and an application to the calculation of relative hydration free energies you can check out: 
+
+*Ries, B.\*; Rieder, S.R.\*; Rhiner, C.; Hünenberger, P.H.; Riniker, S. - A Graph-Based Approach to the Restraint Problem in Dual Topology Approaches with RestraintMaker. to be submitted*
 
 ## Content
 ### Development
@@ -19,7 +21,7 @@ RestraintMaker is split into two parts:
 * RestraintMaker
    This part is the core of the program. It can be executed as a standalone.
     * algorithm: restraint selecting algorithms
-    * tools_Rdkit: additional functions for filtering or selecting (see [2])
+    * tools_RDKit: additional functions for filtering or selecting (see [2])
     * io: writing/importing outputfiles
     * utils
     
