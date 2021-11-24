@@ -81,43 +81,37 @@ def _check_importing_packages():
         This function checks if all needed packages are there.
     """
 
-    try:
-        import conda.cli as cli
-    except :
-        warnings.warn("WARNING: could not find PyMOL in enviroment. Try installing via anaconda3")
-
-        import os
-        os.system("conda install conda")
-
-    # IMPORT PYMOL
+    # IMPORT RDKIT
+    collect_paackages = []
     try:
         import pymol
     except Exception as err:
-        warnings.warn("WARNING: could not find PyMOL in enviroment. Try installing via anaconda3")
-        if ("conda" in sys.modules):
-            import conda.cli as cli
-            cli.main('conda', 'install', '-y', '-c schrodinger', 'pymol')
-            # start interface_Pymol
-            import pymol
-        else:
-            raise ImportError(
-                "Could not find pymol package or conda enviroment to install the package.\n " + "\n ".join(
-                    err.args))
-
-    # IMPORT RDKIT
+        collect_paackages.append('pymol-open-source')
     try:
         import rdkit
     except Exception as err:
+        collect_paackages.append('rdkit')
+    try:
+        import scipy
+    except Exception as err:
+        collect_paackages.append('scipy')
+    try:
+        import numpy
+    except Exception as err:
+        collect_paackages.append('numpy')
+    try:
+        import pandas
+    except Exception as err:
+        collect_paackages.append('pandas')
+
+    if(len(collect_paackages) > 0):
         warnings.warn("WARNING: could not find rdkit in enviroment. Try installing via anaconda3")
-        if ("conda" in sys.modules):
-            import conda.cli as cli
-            cli.main('conda', 'install', '-y', '-c rdkit', 'rdkit')
-            # start interface_Pymol
-            import rdkit
-        else:
-            raise ImportError(
-            "Could not find rdkit package! And also couldn't find a conda enviroment to install Tools_rdkit.\n " + "\n ".join(
-                err.args))
+        #this is clunky and will only work for conda envs always work!
+        import os
+        os.system("conda install -y -c conda-forge "+ " ".join(collect_paackages))
+
+        #import conda.cli as cli
+        #cli.main('conda', 'install', '-y', '-c conda-forge', " ".join(collect_paackages))
 
 
 

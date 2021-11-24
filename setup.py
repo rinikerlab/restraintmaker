@@ -65,3 +65,15 @@ setup(
     # zip_safe=False,
 
 )
+
+
+###IF YOU WANT TO INCLUDE RESMAKER AS PLUGIN
+def __init_plugin__(app=None):
+    """
+    Required for PyMol plugin installation - problem not all in one file!
+    """
+
+    from pymol.plugins import addmenuitemqt
+    from restraintmaker import restraintMaker
+    restraintMaker._check_importing_packages()
+    addmenuitemqt('RestraintMaker', restraintMaker.run_plugin_gui)
