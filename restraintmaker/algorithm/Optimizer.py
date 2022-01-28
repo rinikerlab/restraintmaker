@@ -1361,10 +1361,10 @@ def additional_ring_interconnections(molecule_pair_list:t.List[t.Tuple[int, int]
             else:
                 if(tdiv == 0.5):
                     i = int(0)
-                    j = int(np.round(tdiv*nLigs))
+                    j = int(np.round(tdiv*nLigs))+1
                 else:
-                    i = int(np.round(tdiv*nLigs))
-                    j = int(np.round((0.5+tdiv)*nLigs))
+                    i = int(np.round(tdiv*nLigs))+1
+                    j = int(np.round((0.5+tdiv)*nLigs))+1
 
                 #print("nP\t"+str(nLigs), mv=_verbosity_level)
                 #print("div\t"+str(tdiv), mv=_verbosity_level)
@@ -1387,8 +1387,9 @@ def additional_ring_interconnections(molecule_pair_list:t.List[t.Tuple[int, int]
     print("Translation\n", mv=_verbosity_level)
 
     for add_tuple_ind in additional_restraint_pairs:
+        print(add_tuple_ind)
         print("tMolChainINd\t"+str(add_tuple_ind), mv=_verbosity_level)
-        molecule_indices = [mol_chain[i] for i in add_tuple_ind]
+        molecule_indices = [mol_chain[i%len(mol_chain)] for i in add_tuple_ind]
         print("tMolINds\t"+str(molecule_indices), mv=_verbosity_level)
         tups = [molecule_pair_list.index(tup) for tup in molecule_pair_list if(all([v in tup for v in molecule_indices]))]
         print("tupleIndex"+str(tups), mv=_verbosity_level)

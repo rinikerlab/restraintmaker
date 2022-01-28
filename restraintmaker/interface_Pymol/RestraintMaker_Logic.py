@@ -533,8 +533,8 @@ class Logic_Handler:
             input_function = qt_dialogs.create_multi_dialog(
                 title='Parameters for BruteForceOptimizer', \
                 inputs=['number of restraints', 'maximal distance of restraints',
-                        'algorithm', 'optimize molecules pairs by'], \
-                options={'algorithm': ['convex_hull', 'pca', 'addtional ring connections'],
+                        'algorithm', 'optimize molecules pairs by', 'addtional ring connections'], \
+                options={'algorithm': ['convex_hull', 'pca'],
                          'optimize molecules pairs by': ['None', 'convex_hull',
                                                          'pca_2d']}, \
                 default={'number of restraints': '4',

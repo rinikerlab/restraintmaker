@@ -17,7 +17,6 @@ if __name__ == "__main__":
     # load
     from restraintmaker import test
     in_file_path = test.test_system1_pdb
-    in_file_path = test.test_system3_pdb
     cmd.load(in_file_path)
 
     # visualization
