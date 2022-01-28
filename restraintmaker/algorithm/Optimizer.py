@@ -1304,7 +1304,7 @@ def additional_ring_interconnections(molecule_pair_list:t.List[t.Tuple[int, int]
 
     print("Molecule Pairs: \t"+str(len(molecule_pair_list)), mv=_verbosity_level)
     print(molecule_pair_list, mv=_verbosity_level)
-    print("Already Chosen Pairs: \t", mv=_verbosity_level)
+    print("Already Chosen Pairs:\t"+str(len(i_chosen_pairs)), mv=_verbosity_level)
     print(i_chosen_pairs, mv=_verbosity_level)
     print("", mv=_verbosity_level)
 
