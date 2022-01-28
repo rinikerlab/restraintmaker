@@ -197,7 +197,7 @@ class _MoleculeRingOptimizer(_Optimizer):
             print("_" * 20 + "\n", mv=_verbosity_level)
             print("Translate back to distance restraints with atom idx", mv=_verbosity_level)
             print("_" * 20 + "\n", mv=_verbosity_level)
-            print("Number of restraint pairs: "+str(len(restraints_list)), mv=_verbosity_level)
+            print("Number of selected restraint pairs: "+str(len(i_chosen_pairs))+" / "+str(len(restraints_list)), mv=_verbosity_level)
             chosen_restraints = []
             for i in i_chosen_pairs:
                 #print(i, mv=5)
@@ -1157,7 +1157,7 @@ def maximal_weight_ring(edge_list: t.List[t.Tuple[int, int]], value_list: t.List
     # TODO: Clean: Start a new for loop, which starts where the one above ended. Do not check in loop if ind is bigger than possible, but just check with a for else statement that an edge was found
     # ADD the last edge: Does close ring, but is not allowed to fork
     found_last_edge = False
-    print('----------', mv=1)
+    print('---------- Close Ring', mv=_verbosity_level)
     for ind in sorted_by_value[last_position + 1:]:
         i_m1 = edge_list[ind][0]
         i_m2 = edge_list[ind][1]
@@ -1306,12 +1306,13 @@ def additional_ring_interconnections(molecule_pair_list:t.List[t.Tuple[int, int]
     print(molecule_pair_list, mv=_verbosity_level)
     print("Already Chosen Pairs: \t", mv=_verbosity_level)
     print(i_chosen_pairs, mv=_verbosity_level)
+    print("", mv=_verbosity_level)
 
-    # a) BUild Ring:
+    # a) Construct Molecule Ring for selection:
     mol_ring = []
     tmp_pair = None
     i=0
-    while(len(mol_ring)< len(i_chosen_pairs)):
+    while(len(mol_ring)< len(i_chosen_pairs)):  #sort tuples, such they form a ring.
         #print(i, mv=_verbosity_level)
         tp = molecule_pair_list[i_chosen_pairs[i]]
         if(tmp_pair is None):
@@ -1339,7 +1340,7 @@ def additional_ring_interconnections(molecule_pair_list:t.List[t.Tuple[int, int]
                 mol_chain.append(i[1])
             else:
                 mol_chain.append(i[0])
-    print("Molecule Chain:", mv=_verbosity_level)
+    print("Molecule Ring Chain:", mv=_verbosity_level)
     print(mol_chain, mv=_verbosity_level)
     print("", mv=_verbosity_level)
 
@@ -1376,9 +1377,9 @@ def additional_ring_interconnections(molecule_pair_list:t.List[t.Tuple[int, int]
 
     additional_restraint_pairs = additional_restraint_pairs
 
-    print("Dividers", mv=_verbosity_level)
+    print("Dividers:", mv=_verbosity_level)
     print(dividers, mv=_verbosity_level)
-    print("additional_restraint_pairs - molecule index in ring", mv=_verbosity_level)
+    print("additional_restraint_pairs - molecule index in ring:", mv=_verbosity_level)
     print(additional_restraint_pairs, mv=_verbosity_level)
 
     # c) Translation of additional restraints to mol tuples:
@@ -1396,7 +1397,8 @@ def additional_ring_interconnections(molecule_pair_list:t.List[t.Tuple[int, int]
     print("", mv=_verbosity_level)
 
     print("Results", mv=_verbosity_level)
-    print(i_chosen_pairs, mv=_verbosity_level)
+    print(str(len(i_chosen_pairs))+" - chosen restraintPairs: \n"+str(i_chosen_pairs), mv=_verbosity_level)
+    print("Molecule Pairs:", mv=_verbosity_level)
     print([molecule_pair_list[o] for o in i_chosen_pairs] , mv=_verbosity_level)
     print("", mv=_verbosity_level)
 
