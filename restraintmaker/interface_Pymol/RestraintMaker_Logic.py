@@ -518,39 +518,45 @@ class Logic_Handler:
             input_function = qt_dialogs.create_multi_dialog(
                 title='Parameters for GreedyGraphOptimizer', \
                 inputs=['number of restraints', 'maximal distance of restraints',
-                        'tree-algorithm', 'optimize molecules pairs by'], \
+                        'tree-algorithm', 'optimize molecules pairs by', 'addtional ring connections'], \
                 options={'tree-algorithm': ['minmax', 'cog', 'prim', "biased_avg"],
                          'optimize molecules pairs by': ['None', 'convex_hull',
                                                          'pca_2d']}, \
                 default={'number of restraints': '4',
                          'maximal distance of restraints': '1.0',
                          'algorithm': 'minmax',
-                         'optimize molecules pairs by': 'convex_hull'})
+                         'optimize molecules pairs by': 'convex_hull',
+                         'addtional ring connections': '0'})
 
 
         elif isinstance(self.my_optimizer, Optimizer.BruteForceRingOptimzer):
             input_function = qt_dialogs.create_multi_dialog(
                 title='Parameters for BruteForceOptimizer', \
                 inputs=['number of restraints', 'maximal distance of restraints',
-                        'algorithm', 'optimize molecules pairs by'], \
+                        'algorithm', 'optimize molecules pairs by', 'addtional ring connections'], \
                 options={'algorithm': ['convex_hull', 'pca'],
                          'optimize molecules pairs by': ['None', 'convex_hull',
                                                          'pca_2d']}, \
                 default={'number of restraints': '4',
-                         'maximal distance of restraints': '1.2', 'algorithm': 'pca',
-                         'optimize molecules pairs by': 'pca_2d'})
+                         'maximal distance of restraints': '1.2',
+                         'algorithm': 'pca',
+                         'optimize molecules pairs by': 'convex_hull',
+                         'addtional ring connections': '0'
+                         })
 
         elif isinstance(self.my_optimizer, Optimizer.MetaMoleculeRingOptimizer):
             input_function = qt_dialogs.create_multi_dialog(
                 title='Parameters for BestMoleculeRingOptimizer', \
                 inputs=['number of restraints', 'maximal distance of restraints',
-                        'algorithm', 'optimize molecules pairs by'], \
+                        'algorithm', 'optimize molecules pairs by', 'addtional ring connections'], \
                 options={'algorithm': ['convex_hull', 'pca'],
                          'optimize molecules pairs by': ['convex_hull',
                                                          'pca_2d']}, \
                 default={'number of restraints': '4',
                          'maximal distance of restraints': '1.2', 'algorithm': 'pca',
-                         'optimize molecules pairs by': 'pca_2d'})
+                         'optimize molecules pairs by': 'convex_hull',
+                         'addtional ring connections': '0'
+                         })
 
         if try_to_get_args(self.my_optimizer, input_function):
             time_start = time.time()

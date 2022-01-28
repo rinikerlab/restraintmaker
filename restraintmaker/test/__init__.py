@@ -9,3 +9,6 @@ test_system1_pdb = systems_file_folder+"/systemA/CHK1_5Ligs.pdb"
 
 #Test System2
 test_system2_pdb = systems_file_folder+"/systemB/BRD4_7Ligs.pdb"
+
+#Test System3
+test_system3_pdb = systems_file_folder+"/systemD/FXR_21ligs.pdb"

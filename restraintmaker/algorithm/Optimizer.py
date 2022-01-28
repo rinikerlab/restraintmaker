@@ -77,8 +77,9 @@ class _MoleculeRingOptimizer(_Optimizer):
         # to be set in get_args of children:
         self.cutoff = -1
         self.arrange_algo = ''  # criterion for how molecules should be sorted
+        self.addditional_ringConnections = 0
 
-    def make_restraints(self) -> t.List[Restraints._Restraint]:
+    def make_restraints(self, _verbosity_level=3) -> t.List[Restraints._Restraint]:
         """
         returns a List of restraints that have been optimally set, depending on the criteria defined by the specific Optimizer used:
 
@@ -98,6 +99,10 @@ class _MoleculeRingOptimizer(_Optimizer):
             if no Solution fulfilling all criteria can be found. For MoleculeRingOptimizer: Not enough restraints shorter than cutoff
 
         """
+        print("", mv=_verbosity_level)
+        print("#" * 20 + "\n", mv=_verbosity_level)
+        print("\tBuilding Distance Restraints\n", mv=_verbosity_level)
+        print("#" * 20 + "\n", mv=_verbosity_level)
 
         restraints: t.List[Restraints._Restraint] = []
 
@@ -105,6 +110,9 @@ class _MoleculeRingOptimizer(_Optimizer):
             raise u.BadArgumentException(
                 'A Molecule Ring Optimizer needs at least 2 Molecules to connect')
         elif len(self.Molecules) == 2:
+            print("_" * 20 + "\n", mv=_verbosity_level)
+            print("Build pairwise Restraints", mv=_verbosity_level)
+            print("_" * 20 + "\n", mv=_verbosity_level)
             restraints = self.connect_two_molecules(self.Molecules[0], self.Molecules[1], self.n)
         elif self.arrange_algo == 'None':  # Str 'None', not None:
 
@@ -121,7 +129,6 @@ class _MoleculeRingOptimizer(_Optimizer):
             restraints.extend(self.connect_two_molecules(self.Molecules[-1], self.Molecules[0], self.n))
         # An Optimization algorithm has been given
         else:
-
             # 0) Choose the algo from a predefined list
             # Do not just use the value returned by connect_two_molecules, because I want to be able to use a different criterion here.
             # TODO: Now the scaling is automatically done by taking calculate_value of all atom positions. For other criteria, it might be better to define a function scale, along with
@@ -139,7 +146,9 @@ class _MoleculeRingOptimizer(_Optimizer):
                     self.arrange_algo + 'is not a known algorithm to arrange the molecules')
 
             # 1) Calclulate ALL PAIRS and their value
-
+            print("_" * 20 + "\n", mv=_verbosity_level)
+            print("Build pairwise Restraints", mv=_verbosity_level)
+            print("_" * 20 + "\n", mv=_verbosity_level)
             # Save restraints and the value of a molecule pair in a list
             # Also create a list indicting which molecule pair is at what index of the list, to save time later on
 
@@ -173,12 +182,32 @@ class _MoleculeRingOptimizer(_Optimizer):
 
             # 2) Build a Ring using modified Kruskal
             i_chosen_pairs = maximal_weight_ring(edge_list=molecule_pair_list, value_list=value_list,
-                                                 n_nodes=len(self.Molecules))
+                                                 n_nodes=len(self.Molecules),
+                                                 _verbosity_level=_verbosity_level)
+
+            # 3) Add optional additional ring interconnections
+            if(self.addditional_ringConnections):
+                i_chosen_pairs = additional_ring_interconnections(molecule_pair_list=molecule_pair_list,
+                                                                  i_chosen_pairs=i_chosen_pairs,
+                                                                  addditional_ringConnections=self.addditional_ringConnections,
+                                                                  _verbosity_level=_verbosity_level)
+
+
+            # 4) Translate chosen sets to actual restraints
+            print("_" * 20 + "\n", mv=_verbosity_level)
+            print("Translate back to distance restraints with atom idx", mv=_verbosity_level)
+            print("_" * 20 + "\n", mv=_verbosity_level)
+            print("Number of selected restraint pairs: "+str(len(i_chosen_pairs))+" / "+str(len(restraints_list)), mv=_verbosity_level)
             chosen_restraints = []
             for i in i_chosen_pairs:
+                #print(i, mv=5)
                 chosen_restraints.extend(restraints_list[i])
 
+            print("", mv=_verbosity_level)
+            print("_" * 20 + "\n", mv=_verbosity_level)
             return chosen_restraints
+            print("", mv=_verbosity_level)
+        print("_" * 20 + "\n", mv=_verbosity_level)
 
         return restraints
 
@@ -273,6 +302,8 @@ class GreedyGraphOptimizer(_MoleculeRingOptimizer):
         self.cutoff = u.check_or_convert_argument(inputs[1], float)
         self.algo = u.check_or_convert_argument(inputs[2], str, ['prim', 'minmax', 'cog', "biased_avg"])
         self.arrange_algo = u.check_or_convert_argument(inputs[3], str, ['None', 'convex_hull', 'pca_2d'])
+        if(len(inputs) > 3):
+            self.addditional_ringConnections = u.check_or_convert_argument(inputs[4], int)
 
     def connect_two_molecules(self, m1: t.List[u.Atom], m2: t.List[
         u.Atom], n) -> t.List[Restraints._Restraint]:
@@ -356,6 +387,9 @@ class BruteForceRingOptimzer(_MoleculeRingOptimizer):
         self.cutoff = u.check_or_convert_argument(inputs[1], float)
         self.algo = u.check_or_convert_argument(inputs[2], str, ['convex_hull', 'pca', "dist"])
         self.arrange_algo = u.check_or_convert_argument(inputs[3], str, ['None', 'convex_hull', 'pca_2d'])
+
+        if(len(inputs) > 3):
+            self.addditional_ringConnections = u.check_or_convert_argument(inputs[4], int)
 
         if self.algo == 'convex_hull' and self.n < 4:
             raise u.BadArgumentException(
@@ -577,6 +611,9 @@ class MetaMoleculeRingOptimizer(_MoleculeRingOptimizer):
         self.criterion = u.check_or_convert_argument(inputs[2], str, ['convex_hull',
                                                                       'pca'])  # would be nice to pass a function instead of just a description here
         self.arrange_algo = u.check_or_convert_argument(inputs[3], str, ['None', 'convex_hull', 'pca_2d'])
+
+        if(len(inputs) > 3):
+            self.addditional_ringConnections = u.check_or_convert_argument(inputs[4], int)
 
         # Create sub optimizers
         tree_algos = ["prim", "cog", "minmax", "biased_avg"]
@@ -1018,7 +1055,7 @@ def cog_distance_restraint(r: Restraints.DistanceRestraint)->t.Tuple[float, floa
             r.atoms[0].z + r.atoms[1].z) / 2
 
 
-def maximal_weight_ring(edge_list: t.List[t.Tuple[int, int]], value_list: t.List[float], n_nodes: int):
+def maximal_weight_ring(edge_list: t.List[t.Tuple[int, int]], value_list: t.List[float], n_nodes: int, _verbosity_level:int=5):
     """
     chooses from a list of edges the ones that form the biggest ring including all nodes.
     Nodes are considered as ints (indices) and edges as tuples of nodes
@@ -1039,6 +1076,10 @@ def maximal_weight_ring(edge_list: t.List[t.Tuple[int, int]], value_list: t.List
     t.List[ind]
          Indices of the chosen edges
     """
+    print("", mv=_verbosity_level)
+    print("_"*20+"\n", mv=_verbosity_level)
+    print("Constructing Molecule Ring", mv=_verbosity_level)
+    print("_"*20+"\n", mv=_verbosity_level)
 
     # 0)
     if len(edge_list) != len(value_list):
@@ -1102,12 +1143,12 @@ def maximal_weight_ring(edge_list: t.List[t.Tuple[int, int]], value_list: t.List
             neighbours_of_node[i_m1].append(i_m2)
             neighbours_of_node[i_m2].append(i_m1)
             i_chosen_edges.append(ind)
-            print('ADDING', i_m1 + 1, i_m2 + 1, '(value =  ' + '{:05.2f}'.format(value_list[ind]) + ')', mv=1)
+            print('ADDING', i_m1 + 1, i_m2 + 1, '(value =  ' + '{:05.2f}'.format(value_list[ind]) + ')', mv=_verbosity_level)
             if len(i_chosen_edges) == n_nodes - 1:
                 last_position = sorted_by_value.index(ind)
                 break
         else:
-            print('DISCARDING', i_m1 + 1, i_m2 + 1, mv=1)
+            print('DISCARDING', i_m1 + 1, i_m2 + 1, mv=_verbosity_level)
 
     else:  # For loop quit without break\
         raise ValueError(
@@ -1116,16 +1157,16 @@ def maximal_weight_ring(edge_list: t.List[t.Tuple[int, int]], value_list: t.List
     # TODO: Clean: Start a new for loop, which starts where the one above ended. Do not check in loop if ind is bigger than possible, but just check with a for else statement that an edge was found
     # ADD the last edge: Does close ring, but is not allowed to fork
     found_last_edge = False
-    print('----------', mv=1)
+    print('---------- Close Ring', mv=_verbosity_level)
     for ind in sorted_by_value[last_position + 1:]:
         i_m1 = edge_list[ind][0]
         i_m2 = edge_list[ind][1]
         if not (len(neighbours_of_node[i_m1]) == 2 or len(neighbours_of_node[i_m2]) == 2):
-            print('ADDING', i_m1 + 1, i_m2 + 1, '(value =  ' + '{:05.2f}'.format(value_list[ind]) + ')', mv=1)
+            print('ADDING', i_m1 + 1, i_m2 + 1, '(value =  ' + '{:05.2f}'.format(value_list[ind]) + ')', mv=_verbosity_level)
             i_chosen_edges.append(ind)
             break
         else:
-            print('DISCARDING', i_m1 + 1, i_m2 + 1, mv=1)
+            print('DISCARDING', i_m1 + 1, i_m2 + 1, mv=_verbosity_level)
     else:  # No break => Did not find last edge
         raise ValueError(
             'Kruskal-like algorithm faild to connect all nodes. This can only happen if there is a serious bug in the Kruskal algorithm, or the input has a bad format')
@@ -1133,7 +1174,7 @@ def maximal_weight_ring(edge_list: t.List[t.Tuple[int, int]], value_list: t.List
     return i_chosen_edges
 
 
-def maximal_weight_chain(edge_list: t.List[t.Tuple[int, int]], value_list: t.List[float], n_nodes: int):
+def maximal_weight_chain(edge_list: t.List[t.Tuple[int, int]], value_list: t.List[float], n_nodes: int, _verbosity_level:int=5):
     """
     chooses from a list of edges the ones that form the biggest chain including all nodes.
     Nodes are considered as ints (indices) and edges as tuples of nodes
@@ -1154,6 +1195,9 @@ def maximal_weight_chain(edge_list: t.List[t.Tuple[int, int]], value_list: t.Lis
     t.List[ind]
          Indices of the chosen edges
     """
+    print("_"*20+"\n", mv=_verbosity_level)
+    print("Constructing Molecule Chain based", mv=_verbosity_level)
+    print("_"*20+"\n", mv=_verbosity_level)
 
     # 0)
     if len(edge_list) != len(value_list):
@@ -1217,15 +1261,146 @@ def maximal_weight_chain(edge_list: t.List[t.Tuple[int, int]], value_list: t.Lis
             neighbours_of_node[i_m1].append(i_m2)
             neighbours_of_node[i_m2].append(i_m1)
             i_chosen_edges.append(ind)
-            print('ADDING', i_m1 + 1, i_m2 + 1, '(value =  ' + '{:05.2f}'.format(value_list[ind]) + ')', mv=1)
+            print('ADDING', i_m1 + 1, i_m2 + 1, '(value =  ' + '{:05.2f}'.format(value_list[ind]) + ')', mv=_verbosity_level)
             if len(i_chosen_edges) == n_nodes - 1:
                 last_position = sorted_by_value.index(ind)
                 break
         else:
-            print('DISCARDING', i_m1 + 1, i_m2 + 1, mv=1)
+            print('DISCARDING', i_m1 + 1, i_m2 + 1, mv=_verbosity_level)
 
     else:   # For loop quit without break\
         raise ValueError(
             'Kruskal-like algorithm faild to connect all molecules. This can only happen if there is a serious bug in the Kruskal algorithm, or the input is not a fully connected graph.')
 
     return i_chosen_edges
+
+
+def additional_ring_interconnections(molecule_pair_list:t.List[t.Tuple[int, int]],
+                                     i_chosen_pairs:t.List[int], addditional_ringConnections:int=0,
+                                     _verbosity_level=5):
+    """
+    For a large number of end-states in one system it might be useful to add additional restraints.
+    This algorithm adds restraints by the following approach:
+
+
+    Parameters
+    ----------
+    molecule_pair_list : t.List[t.Tuple[int,int]]
+        Molecule edge pairs
+    i_chosen_pairs : t.List[int]
+        A list of all already chosen molecule edge pairs
+    addditional_ringConnections : int
+        Number additional restrained molecule pairs
+
+    Returns
+    -------
+    t.List[ind]
+         Extended list of selected molecule pair edge sets by addditional_ringConnections.
+    """
+    print("", mv=_verbosity_level)
+    print("_"*20+"\n", mv=_verbosity_level)
+    print("Add additional Molecule Pair Restraints", mv=_verbosity_level)
+    print("_"*20+"\n", mv=_verbosity_level)
+
+    print("Molecule Pairs: \t"+str(len(molecule_pair_list)), mv=_verbosity_level)
+    print(molecule_pair_list, mv=_verbosity_level)
+    print("Already Chosen Pairs:\t"+str(len(i_chosen_pairs)), mv=_verbosity_level)
+    print(i_chosen_pairs, mv=_verbosity_level)
+    print("", mv=_verbosity_level)
+
+    # a) Construct Molecule Ring for selection:
+    mol_ring = []
+    tmp_pair = None
+    i=0
+    while(len(mol_ring)< len(i_chosen_pairs)):  #sort tuples, such they form a ring.
+        #print(i, mv=_verbosity_level)
+        tp = molecule_pair_list[i_chosen_pairs[i]]
+        if(tmp_pair is None):
+            tmp_pair = tp
+            mol_ring.append(tp)
+        else:
+            if(any([p in tmp_pair for p in tp]) and not tp in mol_ring):
+                mol_ring.append(tp)
+                tmp_pair = tp
+        i = (i+1) % len(i_chosen_pairs)
+    print("Ring of Mols:", mv=_verbosity_level)
+    print(mol_ring, mv=_verbosity_level)
+    print("", mv=_verbosity_level)
+
+    first = True
+    mol_chain = []
+    for i in mol_ring:
+        if (first):
+            mol_chain.extend(i)
+            first = False
+        elif(i[0] in mol_chain and i[1] in mol_chain):
+            continue
+        else:
+            if (i[0] in mol_chain):
+                mol_chain.append(i[1])
+            else:
+                mol_chain.append(i[0])
+    print("Molecule Ring Chain:", mv=_verbosity_level)
+    print(mol_chain, mv=_verbosity_level)
+    print("", mv=_verbosity_level)
+
+    # b) Get index of molecules, that should additionally be restrained:
+    nLigs =  float(len(mol_chain))
+    additional_restraint_pairs = []
+    divider = 1
+    dividers = []
+    while (len(additional_restraint_pairs) < addditional_ringConnections):
+        divider = divider * 0.5
+        for t in range(1, int(1/divider)):
+            tdiv = t*divider
+
+            if(tdiv in dividers):
+                continue
+            elif(tdiv > 0.5 or len(additional_restraint_pairs) >= addditional_ringConnections):
+                break
+            else:
+                if(tdiv == 0.5):
+                    i = int(0)
+                    j = int(np.round(tdiv*nLigs))+1
+                else:
+                    i = int(np.round(tdiv*nLigs))+1
+                    j = int(np.round((0.5+tdiv)*nLigs))+1
+
+                #print("nP\t"+str(nLigs), mv=_verbosity_level)
+                #print("div\t"+str(tdiv), mv=_verbosity_level)
+                #print("i\t"+str(i), mv=_verbosity_level)
+                #print("j\t"+str(j), mv=_verbosity_level)
+
+                dividers.append(tdiv)
+                #mol_ring
+                additional_restraint_pairs.append((i,j))
+
+    additional_restraint_pairs = additional_restraint_pairs
+
+    print("Dividers:", mv=_verbosity_level)
+    print(dividers, mv=_verbosity_level)
+    print("additional_restraint_pairs - molecule index in ring:", mv=_verbosity_level)
+    print(additional_restraint_pairs, mv=_verbosity_level)
+
+    # c) Translation of additional restraints to mol tuples:
+    print("", mv=_verbosity_level)
+    print("Translation\n", mv=_verbosity_level)
+
+    for add_tuple_ind in additional_restraint_pairs:
+        print(add_tuple_ind)
+        print("tMolChainINd\t"+str(add_tuple_ind), mv=_verbosity_level)
+        molecule_indices = [mol_chain[i%len(mol_chain)] for i in add_tuple_ind]
+        print("tMolINds\t"+str(molecule_indices), mv=_verbosity_level)
+        tups = [molecule_pair_list.index(tup) for tup in molecule_pair_list if(all([v in tup for v in molecule_indices]))]
+        print("tupleIndex"+str(tups), mv=_verbosity_level)
+        if(not tups in i_chosen_pairs):
+            i_chosen_pairs.extend(tups)
+    print("", mv=_verbosity_level)
+
+    print("Results", mv=_verbosity_level)
+    print(str(len(i_chosen_pairs))+" - chosen restraintPairs: \n"+str(i_chosen_pairs), mv=_verbosity_level)
+    print("Molecule Pairs:", mv=_verbosity_level)
+    print([molecule_pair_list[o] for o in i_chosen_pairs] , mv=_verbosity_level)
+    print("", mv=_verbosity_level)
+
+    return i_chosen_pairs
