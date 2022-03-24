@@ -1,73 +1,34 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>restraintmaker.utils package &mdash; restraintMaker  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="restraintmaker.tools_Rdkit package" href="restraintmaker.tools_Rdkit.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> restraintMaker
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -75,18 +36,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Welcome to RestraintMaker</a></li>
@@ -112,75 +62,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">restraintMaker</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="modules.html">restraintmaker</a> &raquo;</li>
-        
           <li><a href="restraintmaker.html">restraintmaker package</a> &raquo;</li>
-        
       <li>restraintmaker.utils package</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/_source/restraintmaker.utils.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -205,182 +112,91 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="restraintmaker-utils-package">
-<h1>restraintmaker.utils package<a class="headerlink" href="#restraintmaker-utils-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-restraintmaker.utils.Types">
-<span id="restraintmaker-utils-types-module"></span><h2>restraintmaker.utils.Types module<a class="headerlink" href="#module-restraintmaker.utils.Types" title="Permalink to this headline">¶</a></h2>
-<p>Defines how Restraints are selected or optimized from atoms.
-Todo: implement Pairwise type and forward to Slection. (Filter and opt?)
-Todo: Molecule class?</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Distance_Restraint">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Types.</span></span><span class="sig-name descname"><span class="pre">Distance_Restraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomA</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">atomB</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Types.html#Distance_Restraint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Types.Distance_Restraint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.utils.Types._Restraint</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Distance_Restraint.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomA</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">atomB</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Types.html#Distance_Restraint.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Types.Distance_Restraint.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This class is defining the rules for a Gromos Distance Restraint</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>atoms</strong> (<em>t.List[u.Atom]</em>)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Distance_Restraint.accepted_selection_types">
-<span class="sig-name descname"><span class="pre">accepted_selection_types</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">restraintmaker.algorithm.Selection._Selection</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">[&lt;class</span> <span class="pre">'restraintmaker.algorithm.Selection.PairSelection'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'restraintmaker.algorithm.Selection.AllSelection'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'restraintmaker.algorithm.Selection.MCS_Selection'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'restraintmaker.algorithm.Selection.SphericalSelection'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'restraintmaker.algorithm.Selection.PaintSelection'&gt;]</span></em><a class="headerlink" href="#restraintmaker.utils.Types.Distance_Restraint.accepted_selection_types" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Distance_Restraint.atomA">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">atomA</span></span><em class="property"><span class="pre">:</span> <span class="pre">restraintmaker.utils.Utilities.Atom</span></em><a class="headerlink" href="#restraintmaker.utils.Types.Distance_Restraint.atomA" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Distance_Restraint.atomB">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">atomB</span></span><em class="property"><span class="pre">:</span> <span class="pre">restraintmaker.utils.Utilities.Atom</span></em><a class="headerlink" href="#restraintmaker.utils.Types.Distance_Restraint.atomB" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Distance_Restraint.atom_limit">
-<span class="sig-name descname"><span class="pre">atom_limit</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#restraintmaker.utils.Types.Distance_Restraint.atom_limit" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Distance_Restraint.distance">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">distance</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#restraintmaker.utils.Types.Distance_Restraint.distance" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Position_restraint">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Types.</span></span><span class="sig-name descname"><span class="pre">Position_restraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomA</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_atom</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Types.html#Position_restraint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Types.Position_restraint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">restraintmaker.utils.Types._Restraint</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Position_restraint.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomA</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_atom</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Types.html#Position_restraint.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Types.Position_restraint.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This is type class, that should predefine position_Restraint</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>atomA</strong> (<em>t.List[u.Atom]</em>)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Position_restraint.accepted_selection_types">
-<span class="sig-name descname"><span class="pre">accepted_selection_types</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">restraintmaker.algorithm.Selection._Selection</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">[&lt;class</span> <span class="pre">'restraintmaker.algorithm.Selection.SingleAtomSelection'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'restraintmaker.algorithm.Selection.AllSelection'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'restraintmaker.algorithm.Selection.MCS_Selection'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'restraintmaker.algorithm.Selection.PaintSelection'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'restraintmaker.algorithm.Selection.SphericalSelection'&gt;]</span></em><a class="headerlink" href="#restraintmaker.utils.Types.Position_restraint.accepted_selection_types" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Position_restraint.atomA">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">atomA</span></span><em class="property"><span class="pre">:</span> <span class="pre">restraintmaker.utils.Utilities.Atom</span></em><a class="headerlink" href="#restraintmaker.utils.Types.Position_restraint.atomA" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Position_restraint.atom_limit">
-<span class="sig-name descname"><span class="pre">atom_limit</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#restraintmaker.utils.Types.Position_restraint.atom_limit" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Position_restraint.distance_to_reference_position">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">distance_to_reference_position</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#restraintmaker.utils.Types.Position_restraint.distance_to_reference_position" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="restraintmaker.utils.Types.Position_restraint.reference_atom">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">reference_atom</span></span><em class="property"><span class="pre">:</span> <span class="pre">restraintmaker.utils.Utilities.Atom</span></em><a class="headerlink" href="#restraintmaker.utils.Types.Position_restraint.reference_atom" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-restraintmaker.utils.Utilities">
-<span id="restraintmaker-utils-utilities-module"></span><h2>restraintmaker.utils.Utilities module<a class="headerlink" href="#module-restraintmaker.utils.Utilities" title="Permalink to this headline">¶</a></h2>
+<section id="restraintmaker-utils-package">
+<h1>restraintmaker.utils package<a class="headerlink" href="#restraintmaker-utils-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="restraintmaker-utils-types-module">
+<h2>restraintmaker.utils.Types module<a class="headerlink" href="#restraintmaker-utils-types-module" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-restraintmaker.utils.Utilities">
+<span id="restraintmaker-utils-utilities-module"></span><h2>restraintmaker.utils.Utilities module<a class="headerlink" href="#module-restraintmaker.utils.Utilities" title="Permalink to this headline"></a></h2>
 <p>Utilities
 utilities contains functions and definitions that are usefull to all modules in the restraintmaker project</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">Atom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">Atom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.alt">
-<span class="sig-name descname"><span class="pre">alt</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.alt" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">alt</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.alt" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 9</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.b">
-<span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.b" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.b" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 10</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.chain">
-<span class="sig-name descname"><span class="pre">chain</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.chain" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">chain</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.chain" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 6</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.elem">
-<span class="sig-name descname"><span class="pre">elem</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.elem" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">elem</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.elem" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.id" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.id" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.label">
-<span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.label" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.label" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 11</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.name">
-<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.name" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.name" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.resi">
-<span class="sig-name descname"><span class="pre">resi</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.resi" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">resi</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.resi" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 8</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.resn">
-<span class="sig-name descname"><span class="pre">resn</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.resn" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">resn</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.resn" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 7</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.x">
-<span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.x" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.x" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 3</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.y">
-<span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.y" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.y" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 4</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.Atom.z">
-<span class="sig-name descname"><span class="pre">z</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.z" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">z</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.Atom.z" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 5</p>
 </dd></dl>
 
@@ -388,7 +204,7 @@ utilities contains functions and definitions that are usefull to all modules in 
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.BadArgumentException">
-<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">BadArgumentException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#BadArgumentException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.BadArgumentException" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">BadArgumentException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#BadArgumentException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.BadArgumentException" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>A BadArgumentException will be raised by the Filter, Selection and Optimizer classes if their function get-args(…)
 does not produce arguments in the desired format.</p>
@@ -396,30 +212,30 @@ does not produce arguments in the desired format.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.NoOptimalSolutionException">
-<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">NoOptimalSolutionException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#NoOptimalSolutionException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.NoOptimalSolutionException" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">NoOptimalSolutionException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#NoOptimalSolutionException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.NoOptimalSolutionException" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>A no optimal solution excpetion will be raised by an Optimizer, if it can not find a solution fulfilling its criteria.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.RestraintPair">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">RestraintPair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#restraintmaker.utils.Utilities.RestraintPair" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">RestraintPair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#restraintmaker.utils.Utilities.RestraintPair" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.RestraintPair.distance">
-<span class="sig-name descname"><span class="pre">distance</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.RestraintPair.distance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">distance</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.RestraintPair.distance" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.RestraintPair.r1">
-<span class="sig-name descname"><span class="pre">r1</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.RestraintPair.r1" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">r1</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.RestraintPair.r1" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.RestraintPair.r2">
-<span class="sig-name descname"><span class="pre">r2</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.RestraintPair.r2" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">r2</span></span><a class="headerlink" href="#restraintmaker.utils.Utilities.RestraintPair.r2" title="Permalink to this definition"></a></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
@@ -427,7 +243,7 @@ does not produce arguments in the desired format.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.check_for_doubles">
-<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">check_for_doubles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#check_for_doubles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.check_for_doubles" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">check_for_doubles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#check_for_doubles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.check_for_doubles" title="Permalink to this definition"></a></dt>
 <dd><blockquote>
 <div><p>Just used for debbuging Checks if a List contains doubles</p>
 </div></blockquote>
@@ -446,7 +262,7 @@ does not produce arguments in the desired format.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.check_or_convert_argument">
-<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">check_or_convert_argument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desired_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acceptable_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#check_or_convert_argument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.check_or_convert_argument" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">check_or_convert_argument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desired_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acceptable_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#check_or_convert_argument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.check_or_convert_argument" title="Permalink to this definition"></a></dt>
 <dd><p>try to convert should be used in all get_args functions to check the input from the input function and try to convert it if necessary</p>
 <blockquote>
 <div><p>TODO: Might be even nicer if we do not pass a list of acceptable values but a bool function
@@ -474,7 +290,7 @@ TODO: Pass name of the variable as arg, so we can get better Error messages ()</
 
 <dl class="py function">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.check_restraint_pairs_for_doubles">
-<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">check_restraint_pairs_for_doubles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#check_restraint_pairs_for_doubles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.check_restraint_pairs_for_doubles" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">check_restraint_pairs_for_doubles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#check_restraint_pairs_for_doubles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.check_restraint_pairs_for_doubles" title="Permalink to this definition"></a></dt>
 <dd><blockquote>
 <div><p>check_restraint_pairs_for_doubles checks a list of pairs for doubles. Pairs count as doubles if the order of elements is changed.</p>
 </div></blockquote>
@@ -493,7 +309,7 @@ TODO: Pass name of the variable as arg, so we can get better Error messages ()</
 
 <dl class="py function">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.convert_atoms_to_pdb_molecules">
-<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">convert_atoms_to_pdb_molecules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#convert_atoms_to_pdb_molecules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.convert_atoms_to_pdb_molecules" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">convert_atoms_to_pdb_molecules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#convert_atoms_to_pdb_molecules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.convert_atoms_to_pdb_molecules" title="Permalink to this definition"></a></dt>
 <dd><blockquote>
 <div><p>This function converts the atom list into pdb blocks.</p>
 </div></blockquote>
@@ -512,25 +328,22 @@ TODO: Pass name of the variable as arg, so we can get better Error messages ()</
 
 <dl class="py function">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.do_nothing">
-<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">do_nothing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dummy_string</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#do_nothing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.do_nothing" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">do_nothing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dummy_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#do_nothing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.do_nothing" title="Permalink to this definition"></a></dt>
 <dd><p>does nothing.
 Can be passed to the <a href="#id1"><span class="problematic" id="id2">*</span></a>.get_args functions which require a function of a string as parameter. Because it is more readable than lambda x: None</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>dummy_string</strong> (<em>str</em>) – Dummy String to satisfy format</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>NoReturn</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>NoReturn</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.execute_at_different_verbosity">
-<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">execute_at_different_verbosity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_verbosity_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#execute_at_different_verbosity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.execute_at_different_verbosity" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">execute_at_different_verbosity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_verbosity_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#execute_at_different_verbosity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.execute_at_different_verbosity" title="Permalink to this definition"></a></dt>
 <dd><blockquote>
 <div><dl class="simple">
 <dt>Wrapper function to change the program verbosity during the execution of one function.</dt><dd><p>&#64;Warning All Errors will be passed on to the calling function. But the verbosity_thresheold will be reset to the previous value in any case.</p>
@@ -557,7 +370,7 @@ Can be passed to the <a href="#id1"><span class="problematic" id="id2">*</span><
 
 <dl class="py function">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.find_atom_by_property">
-<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">find_atom_by_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property_value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'id'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a></span></span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#find_atom_by_property"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.find_atom_by_property" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">find_atom_by_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'id'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a></span></span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#find_atom_by_property"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.find_atom_by_property" title="Permalink to this definition"></a></dt>
 <dd><blockquote>
 <div><p>find_atom will look for the first atom with the specified property and value</p>
 </div></blockquote>
@@ -582,7 +395,7 @@ Can be passed to the <a href="#id1"><span class="problematic" id="id2">*</span><
 
 <dl class="py function">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.get_all_subclasses">
-<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">get_all_subclasses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_private_sublcasses</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">type</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#get_all_subclasses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.get_all_subclasses" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">get_all_subclasses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_private_sublcasses</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">type</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#get_all_subclasses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.get_all_subclasses" title="Permalink to this definition"></a></dt>
 <dd><blockquote>
 <div><p>get_all_subclasses returns ALL subclasses of a type, including grandchilder etc.</p>
 </div></blockquote>
@@ -604,7 +417,7 @@ Can be passed to the <a href="#id1"><span class="problematic" id="id2">*</span><
 
 <dl class="py function">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.order_atoms_by_molecule">
-<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">order_atoms_by_molecule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#order_atoms_by_molecule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.order_atoms_by_molecule" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">order_atoms_by_molecule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#restraintmaker.utils.Utilities.Atom" title="restraintmaker.utils.Utilities.Atom"><span class="pre">restraintmaker.utils.Utilities.Atom</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#order_atoms_by_molecule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.order_atoms_by_molecule" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>atoms</strong> (<em>t.List[Atom]</em>) – A list of atoms</p>
@@ -620,7 +433,7 @@ Can be passed to the <a href="#id1"><span class="problematic" id="id2">*</span><
 
 <dl class="py function">
 <dt class="sig sig-object py" id="restraintmaker.utils.Utilities.print">
-<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mv</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.print" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">restraintmaker.utils.Utilities.</span></span><span class="sig-name descname"><span class="pre">print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/restraintmaker/utils/Utilities.html#print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#restraintmaker.utils.Utilities.print" title="Permalink to this definition"></a></dt>
 <dd><dl>
 <dt>print is overridden for the restraintmaker project:</dt><dd><p>The parameter mv indicates the minimal verbosity at which the statement will still be printed.</p>
 <dl class="simple">
@@ -640,66 +453,46 @@ Can be passed to the <a href="#id1"><span class="problematic" id="id2">*</span><
 <li><p><strong>mv</strong> (<em>int</em>) – Minimal verbosity at which this statement will still be printed.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>NoReturn</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>NoReturn</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-restraintmaker.utils">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-restraintmaker.utils" title="Permalink to this headline">¶</a></h2>
-</div>
-</div>
+</section>
+<section id="module-restraintmaker.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-restraintmaker.utils" title="Permalink to this headline"></a></h2>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="restraintmaker.tools_Rdkit.html" class="btn btn-neutral float-left" title="restraintmaker.tools_Rdkit package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
-
-    </p>
+    <p>&#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

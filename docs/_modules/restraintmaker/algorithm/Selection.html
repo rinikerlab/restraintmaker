@@ -1,72 +1,32 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>restraintmaker.algorithm.Selection &mdash; restraintMaker  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../../index.html" class="icon icon-home"> restraintMaker
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,18 +34,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome to RestraintMaker</a></li>
@@ -93,74 +42,36 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">restraintMaker</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
       <li>restraintmaker.algorithm.Selection</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for restraintmaker.algorithm.Selection</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The module Selections contains the selection logics. A selected atom will be considered for restraint placement.</span>
+<span class="sd">    These Selections are mostly useful for the GUI mode.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
+<span class="kn">from</span> <span class="nn">pymol</span> <span class="kn">import</span> <span class="n">cmd</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
 
@@ -726,9 +637,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="ow">not</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">,</span> <span class="n">atoms_in_sphere</span><span class="p">))</span></div></div>
 
 
-<div class="viewcode-block" id="MCS_Selection"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection">[docs]</a><span class="k">class</span> <span class="nc">MCS_Selection</span><span class="p">(</span><span class="n">_Selection</span><span class="p">):</span>
+<div class="viewcode-block" id="MCSSelection"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCSSelection">[docs]</a><span class="k">class</span> <span class="nc">MCSSelection</span><span class="p">(</span><span class="n">_Selection</span><span class="p">):</span>
 
-<div class="viewcode-block" id="MCS_Selection.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">):</span>
+<div class="viewcode-block" id="MCSSelection.__init__"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCSSelection.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_atoms</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">             Selects all atoms, which are in the MCS of at least on pair of molecules</span>
 
@@ -741,7 +652,7 @@
         <span class="c1"># Attributes set in get args:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rdkit_molecules</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="MCS_Selection.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+<div class="viewcode-block" id="MCSSelection.get_args"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCSSelection.get_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_function</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            should be overridden by every subclass of _Selection. It will assign all necessart variables using input function.</span>
 <span class="sd">            For MCS_Selection the argument is a list of the Molecules in the pdb format.</span>
@@ -769,7 +680,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="MCS_Selection.update"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MCSSelection.update"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCSSelection.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">         general update function</span>
 
@@ -778,11 +689,14 @@
 <span class="sd">        NoReturn</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EXECUTING MCS Selection: please Wait - this can take a bit longer.&quot;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
         <span class="n">mcs_ids</span> <span class="o">=</span> <span class="n">Rdkit_Functions</span><span class="o">.</span><span class="n">mcs_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">molecules_rdk</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">mcs_ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">has_finished</span> <span class="o">=</span> <span class="kc">True</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_finished</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EXECUTING MCS Selection: DONE&quot;</span><span class="p">,</span> <span class="n">mv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MCS_Selection._update_select"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection._update_select">[docs]</a>    <span class="k">def</span> <span class="nf">_update_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
+
+<div class="viewcode-block" id="MCSSelection._update_select"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCSSelection._update_select">[docs]</a>    <span class="k">def</span> <span class="nf">_update_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Dummy no selection possible</span>
 
@@ -797,7 +711,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="MCS_Selection._update_move"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection._update_move">[docs]</a>    <span class="k">def</span> <span class="nf">_update_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<div class="viewcode-block" id="MCSSelection._update_move"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCSSelection._update_move">[docs]</a>    <span class="k">def</span> <span class="nf">_update_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">new_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Dummy no selection possible</span>
 
@@ -812,7 +726,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="MCS_Selection._update_size"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection._update_size">[docs]</a>    <span class="k">def</span> <span class="nf">_update_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">increase</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<div class="viewcode-block" id="MCSSelection._update_size"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCSSelection._update_size">[docs]</a>    <span class="k">def</span> <span class="nf">_update_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">increase</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Dummy no selection possible</span>
 
@@ -827,7 +741,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="MCS_Selection._update_confirm"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCS_Selection._update_confirm">[docs]</a>    <span class="k">def</span> <span class="nf">_update_confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MCSSelection._update_confirm"><a class="viewcode-back" href="../../../_source/restraintmaker.algorithm.html#restraintmaker.algorithm.Selection.MCSSelection._update_confirm">[docs]</a>    <span class="k">def</span> <span class="nf">_update_confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Dummy no selection possible</span>
 
@@ -844,46 +758,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
-
-    </p>
+    <p>&#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

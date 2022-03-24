@@ -2,28 +2,25 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "source": [
-    "# Example Execution for RestraintMaker"
-   ],
    "metadata": {
-    "collapsed": false,
     "pycharm": {
      "name": "#%% md\n"
     }
-   }
+   },
+   "source": [
+    "# Example Execution for RestraintMaker"
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
-   "metadata": {
-    "collapsed": true
-   },
+   "execution_count": 59,
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "/home/bschroed/Documents/code/restraintmaker/restraintmaker/test/test_files/test_systems/systemA/CHK1_5Ligs.pdb\n"
+      "/home/bschroed/Documents/projects/restraintmaker/restraintmaker/test/test_files/test_systems/systemA/CHK1_5Ligs.pdb\n"
      ]
     }
    ],
@@ -37,19 +34,24 @@
   },
   {
    "cell_type": "markdown",
-   "source": [
-    "    Get atoms of the system"
-   ],
    "metadata": {
-    "collapsed": false,
     "pycharm": {
      "name": "#%% md\n"
     }
-   }
+   },
+   "source": [
+    "## Get atoms of the system \n",
+    "first we need to get a atom list. There are multiple ways on how to do this, here we use pymol for this:"
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 60,
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [],
    "source": [
     "from pymol import cmd\n",
@@ -58,64 +60,62 @@
     "cmd.load(pdb_path)\n",
     "atom_list = u.pymol_selection_to_atom_list(\"all\")\n",
     "cmd.reinitialize()"
-   ],
-   "metadata": {
-    "collapsed": false,
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   }
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 78,
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "KL20\n",
-      "\t\tKL21\n",
+      "Residues to link: \n",
       "\t\tKL19\n",
+      "\t\tKL20\n",
       "\t\tKL17\n",
-      "\t\tKL1\n"
+      "\t\tKL1\n",
+      "\t\tKL21\n"
      ]
     }
    ],
    "source": [
-    "print(\"\\n\\t\\t\".join(set(map(lambda x: x.resn, atom_list))))"
-   ],
-   "metadata": {
-    "collapsed": false,
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   }
+    "print(\"Residues to link: \\n\\t\\t\"+\"\\n\\t\\t\".join(set(map(lambda x: x.resn, atom_list))))"
+   ]
   },
   {
    "cell_type": "markdown",
-   "source": [
-    "## RestraintMaker Pipeline\n",
-    "\n",
-    "### Filtering the atoms"
-   ],
    "metadata": {
-    "collapsed": false,
     "pycharm": {
      "name": "#%% md\n"
     }
-   }
+   },
+   "source": [
+    "## RestraintMaker Pipeline\n",
+    "\n",
+    "### Filtering the atoms\n",
+    "We provide functionality for filtering atoms in a selection. This can be used to exclude certain atoms, that should not be restrained, and additionally reduces the complexity of the problem."
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 79,
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Filter Step1 - Elements:  203 -> 142\n",
-      "Filter Step2 - Ring Atoms:  203 -> 71\n"
+      "Filter Step1 - Elements:  203 -> 142\n"
      ]
     }
    ],
@@ -126,157 +126,32 @@
     "filtered_atoms = atom_list\n",
     "\n",
     "## Filtering for not H\n",
-    "#filter = Filter.ElementFilter(filtered_atoms)\n",
-    "#filter.get_args(lambda x: (\"O, N, C\"))\n",
-    "#filtered_atoms = filter.filter()\n",
-    "#print(\"Filter Step1 - Elements: \", len(atom_list), \"->\",len(filtered_atoms))\n",
-    "\n",
-    "## Filtering for rings\n",
-    "filter = Filter.RingFilter(filtered_atoms)\n",
-    "pdb_blocks = u.convert_atoms_to_pdb_molecules(filtered_atoms)\n",
-    "filter.get_args(lambda x: (pdb_blocks))\n",
+    "filter = Filter.ElementFilter(filtered_atoms)\n",
+    "filter.get_args(lambda x: (\"O, N, C\"))\n",
     "filtered_atoms = filter.filter()\n",
-    "print(\"Filter Step2 - Ring Atoms: \", len(atom_list), \"->\",len(filtered_atoms))"
-   ],
-   "metadata": {
-    "collapsed": false,
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   }
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 14,
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "Atom(elem='N', id=1, name='N1', x=13.211999893188477, y=-4.593999862670898, z=12.567000389099121, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=2, name='C2', x=12.73900032043457, y=-5.415999889373779, z=11.404999732971191, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=3, name='C3', x=12.527999877929688, y=-3.259000062942505, z=12.562999725341797, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=4, name='C4', x=11.220000267028809, y=-5.599999904632568, z=11.39799976348877, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='N', id=5, name='N5', x=10.494999885559082, y=-4.3460001945495605, z=11.647000312805176, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=6, name='C6', x=11.01200008392334, y=-3.430000066757202, z=12.675000190734863, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=7, name='C7', x=9.100000381469727, y=-4.408999919891357, z=11.545999526977539, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=8, name='C8', x=8.354999542236328, y=-5.275000095367432, z=12.338000297546387, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=9, name='C9', x=8.461999893188477, y=-3.4670000076293945, z=10.746999740600586, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=10, name='C10', x=7.076000213623047, y=-3.371999979019165, z=10.781999588012695, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=11, name='C11', x=6.9670000076293945, y=-5.197999954223633, z=12.345000267028809, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=12, name='C12', x=6.327000141143799, y=-4.235000133514404, z=11.574000358581543, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=20, name='C20', x=9.998000144958496, y=0.2160000056028366, z=7.830999851226807, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=21, name='C21', x=13.581000328063965, y=-1.3799999952316284, z=7.539999961853027, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=22, name='C22', x=14.458999633789062, y=-0.6610000133514404, z=6.736000061035156, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=23, name='C23', x=15.770999908447266, y=-1.0880000591278076, z=6.574999809265137, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=26, name='C26', x=18.545000076293945, y=-2.1540000438690186, z=6.380000114440918, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=27, name='C27', x=15.324000358581543, y=-2.9690001010894775, z=8.02299976348877, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=28, name='C28', x=14.01200008392334, y=-2.5369999408721924, z=8.177000045776367, chain='A', resn='KL17', resi='1', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=47, name='C7', x=9.100000381469727, y=-4.395999908447266, z=11.557999610900879, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=48, name='C8', x=8.355999946594238, y=-5.284999847412109, z=12.324999809265137, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=49, name='C9', x=8.461000442504883, y=-3.4790000915527344, z=10.730999946594238, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=52, name='C12', x=6.327000141143799, y=-4.243000030517578, z=11.562000274658203, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='O', id=55, name='O15', x=7.906000137329102, y=-0.8569999933242798, z=9.480999946594238, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=56, name='C16', x=10.119000434875488, y=-0.902999997138977, z=8.642999649047852, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='N', id=57, name='N17', x=11.359999656677246, y=-1.5069999694824219, z=8.631999969482422, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=58, name='C18', x=12.189000129699707, y=-0.8889999985694885, z=7.811999797821045, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=60, name='C20', x=10.020000457763672, y=0.20399999618530273, z=7.824999809265137, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=61, name='C21', x=13.611000061035156, y=-1.3880000114440918, z=7.607999801635742, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=62, name='C22', x=14.057000160217285, y=-2.502000093460083, z=8.309000015258789, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=63, name='C23', x=15.342000007629395, y=-2.996000051498413, z=8.119000434875488, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='O', id=64, name='O24', x=15.342000007629395, y=-4.3460001945495605, z=8.281999588012695, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=65, name='C25', x=16.309999465942383, y=-5.34499979019165, z=7.951000213623047, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=66, name='C26', x=16.215999603271484, y=-2.313999891281128, z=7.2789998054504395, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='O', id=67, name='O27', x=17.534000396728516, y=-2.1570000648498535, z=7.578000068664551, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=68, name='C28', x=18.47800064086914, y=-2.880000114440918, z=8.371999740600586, chain='B', resn='KL19', resi='2', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='N', id=82, name='N1', x=13.229000091552734, y=-4.570000171661377, z=12.550000190734863, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=83, name='C2', x=12.753999710083008, y=-5.4019999504089355, z=11.395999908447266, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=84, name='C3', x=12.534000396728516, y=-3.240999937057495, z=12.54699993133545, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=85, name='C4', x=11.236000061035156, y=-5.5960001945495605, z=11.39799976348877, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='N', id=86, name='N5', x=10.505000114440918, y=-4.3429999351501465, z=11.642000198364258, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=87, name='C6', x=11.019000053405762, y=-3.4230000972747803, z=12.666999816894531, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=88, name='C7', x=9.109999656677246, y=-4.415999889373779, z=11.545999526977539, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=89, name='C8', x=8.373000144958496, y=-5.2779998779296875, z=12.347999572753906, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=90, name='C9', x=8.463000297546387, y=-3.4800000190734863, z=10.746000289916992, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=91, name='C10', x=7.077000141143799, y=-3.3889999389648438, z=10.791000366210938, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=92, name='C11', x=6.985000133514404, y=-5.206999778747559, z=12.36400032043457, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=93, name='C12', x=6.335000038146973, y=-4.25, z=11.592000007629395, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='N', id=94, name='N13', x=9.286999702453613, y=-2.61299991607666, z=10.019000053405762, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=95, name='C14', x=8.984000205993652, y=-1.4529999494552612, z=9.444000244140625, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='O', id=96, name='O15', x=7.883999824523926, y=-0.8619999885559082, z=9.515999794006348, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=104, name='C23', x=15.272000312805176, y=-2.9839999675750732, z=7.986999988555908, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=105, name='C24', x=16.018999099731445, y=-4.197000026702881, z=8.54699993133545, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=106, name='C25', x=17.448999404907227, y=-3.703000068664551, z=8.319000244140625, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='O', id=107, name='O26', x=17.4060001373291, y=-2.811000108718872, z=7.202000141143799, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=108, name='C27', x=16.142000198364258, y=-2.257999897003174, z=7.182000160217285, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=109, name='C28', x=15.734000205993652, y=-1.0829999446868896, z=6.563000202178955, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=110, name='C29', x=14.432000160217285, y=-0.6299999952316284, z=6.744999885559082, chain='C', resn='KL1', resi='3', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='N', id=122, name='N1', x=13.217000007629395, y=-4.590000152587891, z=12.548999786376953, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=123, name='C2', x=12.73900032043457, y=-5.410999774932861, z=11.387999534606934, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=124, name='C3', x=12.529999732971191, y=-3.25600004196167, z=12.550999641418457, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=132, name='C11', x=6.9679999351501465, y=-5.202000141143799, z=12.347000122070312, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=133, name='C12', x=6.323999881744385, y=-4.239999771118164, z=11.57800006866455, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='N', id=134, name='N13', x=9.284000396728516, y=-2.5969998836517334, z=10.027000427246094, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=135, name='C14', x=8.980999946594238, y=-1.4420000314712524, z=9.442999839782715, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='O', id=136, name='O15', x=7.880000114440918, y=-0.8529999852180481, z=9.501999855041504, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=137, name='C16', x=10.079000473022461, y=-0.8899999856948853, z=8.63599967956543, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='N', id=138, name='N17', x=11.310999870300293, y=-1.5099999904632568, z=8.581000328063965, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=139, name='C18', x=12.123000144958496, y=-0.8889999985694885, z=7.745999813079834, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=141, name='C20', x=9.973999977111816, y=0.23000000417232513, z=7.836999893188477, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n",
-      "\tAtom(elem='C', id=142, name='C21', x=13.539999961853027, y=-1.3919999599456787, z=7.520999908447266, chain='D', resn='KL20', resi='4', alt='', b=0.0, label='')\n"
-     ]
-    }
-   ],
-   "source": [
-    "print(\"\\n\\t\".join(map(str, filtered_atoms)))"
-   ],
-   "metadata": {
-    "collapsed": false,
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   }
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 15,
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "KL17\n",
-      "\tKL1\n",
-      "\tKL20\n",
-      "\tKL19\n"
-     ]
-    }
-   ],
-   "source": [
-    "print(\"\\n\\t\".join(set(map(lambda x: x.resn, filtered_atoms))))"
-   ],
-   "metadata": {
-    "collapsed": false,
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   }
+    "print(\"Filter Step1 - Elements: \", len(atom_list), \"->\",len(filtered_atoms))\n"
+   ]
   },
   {
    "cell_type": "markdown",
-   "source": [
-    "### Optimization"
-   ],
    "metadata": {
-    "collapsed": false,
     "pycharm": {
      "name": "#%% md\n"
     }
-   }
+   },
+   "source": [
+    "### Optimization\n",
+    "Here we use the proposed algorithm to calculated a well distributed set of distance restraints."
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 81,
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "name": "stdout",
@@ -289,18 +164,29 @@
       "\n",
       " Connecting molecules #1 and #4\n",
       "\n",
+      " Connecting molecules #1 and #5\n",
+      "\n",
       " Connecting molecules #2 and #3\n",
       "\n",
       " Connecting molecules #2 and #4\n",
       "\n",
+      " Connecting molecules #2 and #5\n",
+      "\n",
       " Connecting molecules #3 and #4\n",
-      "ADDING 1 3 (value =  01.26)\n",
-      "ADDING 1 4 (value =  01.18)\n",
-      "ADDING 2 3 (value =  01.00)\n",
-      "----------\n",
-      "DISCARDING 1 2\n",
+      "\n",
+      " Connecting molecules #3 and #5\n",
+      "\n",
+      " Connecting molecules #4 and #5\n",
+      "ADDING 3 5 (value =  00.37)\n",
+      "ADDING 4 5 (value =  00.37)\n",
+      "ADDING 1 3 (value =  00.32)\n",
       "DISCARDING 3 4\n",
-      "ADDING 2 4 (value =  00.28)\n"
+      "DISCARDING 1 4\n",
+      "DISCARDING 2 3\n",
+      "DISCARDING 1 5\n",
+      "ADDING 2 4 (value =  00.26)\n",
+      "----------\n",
+      "ADDING 1 2 (value =  00.22)\n"
      ]
     }
    ],
@@ -308,116 +194,122 @@
     "# Optimize Restraints\n",
     "## Paramters\n",
     "nRestraints = 6\n",
-    "maximal_restraint_distance = 1.2 #A\n",
-    "method = \"shortest\"\n",
-    "projection = \"pca_2d\"\n",
+    "maximal_restraint_distance = 1.5 #A\n",
+    "method = \"minmax\"\n",
+    "projection = \"convex_hull\"\n",
     "\n",
     "## program\n",
-    "optimizer = Optimizer.TreeHeuristicOptimizer(filtered_atoms)\n",
+    "optimizer = Optimizer.GreedyGraphOptimizer(filtered_atoms)\n",
     "optimizer.get_args(lambda x: (nRestraints, maximal_restraint_distance, method, projection))\n",
     "found_restraints = optimizer.make_restraints()"
-   ],
-   "metadata": {
-    "collapsed": false,
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   }
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 82,
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
       "Result: \n",
-      "\t Distance_Restraint\t11\t92\t0.027676766479476103\n",
-      "\tDistance_Restraint\t23\t109\t0.03921695674451211\n",
-      "\tDistance_Restraint\t1\t82\t0.033970555741711594\n",
-      "\tDistance_Restraint\t5\t86\t0.01157615128508411\n",
-      "\tDistance_Restraint\t27\t104\t0.06499988115794252\n",
-      "\tDistance_Restraint\t10\t91\t0.019261684801060098\n",
-      "\tDistance_Restraint\t11\t132\t0.004582659776816626\n",
-      "\tDistance_Restraint\t21\t142\t0.04675501269373408\n",
-      "\tDistance_Restraint\t1\t122\t0.019105510292366224\n",
-      "\tDistance_Restraint\t20\t141\t0.02842549067573466\n",
-      "\tDistance_Restraint\t3\t124\t0.012530026346328164\n",
-      "\tDistance_Restraint\t2\t123\t0.017720267741949906\n",
-      "\tDistance_Restraint\t52\t93\t0.0318273766301751\n",
-      "\tDistance_Restraint\t67\t107\t0.765164079974097\n",
-      "\tDistance_Restraint\t55\t96\t0.041641362066013494\n",
-      "\tDistance_Restraint\t47\t88\t0.025376894134306997\n",
-      "\tDistance_Restraint\t64\t105\t0.7421280231109166\n",
-      "\tDistance_Restraint\t49\t90\t0.015166066564349288\n",
-      "\tDistance_Restraint\t52\t133\t0.016552840275103946\n",
-      "\tDistance_Restraint\t61\t142\t0.11236545326164007\n",
-      "\tDistance_Restraint\t55\t136\t0.033660026883969185\n",
-      "\tDistance_Restraint\t60\t141\t0.05418529920277415\n",
-      "\tDistance_Restraint\t57\t138\t0.07078801180767609\n",
-      "\tDistance_Restraint\t56\t137\t0.04263797390290723\n"
+      "\t DistanceRestraint\t93\t173\t0.020928573118637137\n",
+      "\tDistanceRestraint\t107\t188\t1.3080112183729382\n",
+      "\tDistanceRestraint\t82\t162\t0.02509969137475135\n",
+      "\tDistanceRestraint\t101\t181\t0.024372021542387032\n",
+      "\tDistanceRestraint\t110\t202\t0.0859593190244359\n",
+      "\tDistanceRestraint\t94\t174\t0.016248190446675838\n",
+      "\tDistanceRestraint\t133\t173\t0.0009999275207519531\n",
+      "\tDistanceRestraint\t147\t188\t1.336934099940074\n",
+      "\tDistanceRestraint\t122\t162\t0.01445687293670089\n",
+      "\tDistanceRestraint\t141\t181\t0.020049805866126494\n",
+      "\tDistanceRestraint\t150\t202\t0.03459786772954851\n",
+      "\tDistanceRestraint\t134\t174\t0.0022359059725316787\n",
+      "\tDistanceRestraint\t12\t93\t0.024758467490798183\n",
+      "\tDistanceRestraint\t25\t107\t0.1347001548421799\n",
+      "\tDistanceRestraint\t1\t82\t0.033970555741711594\n",
+      "\tDistanceRestraint\t20\t101\t0.03277216022777024\n",
+      "\tDistanceRestraint\t21\t102\t0.03656542498433159\n",
+      "\tDistanceRestraint\t13\t94\t0.013038264376255066\n",
+      "\tDistanceRestraint\t52\t133\t0.016552840275103946\n",
+      "\tDistanceRestraint\t68\t147\t1.471557002595128\n",
+      "\tDistanceRestraint\t60\t141\t0.05418529920277415\n",
+      "\tDistanceRestraint\t41\t122\t0.005477263884099628\n",
+      "\tDistanceRestraint\t70\t150\t0.08960487678350591\n",
+      "\tDistanceRestraint\t53\t134\t0.014176991082075412\n",
+      "\tDistanceRestraint\t12\t52\t0.014422217798542254\n",
+      "\tDistanceRestraint\t25\t67\t0.699488284822284\n",
+      "\tDistanceRestraint\t1\t41\t0.024556647550918718\n",
+      "\tDistanceRestraint\t20\t60\t0.02576847867236797\n",
+      "\tDistanceRestraint\t21\t61\t0.07475267519104152\n",
+      "\tDistanceRestraint\t13\t53\t0.008124036536692249\n"
      ]
     }
    ],
    "source": [
     "print(\"Result: \\n\\t\", \"\\n\\t\".join(map(str, found_restraints)))"
-   ],
-   "metadata": {
-    "collapsed": false,
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   }
+   ]
   },
   {
    "cell_type": "markdown",
-   "source": [
-    "### Export"
-   ],
    "metadata": {
-    "collapsed": false,
     "pycharm": {
      "name": "#%% md\n"
     }
-   }
+   },
+   "source": [
+    "### Export\n",
+    "The Generated restraints can be exported in three file formats currently:\n",
+    "* Gromos\n",
+    "* Gromacs\n",
+    "* JSON"
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 83,
+   "metadata": {
+    "pycharm": {
+     "name": "#%%md\n"
+    }
+   },
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "wrote to: out_disres.dat\n"
+      "wrote to: out_disres.dat.disres\n"
      ]
     }
    ],
    "source": [
     "from restraintmaker.io import Exporter\n",
-    "exporter = Exporter.Gromos_Distance_Restraint_Exporter(found_restraints)\n",
+    "exporter = Exporter.export_Gromos_Distance_Restraints(found_restraints)\n",
     "exporter.out_path = \"out_disres.dat\"\n",
     "#writes out to path, is the path is not none\n",
     "disres_text = exporter.export_restraints()"
-   ],
-   "metadata": {
-    "collapsed": false,
-    "pycharm": {
-     "name": "#%%md\n"
-    }
-   }
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 84,
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
       "TITLE\n",
-      "generated disres file for BRD4 with PYMOL wizard\n",
+      "generated disres file with restraintmaker\n",
       "\t >>> Generated with python lib function_libs utilities. (riniker group)\n",
       "\t >>> line_seperator: ' \\n'\t field_seperator: ' \\t '\n",
       "END\n",
@@ -425,54 +317,66 @@
       "# KDISH \t KDISC \n",
       " \t 0.1 \t 0.153 \n",
       "#   i     j     k     l  type        i     j     k     l  type          r0         w0 rah\n",
-      "##\tKL17/C11 11 - KL1/C11 92\n",
-      "   11     0     0     0     0       92     0     0     0     0     0.00300    1.00000   1\n",
-      "##\tKL17/C23 23 - KL1/C28 109\n",
-      "   23     0     0     0     0      109     0     0     0     0     0.00400    1.00000   1\n",
+      "##\tKL1/C12 93 - KL21/C12 173\n",
+      "   93     0     0     0     0      173     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL1/O26 107 - KL21/C27 188\n",
+      "  107     0     0     0     0      188     0     0     0     0     0.13000    1.00000   1\n",
+      "##\tKL1/N1 82 - KL21/N1 162\n",
+      "   82     0     0     0     0      162     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL1/C20 101 - KL21/C20 181\n",
+      "  101     0     0     0     0      181     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL1/C29 110 - KL21/C31 202\n",
+      "  110     0     0     0     0      202     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL1/N13 94 - KL21/N13 174\n",
+      "   94     0     0     0     0      174     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL20/C12 133 - KL21/C12 173\n",
+      "  133     0     0     0     0      173     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL20/O26 147 - KL21/C27 188\n",
+      "  147     0     0     0     0      188     0     0     0     0     0.13000    1.00000   1\n",
+      "##\tKL20/N1 122 - KL21/N1 162\n",
+      "  122     0     0     0     0      162     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL20/C20 141 - KL21/C20 181\n",
+      "  141     0     0     0     0      181     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL20/C29 150 - KL21/C31 202\n",
+      "  150     0     0     0     0      202     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL20/N13 134 - KL21/N13 174\n",
+      "  134     0     0     0     0      174     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL17/C12 12 - KL1/C12 93\n",
+      "   12     0     0     0     0       93     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL17/O25 25 - KL1/O26 107\n",
+      "   25     0     0     0     0      107     0     0     0     0     0.01000    1.00000   1\n",
       "##\tKL17/N1 1 - KL1/N1 82\n",
-      "    1     0     0     0     0       82     0     0     0     0     0.00300    1.00000   1\n",
-      "##\tKL17/N5 5 - KL1/N5 86\n",
-      "    5     0     0     0     0       86     0     0     0     0     0.00100    1.00000   1\n",
-      "##\tKL17/C27 27 - KL1/C23 104\n",
-      "   27     0     0     0     0      104     0     0     0     0     0.00600    1.00000   1\n",
-      "##\tKL17/C10 10 - KL1/C10 91\n",
-      "   10     0     0     0     0       91     0     0     0     0     0.00200    1.00000   1\n",
-      "##\tKL17/C11 11 - KL20/C11 132\n",
-      "   11     0     0     0     0      132     0     0     0     0     0.00000    1.00000   1\n",
-      "##\tKL17/C21 21 - KL20/C21 142\n",
-      "   21     0     0     0     0      142     0     0     0     0     0.00500    1.00000   1\n",
-      "##\tKL17/N1 1 - KL20/N1 122\n",
-      "    1     0     0     0     0      122     0     0     0     0     0.00200    1.00000   1\n",
-      "##\tKL17/C20 20 - KL20/C20 141\n",
-      "   20     0     0     0     0      141     0     0     0     0     0.00300    1.00000   1\n",
-      "##\tKL17/C3 3 - KL20/C3 124\n",
-      "    3     0     0     0     0      124     0     0     0     0     0.00100    1.00000   1\n",
-      "##\tKL17/C2 2 - KL20/C2 123\n",
-      "    2     0     0     0     0      123     0     0     0     0     0.00200    1.00000   1\n",
-      "##\tKL19/C12 52 - KL1/C12 93\n",
-      "   52     0     0     0     0       93     0     0     0     0     0.00300    1.00000   1\n",
-      "##\tKL19/O27 67 - KL1/O26 107\n",
-      "   67     0     0     0     0      107     0     0     0     0     0.07700    1.00000   1\n",
-      "##\tKL19/O15 55 - KL1/O15 96\n",
-      "   55     0     0     0     0       96     0     0     0     0     0.00400    1.00000   1\n",
-      "##\tKL19/C7 47 - KL1/C7 88\n",
-      "   47     0     0     0     0       88     0     0     0     0     0.00300    1.00000   1\n",
-      "##\tKL19/O24 64 - KL1/C24 105\n",
-      "   64     0     0     0     0      105     0     0     0     0     0.07400    1.00000   1\n",
-      "##\tKL19/C9 49 - KL1/C9 90\n",
-      "   49     0     0     0     0       90     0     0     0     0     0.00200    1.00000   1\n",
+      "    1     0     0     0     0       82     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL17/C20 20 - KL1/C20 101\n",
+      "   20     0     0     0     0      101     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL17/C21 21 - KL1/C21 102\n",
+      "   21     0     0     0     0      102     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL17/N13 13 - KL1/N13 94\n",
+      "   13     0     0     0     0       94     0     0     0     0     0.00000    1.00000   1\n",
       "##\tKL19/C12 52 - KL20/C12 133\n",
-      "   52     0     0     0     0      133     0     0     0     0     0.00200    1.00000   1\n",
-      "##\tKL19/C21 61 - KL20/C21 142\n",
-      "   61     0     0     0     0      142     0     0     0     0     0.01100    1.00000   1\n",
-      "##\tKL19/O15 55 - KL20/O15 136\n",
-      "   55     0     0     0     0      136     0     0     0     0     0.00300    1.00000   1\n",
+      "   52     0     0     0     0      133     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL19/C28 68 - KL20/O26 147\n",
+      "   68     0     0     0     0      147     0     0     0     0     0.14000    1.00000   1\n",
       "##\tKL19/C20 60 - KL20/C20 141\n",
-      "   60     0     0     0     0      141     0     0     0     0     0.00500    1.00000   1\n",
-      "##\tKL19/N17 57 - KL20/N17 138\n",
-      "   57     0     0     0     0      138     0     0     0     0     0.00700    1.00000   1\n",
-      "##\tKL19/C16 56 - KL20/C16 137\n",
-      "   56     0     0     0     0      137     0     0     0     0     0.00400    1.00000   1\n",
+      "   60     0     0     0     0      141     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL19/N1 41 - KL20/N1 122\n",
+      "   41     0     0     0     0      122     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL19/C30 70 - KL20/C29 150\n",
+      "   70     0     0     0     0      150     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL19/N13 53 - KL20/N13 134\n",
+      "   53     0     0     0     0      134     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL17/C12 12 - KL19/C12 52\n",
+      "   12     0     0     0     0       52     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL17/O25 25 - KL19/O27 67\n",
+      "   25     0     0     0     0       67     0     0     0     0     0.06000    1.00000   1\n",
+      "##\tKL17/N1 1 - KL19/N1 41\n",
+      "    1     0     0     0     0       41     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL17/C20 20 - KL19/C20 60\n",
+      "   20     0     0     0     0       60     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL17/C21 21 - KL19/C21 61\n",
+      "   21     0     0     0     0       61     0     0     0     0     0.00000    1.00000   1\n",
+      "##\tKL17/N13 13 - KL19/N13 53\n",
+      "   13     0     0     0     0       53     0     0     0     0     0.00000    1.00000   1\n",
       "END\n",
       "\n"
      ]
@@ -480,46 +384,132 @@
    ],
    "source": [
     "print(disres_text)"
-   ],
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 85,
    "metadata": {
-    "collapsed": false,
     "pycharm": {
      "name": "#%%\n"
     }
-   }
+   },
+   "outputs": [],
+   "source": [
+    "from restraintmaker.io import Exporter\n",
+    "exporter = Exporter.export_Gromacs_Distance_Restraints(found_restraints)\n",
+    "exporter.out_path = \"out_disres_gmx.itp\"\n",
+    "\n",
+    "#writes out to path, is the path is not none\n",
+    "disres_text = exporter.export_restraints()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 86,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[ distance_restraints ]\n",
+      ";i j type index type' low up1 up2 fac\n",
+      "   93   173      1      1      1      0.0     0.0     0.1      1.0; KL1/C12 - KL21/C12\n",
+      "  107   188      1      1      1      0.0     0.0     0.1      1.0; KL1/O26 - KL21/C27\n",
+      "   82   162      1      1      1      0.0     0.0     0.1      1.0; KL1/N1 - KL21/N1\n",
+      "  101   181      1      1      1      0.0     0.0     0.1      1.0; KL1/C20 - KL21/C20\n",
+      "  110   202      1      1      1      0.0     0.0     0.1      1.0; KL1/C29 - KL21/C31\n",
+      "   94   174      1      1      1      0.0     0.0     0.1      1.0; KL1/N13 - KL21/N13\n",
+      "  133   173      1      1      1      0.0     0.0     0.1      1.0; KL20/C12 - KL21/C12\n",
+      "  147   188      1      1      1      0.0     0.0     0.1      1.0; KL20/O26 - KL21/C27\n",
+      "  122   162      1      1      1      0.0     0.0     0.1      1.0; KL20/N1 - KL21/N1\n",
+      "  141   181      1      1      1      0.0     0.0     0.1      1.0; KL20/C20 - KL21/C20\n",
+      "  150   202      1      1      1      0.0     0.0     0.1      1.0; KL20/C29 - KL21/C31\n",
+      "  134   174      1      1      1      0.0     0.0     0.1      1.0; KL20/N13 - KL21/N13\n",
+      "   12    93      1      1      1      0.0     0.0     0.1      1.0; KL17/C12 - KL1/C12\n",
+      "   25   107      1      1      1      0.0     0.0     0.1      1.0; KL17/O25 - KL1/O26\n",
+      "    1    82      1      1      1      0.0     0.0     0.1      1.0; KL17/N1 - KL1/N1\n",
+      "   20   101      1      1      1      0.0     0.0     0.1      1.0; KL17/C20 - KL1/C20\n",
+      "   21   102      1      1      1      0.0     0.0     0.1      1.0; KL17/C21 - KL1/C21\n",
+      "   13    94      1      1      1      0.0     0.0     0.1      1.0; KL17/N13 - KL1/N13\n",
+      "   52   133      1      1      1      0.0     0.0     0.1      1.0; KL19/C12 - KL20/C12\n",
+      "   68   147      1      1      1      0.0     0.0     0.1      1.0; KL19/C28 - KL20/O26\n",
+      "   60   141      1      1      1      0.0     0.0     0.1      1.0; KL19/C20 - KL20/C20\n",
+      "   41   122      1      1      1      0.0     0.0     0.1      1.0; KL19/N1 - KL20/N1\n",
+      "   70   150      1      1      1      0.0     0.0     0.1      1.0; KL19/C30 - KL20/C29\n",
+      "   53   134      1      1      1      0.0     0.0     0.1      1.0; KL19/N13 - KL20/N13\n",
+      "   12    52      1      1      1      0.0     0.0     0.1      1.0; KL17/C12 - KL19/C12\n",
+      "   25    67      1      1      1      0.0     0.0     0.1      1.0; KL17/O25 - KL19/O27\n",
+      "    1    41      1      1      1      0.0     0.0     0.1      1.0; KL17/N1 - KL19/N1\n",
+      "   20    60      1      1      1      0.0     0.0     0.1      1.0; KL17/C20 - KL19/C20\n",
+      "   21    61      1      1      1      0.0     0.0     0.1      1.0; KL17/C21 - KL19/C21\n",
+      "   13    53      1      1      1      0.0     0.0     0.1      1.0; KL17/N13 - KL19/N13\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(disres_text)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 87,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from restraintmaker.io import Exporter\n",
+    "exporter = Exporter.export_JSON_Distance_Restraints(found_restraints)\n",
+    "exporter.out_path = \"out_disres.json\"\n",
+    "\n",
+    "#writes out to path, is the path is not none\n",
+    "disres_text = exporter.export_restraints()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 88,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{0: {'a1': {'elem': 'C', 'id': 93, 'name': 'C12', 'x': 6.335000038146973, 'y': -4.25, 'z': 11.592000007629395, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 173, 'name': 'C12', 'x': 6.323999881744385, 'y': -4.238999843597412, 'z': 11.57800006866455, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0020928573118637137}, 1: {'a1': {'elem': 'O', 'id': 107, 'name': 'O26', 'x': 17.4060001373291, 'y': -2.811000108718872, 'z': 7.202000141143799, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 188, 'name': 'C27', 'x': 17.940000534057617, 'y': -3.9670000076293945, 'z': 6.9029998779296875, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.1308011218372938}, 2: {'a1': {'elem': 'N', 'id': 82, 'name': 'N1', 'x': 13.229000091552734, 'y': -4.570000171661377, 'z': 12.550000190734863, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'N', 'id': 162, 'name': 'N1', 'x': 13.220000267028809, 'y': -4.5879998207092285, 'z': 12.53499984741211, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.002509969137475135}, 3: {'a1': {'elem': 'C', 'id': 101, 'name': 'C20', 'x': 9.967000007629395, 'y': 0.22300000488758087, 'z': 7.839000225067139, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 181, 'name': 'C20', 'x': 9.989999771118164, 'y': 0.21899999678134918, 'z': 7.831999778747559, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0024372021542387033}, 4: {'a1': {'elem': 'C', 'id': 110, 'name': 'C29', 'x': 14.432000160217285, 'y': -0.6299999952316284, 'z': 6.744999885559082, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 202, 'name': 'C31', 'x': 14.442000389099121, 'y': -0.7129999995231628, 'z': 6.724999904632568, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.00859593190244359}, 5: {'a1': {'elem': 'N', 'id': 94, 'name': 'N13', 'x': 9.286999702453613, 'y': -2.61299991607666, 'z': 10.019000053405762, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'N', 'id': 174, 'name': 'N13', 'x': 9.28499984741211, 'y': -2.5989999771118164, 'z': 10.027000427246094, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0016248190446675839}, 6: {'a1': {'elem': 'C', 'id': 133, 'name': 'C12', 'x': 6.323999881744385, 'y': -4.239999771118164, 'z': 11.57800006866455, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 173, 'name': 'C12', 'x': 6.323999881744385, 'y': -4.238999843597412, 'z': 11.57800006866455, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 9.999275207519531e-05}, 7: {'a1': {'elem': 'O', 'id': 147, 'name': 'O26', 'x': 17.408000946044922, 'y': -2.8299999237060547, 'z': 7.36299991607666, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 188, 'name': 'C27', 'x': 17.940000534057617, 'y': -3.9670000076293945, 'z': 6.9029998779296875, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.13369340999400742}, 8: {'a1': {'elem': 'N', 'id': 122, 'name': 'N1', 'x': 13.217000007629395, 'y': -4.590000152587891, 'z': 12.548999786376953, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'N', 'id': 162, 'name': 'N1', 'x': 13.220000267028809, 'y': -4.5879998207092285, 'z': 12.53499984741211, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0014456872936700889}, 9: {'a1': {'elem': 'C', 'id': 141, 'name': 'C20', 'x': 9.973999977111816, 'y': 0.23000000417232513, 'z': 7.836999893188477, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 181, 'name': 'C20', 'x': 9.989999771118164, 'y': 0.21899999678134918, 'z': 7.831999778747559, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0020049805866126495}, 10: {'a1': {'elem': 'C', 'id': 150, 'name': 'C29', 'x': 14.428999900817871, 'y': -0.6809999942779541, 'z': 6.7230000495910645, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 202, 'name': 'C31', 'x': 14.442000389099121, 'y': -0.7129999995231628, 'z': 6.724999904632568, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.003459786772954851}, 11: {'a1': {'elem': 'N', 'id': 134, 'name': 'N13', 'x': 9.284000396728516, 'y': -2.5969998836517334, 'z': 10.027000427246094, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'N', 'id': 174, 'name': 'N13', 'x': 9.28499984741211, 'y': -2.5989999771118164, 'z': 10.027000427246094, 'chain': 'E', 'resn': 'KL21', 'resi': '5', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.00022359059725316787}, 12: {'a1': {'elem': 'C', 'id': 12, 'name': 'C12', 'x': 6.327000141143799, 'y': -4.235000133514404, 'z': 11.574000358581543, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 93, 'name': 'C12', 'x': 6.335000038146973, 'y': -4.25, 'z': 11.592000007629395, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0024758467490798184}, 13: {'a1': {'elem': 'O', 'id': 25, 'name': 'O25', 'x': 17.474000930786133, 'y': -2.7070000171661377, 'z': 7.150000095367432, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'O', 'id': 107, 'name': 'O26', 'x': 17.4060001373291, 'y': -2.811000108718872, 'z': 7.202000141143799, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.01347001548421799}, 14: {'a1': {'elem': 'N', 'id': 1, 'name': 'N1', 'x': 13.211999893188477, 'y': -4.593999862670898, 'z': 12.567000389099121, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'N', 'id': 82, 'name': 'N1', 'x': 13.229000091552734, 'y': -4.570000171661377, 'z': 12.550000190734863, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0033970555741711594}, 15: {'a1': {'elem': 'C', 'id': 20, 'name': 'C20', 'x': 9.998000144958496, 'y': 0.2160000056028366, 'z': 7.830999851226807, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 101, 'name': 'C20', 'x': 9.967000007629395, 'y': 0.22300000488758087, 'z': 7.839000225067139, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.003277216022777024}, 16: {'a1': {'elem': 'C', 'id': 21, 'name': 'C21', 'x': 13.581000328063965, 'y': -1.3799999952316284, 'z': 7.539999961853027, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 102, 'name': 'C21', 'x': 13.555999755859375, 'y': -1.3539999723434448, 'z': 7.546000003814697, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.003656542498433159}, 17: {'a1': {'elem': 'N', 'id': 13, 'name': 'N13', 'x': 9.295999526977539, 'y': -2.6050000190734863, 'z': 10.02400016784668, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'N', 'id': 94, 'name': 'N13', 'x': 9.286999702453613, 'y': -2.61299991607666, 'z': 10.019000053405762, 'chain': 'C', 'resn': 'KL1', 'resi': '3', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0013038264376255067}, 18: {'a1': {'elem': 'C', 'id': 52, 'name': 'C12', 'x': 6.327000141143799, 'y': -4.243000030517578, 'z': 11.562000274658203, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 133, 'name': 'C12', 'x': 6.323999881744385, 'y': -4.239999771118164, 'z': 11.57800006866455, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0016552840275103945}, 19: {'a1': {'elem': 'C', 'id': 68, 'name': 'C28', 'x': 18.47800064086914, 'y': -2.880000114440918, 'z': 8.371999740600586, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'O', 'id': 147, 'name': 'O26', 'x': 17.408000946044922, 'y': -2.8299999237060547, 'z': 7.36299991607666, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.1471557002595128}, 20: {'a1': {'elem': 'C', 'id': 60, 'name': 'C20', 'x': 10.020000457763672, 'y': 0.20399999618530273, 'z': 7.824999809265137, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 141, 'name': 'C20', 'x': 9.973999977111816, 'y': 0.23000000417232513, 'z': 7.836999893188477, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.005418529920277415}, 21: {'a1': {'elem': 'N', 'id': 41, 'name': 'N1', 'x': 13.218999862670898, 'y': -4.589000225067139, 'z': 12.543999671936035, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'N', 'id': 122, 'name': 'N1', 'x': 13.217000007629395, 'y': -4.590000152587891, 'z': 12.548999786376953, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0005477263884099628}, 22: {'a1': {'elem': 'C', 'id': 70, 'name': 'C30', 'x': 14.456000328063965, 'y': -0.7630000114440918, 'z': 6.698999881744385, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 150, 'name': 'C29', 'x': 14.428999900817871, 'y': -0.6809999942779541, 'z': 6.7230000495910645, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.00896048767835059}, 23: {'a1': {'elem': 'N', 'id': 53, 'name': 'N13', 'x': 9.29699993133545, 'y': -2.6010000705718994, 'z': 10.031000137329102, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'N', 'id': 134, 'name': 'N13', 'x': 9.284000396728516, 'y': -2.5969998836517334, 'z': 10.027000427246094, 'chain': 'D', 'resn': 'KL20', 'resi': '4', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0014176991082075411}, 24: {'a1': {'elem': 'C', 'id': 12, 'name': 'C12', 'x': 6.327000141143799, 'y': -4.235000133514404, 'z': 11.574000358581543, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 52, 'name': 'C12', 'x': 6.327000141143799, 'y': -4.243000030517578, 'z': 11.562000274658203, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0014422217798542255}, 25: {'a1': {'elem': 'O', 'id': 25, 'name': 'O25', 'x': 17.474000930786133, 'y': -2.7070000171661377, 'z': 7.150000095367432, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'O', 'id': 67, 'name': 'O27', 'x': 17.534000396728516, 'y': -2.1570000648498535, 'z': 7.578000068664551, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0699488284822284}, 26: {'a1': {'elem': 'N', 'id': 1, 'name': 'N1', 'x': 13.211999893188477, 'y': -4.593999862670898, 'z': 12.567000389099121, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'N', 'id': 41, 'name': 'N1', 'x': 13.218999862670898, 'y': -4.589000225067139, 'z': 12.543999671936035, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0024556647550918716}, 27: {'a1': {'elem': 'C', 'id': 20, 'name': 'C20', 'x': 9.998000144958496, 'y': 0.2160000056028366, 'z': 7.830999851226807, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 60, 'name': 'C20', 'x': 10.020000457763672, 'y': 0.20399999618530273, 'z': 7.824999809265137, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0025768478672367973}, 28: {'a1': {'elem': 'C', 'id': 21, 'name': 'C21', 'x': 13.581000328063965, 'y': -1.3799999952316284, 'z': 7.539999961853027, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'C', 'id': 61, 'name': 'C21', 'x': 13.611000061035156, 'y': -1.3880000114440918, 'z': 7.607999801635742, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.007475267519104152}, 29: {'a1': {'elem': 'N', 'id': 13, 'name': 'N13', 'x': 9.295999526977539, 'y': -2.6050000190734863, 'z': 10.02400016784668, 'chain': 'A', 'resn': 'KL17', 'resi': '1', 'alt': '', 'b': 0.0, 'label': ''}, 'a2': {'elem': 'N', 'id': 53, 'name': 'N13', 'x': 9.29699993133545, 'y': -2.6010000705718994, 'z': 10.031000137329102, 'chain': 'B', 'resn': 'KL19', 'resi': '2', 'alt': '', 'b': 0.0, 'label': ''}, 'd': 0.0008124036536692249}}\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(disres_text)"
+   ]
   },
   {
    "cell_type": "code",
    "execution_count": null,
+   "metadata": {},
    "outputs": [],
-   "source": [],
-   "metadata": {
-    "collapsed": false,
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   }
+   "source": []
   }
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "Python 3",
+   "display_name": "Python 3 (ipykernel)",
    "language": "python",
    "name": "python3"
   },
   "language_info": {
    "codemirror_mode": {
     "name": "ipython",
-    "version": 2
+    "version": 3
    },
    "file_extension": ".py",
    "mimetype": "text/x-python",
    "name": "python",
    "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython2",
-   "version": "2.7.6"
+   "pygments_lexer": "ipython3",
+   "version": "3.8.10"
   }
  },
  "nbformat": 4,
- "nbformat_minor": 0
+ "nbformat_minor": 1
 }

@@ -1,72 +1,32 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>restraintmaker.interface_Pymol.RestraintMaker_Logic &mdash; restraintMaker  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../../index.html" class="icon icon-home"> restraintMaker
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,18 +34,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome to RestraintMaker</a></li>
@@ -93,69 +42,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">restraintMaker</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
       <li>restraintmaker.interface_Pymol.RestraintMaker_Logic</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for restraintmaker.interface_Pymol.RestraintMaker_Logic</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Contains the class Logic_Handler, which defines the program flow, decides which user activities are allowed and manages Importers, Selections,</span>
@@ -172,7 +82,7 @@
 <span class="kn">from</span> <span class="nn">restraintmaker.interface_Pymol.pymol_utilities.pymol_utitlities</span> <span class="kn">import</span> <span class="n">_convert_molecules_to_pdb</span><span class="p">,</span> <span class="n">try_to_get_args</span>
 
 <span class="kn">from</span> <span class="nn">restraintmaker.io</span> <span class="kn">import</span> <span class="n">Exporter</span><span class="p">,</span> <span class="n">Importer</span>
-<span class="kn">from</span> <span class="nn">restraintmaker.utils</span> <span class="kn">import</span> <span class="n">Utilities</span> <span class="k">as</span> <span class="n">u</span><span class="p">,</span> <span class="n">Types</span>
+<span class="kn">from</span> <span class="nn">restraintmaker.utils</span> <span class="kn">import</span> <span class="n">Utilities</span> <span class="k">as</span> <span class="n">u</span><span class="p">,</span> <span class="n">Restraints</span><span class="p">,</span> <span class="n">Restraint_Types</span>
 <span class="kn">from</span> <span class="nn">restraintmaker.interface_Pymol.pymol_utilities</span> <span class="kn">import</span> <span class="n">program_states</span><span class="p">,</span> <span class="n">qt_dialogs</span>
 <span class="kn">from</span> <span class="nn">restraintmaker.utils.Utilities</span> <span class="kn">import</span> <span class="nb">print</span>
 
@@ -215,12 +125,13 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">all_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">all_atoms</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">Atom</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Restraints</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="c1"># Define Restraint-Types</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">my_restraint</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_restraint_types</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Restraint_Types</span><span class="o">.</span><span class="n">_Restraint_Type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="p">:</span><span class="n">Restraint_Types</span><span class="o">.</span><span class="n">_Restraint_Type</span> <span class="o">=</span> <span class="n">Restraint_Types</span><span class="o">.</span><span class="n">DistanceRestraintType</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_restraint</span><span class="p">:</span> <span class="n">Restraint_Types</span><span class="o">.</span><span class="n">_Restraint_Type</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># Define Importer-Types</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">available_importer_types</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Importer</span><span class="o">.</span><span class="n">_Importer</span><span class="p">)</span>
@@ -233,29 +144,29 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Unlike my_filter my_selection needs to be accessed by several methods: do_pick, set_selection</span>
 
         <span class="c1"># Define Filter-Types</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">available_filter_types</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Filter</span><span class="o">.</span><span class="n">_Filter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_filters</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Filter</span><span class="o">.</span><span class="n">_Filter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_filter_types</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_filters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_filter_type</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># Define-Optimizer Types</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">available_optimizer_types</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Optimizer</span><span class="o">.</span><span class="n">_Optimizer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_optimizer_types</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Optimizer</span><span class="o">.</span><span class="n">_Optimizer</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">x</span> <span class="o">==</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">MetaMoleculeRingOptimizer</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_optimizer_type</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># Define-Exporter-Types</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">all_exporter_types</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Exporter</span><span class="o">.</span><span class="n">_Exporter</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">available_exporter_types</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Exporter</span><span class="o">.</span><span class="n">_Exporter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_exporter_types</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_all_subclasses</span><span class="p">(</span><span class="n">Exporter</span><span class="o">.</span><span class="n">_Export_Distance_Restraints</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_exporter_type</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">my_exporter</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># Modes &amp; Action_States (Modes: What do to atoms, when they are selected. Action states: Which actions are possible right now)</span>
         <span class="c1"># which contains one attribute indicating actions AND one for each mode</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># True = select, False = delte</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># True = atom, False = Restraint</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;toggle_select_delete&#39;</span><span class="p">:</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span><span class="p">,</span>
             <span class="s1">&#39;toggle_atom_restraint&#39;</span><span class="p">:</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span><span class="p">,</span>
+            <span class="s1">&#39;Reset&#39;</span><span class="p">:</span>  <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span><span class="p">,</span>
             <span class="s1">&#39;Importer&#39;</span><span class="p">:</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_DISABLED</span><span class="p">,</span>
             <span class="s1">&#39;Restraint&#39;</span><span class="p">:</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_DISABLED</span><span class="p">,</span>
             <span class="s1">&#39;Selection&#39;</span><span class="p">:</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_DISABLED</span><span class="p">,</span>
@@ -263,8 +174,12 @@
             <span class="s1">&#39;Optimizer&#39;</span><span class="p">:</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_DISABLED</span><span class="p">,</span>
             <span class="s1">&#39;Exporter&#39;</span><span class="p">:</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_DISABLED</span><span class="p">,</span>
             <span class="s1">&#39;Done&#39;</span><span class="p">:</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span><span class="p">}</span>
+
+        <span class="c1">#initialize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">select_delete</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">atom_restraint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_action_states</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span><span class="n">Types</span><span class="o">.</span><span class="n">Distance_Restraint</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="p">)</span></div>
+
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        event_functions</span>
@@ -395,20 +310,34 @@
 
         <span class="c1"># &#39;Depending&#39; on the mode some actions (e.g creating restraints) are not possible</span>
 
-        <span class="c1"># Select or delte atoms mode</span>
+        <span class="c1"># Select or delete atoms mode</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># restraint Option not needed</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_restraint_types</span> <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">accepted_optimizer_types</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)]</span>
+            <span class="n">set_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span><span class="n">set_type</span><span class="p">)</span>  <span class="c1"># restraint Option not needed</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">available_filter_types</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">available_filter_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_filters</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_restraint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">available_optimizer_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_restraint</span><span class="o">.</span><span class="n">accepted_optimizer_types</span>
 
         <span class="c1"># Select restraint mode</span>
         <span class="k">elif</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span>
-                <span class="kc">None</span><span class="p">)</span>  <span class="c1"># Restraint should be chosen by hand. Reset to None in case an old Restraint type is still active</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_set_selection_type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># Selection Type will be set by the Restraint</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_restraint_types</span>
+            <span class="n">set_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span><span class="n">set_type</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">available_filter_types</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">available_optimizer_types</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="c1"># Delte Restraint Mode</span>
+        <span class="c1"># Delete Restraint Mode</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># To clerly show, that any restraint can be deleted</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_restraint_type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># To clearly show, that any restraint can be deleted</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_selection_type</span><span class="p">(</span><span class="n">Selection</span><span class="o">.</span><span class="n">SingleAtomSelection</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_filter_type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">available_optimizer_types</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">set_action_states</span><span class="p">()</span></div>
 
@@ -428,9 +357,7 @@
             <span class="k">return</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">has_finished</span><span class="p">:</span>
-
             <span class="c1"># CHECK ALL FOR POSSIBLE MODES</span>
-
             <span class="c1"># SELECT ATOM MODE</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="ow">not</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">,</span>
@@ -444,17 +371,21 @@
 
             <span class="c1"># SELECT RESTRAINT MODE</span>
             <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span><span class="p">:</span>
-                <span class="n">new_restraint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_restraint</span><span class="p">)</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">Restraint_Types</span><span class="o">.</span><span class="n">PositionRestraintType</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="p">):</span>
+                    <span class="n">new_restraint</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="o">.</span><span class="n">restraint</span><span class="p">(</span><span class="n">atomA</span><span class="o">=</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">atoms</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_restraint</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">new_restraint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="o">.</span><span class="n">restraint</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_restraint</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 
             <span class="c1"># DELETE RESTRAINT MODE</span>
             <span class="k">else</span><span class="p">:</span>
+
                 <span class="c1"># In delete Restraint Mode the Selection is a Single Atom Selection</span>
-                <span class="c1"># TODO DELETE_RESTRAINT_MODE (2): Allow to use every kind of Selection in Delete-Restraint_mode. Upon confirmation: Delete everz restraint containing an atom in that selection</span>
-                <span class="n">atom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">atoms</span>
                 <span class="c1"># Remove all restraints containing the selected atom</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">atom</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">atoms</span><span class="p">])]</span>
                 <span class="c1"># open a new SingleAtomSelection</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
 
@@ -492,7 +423,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">my_importer</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_importer_type</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Logic_Handler._set_restraint_type"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_restraint_type">[docs]</a>    <span class="k">def</span> <span class="nf">_set_restraint_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_restraint_type</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">[</span><span class="n">Types</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]):</span>
+<div class="viewcode-block" id="Logic_Handler._set_restraint_type"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_restraint_type">[docs]</a>    <span class="k">def</span> <span class="nf">_set_restraint_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_restraint_type</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">[</span><span class="n">Restraints</span><span class="o">.</span><span class="n">_Restraint</span><span class="p">]):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        _set_restraint_type changes the current type of Restraint.</span>
 
@@ -506,7 +437,7 @@
 
         <span class="k">if</span> <span class="n">new_restraint_type</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">my_restraint</span> <span class="o">==</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_restraint</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">return</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">new_restraint_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_restraint_types</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
@@ -515,12 +446,17 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SET TYPE: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_restraint_type</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="o">=</span> <span class="n">new_restraint_type</span>
 
+        <span class="c1"># self.current_restraint_type.accepted_selection_types_atoms if(self.atom_or_restraint_mode) else</span>
         <span class="c1"># Set the Selection type to the preferred selection of this restraint type. set_mode will deactivate the selection, button, so it cant be changed</span>
         <span class="c1"># TODO: In theory a restraint could accept several selection types. Would be nice to give the user the possibilitz to choose between all of them</span>
         <span class="c1"># TODO: If the first selection in the list is e.g a Limited selection the user will be asked for input. At a moment I just check for all lists that that is not the case.</span>
         <span class="c1">#   Would be nicer if there was a way to pass an input function that does not require user input in this context</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">available_selection_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="o">.</span><span class="n">accepted_selection_types</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_set_selection_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="o">.</span><span class="n">accepted_selection_types</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_action_states</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_selection_types</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="o">.</span><span class="n">accepted_selection_types_atoms</span> <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="o">.</span><span class="n">accepted_selection_types_res</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_selection_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">available_selection_types</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_optimizer_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="o">.</span><span class="n">accepted_optimizer_types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_exporter_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="o">.</span><span class="n">accepted_exporter_types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_importer_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="o">.</span><span class="n">accepted_importer_types</span></div>
 
 <div class="viewcode-block" id="Logic_Handler._set_selection_type"><a class="viewcode-back" href="../../../_source/restraintmaker.interface_Pymol.html#restraintmaker.interface_Pymol.RestraintMaker_Logic.Logic_Handler._set_selection_type">[docs]</a>    <span class="k">def</span> <span class="nf">_set_selection_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_selection_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -544,7 +480,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">return</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_selection_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_selection_types</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_selection_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_selection_types</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_or_delete_mode</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_selection_type</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; is not an  available type of Selection&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">current_selection_type</span> <span class="o">=</span> <span class="n">new_selection_type</span>
@@ -558,7 +494,7 @@
             <span class="n">input_function</span> <span class="o">=</span> <span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_input_dialog</span><span class="p">(</span><span class="n">parent_window</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Selection&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">SphericalSelection</span><span class="p">):</span>
             <span class="n">input_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="mi">5</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">MCS_Selection</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="p">,</span> <span class="n">Selection</span><span class="o">.</span><span class="n">MCSSelection</span><span class="p">):</span>
             <span class="n">input_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">dummy_arg</span><span class="p">:</span> <span class="n">_convert_molecules_to_pdb</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">try_to_get_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_selection</span><span class="p">,</span> <span class="n">input_function</span><span class="p">):</span>
@@ -613,6 +549,7 @@
 
         <span class="k">if</span> <span class="n">try_to_get_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span><span class="p">,</span> <span class="n">input_function</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">my_filter</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_filter_type</span> <span class="o">=</span> <span class="kc">None</span></div>
@@ -646,43 +583,49 @@
         <span class="c1"># SWITCHTABLE FOR input function</span>
         <span class="n">input_functions</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">do_nothing</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span><span class="p">,</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">TreeHeuristicOptimizer</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span><span class="p">,</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">GreedyGraphOptimizer</span><span class="p">):</span>
             <span class="n">input_function</span> <span class="o">=</span> <span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_multi_dialog</span><span class="p">(</span>
-                <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Parameters for TreeHeuristicOptimizer&#39;</span><span class="p">,</span> \
+                <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Parameters for GreedyGraphOptimizer&#39;</span><span class="p">,</span> \
                 <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">,</span> <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;tree-algorithm&#39;</span><span class="p">,</span> <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">],</span> \
-                <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tree-algorithm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;shortest&#39;</span><span class="p">,</span> <span class="s1">&#39;cog&#39;</span><span class="p">,</span> <span class="s1">&#39;prim&#39;</span><span class="p">,</span> <span class="s2">&quot;biased_avg&quot;</span><span class="p">],</span>
+                        <span class="s1">&#39;tree-algorithm&#39;</span><span class="p">,</span> <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">,</span> <span class="s1">&#39;addtional ring connections&#39;</span><span class="p">],</span> \
+                <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tree-algorithm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;minmax&#39;</span><span class="p">,</span> <span class="s1">&#39;cog&#39;</span><span class="p">,</span> <span class="s1">&#39;prim&#39;</span><span class="p">,</span> <span class="s2">&quot;biased_avg&quot;</span><span class="p">],</span>
                          <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span>
                                                          <span class="s1">&#39;pca_2d&#39;</span><span class="p">]},</span> \
                 <span class="n">default</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
                          <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;shortest&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">})</span>
+                         <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;minmax&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;addtional ring connections&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">})</span>
 
 
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span><span class="p">,</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">BruteForceRingOptimzer</span><span class="p">):</span>
             <span class="n">input_function</span> <span class="o">=</span> <span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_multi_dialog</span><span class="p">(</span>
                 <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Parameters for BruteForceOptimizer&#39;</span><span class="p">,</span> \
                 <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">,</span> <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;algorithm&#39;</span><span class="p">,</span> <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">],</span> \
+                        <span class="s1">&#39;algorithm&#39;</span><span class="p">,</span> <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">,</span> <span class="s1">&#39;addtional ring connections&#39;</span><span class="p">],</span> \
                 <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span> <span class="s1">&#39;pca&#39;</span><span class="p">],</span>
                          <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span>
                                                          <span class="s1">&#39;pca_2d&#39;</span><span class="p">]},</span> \
                 <span class="n">default</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;1.2&#39;</span><span class="p">,</span> <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;pca&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="s1">&#39;pca_2d&#39;</span><span class="p">})</span>
+                         <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;1.2&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;pca&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;addtional ring connections&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span>
+                         <span class="p">})</span>
 
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span><span class="p">,</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">MetaMoleculeRingOptimizer</span><span class="p">):</span>
             <span class="n">input_function</span> <span class="o">=</span> <span class="n">qt_dialogs</span><span class="o">.</span><span class="n">create_multi_dialog</span><span class="p">(</span>
                 <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Parameters for BestMoleculeRingOptimizer&#39;</span><span class="p">,</span> \
                 <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">,</span> <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;algorithm&#39;</span><span class="p">,</span> <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">],</span> \
+                        <span class="s1">&#39;algorithm&#39;</span><span class="p">,</span> <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">,</span> <span class="s1">&#39;addtional ring connections&#39;</span><span class="p">],</span> \
                 <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span> <span class="s1">&#39;pca&#39;</span><span class="p">],</span>
                          <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span>
                                                          <span class="s1">&#39;pca_2d&#39;</span><span class="p">]},</span> \
                 <span class="n">default</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;number of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
                          <span class="s1">&#39;maximal distance of restraints&#39;</span><span class="p">:</span> <span class="s1">&#39;1.2&#39;</span><span class="p">,</span> <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;pca&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="s1">&#39;pca_2d&#39;</span><span class="p">})</span>
+                         <span class="s1">&#39;optimize molecules pairs by&#39;</span><span class="p">:</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;addtional ring connections&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span>
+                         <span class="p">})</span>
 
         <span class="k">if</span> <span class="n">try_to_get_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_optimizer</span><span class="p">,</span> <span class="n">input_function</span><span class="p">):</span>
             <span class="n">time_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -746,68 +689,56 @@
         <span class="c1"># if the structure beomces more complex consider first checking the toggle modes (atom?restraint, delete/select) and go through each state in iach state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;toggle_select_delete&#39;</span><span class="p">]:</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;toggle_atom_restraint&#39;</span><span class="p">]:</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Importer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>  <span class="c1"># TODO Later: Check if there is any Molecules loaded.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Restraint&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Selection&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="k">else</span> \
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Selection&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="o">==</span> <span class="n">Restraint_Types</span><span class="o">.</span><span class="n">PositionRestraintType</span><span class="p">))</span> <span class="k">else</span> \
             <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>  <span class="c1"># TODO Later: Check if any atoms are loaded</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Filter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> \
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Filter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">available_filter_types</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>  <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_restraint_type</span> <span class="o">==</span> <span class="n">Restraint_Types</span><span class="o">.</span><span class="n">DistanceRestraintType</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atom_or_restraint_mode</span><span class="p">))</span> \
                                                                                         <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Optimizer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> \
-                                                                                           <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Optimizer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">available_optimizer_types</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> \
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>
         <span class="c1"># TODO: Check if we have Atoms from at least 2 Molecules</span>
         <span class="c1"># TODO: Check indivudiual Optimizers depending on Restraint type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Exporter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_ENABLED</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> \
             <span class="k">else</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Done&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span></div></div>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Done&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Reset&#39;</span><span class="p">]:</span> <span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">ALWAYS_ENABLED</span></div></div>
+
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
-
-    </p>
+    <p>&#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

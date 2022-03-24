@@ -1,72 +1,32 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>restraintmaker.interface_Pymol.RestraintMaker_Pymol &mdash; restraintMaker  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../../index.html" class="icon icon-home"> restraintMaker
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,18 +34,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Welcome to RestraintMaker</a></li>
@@ -93,69 +42,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_source/modules.html">restraintmaker</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">restraintMaker</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
       <li>restraintmaker.interface_Pymol.RestraintMaker_Pymol</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for restraintmaker.interface_Pymol.RestraintMaker_Pymol</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This module plugs in the restraintmaker logic into PyMOL.</span>
@@ -192,7 +102,6 @@
 <span class="sd">        ----------</span>
 <span class="sd">        _self</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">cmd</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span> <span class="o">=</span> <span class="n">Logic</span><span class="o">.</span><span class="n">Logic_Handler</span><span class="p">(</span><span class="n">pu</span><span class="o">.</span><span class="n">pymol_selection_to_atom_list</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">))</span>
 
         <span class="n">Wizard</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_self</span><span class="p">)</span>
@@ -242,7 +151,7 @@
                       <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;import_&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="s1">&#39;cmd.get_wizard()._action_button_pressed(</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">)&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>
                        <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">available_importer_types</span><span class="p">],</span>
             <span class="s1">&#39;Restraint&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Restraint&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]]</span> <span class="o">+</span>
-                         <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;cmd.get_wizard()._action_button_pressed(</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">)&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span>
+                         <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_Type&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="s1">&#39;cmd.get_wizard()._action_button_pressed(</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_Type&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">)&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span>
                           <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">available_restraint_types</span><span class="p">],</span>
             <span class="s1">&#39;Selection&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Selection&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]]</span> <span class="o">+</span>
                          <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;cmd.get_wizard()._action_button_pressed(</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">)&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span>
@@ -423,6 +332,7 @@
             <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;to_3_i_m&#39;</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_to3_i_m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_to3_i_m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">())</span> <span class="o">/</span> <span class="mi">3</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_optimzer_show_next_molecule_pair_3</span><span class="p">()</span>
+
         <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>  <span class="c1"># Space</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;grid_mode&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;grid_mode&#39;</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
 
@@ -460,9 +370,11 @@
 
         <span class="c1"># Shf Q: Choose all atoms, start brute force optimizer, start test mode 4</span>
         <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">81</span> <span class="ow">and</span> <span class="n">mod</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_action_button_pressed</span><span class="p">(</span><span class="s1">&#39;UniversalSelection&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_action_button_pressed</span><span class="p">(</span><span class="s1">&#39;AllSelection&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">trigger_event</span><span class="p">(</span><span class="n">program_states</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">CONFIRM</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_action_button_pressed</span><span class="p">(</span><span class="s1">&#39;TreeHeuristicOptimizer&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_action_button_pressed</span><span class="p">(</span><span class="s2">&quot;RingFilter&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trigger_event</span><span class="p">(</span><span class="n">program_states</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">CONFIRM</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_action_button_pressed</span><span class="p">(</span><span class="s1">&#39;GreedyGraphOptimizer&#39;</span><span class="p">)</span>
 
             <span class="c1"># Make sure Optimizatyion was sucessfull</span>
             <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">selected_restraints</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
@@ -476,9 +388,9 @@
 
             <span class="n">Optimizer</span><span class="o">.</span><span class="n">compare_pair_optimizers</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="n">Optimizer</span><span class="o">.</span><span class="n">_calculate_value_convex_hull</span><span class="p">,</span> \
                                               <span class="n">atoms</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">selected_atoms</span><span class="p">,</span> \
-                                              <span class="n">opt_types</span><span class="o">=</span><span class="p">[</span><span class="n">Optimizer</span><span class="o">.</span><span class="n">TreeHeuristicOptimizer</span><span class="p">,</span>
-                                                         <span class="n">Optimizer</span><span class="o">.</span><span class="n">TreeHeuristicOptimizer</span><span class="p">,</span>
-                                                         <span class="n">Optimizer</span><span class="o">.</span><span class="n">TreeHeuristicOptimizer</span><span class="p">,</span>
+                                              <span class="n">opt_types</span><span class="o">=</span><span class="p">[</span><span class="n">Optimizer</span><span class="o">.</span><span class="n">GreedyGraphOptimizer</span><span class="p">,</span>
+                                                         <span class="n">Optimizer</span><span class="o">.</span><span class="n">GreedyGraphOptimizer</span><span class="p">,</span>
+                                                         <span class="n">Optimizer</span><span class="o">.</span><span class="n">GreedyGraphOptimizer</span><span class="p">,</span>
                                                          <span class="n">Optimizer</span><span class="o">.</span><span class="n">BruteForceRingOptimzer</span><span class="p">,</span>
                                                          <span class="n">Optimizer</span><span class="o">.</span><span class="n">BruteForceRingOptimzer</span><span class="p">],</span> \
                                               <span class="n">opt_args</span><span class="o">=</span><span class="p">[(</span><span class="mi">4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;prim&#39;</span><span class="p">,</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;cog&#39;</span><span class="p">,</span> <span class="s1">&#39;convex_hull&#39;</span><span class="p">),</span>
@@ -570,7 +482,7 @@
         <span class="c1"># Restraint</span>
         <span class="k">if</span> <span class="n">x_type</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">r_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">available_restraint_types</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">r_type</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">x_name</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">r_type</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_Type&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>  <span class="o">==</span> <span class="n">x_name</span><span class="p">:</span>
                     <span class="n">x_type</span> <span class="o">=</span> <span class="n">r_type</span>
 
         <span class="c1"># Selection</span>
@@ -626,8 +538,29 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s1">&#39;_toggle_button_pressed needs to be called with </span><span class="se">\&#39;</span><span class="s1">button</span><span class="se">\&#39;</span><span class="s1"> = toggle_delte or toggle_atom. Not &#39;</span> <span class="o">+</span> <span class="n">button</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_menu</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_panel</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">refresh_wizard</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">unpick</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">deselect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;mouse_selection_mode&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_result_dict</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># crd (check_results_dict) is an dict that can beused by the test mode to store information</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_results_mode</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Check results mode indicates if we are using a special test mode at the moment.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tmp_cnt</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># The different check_opzimier_results functions indicate in whihc mode they are called</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">selected_atoms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">selected_restraints</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">set_action_states</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="s2">&quot;spheres&quot;</span><span class="p">)</span> <span class="c1">#this is a bit hacky</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">refresh_wizard</span><span class="p">()</span>
+        <span class="k">pass</span>
+
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Utility functions</span>
@@ -673,7 +606,7 @@
                            <span class="s1">&#39;cnfrm: shft+up&#39;</span><span class="p">]</span>
                 <span class="k">if</span> <span class="s1">&#39;SphericalSelection&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">():</span>
                     <span class="n">prompt</span> <span class="o">+=</span> <span class="p">[</span>
-                        <span class="s1">&#39;size: left / right&#39;</span> \
+                        <span class="s1">&#39;size: left / right&#39;</span><span class="p">,</span> \
                         <span class="s1">&#39;move/rotate: mouse, left&#39;</span><span class="p">,</span> \
                         <span class="s1">&#39;activate rota: up&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;activate move: down&#39;</span><span class="p">]</span>
@@ -719,18 +652,21 @@
 
         <span class="n">menu</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">menu</span> <span class="o">+=</span> <span class="n">empty_panel</span>
-        <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;toggle_select_delete&#39;</span><span class="p">]),</span> <span class="n">text_select_delete</span><span class="p">,</span>
-                  <span class="s1">&#39;cmd.get_wizard()._toggle_button_pressed(</span><span class="se">\&quot;</span><span class="s1">toggle_delete</span><span class="se">\&quot;</span><span class="s1">)&#39;</span><span class="p">]]</span>
+        <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span><span class="p">),</span>  <span class="s2">&quot;RestraintMaker&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]]</span>  <span class="c1">#Should actually be Always_Disabled, but not nice colored!</span>
+        <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;--------------&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]]</span>
+        <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="n">program_states</span><span class="o">.</span><span class="n">ActionState</span><span class="o">.</span><span class="n">CURRENTLY_DISABLED</span><span class="p">),</span>  <span class="s2">&quot;Selection Options: &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]]</span>  <span class="c1">#Should actually be Always_Disabled, but not nice colored!</span>
         <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;toggle_select_delete&#39;</span><span class="p">]),</span> <span class="n">text_atom_restraint_mode</span><span class="p">,</span>
                   <span class="s1">&#39;cmd.get_wizard()._toggle_button_pressed(</span><span class="se">\&quot;</span><span class="s1">toggle_atom</span><span class="se">\&quot;</span><span class="s1">)&#39;</span><span class="p">]]</span>
-
+        <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;toggle_select_delete&#39;</span><span class="p">]),</span> <span class="n">text_select_delete</span><span class="p">,</span>
+                  <span class="s1">&#39;cmd.get_wizard()._toggle_button_pressed(</span><span class="se">\&quot;</span><span class="s1">toggle_delete</span><span class="se">\&quot;</span><span class="s1">)&#39;</span><span class="p">]]</span>
+        <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Reset&#39;</span><span class="p">]),</span> <span class="s1">&#39;Reset&#39;</span><span class="p">,</span>  <span class="s1">&#39;cmd.get_wizard()._reset()&#39;</span> <span class="p">]]</span>
         <span class="n">menu</span> <span class="o">+=</span> <span class="n">empty_panel</span>
+        <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Restraint&#39;</span><span class="p">]),</span>
+                  <span class="s1">&#39;Type:&#39;</span> <span class="o">+</span> <span class="n">get_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_Type&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="s1">&#39;Restraint&#39;</span><span class="p">]]</span>
         <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Importer&#39;</span><span class="p">]),</span>
                   <span class="s1">&#39;Import:&#39;</span> <span class="o">+</span> <span class="n">get_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">current_importer_type</span><span class="p">),</span> <span class="s1">&#39;Import&#39;</span><span class="p">]]</span>
-        <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Restraint&#39;</span><span class="p">]),</span>
-                  <span class="s1">&#39;Restraint:&#39;</span> <span class="o">+</span> <span class="n">get_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">current_restraint_type</span><span class="p">),</span> <span class="s1">&#39;Restraint&#39;</span><span class="p">]]</span>
         <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Selection&#39;</span><span class="p">]),</span>
-                  <span class="s1">&#39;Selection: &#39;</span> <span class="o">+</span> <span class="n">get_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">current_selection_type</span><span class="p">),</span> <span class="s1">&#39;Selection&#39;</span><span class="p">]]</span>
+                  <span class="s1">&#39;Mode: &#39;</span> <span class="o">+</span> <span class="n">get_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">current_selection_type</span><span class="p">),</span> <span class="s1">&#39;Selection&#39;</span><span class="p">]]</span>
         <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Filter&#39;</span><span class="p">]),</span>
                   <span class="s1">&#39;Filter: &#39;</span> <span class="o">+</span> <span class="n">get_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">current_filter_type</span><span class="p">),</span> <span class="s1">&#39;Filter&#39;</span><span class="p">]]</span>
         <span class="n">menu</span> <span class="o">+=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logic_handler</span><span class="o">.</span><span class="n">_action_states</span><span class="p">[</span><span class="s1">&#39;Optimizer&#39;</span><span class="p">]),</span>
@@ -852,9 +788,14 @@
                     <span class="n">pu</span><span class="o">.</span><span class="n">help_pymol_with_big_atom_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">,</span> <span class="n">pair</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;sphere_color&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">i</span> <span class="o">%</span> <span class="mi">54</span><span class="p">)</span>
 
                 <span class="n">already_colored</span><span class="o">=</span><span class="kc">False</span>
-                <span class="n">cmd</span><span class="o">.</span><span class="n">set</span>
 
             <span class="c1"># 3a) Colour all restrained atoms</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_objects_exists</span><span class="p">(</span><span class="s1">&#39;SphericalSelection&#39;</span><span class="p">):</span>
+                <span class="n">cmd</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="s2">&quot;spheres&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cmd</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="s2">&quot;spheres&quot;</span><span class="p">,</span> <span class="s2">&quot;not SphericalSelection&quot;</span><span class="p">)</span>
+                <span class="n">cmd</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s2">&quot;spheres&quot;</span><span class="p">,</span> <span class="s2">&quot;SphericalSelection&quot;</span><span class="p">)</span>
+
             <span class="n">pu</span><span class="o">.</span><span class="n">help_pymol_with_big_atom_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">show</span><span class="p">,</span> <span class="n">restrained_atoms</span><span class="p">,</span> <span class="n">representation</span><span class="o">=</span><span class="s1">&#39;spheres&#39;</span><span class="p">)</span>
 
 
@@ -892,46 +833,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.
-
-    </p>
+    <p>&#169; Copyright 2020, Benjamin Ries, Clemens Rhiner. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.3.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
