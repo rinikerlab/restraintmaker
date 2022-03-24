@@ -34,9 +34,6 @@ RestraintMaker is split into two parts:
 You can retrieve the repository from GitHub:
 https://github.com/rinikerlab/restraintmaker
 
-  * Install via Pymol Plugin Manager 
-    should be possible, but not recommended right now :)
-
   * Install with Anaconda
 
 ```
@@ -58,6 +55,9 @@ conda activate restraintmaker
 python examples/example_gui.py
 ```
 
+  * Install via Pymol Plugin Manager 
+    should be possible, but not recommended right now :)
+    
 ## GUI Tutorial
 ### GUI Menu
 RestraintMaker adds a menu to the pymol GUI on the bottom right. This is the easiest way to interact with RestraintMaker.
