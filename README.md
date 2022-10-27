@@ -139,5 +139,5 @@ pling (RE-EDS): A Robust Method to Estimate Multiple Free-Energy Differences Fro
 a Single Simulation. J. Chem. Phys. 2016, 145, 154114. https://doi.org/10.1063/1.4964781
 
 ## Copyright
-Copyright (c) 2021, Benjamin Ries (@SchroederB), Salomé R. Rieder (@SalomeRonja), Clemens Rhiner (@ClemensRhiner) and Sereina Riniker (@sriniker)
+Copyright (c) 2021, Benjamin Ries (@RiesBen), Salomé R. Rieder (@SalomeRonja), Clemens Rhiner (@ClemensRhiner) and Sereina Riniker (@sriniker)
 
